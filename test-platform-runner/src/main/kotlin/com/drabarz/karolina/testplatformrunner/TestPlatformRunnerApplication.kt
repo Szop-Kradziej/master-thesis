@@ -15,6 +15,7 @@ import org.testcontainers.containers.output.OutputFrame
 import org.testcontainers.containers.output.ToStringConsumer
 import org.testcontainers.images.builder.ImageFromDockerfile
 import org.testcontainers.utility.MountableFile
+import java.util.*
 
 
 @SpringBootApplication
@@ -29,6 +30,7 @@ fun main(args: Array<String>) {
 class TestPlatformApi {
 
 	val jarService = JarService()
+    val testCaseService = TestCaseService()
 
 	@PostMapping("/jar")
 	fun uploadJar(@RequestParam("file") uploadedFile: MultipartFile): String {
@@ -40,6 +42,13 @@ class TestPlatformApi {
 
 		return "200"
 	}
+
+    @PostMapping("/testCase")
+    fun uploadTestCase(@RequestParam("input") inputFile: MultipartFile, @RequestParam("output") outputFile: MultipartFile): String {
+        testCaseService.saveTestCase(inputFile, outputFile)
+
+        return "200"
+    }
 }
 
 @Component
@@ -81,6 +90,29 @@ class JarService {
 	companion object {
 	    val PATH_PREFIX = "/home/karolina/MGR/tests";
 	}
+}
+
+@Component
+class TestCaseService {
+    fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile) {
+        val testCaseName = UUID.randomUUID()
+        val testCasePath = "$PATH_PREFIX/$testCaseName"
+
+        val dir = File(testCasePath)
+        dir.mkdir()
+
+        val savedInputFile = File(testCasePath, INPUT_FILE_NAME)
+        inputFile.transferTo(savedInputFile)
+
+        val savedOutputFile = File(testCasePath, OUTPUT_FILE_NAME)
+        outputFile.transferTo(savedOutputFile)
+    }
+
+    companion object {
+        val PATH_PREFIX = "/home/karolina/MGR/tests"
+        val INPUT_FILE_NAME = "input"
+        val OUTPUT_FILE_NAME = "output"
+    }
 }
 
 class KGenericContainer(imageName: ImageFromDockerfile) : GenericContainer<KGenericContainer>(imageName)
