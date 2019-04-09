@@ -59,14 +59,15 @@ class JarService {
 
 	fun runJar(originalFileName: String?): TestResponse {
 		val log = LoggerFactory.logger(this.javaClass)
+        val testCaseName = "example_test_case"
 
 		val container = KGenericContainer(
 				ImageFromDockerfile()
 						.withFileFromClasspath("Dockerfile", "static/Dockerfile")
 		)
-				.withCopyFileToContainer(MountableFile.forHostPath(PATH_PREFIX + "/" + originalFileName), "/home/example.jar")
-				.withClasspathResourceMapping("static/input.txt", "/home/input.txt", BindMode.READ_ONLY)
-				.withClasspathResourceMapping("static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
+				.withCopyFileToContainer(MountableFile.forHostPath("$PATH_PREFIX/$originalFileName"), "/home/example.jar")
+				.withFileSystemBind("$PATH_PREFIX/$testCaseName/input.txt", "/home/input.txt", BindMode.READ_ONLY)
+				.withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
 
 		container.start()
 
@@ -81,14 +82,14 @@ class JarService {
 
 		container.stop()
 
-		val input = JarService::class.java.getResource("/static/input.txt").readText()
+		val expectedOutput = File("$PATH_PREFIX/$testCaseName/output.txt").reader().readText()
 		val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
-		if(checkCorrectness(testOutput, input)) {
+		if(checkCorrectness(testOutput, expectedOutput)) {
 			return Success()
 		}
 
-		return Error(container.logs)
+		return Error("Error: \n Actual: $testOutput \n Expected: $expectedOutput")
 	}
 
 	fun checkCorrectness(testOutput: String, expectedOutput: String): Boolean {
