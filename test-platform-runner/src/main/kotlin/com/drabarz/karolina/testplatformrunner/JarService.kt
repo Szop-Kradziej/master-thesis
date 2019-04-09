@@ -21,10 +21,10 @@ class JarService {
         uploadedFile.transferTo(outputFile)
     }
 
-    fun runJar(originalFileName: String?, testCaseName: String): TestResponse {
+    fun runJar(jarName: String?, testCaseName: String): TestResponse {
         val log = LoggerFactory.logger(this.javaClass)
 
-        val container = containerFactory.createContainerWithFilesBinded(testCaseName, originalFileName)
+        val container = containerFactory.createContainerWithFilesBinded(testCaseName, jarName)
 
         container.start()
 
@@ -39,18 +39,18 @@ class JarService {
 
         container.stop()
 
+        return checkCorrectness(testCaseName)
+    }
+
+    fun checkCorrectness(testCaseName: String): TestResponse {
         val expectedOutput = File("$PATH_PREFIX/$testCaseName/output.txt").reader().readText()
         val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
-        if (checkCorrectness(testOutput, expectedOutput)) {
+        if (testOutput.trim() == expectedOutput.trim()) {
             return Success()
         }
 
         return Error("Error: \n Actual: $testOutput \n Expected: $expectedOutput")
-    }
-
-    fun checkCorrectness(testOutput: String, expectedOutput: String): Boolean {
-        return testOutput.trim() == expectedOutput.trim()
     }
 
     companion object {
