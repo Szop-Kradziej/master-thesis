@@ -42,7 +42,7 @@ class JarService {
         val expectedOutput = File("$PATH_PREFIX/$testCaseName/output.txt").reader().readText()
         val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
-        if(checkCorrectness(testOutput, expectedOutput)) {
+        if (checkCorrectness(testOutput, expectedOutput)) {
             return Success()
         }
 
