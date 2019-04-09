@@ -15,6 +15,7 @@ import java.io.File
 class JarService {
 
     val containerFactory = ContainerFactory()
+    val containerService = ContainerService()
 
     fun saveFile(uploadedFile: MultipartFile) {
         val outputFile = File(PATH_PREFIX, uploadedFile.originalFilename)
@@ -22,23 +23,8 @@ class JarService {
     }
 
     fun runJar(jarName: String?, testCaseName: String): TestResponse {
-        val log = LoggerFactory.logger(this.javaClass)
-
         val container = containerFactory.createContainerWithFilesBinded(testCaseName, jarName)
-
-        container.start()
-
-        Thread.sleep(1000)
-
-        val toStringConsumer = ToStringConsumer()
-        container.followOutput(toStringConsumer, OutputFrame.OutputType.STDERR)
-
-        log.info(container.containerId)
-        log.info(toStringConsumer.toUtf8String())
-        log.info(container.logs)
-
-        container.stop()
-
+        containerService.runTestCase(container)
         return checkCorrectness(testCaseName)
     }
 
@@ -74,6 +60,27 @@ class ContainerFactory {
                 .withCopyFileToContainer(MountableFile.forHostPath("${JarService.PATH_PREFIX}/$jarName"), "/home/example.jar")
                 .withFileSystemBind("${JarService.PATH_PREFIX}/$testCaseName/input.txt", "/home/input.txt", BindMode.READ_ONLY)
                 .withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
+    }
+}
+
+@Component
+class ContainerService {
+
+    fun runTestCase(container: KGenericContainer) {
+        val log = LoggerFactory.logger(this.javaClass)
+
+        container.start()
+
+        Thread.sleep(1000)
+
+        val toStringConsumer = ToStringConsumer()
+        container.followOutput(toStringConsumer, OutputFrame.OutputType.STDERR)
+
+        log.info(container.containerId)
+        log.info(toStringConsumer.toUtf8String())
+        log.info(container.logs)
+
+        container.stop()
     }
 }
 
