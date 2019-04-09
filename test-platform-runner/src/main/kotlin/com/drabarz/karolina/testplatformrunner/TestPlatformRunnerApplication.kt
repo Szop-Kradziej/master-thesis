@@ -33,14 +33,12 @@ class TestPlatformApi {
     val testCaseService = TestCaseService()
 
 	@PostMapping("/jar")
-	fun uploadJar(@RequestParam("file") uploadedFile: MultipartFile): String {
+	fun uploadJar(@RequestParam("file") uploadedFile: MultipartFile): TestResponse {
 		val originalFileName = uploadedFile.originalFilename
 
 		jarService.saveFile(uploadedFile)
 
-		jarService.runJar(originalFileName)
-
-		return "200"
+		return jarService.runJar(originalFileName)
 	}
 
     @PostMapping("/testCase")
@@ -59,7 +57,7 @@ class JarService {
 		uploadedFile.transferTo(outputFile)
 	}
 
-	fun runJar(originalFileName: String?) {
+	fun runJar(originalFileName: String?): TestResponse {
 		val log = LoggerFactory.logger(this.javaClass)
 
 		val container = KGenericContainer(
@@ -72,7 +70,6 @@ class JarService {
 
 		container.start()
 
-
 		Thread.sleep(1000)
 
 		val toStringConsumer = ToStringConsumer()
@@ -84,13 +81,28 @@ class JarService {
 
 		container.stop()
 
-		JarService::class.java.getResource("/static/output.txt").readText().let { log.info(it) }
+		val input = JarService::class.java.getResource("/static/input.txt").readText()
+		val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
+
+		if(checkCorrectness(testOutput, input)) {
+			return Success()
+		}
+
+		return Error(container.logs)
+	}
+
+	fun checkCorrectness(testOutput: String, expectedOutput: String): Boolean {
+		return testOutput.trim() == expectedOutput.trim()
 	}
 
 	companion object {
 	    val PATH_PREFIX = "/home/karolina/MGR/tests";
 	}
 }
+
+sealed class TestResponse
+class Success : TestResponse()
+class Error(val message: String) : TestResponse()
 
 @Component
 class TestCaseService {
