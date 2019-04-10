@@ -32,8 +32,11 @@ class TestPlatformApi {
     }
 
     @PostMapping("/testCase")
-    fun uploadTestCase(@RequestParam("input") inputFile: MultipartFile, @RequestParam("output") outputFile: MultipartFile): String {
-        testCaseService.saveTestCase(inputFile, outputFile)
+    fun uploadTestCase(
+            @RequestParam("input") inputFile: MultipartFile,
+            @RequestParam("output") outputFile: MultipartFile,
+            @RequestParam("testCaseName") testCaseName: String): String {
+        testCaseService.saveTestCase(inputFile, outputFile, testCaseName)
 
         return "200"
     }

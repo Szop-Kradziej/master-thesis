@@ -7,8 +7,7 @@ import java.util.*
 
 @Component
 class TestCaseService {
-    fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile) {
-        val testCaseName = UUID.randomUUID()
+    fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, testCaseName: String) {
         val testCasePath = "$PATH_PREFIX/$testCaseName"
 
         val dir = File(testCasePath)
@@ -20,6 +19,8 @@ class TestCaseService {
         val savedOutputFile = File(testCasePath, OUTPUT_FILE_NAME)
         outputFile.transferTo(savedOutputFile)
     }
+
+
 
     companion object {
         val PATH_PREFIX = "/home/karolina/MGR/tests"
