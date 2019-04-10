@@ -16,27 +16,33 @@ class JarService {
 
     val containerFactory = ContainerFactory()
     val containerService = ContainerService()
+    val testCaseService = TestCaseService()
 
     fun saveFile(uploadedFile: MultipartFile) {
         val outputFile = File(PATH_PREFIX, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
     }
 
-    fun runJar(jarName: String?, testCaseName: String): TestResponse {
-        val container = containerFactory.createContainerWithFilesBinded(testCaseName, jarName)
+    fun runJar(jarName: String?, stageName: String): TestResponse {
+        val testCaseName = testCaseService.getTestCaseName(stageName)
+        val container = containerFactory.createContainerWithFilesBinded(stageName, testCaseName, jarName)
         containerService.runTestCase(container)
-        return checkCorrectness(testCaseName)
+        return checkCorrectness(stageName, testCaseName)
     }
 
-    fun checkCorrectness(testCaseName: String): TestResponse {
-        val expectedOutput = File("$PATH_PREFIX/$testCaseName/output.txt").reader().readText()
-        val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
+    fun checkCorrectness(stageName:String, testCaseName: String): TestResponse {
+        try {
+            val expectedOutput = File("$PATH_PREFIX/$stageName/$testCaseName/output").reader().readText()
+            val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
-        if (testOutput.trim() == expectedOutput.trim()) {
-            return Success()
+            if (testOutput.trim() == expectedOutput.trim()) {
+                return Success()
+            }
+
+            return Error("Error: \n Actual: $testOutput \n Expected: $expectedOutput")
+        } catch (e: RuntimeException) {
+            return Error(e.message!!)
         }
-
-        return Error("Error: \n Actual: $testOutput \n Expected: $expectedOutput")
     }
 
     companion object {
@@ -51,14 +57,14 @@ class Error(val message: String) : TestResponse()
 @Component
 class ContainerFactory {
 
-    fun createContainerWithFilesBinded(testCaseName: String, jarName: String?): KGenericContainer {
+    fun createContainerWithFilesBinded(stageName: String, testCaseName: String, jarName: String?): KGenericContainer {
 
         return KGenericContainer(
                 ImageFromDockerfile()
                         .withFileFromClasspath("Dockerfile", "static/Dockerfile")
         )
                 .withCopyFileToContainer(MountableFile.forHostPath("${JarService.PATH_PREFIX}/$jarName"), "/home/example.jar")
-                .withFileSystemBind("${JarService.PATH_PREFIX}/$testCaseName/input.txt", "/home/input.txt", BindMode.READ_ONLY)
+                .withFileSystemBind("${JarService.PATH_PREFIX}/$stageName/$testCaseName/input", "/home/input.txt", BindMode.READ_ONLY)
                 .withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
     }
 }

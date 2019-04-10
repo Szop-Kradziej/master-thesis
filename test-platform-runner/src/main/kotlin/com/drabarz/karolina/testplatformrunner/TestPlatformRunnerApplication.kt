@@ -23,21 +23,25 @@ class TestPlatformApi {
     val testCaseService = TestCaseService()
 
     @PostMapping("/jar")
-    fun uploadJar(@RequestParam("file") uploadedFile: MultipartFile, @RequestParam("testCaseName") testCaseName: String): TestResponse {
+    fun uploadJar(@RequestParam("file") uploadedFile: MultipartFile, @RequestParam("stageName") stageName: String): TestResponse {
         val originalFileName = uploadedFile.originalFilename
 
         jarService.saveFile(uploadedFile)
 
-        return jarService.runJar(originalFileName, testCaseName)
+        return jarService.runJar(originalFileName, stageName)
     }
 
     @PostMapping("/testCase")
     fun uploadTestCase(
             @RequestParam("input") inputFile: MultipartFile,
             @RequestParam("output") outputFile: MultipartFile,
-            @RequestParam("testCaseName") testCaseName: String): String {
-        testCaseService.saveTestCase(inputFile, outputFile, testCaseName)
+            @RequestParam("stageName") stageName: String,
+            @RequestParam("testCaseName") testCaseName: String): TestResponse {
+        return testCaseService.saveTestCase(inputFile, outputFile, stageName, testCaseName)
+    }
 
-        return "200"
+    @PostMapping("/stage")
+    fun addStage(@RequestParam("stageName") stageName: String): TestResponse {
+        return testCaseService.addStage(stageName)
     }
 }
