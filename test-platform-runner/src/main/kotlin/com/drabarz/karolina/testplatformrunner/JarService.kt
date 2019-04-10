@@ -23,16 +23,16 @@ class JarService {
         uploadedFile.transferTo(outputFile)
     }
 
-    fun runJar(jarName: String?, stageName: String): TestResponse {
-        val testCaseName = testCaseService.getTestCaseName(stageName)
-        val container = containerFactory.createContainerWithFilesBinded(stageName, testCaseName, jarName)
+    fun runJar(jarName: String?, projectName: String, stageName: String): TestResponse {
+        val testCaseName = testCaseService.getTestCaseName(projectName, stageName)
+        val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, testCaseName, jarName)
         containerService.runTestCase(container)
-        return checkCorrectness(stageName, testCaseName)
+        return checkCorrectness(projectName, stageName, testCaseName)
     }
 
-    fun checkCorrectness(stageName:String, testCaseName: String): TestResponse {
+    fun checkCorrectness(projectName: String, stageName:String, testCaseName: String): TestResponse {
         try {
-            val expectedOutput = File("$PATH_PREFIX/$stageName/$testCaseName/output").reader().readText()
+            val expectedOutput = File("$PATH_PREFIX/$projectName/$stageName/$testCaseName/output").reader().readText()
             val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
@@ -57,14 +57,14 @@ class Error(val message: String) : TestResponse()
 @Component
 class ContainerFactory {
 
-    fun createContainerWithFilesBinded(stageName: String, testCaseName: String, jarName: String?): KGenericContainer {
+    fun createContainerWithFilesBinded(projectName: String, stageName: String, testCaseName: String, jarName: String?): KGenericContainer {
 
         return KGenericContainer(
                 ImageFromDockerfile()
                         .withFileFromClasspath("Dockerfile", "static/Dockerfile")
         )
                 .withCopyFileToContainer(MountableFile.forHostPath("${JarService.PATH_PREFIX}/$jarName"), "/home/example.jar")
-                .withFileSystemBind("${JarService.PATH_PREFIX}/$stageName/$testCaseName/input", "/home/input.txt", BindMode.READ_ONLY)
+                .withFileSystemBind("${JarService.PATH_PREFIX}/$projectName/$stageName/$testCaseName/input", "/home/input.txt", BindMode.READ_ONLY)
                 .withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
     }
 }
