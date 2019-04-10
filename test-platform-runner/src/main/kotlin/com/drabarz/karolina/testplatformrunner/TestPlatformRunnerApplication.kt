@@ -26,7 +26,7 @@ class TestPlatformApi {
     fun uploadJar(
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String): TestResponse {
+            @RequestParam("stageName") stageName: String): List<TestResponse> {
         val originalFileName = uploadedFile.originalFilename
 
         jarService.saveFile(uploadedFile)

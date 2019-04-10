@@ -61,7 +61,7 @@ class TestCaseService {
         return Success()
     }
 
-    fun getTestCaseName(projectName: String, stageName: String): String {
+    fun getTestCasesNames(projectName: String, stageName: String): List<String> {
         val projectDir = File("$PATH_PREFIX/$projectName")
 
         if(! projectDir.exists()) {
@@ -80,7 +80,7 @@ class TestCaseService {
             throw RuntimeException("Error. There are no test cases for stage $stageName")
         }
 
-        return stageDir.list().get(0)
+        return stageDir.list().asList()
     }
 
     companion object {

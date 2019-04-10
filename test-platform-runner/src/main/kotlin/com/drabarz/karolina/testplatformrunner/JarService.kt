@@ -23,14 +23,16 @@ class JarService {
         uploadedFile.transferTo(outputFile)
     }
 
-    fun runJar(jarName: String?, projectName: String, stageName: String): TestResponse {
-        val testCaseName = testCaseService.getTestCaseName(projectName, stageName)
-        val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, testCaseName, jarName)
-        containerService.runTestCase(container)
-        return checkCorrectness(projectName, stageName, testCaseName)
+    fun runJar(jarName: String?, projectName: String, stageName: String): List<TestResponse> {
+        val testCasesNames = testCaseService.getTestCasesNames(projectName, stageName)
+        return testCasesNames.map {
+            val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it, jarName)
+            containerService.runTestCase(container)
+            checkCorrectness(projectName, stageName, it)
+        }
     }
 
-    fun checkCorrectness(projectName: String, stageName:String, testCaseName: String): TestResponse {
+    fun checkCorrectness(projectName: String, stageName: String, testCaseName: String): TestResponse {
         try {
             val expectedOutput = File("$PATH_PREFIX/$projectName/$stageName/$testCaseName/output").reader().readText()
             val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
