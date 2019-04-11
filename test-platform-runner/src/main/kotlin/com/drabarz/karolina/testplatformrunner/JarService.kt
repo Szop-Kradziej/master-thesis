@@ -54,9 +54,7 @@ class Success(val testCaseName: String) : TestResponse()
 class Error(val testCaseName: String, val message: String) : TestResponse()
 
 @Component
-class ContainerFactory {
-
-    val pathProvider: PathProv = PathProvider()
+class ContainerFactory(val pathProvider: PathProv) {
 
     fun createContainerWithFilesBinded(projectName: String, stageName: String, testCaseName: String, jarName: String?): KGenericContainer {
 
