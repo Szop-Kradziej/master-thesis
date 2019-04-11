@@ -90,6 +90,15 @@ class TestCaseService {
         return File(pathProvider.projectPath).list().asList()
     }
 
+    fun getStages(projectName: String): List<String> {
+        val projectDir = File("${pathProvider.projectPath}/$projectName")
+        if(! projectDir.exists()) {
+            throw RuntimeException("Error. Can not get stages for project. Project $projectName doesn't exist")
+        }
+
+        return projectDir.list().asList()
+    }
+
     companion object {
         val INPUT_FILE_NAME = "input"
         val OUTPUT_FILE_NAME = "output"
