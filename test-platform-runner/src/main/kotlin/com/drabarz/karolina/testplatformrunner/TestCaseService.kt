@@ -77,12 +77,6 @@ class TestCaseService {
             throw RuntimeException("Error. Stage $stageName doesn't exist")
         }
 
-        val testCases = stageDir.list()
-
-        if(testCases.isEmpty()) {
-            throw RuntimeException("Error. There are no test cases for stage $stageName")
-        }
-
         return stageDir.list().asList()
     }
 
@@ -90,13 +84,13 @@ class TestCaseService {
         return File(pathProvider.projectPath).list().asList()
     }
 
-    fun getStages(projectName: String): List<String> {
+    fun getStages(projectName: String): List<Stage> {
         val projectDir = File("${pathProvider.projectPath}/$projectName")
         if(! projectDir.exists()) {
             throw RuntimeException("Error. Can not get stages for project. Project $projectName doesn't exist")
         }
 
-        return projectDir.list().asList()
+        return projectDir.list().asList().map{ it -> Stage(it, getTestCasesNames(projectName, it))}
     }
 
     companion object {

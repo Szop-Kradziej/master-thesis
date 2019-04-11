@@ -69,9 +69,13 @@ class ProjectBoard extends Component {
                     </TableHead>
                     <TableBody>
                         {this.state.stages.stages.map(stage => (
-                            <TableRow key={stage}>
+                            <TableRow key={stage.stageName}>
                                 <CustomTableCell component="th" scope="row">
-                                    {stage}
+                                    {stage.stageName}
+                                    {stage.testCases.map(testCase => (
+                                            <p className={this.props.classes.testCase}> {testCase} </p>
+                                        )
+                                    )}
                                 </CustomTableCell>
                             </TableRow>
                         ))}
@@ -152,6 +156,10 @@ const styles = (theme) => ({
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
         width: 200,
+    },
+    testCase: {
+        marginLeft: 100,
+        backgroundColor: "#e0e0e0",
     },
 });
 

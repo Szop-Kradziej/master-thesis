@@ -42,7 +42,7 @@ class TestPlatformApi {
         return testCaseService.addProject(projectName)
     }
 
-    @GetMapping("{projectName}/stages")
+    @GetMapping("/{projectName}/stages")
     fun getStagesList(@PathVariable("projectName") projectName: String): StagesResponse {
         return StagesResponse(testCaseService.getStages(projectName))
     }
@@ -64,4 +64,5 @@ class TestPlatformApi {
 }
 
 class ProjectResponse(val projects: List<String>)
-class StagesResponse(val stages: List<String>)
+class StagesResponse(val stages: List<Stage>)
+class Stage(val stageName: String, val testCases: List<String>)

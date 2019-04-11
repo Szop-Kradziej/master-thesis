@@ -28,6 +28,11 @@ class JarService {
 
     fun runJar(jarName: String?, projectName: String, stageName: String): List<TestResponse> {
         val testCasesNames = testCaseService.getTestCasesNames(projectName, stageName)
+
+        if(testCasesNames.isEmpty()) {
+            throw java.lang.RuntimeException("Error. There are no test cases for stage $stageName")
+        }
+
         return testCasesNames.map {
             val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it, jarName)
             containerService.runTestCase(container)
