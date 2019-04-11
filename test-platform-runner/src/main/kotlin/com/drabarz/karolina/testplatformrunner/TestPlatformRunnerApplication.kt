@@ -2,17 +2,8 @@ package com.drabarz.karolina.testplatformrunner
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
-import org.springframework.context.annotation.Bean
-import org.springframework.context.annotation.Configuration
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestParam
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import org.springframework.context.annotation.AnnotationConfigApplicationContext
-
-
-
 
 @SpringBootApplication
 class TestPlatformRunnerApplication
@@ -22,6 +13,7 @@ fun main(args: Array<String>) {
     runApplication<TestPlatformRunnerApplication>(*args)
 }
 
+@CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
 @RestController
 class TestPlatformApi {
 
@@ -41,8 +33,8 @@ class TestPlatformApi {
     }
 
     @GetMapping("/projects")
-    fun getProjectsList() : List<String> {
-        return testCaseService.getProjects()
+    fun getProjectsList(): ProjectResponse {
+        return ProjectResponse(testCaseService.getProjects())
     }
 
     @PostMapping("/project")
@@ -65,3 +57,5 @@ class TestPlatformApi {
         return testCaseService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
     }
 }
+
+class ProjectResponse(val projects: List<String>)
