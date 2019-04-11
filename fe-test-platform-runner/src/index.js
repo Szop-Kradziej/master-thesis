@@ -6,12 +6,14 @@ import * as serviceWorker from './serviceWorker';
 import {Route, Router, Switch} from 'react-router-dom';
 import customHistory from "./history";
 import ProjectsBoard from "./ProjectsBoard";
+import ProjectBoard from "./ProjectBoard";
 
 
 const TopRoute = () => (
     <Switch>
         <Route exact path='/' component={App}/>
-        <Route path='/projects' component={ProjectsBoard}/>
+        <Route exact path='/projects' component={ProjectsBoard}/>
+        <Route path="/projects/:projectId" component={ProjectBoard}/>
     </Switch>
 );
 

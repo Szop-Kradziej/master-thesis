@@ -9,6 +9,7 @@ import TableCell from "@material-ui/core/TableCell/TableCell";
 import Button from "@material-ui/core/Button/Button";
 import Modal from "@material-ui/core/Modal/Modal";
 import TextField from "@material-ui/core/TextField/TextField";
+import {Link} from "react-router-dom";
 
 class ProjectsBoard extends React.Component {
 
@@ -66,9 +67,11 @@ class ProjectsBoard extends React.Component {
                     </TableHead>
                     <TableBody>
                         {this.state.projects.projects.map(project => (
-                            <TableRow key={project.id}>
+                            <TableRow key={project}>
                                 <CustomTableCell component="th" scope="row">
-                                    {project}
+                                    <Link to={`/projects/${project}`} className={this.props.classes.link}>
+                                        {project}
+                                    </Link>
                                 </CustomTableCell>
                             </TableRow>
                         ))}
@@ -135,6 +138,9 @@ const styles = (theme) => ({
         backgroundColor: "#5aa724",
         color: "black",
         marginTop: 20
+    },
+    link: {
+        textDecoration: "none"
     },
     paper: {
         position: 'absolute',
