@@ -15,10 +15,7 @@ fun main(args: Array<String>) {
 
 @CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
 @RestController
-class TestPlatformApi {
-
-    val jarService = JarService()
-    val testCaseService = TestCaseService()
+class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseService) {
 
     @PostMapping("/jar")
     fun uploadJar(

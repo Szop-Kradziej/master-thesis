@@ -1,7 +1,6 @@
 package com.drabarz.karolina.testplatformrunner
 
 import org.hibernate.annotations.common.util.impl.LoggerFactory
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import org.testcontainers.containers.BindMode
@@ -13,13 +12,7 @@ import org.testcontainers.utility.MountableFile
 import java.io.File
 
 @Component
-class JarService {
-
-    val containerFactory = ContainerFactory()
-    val containerService = ContainerService()
-    val testCaseService = TestCaseService()
-
-    val pathProvider: PathProv = PathProvider()
+class JarService(val pathProvider: PathProv, val containerFactory: ContainerFactory, val containerService: ContainerService, val testCaseService: TestCaseService) {
 
     fun saveFile(uploadedFile: MultipartFile) {
         val outputFile = File(pathProvider.jarPath, uploadedFile.originalFilename)
@@ -29,7 +22,7 @@ class JarService {
     fun runJar(jarName: String?, projectName: String, stageName: String): List<TestResponse> {
         val testCasesNames = testCaseService.getTestCasesNames(projectName, stageName)
 
-        if(testCasesNames.isEmpty()) {
+        if (testCasesNames.isEmpty()) {
             throw java.lang.RuntimeException("Error. There are no test cases for stage $stageName")
         }
 
