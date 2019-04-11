@@ -1,6 +1,7 @@
 package com.drabarz.karolina.testplatformrunner
 
 import org.hibernate.annotations.common.util.impl.LoggerFactory
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import org.testcontainers.containers.BindMode
@@ -18,8 +19,10 @@ class JarService {
     val containerService = ContainerService()
     val testCaseService = TestCaseService()
 
+    val pathProvider: PathProv = PathProvider()
+
     fun saveFile(uploadedFile: MultipartFile) {
-        val outputFile = File(PATH_PREFIX, uploadedFile.originalFilename)
+        val outputFile = File(pathProvider.projectPath, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
     }
 
@@ -34,7 +37,7 @@ class JarService {
 
     fun checkCorrectness(projectName: String, stageName: String, testCaseName: String): TestResponse {
         try {
-            val expectedOutput = File("$PATH_PREFIX/$projectName/$stageName/$testCaseName/output").reader().readText()
+            val expectedOutput = File("${pathProvider.projectPath}/$projectName/$stageName/$testCaseName/output").reader().readText()
             val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
@@ -46,10 +49,6 @@ class JarService {
             return Error(e.message!!)
         }
     }
-
-    companion object {
-        val PATH_PREFIX = "/home/karolina/MGR/tests";
-    }
 }
 
 sealed class TestResponse
@@ -59,14 +58,16 @@ class Error(val message: String) : TestResponse()
 @Component
 class ContainerFactory {
 
+    val pathProvider: PathProv = PathProvider()
+
     fun createContainerWithFilesBinded(projectName: String, stageName: String, testCaseName: String, jarName: String?): KGenericContainer {
 
         return KGenericContainer(
                 ImageFromDockerfile()
                         .withFileFromClasspath("Dockerfile", "static/Dockerfile")
         )
-                .withCopyFileToContainer(MountableFile.forHostPath("${JarService.PATH_PREFIX}/$jarName"), "/home/example.jar")
-                .withFileSystemBind("${JarService.PATH_PREFIX}/$projectName/$stageName/$testCaseName/input", "/home/input.txt", BindMode.READ_ONLY)
+                .withCopyFileToContainer(MountableFile.forHostPath("${pathProvider.jarPath}/$jarName"), "/home/example.jar")
+                .withFileSystemBind("${pathProvider.projectPath}/$projectName/$stageName/$testCaseName/input", "/home/input.txt", BindMode.READ_ONLY)
                 .withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
     }
 }

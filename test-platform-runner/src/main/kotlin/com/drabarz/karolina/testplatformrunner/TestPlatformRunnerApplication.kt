@@ -2,10 +2,16 @@ package com.drabarz.karolina.testplatformrunner
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.context.annotation.AnnotationConfigApplicationContext
+
+
 
 
 @SpringBootApplication
@@ -32,6 +38,11 @@ class TestPlatformApi {
         jarService.saveFile(uploadedFile)
 
         return jarService.runJar(originalFileName, projectName, stageName)
+    }
+
+    @GetMapping("/projects")
+    fun getProjectsList() : List<String> {
+        return testCaseService.getProjects()
     }
 
     @PostMapping("/project")
