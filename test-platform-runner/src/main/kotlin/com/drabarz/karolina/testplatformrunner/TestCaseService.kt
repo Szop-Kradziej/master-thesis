@@ -10,46 +10,46 @@ class TestCaseService {
 
     val pathProvider: PathProv = PathProvider()
 
-    fun addProject(projectName: String): TestResponse {
+    fun addProject(projectName: String): String {
         val dir = File("${pathProvider.projectPath}/$projectName")
 
         if(dir.exists()) {
-            return Error("Warning. Project already exists")
+            throw RuntimeException("Warning. Project already exists")
         }
 
         dir.mkdir()
 
-        return Success()
+        return "200"
     }
 
-    fun addStage(projectName: String, stageName: String): TestResponse {
+    fun addStage(projectName: String, stageName: String): String {
         val stageDir = File("${pathProvider.projectPath}/$projectName")
         if(! stageDir.exists()) {
-            return Error("Error. Can not create stage for project. Project $projectName doesn't exist")
+            throw RuntimeException("Error. Can not create stage for project. Project $projectName doesn't exist")
         }
 
         val dir = File("${pathProvider.projectPath}/$projectName/$stageName")
 
         if(dir.exists()) {
-            return Error("Warning. Stage already exists")
+            throw RuntimeException("Warning. Stage already exists")
         }
 
         dir.mkdir()
 
-        return Success()
+        return "200"
     }
 
-    fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, stageName: String, testCaseName: String): TestResponse {
+    fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, stageName: String, testCaseName: String): String {
         val testCasePath = "${pathProvider.projectPath}/$projectName/$stageName/$testCaseName"
 
         val projectDir = File("${pathProvider.projectPath}/$projectName")
         if(! projectDir.exists()) {
-            return Error("Error. Can not create test case for project. Project $projectName doesn't exist")
+            throw RuntimeException("Error. Can not create test case for project. Project $projectName doesn't exist")
         }
 
         val stageDir = File("${pathProvider.projectPath}/$projectName/$stageName")
         if(! stageDir.exists()) {
-            return Error("Error. Can not create test case for stage. Stage $stageName doesn't exist")
+            throw RuntimeException("Error. Can not create test case for stage. Stage $stageName doesn't exist")
         }
 
         val testCaseDir = File(testCasePath)
@@ -61,7 +61,7 @@ class TestCaseService {
         val savedOutputFile = File(testCasePath, OUTPUT_FILE_NAME)
         outputFile.transferTo(savedOutputFile)
 
-        return Success()
+        return "200"
     }
 
     fun getTestCasesNames(projectName: String, stageName: String): List<String> {

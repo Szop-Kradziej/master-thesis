@@ -46,19 +46,19 @@ class JarService {
             val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
-                return Success()
+                return Success(testCaseName)
             }
 
-            return Error("Error: \n Actual: $testOutput \n Expected: $expectedOutput")
+            return Error(testCaseName, "Error: \n Actual: $testOutput \n Expected: $expectedOutput")
         } catch (e: RuntimeException) {
-            return Error(e.message!!)
+            return Error(testCaseName, e.message!!)
         }
     }
 }
 
-sealed class TestResponse
-class Success : TestResponse()
-class Error(val message: String) : TestResponse()
+sealed class TestResponse()
+class Success(val testCaseName: String) : TestResponse()
+class Error(val testCaseName: String, val message: String) : TestResponse()
 
 @Component
 class ContainerFactory {

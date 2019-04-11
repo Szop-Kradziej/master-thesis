@@ -38,7 +38,7 @@ class TestPlatformApi {
     }
 
     @PostMapping("/project")
-    fun addProject(@RequestParam("projectName") projectName: String): TestResponse {
+    fun addProject(@RequestParam("projectName") projectName: String): String {
         return testCaseService.addProject(projectName)
     }
 
@@ -48,7 +48,7 @@ class TestPlatformApi {
     }
 
     @PostMapping("/stage")
-    fun addStage(@RequestParam("projectName") projectName: String, @RequestParam("stageName") stageName: String): TestResponse {
+    fun addStage(@RequestParam("projectName") projectName: String, @RequestParam("stageName") stageName: String): String {
         return testCaseService.addStage(projectName, stageName)
     }
 
@@ -58,7 +58,7 @@ class TestPlatformApi {
             @RequestParam("output") outputFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String,
-            @RequestParam("testCaseName") testCaseName: String): TestResponse {
+            @RequestParam("testCaseName") testCaseName: String): String {
         return testCaseService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
     }
 }
