@@ -22,7 +22,7 @@ class JarService {
     val pathProvider: PathProv = PathProvider()
 
     fun saveFile(uploadedFile: MultipartFile) {
-        val outputFile = File(pathProvider.projectPath, uploadedFile.originalFilename)
+        val outputFile = File(pathProvider.jarPath, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
     }
 
