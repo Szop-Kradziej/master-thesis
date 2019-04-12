@@ -7,7 +7,7 @@ import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import Button from "@material-ui/core/Button/Button";
 import TextField from "@material-ui/core/TextField/TextField";
-import {CustomTableCell, getModalStyle, styles} from "./styles/ProjectBoardStyles";
+import {CustomTableCell, styles} from "./styles/ProjectBoardStyles";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -18,6 +18,7 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
+import TestCasesDetails from "./TestCasesDetails"
 
 class ProjectBoard extends Component {
 
@@ -42,15 +43,15 @@ class ProjectBoard extends Component {
     };
 
     handleOpenNewStageDialog = () => {
-        this.setState({isNewStageDialogVisible: true});
+        this.setState({isNewTestDialogVisible: true});
     };
 
     handleCloseNewStageDialog = () => {
-        this.setState({isNewStageDialogVisible: false});
+        this.setState({isNewTestDialogVisible: false});
     };
 
     handleNewStageNameAdded = () => event => {
-        this.setState({newStageName: event.target.value})
+        this.setState({newTestName: event.target.value})
     };
 
     handleAddNewStage = () => {
@@ -58,14 +59,10 @@ class ProjectBoard extends Component {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: "projectName=" + this.props.match.params.projectId + "&stageName=" + this.state.newStageName
+            body: "projectName=" + this.props.match.params.projectId + "&stageName=" + this.state.newTestName
         })
-            .then(() => this.setState({isNewStageDialogVisible: false, newStageName: null}))
+            .then(() => this.setState({isNewTestDialogVisible: false, newTestName: null}))
             .then(this.fetchStages)
-    };
-
-    handleOpenNewTestDialog = () => {
-
     };
 
     render() {
@@ -93,15 +90,12 @@ class ProjectBoard extends Component {
                                         <ExpansionPanelDetails>
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
-                                                    {stage.testCases.map(testCase => (
-                                                            <p className={this.props.classes.testCase}> {testCase} </p>
-                                                        )
-                                                    )}
+                                                    <TestCasesDetails
+                                                        testCases={stage.testCases}
+                                                        projectName={this.props.match.params.projectId}
+                                                        stageName={stage.stageName}
+                                                    />
                                                 </div>
-                                                <Button className={this.props.classes.button}
-                                                        onClick={this.handleOpenNewTestDialog}>
-                                                    Dodaj nowy test
-                                                </Button>
                                             </Typography>
                                         </ExpansionPanelDetails>
                                     </ExpansionPanel>
@@ -113,7 +107,7 @@ class ProjectBoard extends Component {
                 <Button className={this.props.classes.button} onClick={this.handleOpenNewStageDialog}>
                     Dodaj nowy etap
                 </Button>
-                <Dialog open={this.state.isNewStageDialogVisible} onClose={this.handleCloseNewStageDialog}
+                <Dialog open={this.state.isNewTestDialogVisible} onClose={this.handleCloseNewStageDialog}
                         aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Dodaj nowy etap</DialogTitle>
                     <DialogContent>
@@ -124,7 +118,7 @@ class ProjectBoard extends Component {
                             id="standard-name"
                             label="Nazwa etapu"
                             className={this.props.classes.textField}
-                            value={this.state.newStageName}
+                            value={this.state.newTestName}
                             onChange={this.handleNewStageNameAdded()}
                             margin="normal"
                         />

@@ -5,12 +5,13 @@
   "dependencies": {
     "@material-ui/core": "^3.9.2",
     "@material-ui/icons": "^3.0.2",
+    "axios": "^0.18.0",
     "classnames": "latest",
+    "lodash": "latest",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "latest",
-    "react-scripts": "2.1.8",
-    "lodash": "latest"
+    "react-scripts": "2.1.8"
   },
   "scripts": {
     "start": "react-scripts start",

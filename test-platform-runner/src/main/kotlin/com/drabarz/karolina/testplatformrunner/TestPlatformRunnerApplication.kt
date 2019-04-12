@@ -29,6 +29,15 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
         return jarService.runJar(originalFileName, projectName, stageName)
     }
 
+    @PostMapping("/upload")
+    fun uploadJar(
+            @RequestParam("file") uploadedFile: MultipartFile): String {
+
+        jarService.saveFile(uploadedFile)
+
+        return "200"
+    }
+
     @GetMapping("/projects")
     fun getProjectsList(): ProjectResponse {
         return ProjectResponse(testCaseService.getProjects())
@@ -49,6 +58,11 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
         return testCaseService.addStage(projectName, stageName)
     }
 
+    @GetMapping("/{projectName}/{stageName}/testCases")
+    fun getTestCasesList(@PathVariable("projectName") projectName: String, @PathVariable("stageName") stageName: String): TestCasesResponse {
+        return TestCasesResponse(testCaseService.getTestCasesNames(projectName, stageName))
+    }
+
     @PostMapping("/testCase")
     fun uploadTestCase(
             @RequestParam("input") inputFile: MultipartFile,
@@ -63,3 +77,4 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
 class ProjectResponse(val projects: List<String>)
 class StagesResponse(val stages: List<Stage>)
 class Stage(val stageName: String, val testCases: List<String>)
+class TestCasesResponse(val testCases: List<String>)
