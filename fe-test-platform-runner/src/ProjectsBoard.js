@@ -6,10 +6,14 @@ import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Button from "@material-ui/core/Button/Button";
-import Modal from "@material-ui/core/Modal/Modal";
 import TextField from "@material-ui/core/TextField/TextField";
 import {Link} from "react-router-dom";
-import {styles, CustomTableCell, getModalStyle} from "./styles/ProjectssBoardStyles";
+import {CustomTableCell, getModalStyle, styles} from "./styles/ProjectssBoardStyles";
+import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
+import Dialog from "@material-ui/core/Dialog/Dialog";
+import DialogContent from "@material-ui/core/DialogContent/DialogContent";
+import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 
 class ProjectsBoard extends React.Component {
 
@@ -62,7 +66,7 @@ class ProjectsBoard extends React.Component {
                 <Table className={this.props.classes.table}>
                     <TableHead>
                         <TableRow>
-                            <CustomTableCell>Nazwa projektu</CustomTableCell>
+                            <CustomTableCell>Projekty</CustomTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -80,27 +84,31 @@ class ProjectsBoard extends React.Component {
                 <Button className={this.props.classes.button} onClick={this.handleOpenNewProjectDialog}>
                     Dodaj nowy projekt
                 </Button>
-
-                <Modal open={this.state.isNewProjectDialogVisible}>
-                    <div style={getModalStyle()} className={this.props.classes.paper}>
-                        <form className={this.props.classes.container} noValidate autoComplete="off">
-                            <TextField
-                                id="standard-name"
-                                label="Nazwa projektu"
-                                className={this.props.classes.textField}
-                                value={this.state.newProjectName}
-                                onChange={this.handleNewProjectNameAdded()}
-                                margin="normal"
-                            />
-                            <Button className={this.props.classes.button} onClick={this.handleAddNewProject}>
-                                Dodaj
-                            </Button>
-                            {/*<Button className={this.props.classes.button} onClick={this.handleCloseNewProjectDialog()}>*/}
-                            {/*Anuluj*/}
-                            {/*</Button>*/}
-                        </form>
-                    </div>
-                </Modal>
+                <Dialog open={this.state.isNewProjectDialogVisible} onClose={this.handleCloseNewProjectDialog}
+                        aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Dodaj nowy projekt</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Podaj nazwę projektu:
+                        </DialogContentText>
+                        <TextField
+                            id="standard-name"
+                            label="Nazwa projektu"
+                            className={this.props.classes.textField}
+                            value={this.state.newProjectName}
+                            onChange={this.handleNewProjectNameAdded()}
+                            margin="normal"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseNewProjectDialog} color="primary">
+                            Anuluj
+                        </Button>
+                        <Button onClick={this.handleAddNewProject} color="primary">
+                            Dodaj
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }

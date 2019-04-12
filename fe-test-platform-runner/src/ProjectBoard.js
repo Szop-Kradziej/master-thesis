@@ -6,9 +6,18 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import Button from "@material-ui/core/Button/Button";
-import Modal from "@material-ui/core/Modal/Modal";
 import TextField from "@material-ui/core/TextField/TextField";
-import {styles, CustomTableCell, getModalStyle} from "./styles/ProjectBoardStyles";
+import {CustomTableCell, getModalStyle, styles} from "./styles/ProjectBoardStyles";
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent/DialogContent";
+import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
+import DialogActions from "@material-ui/core/DialogActions/DialogActions";
+import Dialog from "@material-ui/core/Dialog/Dialog";
 
 class ProjectBoard extends Component {
 
@@ -55,27 +64,47 @@ class ProjectBoard extends Component {
             .then(this.fetchStages)
     };
 
+    handleOpenNewTestDialog = () => {
+
+    };
+
     render() {
         return (
             <div className={this.props.classes.app}>
                 <p>
-                    Nazwa projektu: {this.props.match.params.projectId}
+                    Projekt: {this.props.match.params.projectId}
                 </p>
                 <Table className={this.props.classes.table}>
                     <TableHead>
                         <TableRow>
-                            <CustomTableCell>Nazwa etapu</CustomTableCell>
+                            <CustomTableCell>Etapy</CustomTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.stages.stages.map(stage => (
                             <TableRow key={stage.stageName}>
                                 <CustomTableCell component="th" scope="row">
-                                    {stage.stageName}
-                                    {stage.testCases.map(testCase => (
-                                            <p className={this.props.classes.testCase}> {testCase} </p>
-                                        )
-                                    )}
+                                    <ExpansionPanel>
+                                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                            <Typography className={this.props.classes.heading}>
+                                                {stage.stageName}
+                                            </Typography>
+                                        </ExpansionPanelSummary>
+                                        <ExpansionPanelDetails>
+                                            <Typography>
+                                                <div className={this.props.classes.panel}>
+                                                    {stage.testCases.map(testCase => (
+                                                            <p className={this.props.classes.testCase}> {testCase} </p>
+                                                        )
+                                                    )}
+                                                </div>
+                                                <Button className={this.props.classes.button}
+                                                        onClick={this.handleOpenNewTestDialog}>
+                                                    Dodaj nowy test
+                                                </Button>
+                                            </Typography>
+                                        </ExpansionPanelDetails>
+                                    </ExpansionPanel>
                                 </CustomTableCell>
                             </TableRow>
                         ))}
@@ -84,27 +113,31 @@ class ProjectBoard extends Component {
                 <Button className={this.props.classes.button} onClick={this.handleOpenNewStageDialog}>
                     Dodaj nowy etap
                 </Button>
-
-                <Modal open={this.state.isNewStageDialogVisible}>
-                    <div style={getModalStyle()} className={this.props.classes.paper}>
-                        <form className={this.props.classes.container} noValidate autoComplete="off">
-                            <TextField
-                                id="standard-name"
-                                label="Nazwa etapu"
-                                className={this.props.classes.textField}
-                                value={this.state.newStageName}
-                                onChange={this.handleNewStageNameAdded()}
-                                margin="normal"
-                            />
-                            <Button className={this.props.classes.button} onClick={this.handleAddNewStage}>
-                                Dodaj
-                            </Button>
-                            {/*<Button className={this.props.classes.button} onClick={this.handleCloseNewProjectDialog()}>*/}
-                            {/*Anuluj*/}
-                            {/*</Button>*/}
-                        </form>
-                    </div>
-                </Modal>
+                <Dialog open={this.state.isNewStageDialogVisible} onClose={this.handleCloseNewStageDialog}
+                        aria-labelledby="form-dialog-title">
+                    <DialogTitle id="form-dialog-title">Dodaj nowy etap</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Podaj nazwę etapu:
+                        </DialogContentText>
+                        <TextField
+                            id="standard-name"
+                            label="Nazwa etapu"
+                            className={this.props.classes.textField}
+                            value={this.state.newStageName}
+                            onChange={this.handleNewStageNameAdded()}
+                            margin="normal"
+                        />
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.handleCloseNewStageDialog} color="primary">
+                            Anuluj
+                        </Button>
+                        <Button onClick={this.handleAddNewStage} color="primary">
+                            Dodaj
+                        </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }

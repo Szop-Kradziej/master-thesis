@@ -16,7 +16,8 @@ export const CustomTableCell = withStyles(() => ({
 export const styles = (theme) => ({
     app: {
         textAlign: "center",
-        backgroundColor: "#e0e0e0",
+        fontSize: 24,
+        fontWeight: 700
     },
     table: {
         minWidth: 900,
@@ -52,15 +53,11 @@ export const styles = (theme) => ({
         marginLeft: 100,
         backgroundColor: "#e0e0e0",
     },
+    root: {
+        width: '100%',
+    },
+    heading: {
+        fontSize: theme.typography.pxToRem(15),
+        fontWeight: theme.typography.fontWeightRegular,
+    },
 });
-
-export function getModalStyle() {
-    const top = 50;
-    const left = 50;
-
-    return {
-        top: `${top}%`,
-        left: `${left}%`,
-        transform: `translate(-${top}%, -${left}%)`,
-    };
-}
