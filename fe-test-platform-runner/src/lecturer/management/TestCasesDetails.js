@@ -7,9 +7,8 @@ import DialogContentText from "@material-ui/core/es/DialogContentText/DialogCont
 import TextField from "@material-ui/core/TextField/TextField";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import backendUrl from "./backendUrl";
+import backendUrl from "../../backendUrl";
 import axios from "axios";
-import {saveAs} from "file-saver";
 import TestCaseRow from "./TestCaseRow";
 
 class TestCasesDetails extends Component {

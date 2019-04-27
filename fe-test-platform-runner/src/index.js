@@ -5,15 +5,18 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {Route, Router, Switch} from 'react-router-dom';
 import customHistory from "./history";
-import ProjectsBoard from "./ProjectsBoard";
-import ProjectBoard from "./ProjectBoard";
-
+import ProjectsBoard from "./lecturer/management/ProjectsBoard";
+import ProjectBoard from "./lecturer/management/ProjectBoard";
+import StudentProjectsBoard from "./student/StudentProjectsBoard";
+import StudentProjectBoard from "./student/StudentProjectBoard";
 
 const TopRoute = () => (
     <Switch>
         <Route exact path='/' component={App}/>
         <Route exact path='/projects' component={ProjectsBoard}/>
         <Route path="/projects/:projectId" component={ProjectBoard}/>
+        <Route exact path='/student/projects/' component={StudentProjectsBoard}/>
+        <Route path="/student/projects/:projectId" component={StudentProjectBoard}/>
     </Switch>
 );
 

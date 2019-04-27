@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
-import backendUrl from "./backendUrl";
+import backendUrl from "../../backendUrl";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import Button from "@material-ui/core/Button/Button";
 import TextField from "@material-ui/core/TextField/TextField";
-import {CustomTableCell, styles} from "./styles/ProjectBoardStyles";
+import {CustomTableCell, styles} from "../../styles/ProjectBoardStyles";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';

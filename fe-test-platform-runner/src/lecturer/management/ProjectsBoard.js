@@ -1,5 +1,5 @@
 import React from "react";
-import backendUrl from "./backendUrl";
+import backendUrl from "../../backendUrl";
 import {withStyles} from "@material-ui/core";
 import Table from "@material-ui/core/Table/Table";
 import TableHead from "@material-ui/core/TableHead/TableHead";
@@ -8,7 +8,7 @@ import TableBody from "@material-ui/core/TableBody/TableBody";
 import Button from "@material-ui/core/Button/Button";
 import TextField from "@material-ui/core/TextField/TextField";
 import {Link} from "react-router-dom";
-import {CustomTableCell, getModalStyle, styles} from "./styles/ProjectssBoardStyles";
+import {CustomTableCell, styles} from "../../styles/ProjectssBoardStyles";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";

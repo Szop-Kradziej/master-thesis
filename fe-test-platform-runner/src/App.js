@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import Button from '@material-ui/core/Button';
 import {withStyles} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import classNames from 'classnames';
 import {styles} from "./styles/AppStyles";
+
 class App extends Component {
   render() {
     return (
@@ -21,8 +22,15 @@ class App extends Component {
                     </Button>
                 </Link>
                 <Link to={"/"} className={this.props.classes.link}>
-                    <Button size="large" className={this.props.classes.button} variant="contained">
+                    <Button size="large"
+                            className={classNames(this.props.classes.button, this.props.classes.marginRight)}
+                            variant="contained">
                         Przeglądaj wyniki
+                    </Button>
+                </Link>
+                <Link to={"/student/projects"} className={this.props.classes.link}>
+                    <Button size="large" className={this.props.classes.button} variant="contained">
+                        Widok studenta
                     </Button>
                 </Link>
             </div>
