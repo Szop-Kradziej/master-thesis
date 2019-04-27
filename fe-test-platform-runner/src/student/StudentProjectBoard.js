@@ -12,6 +12,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import StudentTestCasesDetails from "./StudentTestCasesDetails"
+import StudentStageRow from "./StudentStageRow";
 
 class StudentProjectBoard extends Component {
 
@@ -53,9 +54,10 @@ class StudentProjectBoard extends Component {
                                 <CustomTableCell component="th" scope="row">
                                     <ExpansionPanel>
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                            <Typography className={this.props.classes.heading}>
-                                                {stage.stageName}
-                                            </Typography>
+                                            <StudentStageRow
+                                                stageName={stage.stageName}
+                                                projectName={this.props.match.params.projectId}
+                                            />
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>
                                             <Typography>
