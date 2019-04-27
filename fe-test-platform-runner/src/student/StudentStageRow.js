@@ -26,7 +26,7 @@ class StudentStageRow extends Component {
     };
 
     handleBinaryFileSaved = () => {
-        this.setState({binaryName: 'Plik istnieje'})
+        this.setState({binaryName: this.inputFile.files[0].name})
     };
 
     handleAddBinary = (event) => {
