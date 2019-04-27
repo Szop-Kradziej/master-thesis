@@ -27,18 +27,6 @@ fun main(args: Array<String>) {
 @RestController
 class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseService, val applicationContext: ApplicationContext) {
 
-    @PostMapping("/jar")
-    fun uploadJar(
-            @RequestParam("file") uploadedFile: MultipartFile,
-            @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String): List<TestResponse> {
-        val originalFileName = uploadedFile.originalFilename
-
-        jarService.saveFile(uploadedFile)
-
-        return jarService.runJar(originalFileName, projectName, stageName)
-    }
-
     @PostMapping("/upload")
     fun uploadJar(
             @RequestParam("file") uploadedFile: MultipartFile): String {
@@ -46,6 +34,14 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
         jarService.saveFile(uploadedFile)
 
         return "200"
+    }
+
+    @PostMapping("/run")
+    fun uploadJar(
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): List<TestResponse> {
+
+        return jarService.runJar(projectName, stageName)
     }
 
     @GetMapping("/projects")

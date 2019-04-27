@@ -17,11 +17,11 @@ class StudentStageRow extends Component {
         this.state = {isAddBinaryDialogVisible: false, inputFile: null, binaryName: 'Brak pliku'};
     }
 
-    handleOpenAddBinaryDialog = (event) => {
+    handleOpenAddBinaryDialog = () => {
         this.setState({isAddBinaryDialogVisible: true});
     };
 
-    handleCloseAddBinaryDialog = (event) => {
+    handleCloseAddBinaryDialog = () => {
         this.setState({isAddBinaryDialogVisible: false});
     };
 
@@ -44,7 +44,16 @@ class StudentStageRow extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+    };
 
+    handleRunTests = () => {
+        fetch(backendUrl(`/run`), {
+            method: "POST",
+            credentials: "include",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            body: "projectName=" + this.props.projectName +"&stageName=" + this.props.stageName
+        })
+            .then( function (response){console.log(response)})
     };
 
     render() {
@@ -58,7 +67,9 @@ class StudentStageRow extends Component {
                     <Button className={this.props.classes.button} onClick={this.handleOpenAddBinaryDialog}>
                         Dodaj binarkę
                     </Button>
-
+                    <Button className={this.props.classes.button} onClick={this.handleRunTests}>
+                        Uruchom testy
+                    </Button>
                     <Dialog open={this.state.isAddBinaryDialogVisible} onClose={this.handleCloseAddBinaryDialog}
                             aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Dodaj nowy test</DialogTitle>

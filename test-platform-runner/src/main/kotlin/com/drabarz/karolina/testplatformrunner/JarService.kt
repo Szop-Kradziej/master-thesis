@@ -19,12 +19,14 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
         uploadedFile.transferTo(outputFile)
     }
 
-    fun runJar(jarName: String?, projectName: String, stageName: String): List<TestResponse> {
+    fun runJar(projectName: String, stageName: String): List<TestResponse> {
         val testCasesNames = testCaseService.getTestCasesNames(projectName, stageName)
 
         if (testCasesNames.isEmpty()) {
             throw java.lang.RuntimeException("Error. There are no test cases for stage $stageName")
         }
+
+        val jarName = File(pathProvider.jarPath).list()[0]
 
         return testCasesNames.map {
             val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it, jarName)
