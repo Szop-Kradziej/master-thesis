@@ -1,7 +1,6 @@
 import Button from "@material-ui/core/Button/Button";
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core";
-import {styles} from "./styles/ProjectBoardStyles";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
@@ -10,6 +9,8 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import backendUrl from "./backendUrl";
 import axios from "axios";
+import {saveAs} from "file-saver";
+import TestCasesRow from "./TestCasesRow";
 
 class TestCasesDetails extends Component {
 
@@ -73,7 +74,10 @@ class TestCasesDetails extends Component {
         return (
             <div className={this.props.classes.panel}>
                 {this.state.testCases.testCases.map(testCase => (
-                        <p className={this.props.classes.testCase}> {testCase} </p>
+                    <TestCasesRow
+                        testCaseName={testCase}
+                        projectName={this.props.projectName}
+                        stageName={this.props.stageName}/>
                     )
                 )}
                 <Button className={this.props.classes.button}
@@ -120,5 +124,16 @@ class TestCasesDetails extends Component {
         );
     }
 }
+
+const styles = theme => ({
+    root: {
+        flexGrow: 1,
+    },
+    button: {
+        backgroundColor: "#5aa724",
+        color: "black",
+        marginTop: 20
+    },
+});
 
 export default withStyles(styles)(TestCasesDetails);

@@ -2,8 +2,18 @@ package com.drabarz.karolina.testplatformrunner
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.context.ApplicationContext
+import org.springframework.http.HttpHeaders
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import org.springframework.util.StringUtils.getFilename
+import org.springframework.web.server.adapter.WebHttpHandlerBuilder.applicationContext
+import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.GetMapping
+import java.io.File
+import java.lang.RuntimeException
+
 
 @SpringBootApplication
 class TestPlatformRunnerApplication
@@ -15,7 +25,7 @@ fun main(args: Array<String>) {
 
 @CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
 @RestController
-class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseService) {
+class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseService, val applicationContext: ApplicationContext) {
 
     @PostMapping("/jar")
     fun uploadJar(
@@ -71,6 +81,22 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
             @RequestParam("stageName") stageName: String,
             @RequestParam("testCaseName") testCaseName: String): String {
         return testCaseService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
+    }
+
+    @GetMapping("/{projectName}/{stageName}/{testCaseName}/{fileName}")
+    @ResponseBody
+    fun downloadFile(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String,
+            @PathVariable("testCaseName") testCaseName: String,
+            @PathVariable("fileName") fileName: String): ResponseEntity<*> {
+        val file = testCaseService.getTestCaseFile(projectName, stageName, testCaseName, fileName)
+
+        val headers = HttpHeaders()
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.name + "\"")
+        headers.add("Access-Control-Expose-Headers", HttpHeaders.CONTENT_DISPOSITION + "," + HttpHeaders.CONTENT_LENGTH)
+
+        return ResponseEntity.ok().headers(headers).body<Any>(file.readBytes())
     }
 }
 

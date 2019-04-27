@@ -52,6 +52,9 @@ export const styles = (theme) => ({
     testCase: {
         marginLeft: 100,
     },
+    testCasesRow: {
+        display: 'flex'
+    },
     root: {
         width: '100%',
     },

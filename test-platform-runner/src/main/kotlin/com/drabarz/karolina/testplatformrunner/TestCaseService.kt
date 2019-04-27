@@ -90,6 +90,15 @@ class TestCaseService(val pathProvider: PathProv) {
         return projectDir.list().asList().map { it -> Stage(it, getTestCasesNames(projectName, it)) }
     }
 
+    fun getTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileName: String): File {
+        val file = File("${pathProvider.projectPath}/$projectName/$stageName/$testCaseName/$fileName")
+        if (file.exists()) {
+            return file
+        }
+
+        throw java.lang.RuntimeException("Error file doesn't exist")
+    }
+
     companion object {
         val INPUT_FILE_NAME = "input"
         val OUTPUT_FILE_NAME = "output"
