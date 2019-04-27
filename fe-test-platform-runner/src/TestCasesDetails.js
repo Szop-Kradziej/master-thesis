@@ -10,7 +10,7 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import backendUrl from "./backendUrl";
 import axios from "axios";
 import {saveAs} from "file-saver";
-import TestCasesRow from "./TestCasesRow";
+import TestCaseRow from "./TestCaseRow";
 
 class TestCasesDetails extends Component {
 
@@ -74,7 +74,7 @@ class TestCasesDetails extends Component {
         return (
             <div className={this.props.classes.panel}>
                 {this.state.testCases.testCases.map(testCase => (
-                    <TestCasesRow
+                    <TestCaseRow
                         testCaseName={testCase}
                         projectName={this.props.projectName}
                         stageName={this.props.stageName}/>

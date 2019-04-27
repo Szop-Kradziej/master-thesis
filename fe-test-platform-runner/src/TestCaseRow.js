@@ -6,14 +6,10 @@ import axios from "axios";
 import Grid from "@material-ui/core/Grid/Grid";
 import {saveAs} from "file-saver";
 
-class TestCasesRow extends Component {
+class TestCaseRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            inputFile: null,
-            outputFile: null
-        };
     }
 
     handleDownloadInputFile = () => {
@@ -39,7 +35,6 @@ class TestCasesRow extends Component {
                 console.log('Error', error.message);
             }
         });
-
     };
 
     render() {
@@ -72,4 +67,4 @@ const styles = theme => ({
     },
 });
 
-export default withStyles(styles)(TestCasesRow);
+export default withStyles(styles)(TestCaseRow);
