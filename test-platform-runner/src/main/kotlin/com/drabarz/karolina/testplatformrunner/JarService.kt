@@ -15,12 +15,12 @@ import java.io.File
 class JarService(val pathProvider: PathProv, val containerFactory: ContainerFactory, val containerService: ContainerService, val testCaseService: TestCaseService) {
 
     fun saveFile(projectName:String, stageName: String, uploadedFile: MultipartFile) {
-        val dir = File("${pathProvider.jarPath}/$projectName/$stageName")
+        val dir = File("${pathProvider.jarPath}/$projectName/$stageName/bin")
         dir.mkdirs()
 
         //TODO: Delete this file
         if(dir.list().isNotEmpty()) {
-            log.info("Existing file to delete: " + File("${dir.path}/${dir.list()[0]}").path)
+            log.info("Existing file to delete: " + File("${dir.path}/bin/${dir.list()[0]}").path)
         }
 
         val outputFile = File(dir.path, uploadedFile.originalFilename)
@@ -34,7 +34,7 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
             throw java.lang.RuntimeException("Error. There are no test cases for stage $stageName")
         }
 
-        val jarPath = File("${pathProvider.jarPath}/$projectName/$stageName")
+        val jarPath = File("${pathProvider.jarPath}/$projectName/$stageName/bin")
 
         if (!jarPath.exists() || jarPath.list().size != 1) {
             throw java.lang.RuntimeException("Invalid number of binaries or no binary")

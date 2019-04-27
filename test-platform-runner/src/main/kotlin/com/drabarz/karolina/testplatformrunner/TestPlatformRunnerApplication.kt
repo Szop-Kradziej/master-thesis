@@ -27,7 +27,7 @@ fun main(args: Array<String>) {
 @RestController
 class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseService, val applicationContext: ApplicationContext) {
 
-    @PostMapping("/upload")
+    @PostMapping("/upload/bin")
     fun uploadJar(
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,

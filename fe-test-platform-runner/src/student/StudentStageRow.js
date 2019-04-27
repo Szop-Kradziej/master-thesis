@@ -37,7 +37,7 @@ class StudentStageRow extends Component {
         data.append('projectName', this.props.projectName);
         data.append('stageName', this.props.stageName);
 
-        axios.post(backendUrl("/upload"), data)
+        axios.post(backendUrl("/upload/bin"), data)
             .then(function (response) {
                 console.log("success");
             })
