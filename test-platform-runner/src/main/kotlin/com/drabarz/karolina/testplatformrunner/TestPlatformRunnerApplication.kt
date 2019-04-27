@@ -29,9 +29,11 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
 
     @PostMapping("/upload")
     fun uploadJar(
-            @RequestParam("file") uploadedFile: MultipartFile): String {
+            @RequestParam("file") uploadedFile: MultipartFile,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
 
-        jarService.saveFile(uploadedFile)
+        jarService.saveFile(projectName, stageName, uploadedFile)
 
         return "200"
     }

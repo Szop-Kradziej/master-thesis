@@ -34,6 +34,8 @@ class StudentStageRow extends Component {
 
         const data = new FormData();
         data.append('file', this.inputFile.files[0]);
+        data.append('projectName', this.props.projectName);
+        data.append('stageName', this.props.stageName);
 
         axios.post(backendUrl("/upload"), data)
             .then(function (response) {

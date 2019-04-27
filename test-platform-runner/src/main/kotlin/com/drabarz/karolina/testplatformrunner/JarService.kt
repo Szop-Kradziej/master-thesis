@@ -14,8 +14,16 @@ import java.io.File
 @Component
 class JarService(val pathProvider: PathProv, val containerFactory: ContainerFactory, val containerService: ContainerService, val testCaseService: TestCaseService) {
 
-    fun saveFile(uploadedFile: MultipartFile) {
-        val outputFile = File(pathProvider.jarPath, uploadedFile.originalFilename)
+    fun saveFile(projectName:String, stageName: String, uploadedFile: MultipartFile) {
+        val dir = File("${pathProvider.jarPath}/$projectName/$stageName")
+        dir.mkdirs()
+
+        //TODO: Delete this file
+        if(dir.list().isNotEmpty()) {
+            log.info("Existing file to delete: " + File("${dir.path}/${dir.list()[0]}").path)
+        }
+
+        val outputFile = File(dir.path, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
     }
 
@@ -26,10 +34,16 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
             throw java.lang.RuntimeException("Error. There are no test cases for stage $stageName")
         }
 
-        val jarName = File(pathProvider.jarPath).list()[0]
+        val jarPath = File("${pathProvider.jarPath}/$projectName/$stageName")
+
+        if (!jarPath.exists() || jarPath.list().size != 1) {
+            throw java.lang.RuntimeException("Invalid number of binaries or no binary")
+        }
+
+        val jarName = jarPath.list()[0]
 
         return testCasesNames.map {
-            val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it, jarName)
+            val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it, "${jarPath.absolutePath}/$jarName")
             containerService.runTestCase(container)
             checkCorrectness(projectName, stageName, it)
         }
@@ -49,6 +63,10 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
             return Error(testCaseName, e.message!!)
         }
     }
+
+    companion object {
+        val log = LoggerFactory.logger(JarService::class.java);
+    }
 }
 
 sealed class TestResponse()
@@ -58,13 +76,13 @@ class Error(val testCaseName: String, val message: String) : TestResponse()
 @Component
 class ContainerFactory(val pathProvider: PathProv) {
 
-    fun createContainerWithFilesBinded(projectName: String, stageName: String, testCaseName: String, jarName: String?): KGenericContainer {
+    fun createContainerWithFilesBinded(projectName: String, stageName: String, testCaseName: String, jarPath: String?): KGenericContainer {
 
         return KGenericContainer(
                 ImageFromDockerfile()
                         .withFileFromClasspath("Dockerfile", "static/Dockerfile")
         )
-                .withCopyFileToContainer(MountableFile.forHostPath("${pathProvider.jarPath}/$jarName"), "/home/example.jar")
+                .withCopyFileToContainer(MountableFile.forHostPath("$jarPath"), "/home/example.jar")
                 .withFileSystemBind("${pathProvider.projectPath}/$projectName/$stageName/$testCaseName/input", "/home/input.txt", BindMode.READ_ONLY)
                 .withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
     }
