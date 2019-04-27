@@ -33,10 +33,22 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
 
-        jarService.saveFile(projectName, stageName, uploadedFile)
+        jarService.saveFile(projectName, stageName, uploadedFile, FileType.BINARY)
 
         return "200"
     }
+
+    @PostMapping("/upload/report")
+    fun uploadReport(
+            @RequestParam("file") uploadedFile: MultipartFile,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
+
+        jarService.saveFile(projectName, stageName, uploadedFile, FileType.REPORT)
+
+        return "200"
+    }
+
 
     @PostMapping("/run")
     fun uploadJar(
@@ -102,3 +114,8 @@ class ProjectResponse(val projects: List<String>)
 class StagesResponse(val stages: List<Stage>)
 class Stage(val stageName: String, val testCases: List<String>)
 class TestCasesResponse(val testCases: List<String>)
+
+enum class FileType {
+    BINARY,
+    REPORT
+}

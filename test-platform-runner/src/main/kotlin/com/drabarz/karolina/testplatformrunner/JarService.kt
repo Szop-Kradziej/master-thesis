@@ -14,8 +14,16 @@ import java.io.File
 @Component
 class JarService(val pathProvider: PathProv, val containerFactory: ContainerFactory, val containerService: ContainerService, val testCaseService: TestCaseService) {
 
-    fun saveFile(projectName:String, stageName: String, uploadedFile: MultipartFile) {
-        val dir = File("${pathProvider.jarPath}/$projectName/$stageName/bin")
+    fun saveFile(projectName:String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
+        val pathPrefix = "${pathProvider.jarPath}/$projectName/$stageName"
+        var dir = File(pathPrefix)
+        if (fileType == FileType.BINARY) {
+            dir = File("$pathPrefix/bin")
+        }
+        else {
+            dir = File("$pathPrefix/report")
+        }
+
         dir.mkdirs()
 
         //TODO: Delete this file

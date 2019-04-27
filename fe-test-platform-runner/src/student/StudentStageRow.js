@@ -14,7 +14,14 @@ class StudentStageRow extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {isAddBinaryDialogVisible: false, inputFile: null, binaryName: 'Brak pliku'};
+        this.state = {
+            isAddBinaryDialogVisible: false,
+            inputBinaryFile: null,
+            binaryName: 'Brak pliku',
+            isAddReportDialogVisible: false,
+            inputReportFile: null,
+            reportName: 'Brak pliku'
+        };
     }
 
     handleOpenAddBinaryDialog = () => {
@@ -26,14 +33,14 @@ class StudentStageRow extends Component {
     };
 
     handleBinaryFileSaved = () => {
-        this.setState({binaryName: this.inputFile.files[0].name})
+        this.setState({binaryName: this.inputBinaryFile.files[0].name})
     };
 
     handleAddBinary = (event) => {
         event.preventDefault();
 
         const data = new FormData();
-        data.append('file', this.inputFile.files[0]);
+        data.append('file', this.inputBinaryFile.files[0]);
         data.append('projectName', this.props.projectName);
         data.append('stageName', this.props.stageName);
 
@@ -53,9 +60,43 @@ class StudentStageRow extends Component {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: "projectName=" + this.props.projectName +"&stageName=" + this.props.stageName
+            body: "projectName=" + this.props.projectName + "&stageName=" + this.props.stageName
         })
-            .then( function (response){console.log(response)})
+            .then(function (response) {
+                console.log(response)
+            })
+    };
+
+
+    handleOpenAddReportDialog = () => {
+        this.setState({isAddReportDialogVisible: true});
+    };
+
+    handleCloseAddReportDialog = () => {
+        this.setState({isAddReportDialogVisible: false});
+    };
+
+    handleReportFileSaved = () => {
+        this.setState({reportName: this.inputReportFile.files[0].name})
+    };
+
+    handleAddReport = (event) => {
+        event.preventDefault();
+
+        const data = new FormData();
+        data.append('file', this.inputReportFile.files[0]);
+        data.append('projectName', this.props.projectName);
+        data.append('stageName', this.props.stageName);
+
+        axios.post(backendUrl("/upload/report"), data)
+            .then(function (response) {
+                console.log("success");
+            })
+            .then(this.handleReportFileSaved)
+            .then(this.handleCloseAddReportDialog)
+            .catch(function (error) {
+                console.log(error);
+            });
     };
 
     render() {
@@ -64,17 +105,24 @@ class StudentStageRow extends Component {
                 <Typography className={this.props.classes.heading}>
                     {this.props.stageName}
                 </Typography>
-                <p> {this.state.binaryName} </p>
                 <InputWrapper>
-                    <Button className={this.props.classes.button} onClick={this.handleOpenAddBinaryDialog}>
-                        Dodaj binarkę
-                    </Button>
-                    <Button className={this.props.classes.button} onClick={this.handleRunTests}>
-                        Uruchom testy
-                    </Button>
+                    <div className={this.props.classes.inputWrapper}>
+
+                        <p> {this.state.binaryName} </p>
+                        <Button className={this.props.classes.button} onClick={this.handleOpenAddBinaryDialog}>
+                            Dodaj binarkę
+                        </Button>
+                        <Button className={this.props.classes.button} onClick={this.handleRunTests}>
+                            Uruchom testy
+                        </Button>
+                        <p> {this.state.reportName} </p>
+                        <Button className={this.props.classes.button} onClick={this.handleOpenAddReportDialog}>
+                            Dodaj raport
+                        </Button>
+                    </div>
                     <Dialog open={this.state.isAddBinaryDialogVisible} onClose={this.handleCloseAddBinaryDialog}
                             aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Dodaj nowy test</DialogTitle>
+                        <DialogTitle id="form-dialog-title">Dodaj binarkę</DialogTitle>
                         <DialogContent>
                             <DialogContentText>
                                 Podaj ścieżkę pliku:
@@ -82,7 +130,7 @@ class StudentStageRow extends Component {
                             {/*TODO: FIX: https://stackoverflow.com/questions/40589302/how-to-enable-file-upload-on-reacts-material-ui-simple-input*/}
                             <div className="form-group">
                                 <input className="form-control" ref={(ref) => {
-                                    this.inputFile = ref;
+                                    this.inputBinaryFile = ref;
                                 }} type="file"/>
                             </div>
                         </DialogContent>
@@ -91,6 +139,29 @@ class StudentStageRow extends Component {
                                 Anuluj
                             </Button>
                             <Button onClick={this.handleAddBinary} color="primary">
+                                Dodaj
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Dialog open={this.state.isAddReportDialogVisible} onClose={this.handleCloseAddReportDialog}
+                            aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Dodaj raport</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Podaj ścieżkę pliku:
+                            </DialogContentText>
+                            {/*TODO: FIX: https://stackoverflow.com/questions/40589302/how-to-enable-file-upload-on-reacts-material-ui-simple-input*/}
+                            <div className="form-group">
+                                <input className="form-control" ref={(ref) => {
+                                    this.inputReportFile = ref;
+                                }} type="file"/>
+                            </div>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleCloseAddReportDialog} color="primary">
+                                Anuluj
+                            </Button>
+                            <Button onClick={this.handleAddReport} color="primary">
                                 Dodaj
                             </Button>
                         </DialogActions>
@@ -114,12 +185,17 @@ export const styles = (theme) => ({
         marginTop: 20
     },
     stageRow: {
-        display: 'flex'
+        display: 'flex',
+        width: 1000
     },
     heading: {
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
+    inputWrapper: {
+        display: 'flex',
+        width: 1000
+    }
 });
 
 export default withStyles(styles)(StudentStageRow);
