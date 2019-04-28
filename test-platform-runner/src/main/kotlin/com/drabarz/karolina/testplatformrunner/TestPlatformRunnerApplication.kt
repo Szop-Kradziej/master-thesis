@@ -7,13 +7,8 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import org.springframework.util.StringUtils.getFilename
-import org.springframework.web.server.adapter.WebHttpHandlerBuilder.applicationContext
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.GetMapping
-import java.io.File
-import java.lang.RuntimeException
-
 
 @SpringBootApplication
 class TestPlatformRunnerApplication
@@ -73,6 +68,11 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
         return StagesResponse(testCaseService.getStages(projectName))
     }
 
+    @GetMapping("/student/{projectName}/stages")
+    fun getStudentStagesList(@PathVariable("projectName") projectName: String): StudentStagesResponse {
+        return StudentStagesResponse(jarService.getStudentStages(projectName))
+    }
+
     @PostMapping("/stage")
     fun addStage(@RequestParam("projectName") projectName: String, @RequestParam("stageName") stageName: String): String {
         return testCaseService.addStage(projectName, stageName)
@@ -114,6 +114,8 @@ class ProjectResponse(val projects: List<String>)
 class StagesResponse(val stages: List<Stage>)
 class Stage(val stageName: String, val testCases: List<String>)
 class TestCasesResponse(val testCases: List<String>)
+class StudentStagesResponse(val stages: List<StudentStage>)
+class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases:List<String>)
 
 enum class FileType {
     BINARY,

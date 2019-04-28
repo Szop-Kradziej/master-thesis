@@ -22,6 +22,9 @@ class StudentStageRow extends Component {
             inputReportFile: null,
             reportName: 'Brak pliku'
         };
+
+        this.state.binaryName = this.props.stage.binaryName;
+        this.state.reportName = this.props.stage.reportName;
     }
 
     handleOpenAddBinaryDialog = () => {
@@ -42,7 +45,7 @@ class StudentStageRow extends Component {
         const data = new FormData();
         data.append('file', this.inputBinaryFile.files[0]);
         data.append('projectName', this.props.projectName);
-        data.append('stageName', this.props.stageName);
+        data.append('stageName', this.props.stage.stageName);
 
         axios.post(backendUrl("/upload/bin"), data)
             .then(function (response) {
@@ -60,7 +63,7 @@ class StudentStageRow extends Component {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: "projectName=" + this.props.projectName + "&stageName=" + this.props.stageName
+            body: "projectName=" + this.props.projectName + "&stageName=" + this.props.stage.stageName
         })
             .then(function (response) {
                 console.log(response)
@@ -86,7 +89,7 @@ class StudentStageRow extends Component {
         const data = new FormData();
         data.append('file', this.inputReportFile.files[0]);
         data.append('projectName', this.props.projectName);
-        data.append('stageName', this.props.stageName);
+        data.append('stageName', this.props.stage.stageName);
 
         axios.post(backendUrl("/upload/report"), data)
             .then(function (response) {
@@ -103,19 +106,19 @@ class StudentStageRow extends Component {
         return (
             <div className={this.props.classes.stageRow}>
                 <Typography className={this.props.classes.heading}>
-                    {this.props.stageName}
+                    {this.props.stage.stageName}
                 </Typography>
                 <InputWrapper>
                     <div className={this.props.classes.inputWrapper}>
 
-                        <p> {this.state.binaryName} </p>
+                        <p> {this.state.binaryName ? this.state.binaryName : 'Brak pliku'} </p>
                         <Button className={this.props.classes.button} onClick={this.handleOpenAddBinaryDialog}>
                             Dodaj binarkę
                         </Button>
                         <Button className={this.props.classes.button} onClick={this.handleRunTests}>
                             Uruchom testy
                         </Button>
-                        <p> {this.state.reportName} </p>
+                        <p> {this.state.reportName ? this.state.reportName : 'Brak pliku'} </p>
                         <Button className={this.props.classes.button} onClick={this.handleOpenAddReportDialog}>
                             Dodaj raport
                         </Button>

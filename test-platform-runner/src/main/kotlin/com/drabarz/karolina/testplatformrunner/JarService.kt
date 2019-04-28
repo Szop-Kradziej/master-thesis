@@ -72,6 +72,43 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
         }
     }
 
+    fun getStudentStages(projectName: String): List<StudentStage> {
+        return testCaseService
+                .getStages(projectName)
+                .map { stage -> StudentStage(stage.stageName, getBinary(projectName, stage.stageName), getReport(projectName, stage.stageName), stage.testCases)}
+    }
+
+    private fun getBinary(projectName: String, stageName: String): String? {
+        return getStageFile(projectName, stageName, FileType.BINARY)
+    }
+
+    private fun getReport(projectName: String, stageName: String): String? {
+        return getStageFile(projectName, stageName, FileType.REPORT)
+    }
+
+    private fun getStageFile(projectName: String, stageName: String, fileType: FileType): String? {
+
+        val stageDir = File("${pathProvider.jarPath}/$projectName/$stageName")
+
+        if (!stageDir.exists()) {
+            return null
+        }
+
+        val fileDir: File
+        if (fileType == FileType.BINARY) {
+            fileDir = File("$stageDir/bin")
+        }
+        else {
+            fileDir = File("$stageDir/report")
+        }
+
+        if (!fileDir.exists() || fileDir.list().size != 1) {
+            return null
+        }
+
+        return fileDir.list()[0]
+    }
+
     companion object {
         val log = LoggerFactory.logger(JarService::class.java);
     }

@@ -26,7 +26,7 @@ class StudentProjectBoard extends Component {
     }
 
     fetchStages = () => {
-        fetch(backendUrl(`/${this.props.match.params.projectId}/stages`), {
+        fetch(backendUrl(`/student/${this.props.match.params.projectId}/stages`), {
             method: "GET",
             credentials: "include"
         })
@@ -55,7 +55,7 @@ class StudentProjectBoard extends Component {
                                     <ExpansionPanel>
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                             <StudentStageRow
-                                                stageName={stage.stageName}
+                                                stage={stage}
                                                 projectName={this.props.match.params.projectId}
                                             />
                                         </ExpansionPanelSummary>
