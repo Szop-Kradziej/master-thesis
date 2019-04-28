@@ -17,10 +17,10 @@ class StudentStageRow extends Component {
         this.state = {
             isAddBinaryDialogVisible: false,
             inputBinaryFile: null,
-            binaryName: 'Brak pliku',
+            binaryName: null,
             isAddReportDialogVisible: false,
             inputReportFile: null,
-            reportName: 'Brak pliku'
+            reportName: null
         };
 
         this.state.binaryName = this.props.stage.binaryName;
@@ -116,7 +116,8 @@ class StudentStageRow extends Component {
                         </Button>
                     </InputWrapper>
                     <InputWrapper>
-                        <Button className={this.props.classes.button} onClick={this.handleRunTests}>
+                        <Button disabled={this.state.binaryName === null} className={this.props.classes.button}
+                                onClick={this.handleRunTests}>
                             Uruchom testy
                         </Button>
                     </InputWrapper>
