@@ -108,21 +108,26 @@ class StudentStageRow extends Component {
                 <Typography className={this.props.classes.heading}>
                     {this.props.stage.stageName}
                 </Typography>
-                <InputWrapper>
-                    <div className={this.props.classes.inputWrapper}>
-
-                        <p> {this.state.binaryName ? this.state.binaryName : 'Brak pliku'} </p>
+                <div className={this.props.classes.inputWrapper}>
+                    <p> {this.state.binaryName ? this.state.binaryName : 'Brak pliku'} </p>
+                    <InputWrapper>
                         <Button className={this.props.classes.button} onClick={this.handleOpenAddBinaryDialog}>
                             Dodaj binarkę
                         </Button>
+                    </InputWrapper>
+                    <InputWrapper>
                         <Button className={this.props.classes.button} onClick={this.handleRunTests}>
                             Uruchom testy
                         </Button>
-                        <p> {this.state.reportName ? this.state.reportName : 'Brak pliku'} </p>
+                    </InputWrapper>
+                    <p> {this.state.reportName ? this.state.reportName : 'Brak pliku'} </p>
+                    <InputWrapper>
                         <Button className={this.props.classes.button} onClick={this.handleOpenAddReportDialog}>
                             Dodaj raport
                         </Button>
-                    </div>
+                    </InputWrapper>
+                </div>
+                <InputWrapper>
                     <Dialog open={this.state.isAddBinaryDialogVisible} onClose={this.handleCloseAddBinaryDialog}
                             aria-labelledby="form-dialog-title">
                         <DialogTitle id="form-dialog-title">Dodaj binarkę</DialogTitle>
