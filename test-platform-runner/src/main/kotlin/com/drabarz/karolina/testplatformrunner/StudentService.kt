@@ -56,7 +56,20 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
     fun getStudentStages(projectName: String): List<StudentStage> {
         return testCaseService
                 .getStages(projectName)
-                .map { stage -> StudentStage(stage.stageName, getBinaryName(projectName, stage.stageName), getReportName(projectName, stage.stageName), getTestCasesWithResults(projectName, stage.stageName, stage.testCases))}
+                .map { stage ->
+                    StudentStage(
+                            stage.stageName,
+                            getBinaryName(projectName, stage.stageName),
+                            getReportName(projectName, stage.stageName),
+                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases),
+                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases).count { it -> it.status == "SUCCESS" },
+                            stage.testCases.size,
+                            getDeadline())}
+    }
+
+    private fun getDeadline(): String {
+        //TODO: Implement after connection to db added
+        return "10/06/2019 23:59"
     }
 
     private fun getBinaryName(projectName: String, stageName: String): String? {

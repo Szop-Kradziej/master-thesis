@@ -3,12 +3,22 @@ import {withStyles} from "@material-ui/core";
 import backendUrl from "../backendUrl";
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button/Button";
+import IconButton from '@material-ui/core/IconButton';
+import EditIcon from '@material-ui/icons/Create';
+import DownloadIcon from '@material-ui/icons/CloudDownload';
+import UploadIcon from '@material-ui/icons/CloudUpload';
+import RunIcon from '@material-ui/icons/PlayArrow';
 import axios from "axios";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
+import TableHead from "@material-ui/core/TableHead/TableHead";
+import TableRow from "@material-ui/core/TableRow/TableRow";
+import TableBody from "@material-ui/core/TableBody/TableBody";
+import Table from "@material-ui/core/Table/Table";
+import TableCell from "@material-ui/core/TableCell/TableCell";
 
 class StudentStageRow extends Component {
 
@@ -99,25 +109,74 @@ class StudentStageRow extends Component {
                     {this.props.stage.stageName}
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
-                    {/*TODO: It seems that it is incorrect approach to use props instead of state here, check: https://github.com/uberVU/react-guide/issues/17*/}
-                    <p> {this.props.stage.binaryName ? this.props.stage.binaryName : 'Brak pliku'} </p>
-                    <InputWrapper>
-                        <Button className={this.props.classes.button} onClick={this.handleOpenAddBinaryDialog}>
-                            Dodaj binarkę
-                        </Button>
-                    </InputWrapper>
-                    <InputWrapper>
-                        <Button disabled={this.props.stage.binaryName === null} className={this.props.classes.button}
-                                onClick={this.handleRunTests}>
-                            Uruchom testy
-                        </Button>
-                    </InputWrapper>
-                    <p> {this.props.stage.reportName ? this.props.stage.reportName : 'Brak pliku'} </p>
-                    <InputWrapper>
-                        <Button className={this.props.classes.button} onClick={this.handleOpenAddReportDialog}>
-                            Dodaj raport
-                        </Button>
-                    </InputWrapper>
+                    <Table width="1700">
+                        <TableHead>
+                            <TableRow>
+                                <CustomTableCell>
+                                    {/*TODO: Remove tags from wrapper*/}
+                                    <InputWrapper>
+                                        Bin:
+                                        <IconButton aria-label="Zmień" onClick={this.handleOpenAddBinaryDialog}>
+                                            <UploadIcon/>
+                                        </IconButton>
+                                        <IconButton aria-label="Pobierz">
+                                            <DownloadIcon/>
+                                        </IconButton>
+                                        <IconButton aria-label="Uruchom"
+                                                    disabled={this.props.stage.binaryName === null}
+                                                    onClick={this.handleRunTests}>
+                                            <RunIcon/>
+                                        </IconButton>
+                                    </InputWrapper>
+                                </CustomTableCell>
+                                <CustomTableCell>
+                                    <InputWrapper>
+                                        Kod:
+                                        <IconButton aria-label="Edytuj">
+                                            <EditIcon/>
+                                        </IconButton>
+                                    </InputWrapper>
+                                </CustomTableCell>
+                                <CustomTableCell>
+                                    <InputWrapper>
+                                        Raport:
+                                        <IconButton aria-label="Zmień" onClick={this.handleOpenAddReportDialog}>
+                                            <UploadIcon/>
+                                        </IconButton>
+                                        <IconButton aria-label="Pobierz">
+                                            <DownloadIcon/>
+                                        </IconButton>
+                                    </InputWrapper>
+                                </CustomTableCell>
+                                <CustomTableCell/>
+                                <CustomTableCell>Zaliczone:</CustomTableCell>
+                                <CustomTableCell>Deadline:</CustomTableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            <TableRow key="custom_key">
+                                <CustomTableCell component="th" scope="row" width="15%">
+                                    <div display="flex">
+                                        {/*TODO: It seems that it is incorrect approach to use props instead of state here, check: https://github.com/uberVU/react-guide/issues/17*/}
+                                        <p> {this.props.stage.binaryName ? this.props.stage.binaryName : 'Brak pliku'} </p>
+                                    </div>
+                                </CustomTableCell>
+                                <CustomTableCell component="th" scope="row" width="15%">
+                                    <p> TODO: KOD</p>
+                                </CustomTableCell>
+                                <CustomTableCell component="th" scope="row" width="15%">
+                                    <p> {this.props.stage.reportName ? this.props.stage.reportName : 'Brak pliku'} </p>
+                                </CustomTableCell>
+                                <CustomTableCell component="th" scope="row"/>
+                                <CustomTableCell component="th" scope="row" width="5%">
+                                    <p> {this.props.stage.passedTestCasesCount}/{this.props.stage.allTestCasesCount}</p>
+                                </CustomTableCell>
+                                <CustomTableCell component="th" scope="row" width="10%">
+                                    <p>{this.props.stage.deadline}</p>
+                                </CustomTableCell>
+                            </TableRow>
+                        </TableBody>
+                    </Table>
                 </div>
                 <InputWrapper>
                     <Dialog open={this.state.isAddBinaryDialogVisible} onClose={this.handleCloseAddBinaryDialog}
@@ -172,6 +231,25 @@ class StudentStageRow extends Component {
     }
 }
 
+const CustomTableCell = withStyles(() => ({
+    head: {
+        color: "black",
+        fontWeight: 700,
+        fontSize: 12,
+        margin: 0,
+        padding: 0,
+        border: 0
+    },
+    body: {
+        color: "black",
+        fontSize: 12,
+        margin: 0,
+        padding: 0,
+        border: 0,
+        height: 5
+    }
+}))(TableCell);
+
 const stopPropagation = (e) => e.stopPropagation();
 const InputWrapper = ({children}) =>
     <div onClick={stopPropagation}>
@@ -182,19 +260,19 @@ export const styles = (theme) => ({
     button: {
         backgroundColor: "#5aa724",
         color: "black",
-        marginTop: 20
+        marginTop: 0
     },
     stageRow: {
         display: 'flex',
-        width: 1000
+        width: 1700
     },
     heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
+        fontSize: 16,
+        fontWeight: 700
     },
     inputWrapper: {
         display: 'flex',
-        width: 1000
+        width: 1700
     }
 });
 
