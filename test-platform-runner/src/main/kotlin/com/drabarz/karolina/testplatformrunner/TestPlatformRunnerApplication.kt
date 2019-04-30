@@ -20,14 +20,13 @@ fun main(args: Array<String>) {
 
 @CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
 @RestController
-class TestPlatformApi(val jarService: JarService, val studentService: StudentService, val testCaseService: TestCaseService, val applicationContext: ApplicationContext) {
+class TestPlatformApi(val studentService: StudentService, val testCaseService: TestCaseService, val applicationContext: ApplicationContext) {
 
     @PostMapping("/upload/bin")
     fun uploadJar(
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-
         studentService.saveFile(projectName, stageName, uploadedFile, FileType.BINARY)
 
         return "200"
@@ -38,19 +37,16 @@ class TestPlatformApi(val jarService: JarService, val studentService: StudentSer
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-
         studentService.saveFile(projectName, stageName, uploadedFile, FileType.REPORT)
 
         return "200"
     }
 
-
     @PostMapping("/run")
     fun uploadJar(
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): List<TestResponse> {
-
-        return jarService.runJar(projectName, stageName)
+        return studentService.runJar(projectName, stageName)
     }
 
     @GetMapping("/projects")

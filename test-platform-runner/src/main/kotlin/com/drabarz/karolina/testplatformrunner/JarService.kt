@@ -56,8 +56,12 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
 }
 
 sealed class TestResponse()
-class Success(val testCaseName: String) : TestResponse()
-class Error(val testCaseName: String, val message: String) : TestResponse()
+class Success(val testCaseName: String) : TestResponse() {
+    val status = "SUCCESS"
+}
+class Error(val testCaseName: String, val message: String) : TestResponse() {
+    val status = "FAILURE"
+}
 
 @Component
 class ContainerFactory(val pathProvider: PathProv) {

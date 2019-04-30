@@ -1,11 +1,35 @@
 package com.drabarz.karolina.testplatformrunner
 
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 @Component
-class StudentService(val testCaseService: TestCaseService, val pathProvider: PathProvider) {
+class StudentService(val testCaseService: TestCaseService, val pathProvider: PathProvider, val jarService: JarService) {
+
+    fun runJar(projectName: String, stageName: String): List<TestResponse> {
+        val testResponses = jarService.runJar(projectName, stageName)
+        saveTestResponses(projectName, stageName, testResponses)
+
+        return testResponses
+    }
+
+    private fun saveTestResponses(projectName: String, stageName: String, testResponses: List<TestResponse>) {
+        val pathPrefix = "${pathProvider.jarPath}/$projectName/$stageName"
+        val dir = File("$pathPrefix/results")
+        dir.mkdirs()
+
+        val file = File("$pathPrefix/results", "result.json");
+
+        val out = ByteArrayOutputStream()
+        val mapper = ObjectMapper()
+
+        mapper.writeValue(out, testResponses)
+
+        file.writeBytes(out.toByteArray())
+    }
 
     fun saveFile(projectName:String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
         val pathPrefix = "${pathProvider.jarPath}/$projectName/$stageName"
