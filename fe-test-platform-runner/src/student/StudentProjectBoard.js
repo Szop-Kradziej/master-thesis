@@ -36,6 +36,10 @@ class StudentProjectBoard extends Component {
             }))
     };
 
+    stageChangedHandler = () => {
+        this.fetchStages()
+    };
+
     render() {
         return (
             <div className={this.props.classes.app}>
@@ -57,6 +61,7 @@ class StudentProjectBoard extends Component {
                                             <StudentStageRow
                                                 stage={stage}
                                                 projectName={this.props.match.params.projectId}
+                                                stageChangedHandler={this.stageChangedHandler}
                                             />
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>

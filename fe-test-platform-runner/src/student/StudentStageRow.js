@@ -17,14 +17,10 @@ class StudentStageRow extends Component {
         this.state = {
             isAddBinaryDialogVisible: false,
             inputBinaryFile: null,
-            binaryName: null,
             isAddReportDialogVisible: false,
             inputReportFile: null,
-            reportName: null
+            stage: null
         };
-
-        this.state.binaryName = this.props.stage.binaryName;
-        this.state.reportName = this.props.stage.reportName;
     }
 
     handleOpenAddBinaryDialog = () => {
@@ -33,10 +29,6 @@ class StudentStageRow extends Component {
 
     handleCloseAddBinaryDialog = () => {
         this.setState({isAddBinaryDialogVisible: false});
-    };
-
-    handleBinaryFileSaved = () => {
-        this.setState({binaryName: this.inputBinaryFile.files[0].name})
     };
 
     handleAddBinary = (event) => {
@@ -51,8 +43,9 @@ class StudentStageRow extends Component {
             .then(function (response) {
                 console.log("success");
             })
-            .then(this.handleBinaryFileSaved)
+            // .then(this.handleBinaryFileSaved)
             .then(this.handleCloseAddBinaryDialog)
+            .then(this.props.stageChangedHandler)
             .catch(function (error) {
                 console.log(error);
             });
@@ -65,8 +58,8 @@ class StudentStageRow extends Component {
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
             body: "projectName=" + this.props.projectName + "&stageName=" + this.props.stage.stageName
         })
+            .then(this.props.stageChangedHandler)
             .then(function (response) {
-                console.log(response)
             })
     };
 
@@ -77,10 +70,6 @@ class StudentStageRow extends Component {
 
     handleCloseAddReportDialog = () => {
         this.setState({isAddReportDialogVisible: false});
-    };
-
-    handleReportFileSaved = () => {
-        this.setState({reportName: this.inputReportFile.files[0].name})
     };
 
     handleAddReport = (event) => {
@@ -95,8 +84,9 @@ class StudentStageRow extends Component {
             .then(function (response) {
                 console.log("success");
             })
-            .then(this.handleReportFileSaved)
+            // .then(this.handleReportFileSaved)
             .then(this.handleCloseAddReportDialog)
+            .then(this.props.stageChangedHandler)
             .catch(function (error) {
                 console.log(error);
             });
@@ -109,19 +99,20 @@ class StudentStageRow extends Component {
                     {this.props.stage.stageName}
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
-                    <p> {this.state.binaryName ? this.state.binaryName : 'Brak pliku'} </p>
+                    {/*TODO: It seems that it is incorrect approach to use props instead of state here, check: https://github.com/uberVU/react-guide/issues/17*/}
+                    <p> {this.props.stage.binaryName ? this.props.stage.binaryName : 'Brak pliku'} </p>
                     <InputWrapper>
                         <Button className={this.props.classes.button} onClick={this.handleOpenAddBinaryDialog}>
                             Dodaj binarkę
                         </Button>
                     </InputWrapper>
                     <InputWrapper>
-                        <Button disabled={this.state.binaryName === null} className={this.props.classes.button}
+                        <Button disabled={this.props.stage.binaryName === null} className={this.props.classes.button}
                                 onClick={this.handleRunTests}>
                             Uruchom testy
                         </Button>
                     </InputWrapper>
-                    <p> {this.state.reportName ? this.state.reportName : 'Brak pliku'} </p>
+                    <p> {this.props.stage.reportName ? this.props.stage.reportName : 'Brak pliku'} </p>
                     <InputWrapper>
                         <Button className={this.props.classes.button} onClick={this.handleOpenAddReportDialog}>
                             Dodaj raport
