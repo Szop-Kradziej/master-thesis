@@ -9,7 +9,7 @@ class StudentTestCasesDetails extends Component {
             <div className={this.props.classes.panel}>
                 {this.props.testCases.map(testCase => (
                         <StudentTestCaseRow
-                            testCaseName={testCase}
+                            testCase={testCase}
                             projectName={this.props.projectName}
                             stageName={this.props.stageName}/>
                     )

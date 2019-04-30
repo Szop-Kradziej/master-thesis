@@ -41,12 +41,12 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
             val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
-                return Success(testCaseName)
+                return TestResponse(testCaseName, "SUCCESS")
             }
 
-            return Error(testCaseName, "Error: \n Actual: $testOutput \n Expected: $expectedOutput")
+            return TestResponse(testCaseName, "FAILURE", "Error: \n Actual: $testOutput \n Expected: $expectedOutput")
         } catch (e: RuntimeException) {
-            return Error(testCaseName, e.message!!)
+            return TestResponse(testCaseName, "FAILURE", e.message!!)
         }
     }
 
@@ -55,13 +55,13 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
     }
 }
 
-sealed class TestResponse()
-class Success(val testCaseName: String) : TestResponse() {
-    val status = "SUCCESS"
-}
-class Error(val testCaseName: String, val message: String) : TestResponse() {
-    val status = "FAILURE"
-}
+data class TestResponse constructor (val testCaseName: String, val status: String = "NO RUN", val message: String? = null)
+//class Success(val testCaseName: String) : TestResponse() {
+//    val status = "SUCCESS"
+//}
+//class Error(val testCaseName: String, val message: String) : TestResponse() {
+//    val status = "FAILURE"
+//}
 
 @Component
 class ContainerFactory(val pathProvider: PathProv) {

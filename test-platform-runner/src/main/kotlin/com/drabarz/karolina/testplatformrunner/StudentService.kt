@@ -1,6 +1,7 @@
 package com.drabarz.karolina.testplatformrunner
 
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayOutputStream
@@ -55,18 +56,18 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
     fun getStudentStages(projectName: String): List<StudentStage> {
         return testCaseService
                 .getStages(projectName)
-                .map { stage -> StudentStage(stage.stageName, getBinary(projectName, stage.stageName), getReport(projectName, stage.stageName), stage.testCases)}
+                .map { stage -> StudentStage(stage.stageName, getBinaryName(projectName, stage.stageName), getReportName(projectName, stage.stageName), getTestCasesWithResults(projectName, stage.stageName, stage.testCases))}
     }
 
-    private fun getBinary(projectName: String, stageName: String): String? {
-        return getStageFile(projectName, stageName, FileType.BINARY)
+    private fun getBinaryName(projectName: String, stageName: String): String? {
+        return getStageFileName(projectName, stageName, FileType.BINARY)
     }
 
-    private fun getReport(projectName: String, stageName: String): String? {
-        return getStageFile(projectName, stageName, FileType.REPORT)
+    private fun getReportName(projectName: String, stageName: String): String? {
+        return getStageFileName(projectName, stageName, FileType.REPORT)
     }
 
-    private fun getStageFile(projectName: String, stageName: String, fileType: FileType): String? {
+    private fun getStageFileName(projectName: String, stageName: String, fileType: FileType): String? {
 
         val stageDir = File("${pathProvider.jarPath}/$projectName/$stageName")
 
@@ -88,9 +89,28 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
 
         return fileDir.list()[0]
     }
+
+    private fun getTestCasesWithResults(projectName: String, stageName: String, testCases: List<String>): List<TestCaseWithResult> {
+        val resultFile = File("${pathProvider.jarPath}/$projectName/$stageName/results/result.json")
+
+        if (!resultFile.exists()) {
+            return testCases.map { testCase -> TestCaseWithResult(testCase, "NO RUN", null)}
+        }
+
+        val jsonData = resultFile.readBytes()
+        val results = jacksonObjectMapper().readerFor(Array<TestResponse>::class.java).readValue<Array<TestResponse>>(jsonData).toList()
+
+        return testCases.map {testCase ->
+            TestCaseWithResult(
+                    testCase,
+                    results.find { it -> it.testCaseName == testCase }?.status ?: "NO RUN",
+                    results.find { it -> it.testCaseName == testCase }?.message)
+        }
+    }
 }
 
 enum class FileType {
     BINARY,
-    REPORT
+    REPORT,
+    RESULTS
 }
