@@ -42,6 +42,16 @@ class TestPlatformApi(val studentService: StudentService, val testCaseService: T
         return "200"
     }
 
+    @PostMapping("/upload/code")
+    fun uploadCode(
+            @RequestParam("codeLink") codeLink: String,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
+        studentService.saveCodeLink(projectName, stageName, codeLink)
+
+        return "200"
+    }
+
     @PostMapping("/run")
     fun uploadJar(
             @RequestParam("projectName") projectName: String,
@@ -111,5 +121,5 @@ class StagesResponse(val stages: List<Stage>)
 class Stage(val stageName: String, val testCases: List<String>)
 class TestCasesResponse(val testCases: List<String>)
 class StudentStagesResponse(val stages: List<StudentStage>)
-class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases:List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int,  val deadline: String)
+class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases:List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int,  val deadline: String, val codeLink: String)
 class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?)

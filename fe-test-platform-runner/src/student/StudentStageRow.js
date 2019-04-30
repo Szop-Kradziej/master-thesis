@@ -29,7 +29,9 @@ class StudentStageRow extends Component {
             inputBinaryFile: null,
             isAddReportDialogVisible: false,
             inputReportFile: null,
-            stage: null
+            stage: null,
+            isAddCodeLinkDialogVisible: false,
+            codeLink: null
         };
     }
 
@@ -102,6 +104,44 @@ class StudentStageRow extends Component {
             });
     };
 
+    handleOpenAddCodeLinkDialog = () => {
+        this.setState({isAddCodeLinkDialogVisible: true});
+    };
+
+    handleCloseAddCodeLinkDialog = () => {
+        this.setState({isAddCodeLinkDialogVisible: false});
+    };
+
+    handleAddCodeLink = (event) => {
+        event.preventDefault();
+
+        const data = new FormData();
+        data.append('codeLink', this.state.codeLink);
+        data.append('projectName', this.props.projectName);
+        data.append('stageName', this.props.stage.stageName);
+
+        axios.post(backendUrl("/upload/code"), data)
+            .then(function (response) {
+                console.log("success");
+            })
+            // .then(this.handleReportFileSaved)
+            .then(this.handleCloseAddCodeLinkDialog)
+            .then(this.props.stageChangedHandler)
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
+    getCodeLink = () => {
+        return (
+            <InputWrapper>
+                <a target='_blank' href={this.props.stage.codeLink}>
+                    Przejdź do kodu
+                </a>
+            </InputWrapper>
+        )
+    };
+
     render() {
         return (
             <div className={this.props.classes.stageRow}>
@@ -132,7 +172,7 @@ class StudentStageRow extends Component {
                                 <CustomTableCell>
                                     <InputWrapper>
                                         Kod:
-                                        <IconButton aria-label="Edytuj">
+                                        <IconButton aria-label="Edytuj" onClick={this.handleOpenAddCodeLinkDialog}>
                                             <EditIcon/>
                                         </IconButton>
                                     </InputWrapper>
@@ -162,7 +202,7 @@ class StudentStageRow extends Component {
                                     </div>
                                 </CustomTableCell>
                                 <CustomTableCell component="th" scope="row" width="15%">
-                                    <p> TODO: KOD</p>
+                                    <p> {this.props.stage.codeLink ? this.getCodeLink() : 'Brak linku'}</p>
                                 </CustomTableCell>
                                 <CustomTableCell component="th" scope="row" width="15%">
                                     <p> {this.props.stage.reportName ? this.props.stage.reportName : 'Brak pliku'} </p>
@@ -221,6 +261,29 @@ class StudentStageRow extends Component {
                                 Anuluj
                             </Button>
                             <Button onClick={this.handleAddReport} color="primary">
+                                Dodaj
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                    <Dialog open={this.state.isAddCodeLinkDialogVisible} onClose={this.handleCloseAddCodeLinkDialog}
+                            aria-labelledby="form-dialog-title">
+                        <DialogTitle id="form-dialog-title">Dodaj raport</DialogTitle>
+                        <DialogContent>
+                            <DialogContentText>
+                                Podaj adres kodu:
+                            </DialogContentText>
+                            {/*TODO: FIX: https://stackoverflow.com/questions/40589302/how-to-enable-file-upload-on-reacts-material-ui-simple-input*/}
+                            <div className="form-group">
+                                <input className="form-control" ref={(ref) => {
+                                    this.inputReportFile = ref;
+                                }} type="file"/>
+                            </div>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleCloseAddCodeLinkDialog} color="primary">
+                                Anuluj
+                            </Button>
+                            <Button onClick={this.handleAddCodeLink} color="primary">
                                 Dodaj
                             </Button>
                         </DialogActions>

@@ -64,7 +64,13 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
                             getTestCasesWithResults(projectName, stage.stageName, stage.testCases),
                             getTestCasesWithResults(projectName, stage.stageName, stage.testCases).count { it -> it.status == "SUCCESS" },
                             stage.testCases.size,
-                            getDeadline())}
+                            getDeadline(),
+                            getCodeLink())}
+    }
+
+    private fun getCodeLink(): String {
+        //TODO: Implement after connection to db added
+        return "https://github.com/Szop-Kradziej/rail-learn/commits/master"
     }
 
     private fun getDeadline(): String {
@@ -119,6 +125,10 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
                     results.find { it -> it.testCaseName == testCase }?.status ?: "NO RUN",
                     results.find { it -> it.testCaseName == testCase }?.message)
         }
+    }
+
+    fun saveCodeLink(projectName: String, stageName: String, codeLink: String) {
+        //TODO: Implement when conection to db will be set
     }
 }
 
