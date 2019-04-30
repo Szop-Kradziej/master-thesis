@@ -20,7 +20,7 @@ fun main(args: Array<String>) {
 
 @CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
 @RestController
-class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseService, val applicationContext: ApplicationContext) {
+class TestPlatformApi(val jarService: JarService, val studentService: StudentService, val testCaseService: TestCaseService, val applicationContext: ApplicationContext) {
 
     @PostMapping("/upload/bin")
     fun uploadJar(
@@ -28,7 +28,7 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
 
-        jarService.saveFile(projectName, stageName, uploadedFile, FileType.BINARY)
+        studentService.saveFile(projectName, stageName, uploadedFile, FileType.BINARY)
 
         return "200"
     }
@@ -39,7 +39,7 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
 
-        jarService.saveFile(projectName, stageName, uploadedFile, FileType.REPORT)
+        studentService.saveFile(projectName, stageName, uploadedFile, FileType.REPORT)
 
         return "200"
     }
@@ -70,7 +70,7 @@ class TestPlatformApi(val jarService: JarService, val testCaseService: TestCaseS
 
     @GetMapping("/student/{projectName}/stages")
     fun getStudentStagesList(@PathVariable("projectName") projectName: String): StudentStagesResponse {
-        return StudentStagesResponse(jarService.getStudentStages(projectName))
+        return StudentStagesResponse(studentService.getStudentStages(projectName))
     }
 
     @PostMapping("/stage")
@@ -116,8 +116,3 @@ class Stage(val stageName: String, val testCases: List<String>)
 class TestCasesResponse(val testCases: List<String>)
 class StudentStagesResponse(val stages: List<StudentStage>)
 class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases:List<String>)
-
-enum class FileType {
-    BINARY,
-    REPORT
-}
