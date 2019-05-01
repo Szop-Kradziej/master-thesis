@@ -24,6 +24,9 @@ export const styles = (theme) => ({
         fontSize: "calc(10px + 2vmin)",
         color: "black"
     },
+    projectDescription: {
+        fontSize: 12
+    },
     table: {
         minWidth: 900,
         fontSize: 16,

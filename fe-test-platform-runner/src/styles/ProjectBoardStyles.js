@@ -5,11 +5,13 @@ export const CustomTableCell = withStyles(() => ({
     head: {
         color: "black",
         fontWeight: 700,
-        fontSize: 16
+        fontSize: 12,
+        border: 0
     },
     body: {
         color: "black",
-        fontSize: 16
+        fontSize: 12,
+        border: 0
     }
 }))(TableCell);
 
@@ -20,14 +22,8 @@ export const styles = (theme) => ({
         fontWeight: 700
     },
     table: {
-        minWidth: 900,
         fontSize: 16,
         color: "black"
-    },
-    button: {
-        backgroundColor: "#5aa724",
-        color: "black",
-        marginTop: 20
     },
     link: {
         textDecoration: "none"
@@ -49,9 +45,6 @@ export const styles = (theme) => ({
         marginRight: theme.spacing.unit,
         width: 200,
     },
-    testCase: {
-        marginLeft: 100,
-    },
     testCasesRow: {
         display: 'flex'
     },
@@ -59,8 +52,9 @@ export const styles = (theme) => ({
         width: '100%',
     },
     heading: {
-        fontSize: theme.typography.pxToRem(15),
-        fontWeight: theme.typography.fontWeightRegular,
+        fontSize: 20,
+        fontWeight: 700,
+        width: 1700,
     },
     testsHeading: {
         fontSize: 16,

@@ -20,7 +20,11 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import TestCasesDetails from "./TestCasesDetails"
 import AddIcon from "@material-ui/icons/AddCircle";
+import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton/IconButton";
+import DeleteIcon from "@material-ui/icons/DeleteForever";
+import UploadIcon from "@material-ui/icons/CloudUpload";
+import DownloadIcon from "@material-ui/icons/CloudDownload";
 
 class ProjectBoard extends Component {
 
@@ -70,9 +74,23 @@ class ProjectBoard extends Component {
     render() {
         return (
             <div className={this.props.classes.app}>
-                <p>
-                    Projekt: {this.props.match.params.projectId}
-                </p>
+                <div display="block">
+                    <div>
+                        Nazwa projektu: {this.props.match.params.projectId}
+                        <IconButton aria-label="Edytuj nazwę">
+                            <EditIcon/>
+                        </IconButton>
+                    </div>
+                    <div className={this.props.classes.projectDescription}>
+                        Opis projektu: TODO: Opis projektu
+                        <IconButton aria-label="Zmień">
+                            <UploadIcon/>
+                        </IconButton>
+                        <IconButton aria-label="Pobierz">
+                            <DownloadIcon/>
+                        </IconButton>
+                    </div>
+                </div>
                 <Table className={this.props.classes.table}>
                     <TableHead>
                         <TableRow>
@@ -91,7 +109,52 @@ class ProjectBoard extends Component {
                                     <ExpansionPanel>
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                             <Typography className={this.props.classes.heading}>
-                                                {stage.stageName}
+                                                <Table>
+                                                    <TableHead>
+                                                        <TableRow>
+                                                            <CustomTableCell width="15%">
+                                                                Nazwa etapu:
+                                                                <IconButton aria-label="Edytuj">
+                                                                    <EditIcon/>
+                                                                </IconButton>
+                                                            </CustomTableCell>
+                                                            <CustomTableCell width="15%">
+                                                                Opis etapu:
+                                                                <IconButton aria-label="Zmień">
+                                                                    <UploadIcon/>
+                                                                </IconButton>
+                                                                <IconButton aria-label="Pobierz">
+                                                                    <DownloadIcon/>
+                                                                </IconButton>
+                                                            </CustomTableCell>
+                                                            <CustomTableCell width="50%"/>
+                                                            <CustomTableCell width="15%">
+                                                                Deadline:
+                                                                <IconButton aria-label="Edytuj">
+                                                                    <EditIcon/>
+                                                                </IconButton>
+                                                            </CustomTableCell>
+                                                            <CustomTableCell>
+                                                                <IconButton aria-label="Usuń">
+                                                                    <DeleteIcon/>
+                                                                </IconButton>
+                                                            </CustomTableCell>
+                                                        </TableRow>
+                                                    </TableHead>
+                                                    <TableBody>
+                                                        <CustomTableCell component="th" scope="row">
+                                                            {stage.stageName}
+                                                        </CustomTableCell>
+                                                        <CustomTableCell component="th" scope="row">
+                                                            TODO: Plik z opisem
+                                                        </CustomTableCell>
+                                                        <CustomTableCell component="th" scope="row"/>
+                                                        <CustomTableCell component="th" scope="row">
+                                                            TODO: Deadline
+                                                        </CustomTableCell>
+                                                        <CustomTableCell component="th" scope="row"/>
+                                                    </TableBody>
+                                                </Table>
                                             </Typography>
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>
