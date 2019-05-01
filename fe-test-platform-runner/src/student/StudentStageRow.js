@@ -8,6 +8,7 @@ import EditIcon from '@material-ui/icons/Create';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
 import UploadIcon from '@material-ui/icons/CloudUpload';
 import RunIcon from '@material-ui/icons/PlayArrow';
+import DescriptionIcon from '@material-ui/icons/Description';
 import axios from "axios";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
@@ -151,7 +152,12 @@ class StudentStageRow extends Component {
         return (
             <div className={this.props.classes.stageRow}>
                 <Typography className={this.props.classes.heading}>
-                    {this.props.stage.stageName}
+                    <InputWrapper>
+                        {this.props.stage.stageName}
+                        <IconButton aria-label="Pobierz opis etapu">
+                            <DescriptionIcon/>
+                        </IconButton>
+                    </InputWrapper>
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
                     <Table width="1700">

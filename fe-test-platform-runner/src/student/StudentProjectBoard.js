@@ -13,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import StudentTestCasesDetails from "./StudentTestCasesDetails"
 import StudentStageRow from "./StudentStageRow";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import DescriptionIcon from "@material-ui/icons/Description";
 
 class StudentProjectBoard extends Component {
 
@@ -43,9 +45,12 @@ class StudentProjectBoard extends Component {
     render() {
         return (
             <div className={this.props.classes.app}>
-                <p>
-                    Projekt: {this.props.match.params.projectId}
-                </p>
+                <div>
+                    {this.props.match.params.projectId}
+                    <IconButton aria-label="Pobierz opis projektu">
+                        <DescriptionIcon/>
+                    </IconButton>
+                </div>
                 <Table className={this.props.classes.table}>
                     <TableHead>
                         <TableRow>
