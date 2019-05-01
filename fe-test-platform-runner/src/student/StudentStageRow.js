@@ -333,11 +333,11 @@ export const styles = (theme) => ({
         marginTop: 0
     },
     stageRow: {
-        display: 'flex',
+        display: 'block',
         width: 1700
     },
     heading: {
-        fontSize: 16,
+        fontSize: 20,
         fontWeight: 700
     },
     inputWrapper: {

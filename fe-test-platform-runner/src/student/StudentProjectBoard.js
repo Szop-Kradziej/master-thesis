@@ -67,6 +67,7 @@ class StudentProjectBoard extends Component {
                                         <ExpansionPanelDetails>
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
+                                                    <p className={this.props.classes.testsHeading}> Testy </p>
                                                     <StudentTestCasesDetails
                                                         testCases={stage.testCases}
                                                         projectName={this.props.match.params.projectId}

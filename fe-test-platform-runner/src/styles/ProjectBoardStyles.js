@@ -62,4 +62,8 @@ export const styles = (theme) => ({
         fontSize: theme.typography.pxToRem(15),
         fontWeight: theme.typography.fontWeightRegular,
     },
+    testsHeading: {
+        fontSize: 16,
+        fontWeight: 700
+    },
 });

@@ -1,27 +1,73 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core";
 import StudentTestCaseRow from "./StudentTestCaseRow";
+import TableHead from "@material-ui/core/TableHead/TableHead";
+import TableRow from "@material-ui/core/TableRow/TableRow";
+import Table from "@material-ui/core/Table/Table";
+import TableCell from "@material-ui/core/TableCell/TableCell";
+import TableBody from "@material-ui/core/TableBody/TableBody";
 
 class StudentTestCasesDetails extends Component {
 
     render() {
         return (
-            <div className={this.props.classes.panel}>
-                {this.props.testCases.map(testCase => (
-                        <StudentTestCaseRow
-                            testCase={testCase}
-                            projectName={this.props.projectName}
-                            stageName={this.props.stageName}/>
-                    )
-                )}
+            <div className={this.props.classes.root}>
+                <Table width="1700">
+                    <TableHead>
+                        <TableRow>
+                            <CustomTableCell>
+                                Nazwa:
+                            </CustomTableCell>
+                            <CustomTableCell>
+                                Status:
+                            </CustomTableCell>
+                            <CustomTableCell>
+                                Komunikat błędu:
+                            </CustomTableCell>
+                            <CustomTableCell>
+                                Logi:
+                            </CustomTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.props.testCases.map(testCase => (
+                                <StudentTestCaseRow
+                                    testCase={testCase}
+                                    projectName={this.props.projectName}
+                                    stageName={this.props.stageName}/>
+                            )
+                        )}
+                    </TableBody>
+                </Table>
+
             </div>
         );
     }
 }
 
+const CustomTableCell = withStyles(() => ({
+    head: {
+        color: "black",
+        fontWeight: 700,
+        fontSize: 12,
+        margin: 0,
+        padding: 0,
+        border: 0
+    },
+    body: {
+        color: "black",
+        fontSize: 12,
+        margin: 0,
+        padding: 0,
+        border: 0,
+        height: 5
+    }
+}))(TableCell);
+
 const styles = theme => ({
     root: {
-        flexGrow: 1,
+        display: "flex",
+        width: 1700,
     },
     button: {
         backgroundColor: "#5aa724",
