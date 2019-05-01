@@ -158,7 +158,7 @@ class ProjectBoard extends Component {
                                             </Typography>
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>
-                                            <Typography>
+                                            <Typography className={this.props.classes.heading}>
                                                 <div className={this.props.classes.panel}>
                                                     <TestCasesDetails
                                                         testCases={stage.testCases}

@@ -12,6 +12,11 @@ import axios from "axios";
 import TestCaseRow from "./TestCaseRow";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import AddIcon from "@material-ui/icons/AddCircle";
+import TableHead from "@material-ui/core/TableHead/TableHead";
+import TableRow from "@material-ui/core/TableRow/TableRow";
+import {CustomTableCell} from "../../styles/ProjectBoardStyles";
+import Table from "@material-ui/core/Table/Table";
+import TableBody from "@material-ui/core/es/TableBody/TableBody";
 
 class TestCasesDetails extends Component {
 
@@ -80,13 +85,32 @@ class TestCasesDetails extends Component {
                         <AddIcon/>
                     </IconButton>
                 </div>
-                {this.state.testCases.testCases.map(testCase => (
-                    <TestCaseRow
-                        testCaseName={testCase}
-                        projectName={this.props.projectName}
-                        stageName={this.props.stageName}/>
-                    )
-                )}
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <CustomTableCell width="20%">
+                                Nazwa testu:
+                            </CustomTableCell>
+                            <CustomTableCell width="15%">
+                                Plik wejściowy
+                            </CustomTableCell>
+                            <CustomTableCell width="15%">
+                                Plik wyjściowy
+                            </CustomTableCell>
+                            <CustomTableCell width="5%"/>
+                            <CustomTableCell/>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.testCases.testCases.map(testCase => (
+                                <TestCaseRow
+                                    testCaseName={testCase}
+                                    projectName={this.props.projectName}
+                                    stageName={this.props.stageName}/>
+                            )
+                        )}
+                    </TableBody>
+                </Table>
                 <Dialog open={this.state.isNewTestDialogVisible} onClose={this.handleCloseNewTestDialog}
                         aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Dodaj nowy test</DialogTitle>

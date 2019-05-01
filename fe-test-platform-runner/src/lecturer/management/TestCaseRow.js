@@ -1,10 +1,14 @@
-import Button from "@material-ui/core/Button/Button";
 import React, {Component} from "react";
-import {withStyles} from "@material-ui/core";
 import backendUrl from "../../backendUrl";
 import axios from "axios";
-import Grid from "@material-ui/core/Grid/Grid";
 import {saveAs} from "file-saver";
+import {CustomTableCell} from "../../styles/ProjectBoardStyles";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import UploadIcon from "@material-ui/icons/CloudUpload";
+import DownloadIcon from "@material-ui/icons/CloudDownload";
+import TableRow from "@material-ui/core/TableRow/TableRow";
+import EditIcon from "@material-ui/icons/Edit";
+import DeleteIcon from "@material-ui/icons/DeleteForever";
 
 class TestCaseRow extends Component {
 
@@ -35,32 +39,42 @@ class TestCaseRow extends Component {
 
     render() {
         return (
-            <div className={this.props.classes.root}>
-
-                <Grid container spacing={24}>
-                    <Grid item xs={4}>
-                        <p>{this.props.testCaseName}</p>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Button onClick={this.handleDownloadInputFile}>
-                            INPUT
-                        </Button>
-                    </Grid>
-                    <Grid item xs={4}>
-                        <Button onClick={this.handleDownloadOutputFile}>
-                            OUTPUT
-                        </Button>
-                    </Grid>
-                </Grid>
-            </div>
+            <TableRow>
+                <CustomTableCell component="th" scope="row">
+                    {this.props.testCaseName}
+                    <IconButton aria-label="Edytuj">
+                        <EditIcon/>
+                    </IconButton>
+                </CustomTableCell>
+                <CustomTableCell component="th" scope="row">
+                    INPUT
+                    <IconButton aria-label="Zmień">
+                        <UploadIcon/>
+                    </IconButton>
+                    <IconButton aria-label="Pobierz" onClick={this.handleDownloadInputFile}>
+                        <DownloadIcon/>
+                    </IconButton>
+                </CustomTableCell>
+                <CustomTableCell component="th" scope="row">
+                    OUTPUT
+                    <IconButton aria-label="Zmień">
+                        <UploadIcon/>
+                    </IconButton>
+                    <IconButton aria-label="Pobierz" onClick={this.handleDownloadOutputFile}>
+                        <DownloadIcon/>
+                    </IconButton>
+                </CustomTableCell>
+                <CustomTableCell>
+                    <CustomTableCell>
+                        <IconButton aria-label="Usuń">
+                            <DeleteIcon/>
+                        </IconButton>
+                    </CustomTableCell>
+                </CustomTableCell>
+                <CustomTableCell/>
+            </TableRow>
         );
     }
 }
 
-const styles = theme => ({
-    root: {
-        flexGrow: 1,
-    },
-});
-
-export default withStyles(styles)(TestCaseRow);
+export default (TestCaseRow);
