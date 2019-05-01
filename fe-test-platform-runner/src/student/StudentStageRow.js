@@ -19,6 +19,7 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
+import TextField from "@material-ui/core/TextField/TextField";
 
 class StudentStageRow extends Component {
 
@@ -130,6 +131,10 @@ class StudentStageRow extends Component {
             .catch(function (error) {
                 console.log(error);
             });
+    };
+
+    handleCodeLinkAdded = () => event => {
+        this.setState({codeLink: event.target.value})
     };
 
     getCodeLink = () => {
@@ -272,12 +277,14 @@ class StudentStageRow extends Component {
                             <DialogContentText>
                                 Podaj adres kodu:
                             </DialogContentText>
-                            {/*TODO: FIX: https://stackoverflow.com/questions/40589302/how-to-enable-file-upload-on-reacts-material-ui-simple-input*/}
-                            <div className="form-group">
-                                <input className="form-control" ref={(ref) => {
-                                    this.inputReportFile = ref;
-                                }} type="file"/>
-                            </div>
+                            <TextField
+                                id="standard-name"
+                                label="Adres kodu"
+                                className={this.props.classes.textField}
+                                value={this.state.codeLink}
+                                onChange={this.handleCodeLinkAdded()}
+                                margin="normal"
+                            />
                         </DialogContent>
                         <DialogActions>
                             <Button onClick={this.handleCloseAddCodeLinkDialog} color="primary">
@@ -336,7 +343,12 @@ export const styles = (theme) => ({
     inputWrapper: {
         display: 'flex',
         width: 1700
-    }
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
 });
 
 export default withStyles(styles)(StudentStageRow);
