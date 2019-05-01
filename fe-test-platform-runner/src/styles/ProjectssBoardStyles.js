@@ -29,11 +29,6 @@ export const styles = (theme) => ({
         fontSize: 16,
         color: "black"
     },
-    button: {
-        backgroundColor: "#5aa724",
-        color: "black",
-        marginTop: 20
-    },
     link: {
         textDecoration: "none"
     },

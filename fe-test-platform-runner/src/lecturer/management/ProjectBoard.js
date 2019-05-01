@@ -19,6 +19,8 @@ import DialogContentText from "@material-ui/core/es/DialogContentText/DialogCont
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import TestCasesDetails from "./TestCasesDetails"
+import AddIcon from "@material-ui/icons/AddCircle";
+import IconButton from "@material-ui/core/IconButton/IconButton";
 
 class ProjectBoard extends Component {
 
@@ -74,7 +76,12 @@ class ProjectBoard extends Component {
                 <Table className={this.props.classes.table}>
                     <TableHead>
                         <TableRow>
-                            <CustomTableCell>Etapy</CustomTableCell>
+                            <CustomTableCell>
+                                Etapy
+                                <IconButton aria-label="Dodaj nowy etap" onClick={this.handleOpenNewStageDialog}>
+                                    <AddIcon/>
+                                </IconButton>
+                            </CustomTableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -104,9 +111,6 @@ class ProjectBoard extends Component {
                         ))}
                     </TableBody>
                 </Table>
-                <Button className={this.props.classes.button} onClick={this.handleOpenNewStageDialog}>
-                    Dodaj nowy etap
-                </Button>
                 <Dialog open={this.state.isNewTestDialogVisible} onClose={this.handleCloseNewStageDialog}
                         aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Dodaj nowy etap</DialogTitle>

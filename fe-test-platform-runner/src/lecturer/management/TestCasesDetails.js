@@ -10,6 +10,8 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import backendUrl from "../../backendUrl";
 import axios from "axios";
 import TestCaseRow from "./TestCaseRow";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import AddIcon from "@material-ui/icons/AddCircle";
 
 class TestCasesDetails extends Component {
 
@@ -72,6 +74,12 @@ class TestCasesDetails extends Component {
     render() {
         return (
             <div className={this.props.classes.panel}>
+                <div>
+                    Testy
+                    <IconButton aria-label="Dodaj nowy test" onClick={this.handleOpenNewTestDialog}>
+                        <AddIcon/>
+                    </IconButton>
+                </div>
                 {this.state.testCases.testCases.map(testCase => (
                     <TestCaseRow
                         testCaseName={testCase}
@@ -79,10 +87,6 @@ class TestCasesDetails extends Component {
                         stageName={this.props.stageName}/>
                     )
                 )}
-                <Button className={this.props.classes.button}
-                        onClick={this.handleOpenNewTestDialog}>
-                    Dodaj nowy test
-                </Button>
                 <Dialog open={this.state.isNewTestDialogVisible} onClose={this.handleCloseNewTestDialog}
                         aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Dodaj nowy test</DialogTitle>
@@ -127,11 +131,6 @@ class TestCasesDetails extends Component {
 const styles = theme => ({
     root: {
         flexGrow: 1,
-    },
-    button: {
-        backgroundColor: "#5aa724",
-        color: "black",
-        marginTop: 20
     },
 });
 
