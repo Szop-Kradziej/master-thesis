@@ -16,3 +16,19 @@ export function fetchProjects() {
         credentials: "include"
     })
 }
+
+export function fetchStages(projectName) {
+    return fetch(backendUrl(`/${projectName}/stages`), {
+        method: "GET",
+        credentials: "include"
+    })
+}
+
+export function addNewStage(projectName, stageName) {
+    return fetch(backendUrl(`/stage`), {
+        method: "POST",
+        credentials: "include",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: "projectName=" + projectName + "&stageName=" + stageName
+    })
+}

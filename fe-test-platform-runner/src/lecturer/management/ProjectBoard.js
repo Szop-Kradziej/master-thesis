@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
-import backendUrl from "../../backendUrl";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
@@ -24,6 +23,7 @@ import DeleteIcon from "@material-ui/icons/DeleteForever";
 import AddNewItemComponent from "../../utils/AddNewItemComponent";
 import EditItemComponent from "../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../utils/UploadAndDownloadItemComponent";
+import * as Api from "../../Api";
 
 class ProjectBoard extends Component {
 
@@ -37,10 +37,7 @@ class ProjectBoard extends Component {
     }
 
     fetchStages = () => {
-        fetch(backendUrl(`/${this.props.match.params.projectId}/stages`), {
-            method: "GET",
-            credentials: "include"
-        })
+        Api.fetchStages(this.props.match.params.projectId)
             .then(response => response.json())
             .then(json => this.setState({
                 stages: json
@@ -48,15 +45,15 @@ class ProjectBoard extends Component {
     };
 
     handleOpenNewStageDialog = () => {
-        this.setState({isNewTestDialogVisible: true});
+        this.setState({isNewStageDialogVisible: true});
     };
 
     handleCloseNewStageDialog = () => {
-        this.setState({isNewTestDialogVisible: false});
+        this.setState({isNewStageDialogVisible: false});
     };
 
     handleNewStageNameAdded = () => event => {
-        this.setState({newTestName: event.target.value})
+        this.setState({newStageName: event.target.value})
     };
 
     handleEditProjectName = () => {
@@ -88,13 +85,8 @@ class ProjectBoard extends Component {
     };
 
     handleAddNewStage = () => {
-        fetch(backendUrl(`/stage`), {
-            method: "POST",
-            credentials: "include",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: "projectName=" + this.props.match.params.projectId + "&stageName=" + this.state.newTestName
-        })
-            .then(() => this.setState({isNewTestDialogVisible: false, newTestName: null}))
+        Api.addNewStage(this.props.match.params.projectId, this.state.newStageName)
+            .then(() => this.setState({isNewStageDialogVisible: false, newStageName: null}))
             .then(this.fetchStages)
     };
 
@@ -195,7 +187,7 @@ class ProjectBoard extends Component {
                         ))}
                     </TableBody>
                 </Table>
-                <Dialog open={this.state.isNewTestDialogVisible} onClose={this.handleCloseNewStageDialog}
+                <Dialog open={this.state.isNewStageDialogVisible} onClose={this.handleCloseNewStageDialog}
                         aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Dodaj nowy etap</DialogTitle>
                     <DialogContent>
@@ -206,7 +198,7 @@ class ProjectBoard extends Component {
                             id="standard-name"
                             label="Nazwa etapu"
                             className={this.props.classes.textField}
-                            value={this.state.newTestName}
+                            value={this.state.newStageName}
                             onChange={this.handleNewStageNameAdded()}
                             margin="normal"
                         />
