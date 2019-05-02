@@ -1,5 +1,4 @@
 import React from "react";
-import backendUrl from "../backendUrl";
 import {withStyles} from "@material-ui/core";
 import Table from "@material-ui/core/Table/Table";
 import TableHead from "@material-ui/core/TableHead/TableHead";
@@ -7,6 +6,7 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import {Link} from "react-router-dom";
 import {CustomTableCell, styles} from "../styles/ProjectssBoardStyles";
+import * as Api from "../Api";
 
 class StudentProjectsBoard extends React.Component {
 
@@ -20,10 +20,8 @@ class StudentProjectsBoard extends React.Component {
     }
 
     fetchProjects = () => {
-        fetch(backendUrl(`/projects`), {
-            method: "GET",
-            credentials: "include"
-        })
+        //TODO: Add request to call for projects for specific user
+        Api.fetchProjects()
             .then(response => response.json())
             .then(json => this.setState({
                 projects: json
