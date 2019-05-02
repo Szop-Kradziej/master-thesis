@@ -10,7 +10,7 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import * as Api from "../../../Api";
 
-class AddNewProjectDialog extends Component {
+class AddNewStageDialog extends Component {
 
     constructor(props) {
         super(props);
@@ -60,4 +60,4 @@ class AddNewProjectDialog extends Component {
     }
 }
 
-export default withStyles(styles)(AddNewProjectDialog);
+export default withStyles(styles)(AddNewStageDialog);

@@ -9,7 +9,7 @@ import AddNewItemComponent from "../../../utils/AddNewItemComponent";
 import * as Api from "../../../Api";
 import ProjectHeader from "./ProjectHeader";
 import StageComponent from "./stage/StageComponent";
-import AddNewProjectDialog from "../AddNewProjectDialog";
+import AddNewStageDialog from "./AddNewStageDialog";
 
 class ProjectBoard extends Component {
 
@@ -67,10 +67,11 @@ class ProjectBoard extends Component {
                         ))}
                     </TableBody>
                 </Table>
-                <AddNewProjectDialog
+                <AddNewStageDialog
                     isOpen={this.state.isNewStageDialogVisible}
+                    projectName={this.props.match.params.projectId}
                     closeActionHandler={this.handleCloseNewStageDialog}
-                    successActionHandler={this.fetchProjects}/>
+                    successActionHandler={this.fetchStages}/>
             </div>
         );
     }
