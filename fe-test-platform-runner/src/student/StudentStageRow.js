@@ -4,7 +4,6 @@ import backendUrl from "../backendUrl";
 import Typography from '@material-ui/core/Typography';
 import Button from "@material-ui/core/Button/Button";
 import IconButton from '@material-ui/core/IconButton';
-import EditIcon from '@material-ui/icons/Create';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
 import UploadIcon from '@material-ui/icons/CloudUpload';
 import RunIcon from '@material-ui/icons/PlayArrow';
@@ -21,6 +20,8 @@ import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
 import TextField from "@material-ui/core/TextField/TextField";
+import EditItemComponent from "../utils/EditItemComponent";
+import UploadAndDownloadItemComponent from "../utils/UploadAndDownloadItemComponent";
 
 class StudentStageRow extends Component {
 
@@ -148,6 +149,10 @@ class StudentStageRow extends Component {
         )
     };
 
+    handleDownloadReport = () => {
+        //TODO: do action
+    };
+
     render() {
         return (
             <div className={this.props.classes.stageRow}>
@@ -181,23 +186,18 @@ class StudentStageRow extends Component {
                                     </InputWrapper>
                                 </CustomTableCell>
                                 <CustomTableCell>
-                                    <InputWrapper>
-                                        Kod:
-                                        <IconButton aria-label="Edytuj" onClick={this.handleOpenAddCodeLinkDialog}>
-                                            <EditIcon/>
-                                        </IconButton>
-                                    </InputWrapper>
+                                    <EditItemComponent
+                                        header="Kod:"
+                                        info="Edytuj link do kodu"
+                                        editActionHandler={this.handleOpenAddCodeLinkDialog}/>
                                 </CustomTableCell>
                                 <CustomTableCell>
-                                    <InputWrapper>
-                                        Raport:
-                                        <IconButton aria-label="Zmień" onClick={this.handleOpenAddReportDialog}>
-                                            <UploadIcon/>
-                                        </IconButton>
-                                        <IconButton aria-label="Pobierz">
-                                            <DownloadIcon/>
-                                        </IconButton>
-                                    </InputWrapper>
+                                    <UploadAndDownloadItemComponent
+                                        header="Raport:"
+                                        uploadInfo="Załaduj raport"
+                                        uploadActionHandler={this.handleOpenAddReportDialog}
+                                        downloadInfo="Pobierz raport"
+                                        downloadActionHandler={this.handleDownloadReport}/>
                                 </CustomTableCell>
                                 <CustomTableCell/>
                                 <CustomTableCell>Zaliczone:</CustomTableCell>

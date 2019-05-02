@@ -4,11 +4,10 @@ import axios from "axios";
 import {saveAs} from "file-saver";
 import {CustomTableCell} from "../../styles/ProjectBoardStyles";
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import UploadIcon from "@material-ui/icons/CloudUpload";
-import DownloadIcon from "@material-ui/icons/CloudDownload";
 import TableRow from "@material-ui/core/TableRow/TableRow";
-import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/DeleteForever";
+import EditItemComponent from "../../utils/EditItemComponent";
+import UploadAndDownloadItemComponent from "../../utils/UploadAndDownloadItemComponent";
 
 class TestCaseRow extends Component {
 
@@ -37,32 +36,42 @@ class TestCaseRow extends Component {
         });
     };
 
+    handleUploadInputFile = () => {
+        //TODO: do action
+    };
+
+    handleUploadOutputFile = () => {
+        //TODO: do action
+    };
+
+    handleEditTestName = () => {
+        //TODO: do action
+    };
+
     render() {
         return (
             <TableRow>
                 <CustomTableCell component="th" scope="row">
-                    {this.props.testCaseName}
-                    <IconButton aria-label="Edytuj">
-                        <EditIcon/>
-                    </IconButton>
+                    <EditItemComponent
+                        header={this.props.testCaseName}
+                        info="Edytuj nazwę testu"
+                        editActionHandler={this.handleEditTestName}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
-                    INPUT
-                    <IconButton aria-label="Zmień">
-                        <UploadIcon/>
-                    </IconButton>
-                    <IconButton aria-label="Pobierz" onClick={this.handleDownloadInputFile}>
-                        <DownloadIcon/>
-                    </IconButton>
+                    <UploadAndDownloadItemComponent
+                        header="INPUT"
+                        uploadInfo="Załaduj plik wejściowy"
+                        uploadActionHandler={this.handleUploadInputFile}
+                        downloadInfo="Pobierz plik wejściowy"
+                        downloadActionHandler={this.handleDownloadInputFile}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
-                    OUTPUT
-                    <IconButton aria-label="Zmień">
-                        <UploadIcon/>
-                    </IconButton>
-                    <IconButton aria-label="Pobierz" onClick={this.handleDownloadOutputFile}>
-                        <DownloadIcon/>
-                    </IconButton>
+                    <UploadAndDownloadItemComponent
+                        header="OUTPUT"
+                        uploadInfo="Załaduj plik wyjściowy"
+                        uploadActionHandler={this.handleUploadOutputFile}
+                        downloadInfo="Pobierz plik wyjściowy"
+                        downloadActionHandler={this.handleDownloadOutputFile}/>
                 </CustomTableCell>
                 <CustomTableCell>
                     <CustomTableCell>

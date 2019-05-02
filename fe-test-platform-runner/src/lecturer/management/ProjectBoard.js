@@ -19,12 +19,11 @@ import DialogContentText from "@material-ui/core/es/DialogContentText/DialogCont
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import TestCasesDetails from "./TestCasesDetails"
-import AddIcon from "@material-ui/icons/AddCircle";
-import EditIcon from "@material-ui/icons/Edit";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import DeleteIcon from "@material-ui/icons/DeleteForever";
-import UploadIcon from "@material-ui/icons/CloudUpload";
-import DownloadIcon from "@material-ui/icons/CloudDownload";
+import AddNewItemComponent from "../../utils/AddNewItemComponent";
+import EditItemComponent from "../../utils/EditItemComponent";
+import UploadAndDownloadItemComponent from "../../utils/UploadAndDownloadItemComponent";
 
 class ProjectBoard extends Component {
 
@@ -60,6 +59,34 @@ class ProjectBoard extends Component {
         this.setState({newTestName: event.target.value})
     };
 
+    handleEditProjectName = () => {
+        //    TODO: do action
+    };
+
+    handleEditStageName = () => {
+        //TODO: do action
+    };
+
+    handleEditStageDeadline = () => {
+        //TODO: do action
+    };
+
+    handleUploadProjectDescription = () => {
+        //TODO: do action
+    };
+
+    handleDownloadProjectDescription = () => {
+        //TODO: do action
+    };
+
+    handleUploadStageDescription = () => {
+        //TODO: do action
+    };
+
+    handleDownloadStageDescription = () => {
+        //TODO: do action
+    };
+
     handleAddNewStage = () => {
         fetch(backendUrl(`/stage`), {
             method: "POST",
@@ -75,30 +102,25 @@ class ProjectBoard extends Component {
         return (
             <div className={this.props.classes.app}>
                 <div display="block">
-                    <div>
-                        Nazwa projektu: {this.props.match.params.projectId}
-                        <IconButton aria-label="Edytuj nazwę">
-                            <EditIcon/>
-                        </IconButton>
-                    </div>
-                    <div className={this.props.classes.projectDescription}>
-                        Opis projektu: TODO: Opis projektu
-                        <IconButton aria-label="Zmień">
-                            <UploadIcon/>
-                        </IconButton>
-                        <IconButton aria-label="Pobierz">
-                            <DownloadIcon/>
-                        </IconButton>
-                    </div>
+                    <EditItemComponent
+                        header={"Nazwa projektu: " + this.props.match.params.projectId}
+                        info="Edytuj nazwę projektu"
+                        editActionHandler={this.handleEditProjectName}/>
+                    <UploadAndDownloadItemComponent className={this.props.classes.projectDescription}
+                                                    header="Opis projektu: TODO: Opis projektu"
+                                                    uploadInfo="Załaduj opis projektu"
+                                                    uploadActionHandler={this.handleUploadProjectDescription}
+                                                    downloadInfo="Pobierz opis projektu"
+                                                    downloadActionHandler={this.handleDownloadProjectDescription}/>
                 </div>
                 <Table className={this.props.classes.table}>
                     <TableHead>
                         <TableRow>
                             <CustomTableCell>
-                                Etapy
-                                <IconButton aria-label="Dodaj nowy etap" onClick={this.handleOpenNewStageDialog}>
-                                    <AddIcon/>
-                                </IconButton>
+                                <AddNewItemComponent
+                                    header="Etapy"
+                                    info="Dodaj nowy etap"
+                                    addActionHandler={this.handleOpenNewStageDialog}/>
                             </CustomTableCell>
                         </TableRow>
                     </TableHead>
@@ -113,26 +135,25 @@ class ProjectBoard extends Component {
                                                     <TableHead>
                                                         <TableRow>
                                                             <CustomTableCell width="15%">
-                                                                Nazwa etapu:
-                                                                <IconButton aria-label="Edytuj">
-                                                                    <EditIcon/>
-                                                                </IconButton>
+                                                                <EditItemComponent
+                                                                    header="Nazwa etapu:"
+                                                                    info="Edytuj nazwę etapu"
+                                                                    editActionHandler={this.handleEditStageName}/>
                                                             </CustomTableCell>
                                                             <CustomTableCell width="15%">
-                                                                Opis etapu:
-                                                                <IconButton aria-label="Zmień">
-                                                                    <UploadIcon/>
-                                                                </IconButton>
-                                                                <IconButton aria-label="Pobierz">
-                                                                    <DownloadIcon/>
-                                                                </IconButton>
+                                                                <UploadAndDownloadItemComponent
+                                                                    header="Opis etapu:"
+                                                                    uploadInfo="Załaduj opis etapu"
+                                                                    uploadActionHandler={this.handleUploadStageDescription}
+                                                                    downloadInfo="Pobierz opis etapu"
+                                                                    downloadActionHandler={this.handleDownloadStageDescription}/>
                                                             </CustomTableCell>
                                                             <CustomTableCell width="50%"/>
                                                             <CustomTableCell width="15%">
-                                                                Deadline:
-                                                                <IconButton aria-label="Edytuj">
-                                                                    <EditIcon/>
-                                                                </IconButton>
+                                                                <EditItemComponent
+                                                                    header="Deadline:"
+                                                                    info="Edytuj deadline etapu"
+                                                                    editActionHandler={this.handleEditStageDeadline}/>
                                                             </CustomTableCell>
                                                             <CustomTableCell>
                                                                 <IconButton aria-label="Usuń">

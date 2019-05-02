@@ -10,13 +10,12 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import backendUrl from "../../backendUrl";
 import axios from "axios";
 import TestCaseRow from "./TestCaseRow";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import AddIcon from "@material-ui/icons/AddCircle";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import {CustomTableCell} from "../../styles/ProjectBoardStyles";
 import Table from "@material-ui/core/Table/Table";
 import TableBody from "@material-ui/core/es/TableBody/TableBody";
+import AddNewItemComponent from "../../utils/AddNewItemComponent";
 
 class TestCasesDetails extends Component {
 
@@ -79,12 +78,10 @@ class TestCasesDetails extends Component {
     render() {
         return (
             <div className={this.props.classes.panel}>
-                <div>
-                    Testy
-                    <IconButton aria-label="Dodaj nowy test" onClick={this.handleOpenNewTestDialog}>
-                        <AddIcon/>
-                    </IconButton>
-                </div>
+                <AddNewItemComponent
+                    header="Testy"
+                    info="Dodaj nowy test"
+                    addActionHandler={this.handleOpenNewTestDialog}/>
                 <Table>
                     <TableHead>
                         <TableRow>

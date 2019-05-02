@@ -14,8 +14,7 @@ import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import AddIcon from "@material-ui/icons/AddCircle";
-import IconButton from "@material-ui/core/IconButton/IconButton";
+import AddNewItemComponent from "../../utils/AddNewItemComponent";
 
 class ProjectsBoard extends React.Component {
 
@@ -69,10 +68,10 @@ class ProjectsBoard extends React.Component {
                     <TableHead>
                         <TableRow>
                             <CustomTableCell>
-                                Projekty
-                                <IconButton aria-label="Dodaj nowy projekt" onClick={this.handleOpenNewProjectDialog}>
-                                    <AddIcon/>
-                                </IconButton>
+                                <AddNewItemComponent
+                                    header="Projekty"
+                                    info="Dodaj nowy projekt"
+                                    addActionHandler={this.handleOpenNewProjectDialog}/>
                             </CustomTableCell>
                         </TableRow>
                     </TableHead>
