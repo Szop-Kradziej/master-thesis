@@ -1,13 +1,13 @@
 import React, {Component} from "react";
-import backendUrl from "../../backendUrl";
+import backendUrl from "../../../../backendUrl";
 import axios from "axios";
 import {saveAs} from "file-saver";
-import {CustomTableCell} from "../../styles/ProjectBoardStyles";
+import {CustomTableCell} from "../../../../styles/ProjectBoardStyles";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import DeleteIcon from "@material-ui/icons/DeleteForever";
-import EditItemComponent from "../../utils/EditItemComponent";
-import UploadAndDownloadItemComponent from "../../utils/UploadAndDownloadItemComponent";
+import EditItemComponent from "../../../../utils/EditItemComponent";
+import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
 
 class TestCaseRow extends Component {
 

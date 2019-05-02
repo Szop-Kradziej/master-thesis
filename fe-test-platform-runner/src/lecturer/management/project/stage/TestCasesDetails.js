@@ -7,15 +7,15 @@ import DialogContentText from "@material-ui/core/es/DialogContentText/DialogCont
 import TextField from "@material-ui/core/TextField/TextField";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import backendUrl from "../../backendUrl";
+import backendUrl from "../../../../backendUrl";
 import axios from "axios";
 import TestCaseRow from "./TestCaseRow";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
-import {CustomTableCell} from "../../styles/ProjectBoardStyles";
+import {CustomTableCell} from "../../../../styles/ProjectBoardStyles";
 import Table from "@material-ui/core/Table/Table";
 import TableBody from "@material-ui/core/es/TableBody/TableBody";
-import AddNewItemComponent from "../../utils/AddNewItemComponent";
+import AddNewItemComponent from "../../../../utils/AddNewItemComponent";
 
 class TestCasesDetails extends Component {
 

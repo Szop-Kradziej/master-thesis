@@ -6,7 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import {Route, Router, Switch} from 'react-router-dom';
 import customHistory from "./history";
 import ProjectsBoard from "./lecturer/management/ProjectsBoard";
-import ProjectBoard from "./lecturer/management/ProjectBoard";
+import ProjectBoard from "./lecturer/management/project/ProjectBoard";
 import StudentProjectsBoard from "./student/StudentProjectsBoard";
 import StudentProjectBoard from "./student/StudentProjectBoard";
 

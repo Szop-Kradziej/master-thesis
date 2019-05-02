@@ -1,26 +1,28 @@
-import React from "react";
+import React, {Component} from 'react';
+import {withStyles} from "@material-ui/core";
 import Button from "@material-ui/core/Button/Button";
 import TextField from "@material-ui/core/TextField/TextField";
+import {styles} from "../../../styles/ProjectBoardStyles";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import Dialog from "@material-ui/core/Dialog/Dialog";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import * as Api from "../../Api";
+import Dialog from "@material-ui/core/Dialog/Dialog";
+import * as Api from "../../../Api";
 
-class AddNewProjectDialog extends React.Component {
+class AddNewProjectDialog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {newProjectName: null};
+        this.state = {newStageName: null};
     }
 
-    handleNewProjectNameAdded = () => event => {
-        this.setState({newProjectName: event.target.value})
+    handleNewStageNameAdded = () => event => {
+        this.setState({newStageName: event.target.value})
     };
 
-    handleAddNewProject = () => {
-        Api.addNewProject(this.state.newProjectName)
+    handleAddNewStage = () => {
+        Api.addNewStage(this.props.projectName, this.state.newStageName)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
     };
@@ -31,26 +33,25 @@ class AddNewProjectDialog extends React.Component {
                 open={this.props.isOpen}
                 onClose={this.props.closeActionHandler}
                 aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">
-                    Dodaj nowy projekt
-                </DialogTitle>
+                <DialogTitle id="form-dialog-title">Dodaj nowy etap</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Podaj nazwę projektu:
+                        Podaj nazwę etapu:
                     </DialogContentText>
                     <TextField
                         id="standard-name"
-                        label="Nazwa projektu"
-                        value={this.state.newProjectName}
-                        onChange={this.handleNewProjectNameAdded()}
+                        label="Nazwa etapu"
+                        className={this.props.classes.textField}
+                        value={this.state.newStageName}
+                        onChange={this.handleNewStageNameAdded()}
                         margin="normal"
                     />
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={this.props.closeActionHandler} color="primary">
+                    <Button onClick={this.closeActionHandler} color="primary">
                         Anuluj
                     </Button>
-                    <Button onClick={this.handleAddNewProject} color="primary">
+                    <Button onClick={this.handleAddNewStage} color="primary">
                         Dodaj
                     </Button>
                 </DialogActions>
@@ -59,4 +60,4 @@ class AddNewProjectDialog extends React.Component {
     }
 }
 
-export default AddNewProjectDialog
+export default withStyles(styles)(AddNewProjectDialog);
