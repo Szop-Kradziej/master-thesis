@@ -15,7 +15,7 @@ class ProjectBoard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {stages: {stages: []}, isNewStageDialogVisible: false, newStageName: null};
+        this.state = {stages: {stages: []}, isNewStageDialogVisible: false};
     }
 
     componentDidMount() {
