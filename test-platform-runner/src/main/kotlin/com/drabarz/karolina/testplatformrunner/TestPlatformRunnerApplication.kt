@@ -18,9 +18,12 @@ fun main(args: Array<String>) {
     runApplication<TestPlatformRunnerApplication>(*args)
 }
 
-@CrossOrigin(origins = ["http://localhost:3000"], allowCredentials = "true")
+@CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000"], allowCredentials = "true")
 @RestController
-class TestPlatformApi(val studentService: StudentService, val testCaseService: TestCaseService, val applicationContext: ApplicationContext) {
+class TestPlatformApi(val studentService: StudentService,
+                      val testCaseService: TestCaseService,
+                      val projectService: ProjectService,
+                      val applicationContext: ApplicationContext) {
 
     @PostMapping("/upload/bin")
     fun uploadJar(
@@ -61,17 +64,24 @@ class TestPlatformApi(val studentService: StudentService, val testCaseService: T
 
     @GetMapping("/projects")
     fun getProjectsList(): ProjectResponse {
-        return ProjectResponse(testCaseService.getProjects())
+        return ProjectResponse(projectService.getProjects())
     }
 
     @PostMapping("/project")
     fun addProject(@RequestParam("projectName") projectName: String): String {
-        return testCaseService.addProject(projectName)
+        return projectService.addProject(projectName)
+    }
+
+    @PostMapping("/project/description")
+    fun addProjectDescription(
+            @RequestParam("description") uploadedFile: MultipartFile,
+            @RequestParam("projectName") projectName: String) : String {
+        return projectService.addProjectDescription(uploadedFile, projectName)
     }
 
     @GetMapping("/{projectName}/stages")
     fun getStagesList(@PathVariable("projectName") projectName: String): StagesResponse {
-        return StagesResponse(testCaseService.getStages(projectName))
+        return StagesResponse(projectService.getStages(projectName))
     }
 
     @GetMapping("/student/{projectName}/stages")
@@ -81,7 +91,7 @@ class TestPlatformApi(val studentService: StudentService, val testCaseService: T
 
     @PostMapping("/stage")
     fun addStage(@RequestParam("projectName") projectName: String, @RequestParam("stageName") stageName: String): String {
-        return testCaseService.addStage(projectName, stageName)
+        return projectService.addStage(projectName, stageName)
     }
 
     @GetMapping("/{projectName}/{stageName}/testCases")

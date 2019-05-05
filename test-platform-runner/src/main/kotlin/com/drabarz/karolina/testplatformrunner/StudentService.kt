@@ -8,7 +8,7 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 @Component
-class StudentService(val testCaseService: TestCaseService, val pathProvider: PathProvider, val jarService: JarService) {
+class StudentService(val projectService: ProjectService, val pathProvider: PathProvider, val jarService: JarService) {
 
     fun runJar(projectName: String, stageName: String): List<TestResponse> {
         val testResponses = jarService.runJar(projectName, stageName)
@@ -18,11 +18,10 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
     }
 
     private fun saveTestResponses(projectName: String, stageName: String, testResponses: List<TestResponse>) {
-        val pathPrefix = "${pathProvider.jarPath}/$projectName/$stageName"
-        val dir = File("$pathPrefix/results")
-        dir.mkdirs()
+        val resultsDir = pathProvider.getStudentResultsDir(projectName, stageName)
+        resultsDir.mkdirs()
 
-        val file = File("$pathPrefix/results", "result.json");
+        val file = File(resultsDir, "result.json");
 
         val out = ByteArrayOutputStream()
         val mapper = ObjectMapper()
@@ -33,13 +32,12 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
     }
 
     fun saveFile(projectName:String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
-        val pathPrefix = "${pathProvider.jarPath}/$projectName/$stageName"
-        var dir = File(pathPrefix)
+        var dir = pathProvider.getStudentStageDir(projectName, stageName)
         if (fileType == FileType.BINARY) {
-            dir = File("$pathPrefix/bin")
+            dir = pathProvider.getStudentBinDir(projectName, stageName)
         }
         else {
-            dir = File("$pathPrefix/report")
+            dir = pathProvider.getStudentReportsDir(projectName, stageName)
         }
 
         dir.mkdirs()
@@ -54,7 +52,7 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
     }
 
     fun getStudentStages(projectName: String): List<StudentStage> {
-        return testCaseService
+        return projectService
                 .getStages(projectName)
                 .map { stage ->
                     StudentStage(
@@ -88,18 +86,17 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
 
     private fun getStageFileName(projectName: String, stageName: String, fileType: FileType): String? {
 
-        val stageDir = File("${pathProvider.jarPath}/$projectName/$stageName")
-
+        val stageDir = pathProvider.getStudentStageDir(projectName, stageName)
         if (!stageDir.exists()) {
             return null
         }
 
         val fileDir: File
         if (fileType == FileType.BINARY) {
-            fileDir = File("$stageDir/bin")
+            fileDir = pathProvider.getStudentBinDir(projectName, stageName)
         }
         else {
-            fileDir = File("$stageDir/report")
+            fileDir = pathProvider.getStudentReportsDir(projectName, stageName)
         }
 
         if (!fileDir.exists() || fileDir.list().size != 1) {
@@ -110,7 +107,7 @@ class StudentService(val testCaseService: TestCaseService, val pathProvider: Pat
     }
 
     private fun getTestCasesWithResults(projectName: String, stageName: String, testCases: List<String>): List<TestCaseWithResult> {
-        val resultFile = File("${pathProvider.jarPath}/$projectName/$stageName/results/result.json")
+        val resultFile = File(pathProvider.getStudentResultsDir(projectName, stageName), "result.json")
 
         if (!resultFile.exists()) {
             return testCases.map { testCase -> TestCaseWithResult(testCase, "NO RUN", null)}

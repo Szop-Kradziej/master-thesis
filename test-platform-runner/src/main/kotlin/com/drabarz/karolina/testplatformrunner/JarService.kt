@@ -11,7 +11,7 @@ import org.testcontainers.utility.MountableFile
 import java.io.File
 
 @Component
-class JarService(val pathProvider: PathProv, val containerFactory: ContainerFactory, val containerService: ContainerService, val testCaseService: TestCaseService) {
+class JarService(val pathProvider: PathProvider, val containerFactory: ContainerFactory, val containerService: ContainerService, val testCaseService: TestCaseService) {
 
     fun runJar(projectName: String, stageName: String): List<TestResponse> {
         val testCasesNames = testCaseService.getTestCasesNames(projectName, stageName)
@@ -20,7 +20,7 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
             throw java.lang.RuntimeException("Error. There are no test cases for stage $stageName")
         }
 
-        val jarPath = File("${pathProvider.jarPath}/$projectName/$stageName/bin")
+        val jarPath = pathProvider.getStudentBinDir(projectName, stageName)
 
         if (!jarPath.exists() || jarPath.list().size != 1) {
             throw java.lang.RuntimeException("Invalid number of binaries or no binary")
@@ -37,7 +37,7 @@ class JarService(val pathProvider: PathProv, val containerFactory: ContainerFact
 
     fun checkCorrectness(projectName: String, stageName: String, testCaseName: String): TestResponse {
         try {
-            val expectedOutput = File("${pathProvider.projectPath}/$projectName/$stageName/$testCaseName/output").reader().readText()
+            val expectedOutput = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName,"output").reader().readText()
             val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
@@ -64,7 +64,7 @@ data class TestResponse constructor (val testCaseName: String, val status: Strin
 //}
 
 @Component
-class ContainerFactory(val pathProvider: PathProv) {
+class ContainerFactory(val pathProvider: PathProvider) {
 
     fun createContainerWithFilesBinded(projectName: String, stageName: String, testCaseName: String, jarPath: String?): KGenericContainer {
 
@@ -73,7 +73,7 @@ class ContainerFactory(val pathProvider: PathProv) {
                         .withFileFromClasspath("Dockerfile", "static/Dockerfile")
         )
                 .withCopyFileToContainer(MountableFile.forHostPath("$jarPath"), "/home/example.jar")
-                .withFileSystemBind("${pathProvider.projectPath}/$projectName/$stageName/$testCaseName/input", "/home/input.txt", BindMode.READ_ONLY)
+                .withFileSystemBind(pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, "input").absolutePath, "/home/input.txt", BindMode.READ_ONLY)
                 .withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
     }
 }
