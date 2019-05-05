@@ -51,10 +51,37 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
 
     fun addProjectDescription(uploadedFile: MultipartFile, projectName: String): String {
         val projectDir = pathProvider.getProjectDir(projectName)
-        if (projectDir.exists()) {
-            throw RuntimeException("Warning. Project already exists")
+        if (!projectDir.exists()) {
+            throw RuntimeException("Error. Project $projectName doesn't not exist")
         }
 
+        val descriptionDir = pathProvider.getProjectDescriptionDir(projectName)
+        descriptionDir.mkdir()
+
+        if(descriptionDir.list().isNotEmpty()) {
+            JarService.log.info("Existing file to delete: " + descriptionDir.list()[0] + " from: " + descriptionDir.absolutePath)
+        }
+
+        val outputFile = File(descriptionDir.path, uploadedFile.originalFilename)
+        uploadedFile.transferTo(outputFile)
+
         return "200"
+    }
+
+    fun getProjectDescriptionName(projectName: String): String? {
+        val projectDescriptionDir = pathProvider.getProjectDescriptionDir(projectName)
+        if (!projectDescriptionDir.exists() || projectDescriptionDir.list().size != 1) {
+            return null
+        }
+        return projectDescriptionDir.list()[0]
+    }
+
+    fun getProjectDescription(projectName: String): File {
+        val projectDescriptionDir = pathProvider.getProjectDescriptionDir(projectName)
+        if (projectDescriptionDir.exists() && projectDescriptionDir.list().size == 1) {
+            return File(projectDescriptionDir, projectDescriptionDir.list()[0])
+        }
+
+        throw java.lang.RuntimeException("Error file doesn't exist")
     }
 }

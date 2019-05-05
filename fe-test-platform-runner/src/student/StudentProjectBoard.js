@@ -15,6 +15,7 @@ import StudentTestCasesDetails from "./StudentTestCasesDetails"
 import StudentStageRow from "./StudentStageRow";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import DescriptionIcon from "@material-ui/icons/Description";
+import * as Api from "../Api";
 
 class StudentProjectBoard extends Component {
 
@@ -42,12 +43,16 @@ class StudentProjectBoard extends Component {
         this.fetchStages()
     };
 
+    handleDownloadProjectDescription = () => {
+        Api.downloadProjectDescription(this.props.match.params.projectId)
+    };
+
     render() {
         return (
             <div className={this.props.classes.app}>
                 <div>
                     {this.props.match.params.projectId}
-                    <IconButton aria-label="Pobierz opis projektu">
+                    <IconButton aria-label="Pobierz opis projektu" onClick={this.handleDownloadProjectDescription}>
                         <DescriptionIcon/>
                     </IconButton>
                 </div>

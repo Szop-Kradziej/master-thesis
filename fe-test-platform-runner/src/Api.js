@@ -1,5 +1,7 @@
 import React from 'react';
 import backendUrl from "./backendUrl";
+import axios from "axios";
+import {saveAs} from "file-saver";
 
 export function addNewProject(projectName) {
     return fetch(backendUrl(`/project`), {
@@ -31,4 +33,34 @@ export function addNewStage(projectName, stageName) {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: "projectName=" + projectName + "&stageName=" + stageName
     })
+}
+
+export function uploadProjectDescription(data) {
+    return axios.post(backendUrl("/project/description"), data)
+        .then(function (response) {
+            console.log("success");
+        })
+}
+
+
+export function downloadProjectDescription(projectName) {
+    return axios.get(backendUrl('/' + projectName + "/description"), {responseType: "blob"})
+        .then((response) => {
+            console.log("Response", response);
+            let fileName = 'download';
+            const contentDisposition = response.headers['content-disposition'];
+            if (contentDisposition) {
+                const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+                if (fileNameMatch.length === 2)
+                    fileName = fileNameMatch[1];
+            }
+            saveAs(new Blob([response.data]), fileName);
+        }).catch(function (error) {
+            console.log(error);
+            if (error.response) {
+                console.log('Error', error.response.status);
+            } else {
+                console.log('Error', error.message);
+            }
+        });
 }

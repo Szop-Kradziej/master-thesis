@@ -31,6 +31,10 @@ class PathProvider : PathProv {
         return File(getTestCaseDir(projectName, stageName, testCaseName), fileName)
     }
 
+    fun getProjectDescriptionDir(projectName: String): File {
+        return File(getProjectDir(projectName), DESCRIPTION)
+    }
+
     fun getStudentStageDir(projectName: String, stageName: String): File {
         return File("${jarPath}/$projectName/$stageName")
     }
@@ -49,7 +53,6 @@ class PathProvider : PathProv {
 
     fun getStudentFileDir(projectName: String, stageName: String, file: String) : File {
         return File(getStudentStageDir(projectName, stageName), file)
-
     }
 
     companion object {

@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.GetMapping
+import java.io.File
 
 @SpringBootApplication
 class TestPlatformRunnerApplication
@@ -74,14 +75,20 @@ class TestPlatformApi(val studentService: StudentService,
 
     @PostMapping("/project/description")
     fun addProjectDescription(
-            @RequestParam("description") uploadedFile: MultipartFile,
+            @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String) : String {
         return projectService.addProjectDescription(uploadedFile, projectName)
     }
 
+    @GetMapping("/{projectName}/description")
+    @ResponseBody
+    fun downloadProjectDescriptionFile(@PathVariable("projectName") projectName: String): ResponseEntity<*> {
+        return createFileResponse(projectService.getProjectDescription(projectName))
+    }
+
     @GetMapping("/{projectName}/stages")
     fun getStagesList(@PathVariable("projectName") projectName: String): StagesResponse {
-        return StagesResponse(projectService.getStages(projectName))
+        return StagesResponse(projectService.getProjectDescriptionName(projectName), projectService.getStages(projectName))
     }
 
     @GetMapping("/student/{projectName}/stages")
@@ -111,14 +118,17 @@ class TestPlatformApi(val studentService: StudentService,
 
     @GetMapping("/{projectName}/{stageName}/{testCaseName}/{fileName}")
     @ResponseBody
-    fun downloadFile(
+    fun downloadTestCaseFile(
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String,
             @PathVariable("fileName") fileName: String): ResponseEntity<*> {
-        val file = testCaseService.getTestCaseFile(projectName, stageName, testCaseName, fileName)
+        return createFileResponse(testCaseService.getTestCaseFile(projectName, stageName, testCaseName, fileName))
+    }
 
+    fun createFileResponse(file: File) : ResponseEntity<*> {
         val headers = HttpHeaders()
+        headers.add("X-Suggested-Filename", file.name);
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.name + "\"")
         headers.add("Access-Control-Expose-Headers", HttpHeaders.CONTENT_DISPOSITION + "," + HttpHeaders.CONTENT_LENGTH)
 
@@ -127,7 +137,7 @@ class TestPlatformApi(val studentService: StudentService,
 }
 
 class ProjectResponse(val projects: List<String>)
-class StagesResponse(val stages: List<Stage>)
+class StagesResponse(val projectDescription: String?, val stages: List<Stage>)
 class Stage(val stageName: String, val testCases: List<String>)
 class TestCasesResponse(val testCases: List<String>)
 class StudentStagesResponse(val stages: List<StudentStage>)
