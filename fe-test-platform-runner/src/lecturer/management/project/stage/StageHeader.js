@@ -66,11 +66,11 @@ class StageHeader extends Component {
                         {this.props.stageName}
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
-                        TODO: Plik z opisem
+                        Description.pdf
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row"/>
                     <CustomTableCell component="th" scope="row">
-                        TODO: Deadline
+                        10/06/2019 23:59
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row"/>
                 </TableBody>

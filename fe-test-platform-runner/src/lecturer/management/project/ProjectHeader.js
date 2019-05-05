@@ -27,7 +27,7 @@ class ProjectHeader extends Component {
                     info="Edytuj nazwę projektu"
                     editActionHandler={this.handleEditProjectName}/>
                 <UploadAndDownloadItemComponent className={this.props.classes.projectDescription}
-                                                header="Opis projektu: TODO: Opis projektu"
+                                                header="Opis projektu: project_description.pdf"
                                                 uploadInfo="Załaduj opis projektu"
                                                 uploadActionHandler={this.handleUploadProjectDescription}
                                                 downloadInfo="Pobierz opis projektu"
