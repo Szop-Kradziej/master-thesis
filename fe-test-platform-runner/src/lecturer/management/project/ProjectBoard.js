@@ -63,7 +63,8 @@ class ProjectBoard extends Component {
                                 <CustomTableCell component="th" scope="row">
                                     <StageComponent
                                         stage={stage}
-                                        projectName={this.props.match.params.projectId}/>
+                                        projectName={this.props.match.params.projectId}
+                                        stageChangedHandler={this.fetchStages}/>
                                 </CustomTableCell>
                             </TableRow>
                         ))}

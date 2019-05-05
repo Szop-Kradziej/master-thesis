@@ -17,7 +17,10 @@ class StageComponent extends Component {
                 <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                     <Typography className={this.props.classes.heading}>
                         <StageHeader
-                            stageName={this.props.stage.stageName}/>
+                            projectName={this.props.projectName}
+                            stageName={this.props.stage.stageName}
+                            stageDescription={this.props.stage.stageDescription}
+                            stageChangedHandler={this.props.stageChangedHandler}/>
                     </Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>

@@ -45,8 +45,8 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
         if (!projectDir.exists()) {
             throw RuntimeException("Error. Can not get stages for project. Project $projectName doesn't exist")
         }
-
-        return projectDir.list().asList().map { it -> Stage(it, testCaseService.getTestCasesNames(projectName, it)) }
+        //TODO: fix add "stages" dir
+        return projectDir.list().asList().filter { it -> it != "description" }.map { it -> Stage(it, getStageDescriptionName(projectName, it), testCaseService.getTestCasesNames(projectName, it)) }
     }
 
     fun addProjectDescription(uploadedFile: MultipartFile, projectName: String): String {
@@ -80,6 +80,42 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
         val projectDescriptionDir = pathProvider.getProjectDescriptionDir(projectName)
         if (projectDescriptionDir.exists() && projectDescriptionDir.list().size == 1) {
             return File(projectDescriptionDir, projectDescriptionDir.list()[0])
+        }
+
+        throw java.lang.RuntimeException("Error file doesn't exist")
+    }
+
+    fun addStageDescription(uploadedFile: MultipartFile, projectName: String, stageName: String): String {
+        val stageDir = pathProvider.getStageDir(projectName, stageName)
+        if (!stageDir.exists()) {
+            throw RuntimeException("Error. Stage $stageName for project: $projectName doesn't not exist")
+        }
+
+        val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
+        descriptionDir.mkdir()
+
+        if(descriptionDir.list().isNotEmpty()) {
+            JarService.log.info("Existing file to delete: " + descriptionDir.list()[0] + " from: " + descriptionDir.absolutePath)
+        }
+
+        val outputFile = File(descriptionDir.path, uploadedFile.originalFilename)
+        uploadedFile.transferTo(outputFile)
+
+        return "200"
+    }
+
+    fun getStageDescriptionName(projectName: String, stageName: String): String? {
+        val stageDescriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
+        if (!stageDescriptionDir.exists() || stageDescriptionDir.list().size != 1) {
+            return null
+        }
+        return stageDescriptionDir.list()[0]
+    }
+
+    fun getStageDescription(projectName: String, stageName: String): File {
+        val stageDescriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
+        if (stageDescriptionDir.exists() && stageDescriptionDir.list().size == 1) {
+            return File(stageDescriptionDir, stageDescriptionDir.list()[0])
         }
 
         throw java.lang.RuntimeException("Error file doesn't exist")

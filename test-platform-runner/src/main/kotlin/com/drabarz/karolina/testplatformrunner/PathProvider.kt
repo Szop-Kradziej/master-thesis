@@ -35,6 +35,10 @@ class PathProvider : PathProv {
         return File(getProjectDir(projectName), DESCRIPTION)
     }
 
+    fun getStageDescriptionDir(projectName: String, stageName: String): File {
+        return File(getStageDir(projectName, stageName), DESCRIPTION)
+    }
+
     fun getStudentStageDir(projectName: String, stageName: String): File {
         return File("${jarPath}/$projectName/$stageName")
     }

@@ -86,6 +86,22 @@ class TestPlatformApi(val studentService: StudentService,
         return createFileResponse(projectService.getProjectDescription(projectName))
     }
 
+    @GetMapping("/{projectName}/{stageName}/description")
+    @ResponseBody
+    fun downloadStageDescriptionFile(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String): ResponseEntity<*> {
+        return createFileResponse(projectService.getStageDescription(projectName, stageName))
+    }
+
+    @PostMapping("/stage/description")
+    fun addStageDescription(
+            @RequestParam("file") uploadedFile: MultipartFile,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String) : String {
+        return projectService.addStageDescription(uploadedFile, projectName, stageName)
+    }
+
     @GetMapping("/{projectName}/stages")
     fun getStagesList(@PathVariable("projectName") projectName: String): StagesResponse {
         return StagesResponse(projectService.getProjectDescriptionName(projectName), projectService.getStages(projectName))
@@ -138,7 +154,7 @@ class TestPlatformApi(val studentService: StudentService,
 
 class ProjectResponse(val projects: List<String>)
 class StagesResponse(val projectDescription: String?, val stages: List<Stage>)
-class Stage(val stageName: String, val testCases: List<String>)
+class Stage(val stageName: String, val stageDescription: String?, val testCases: List<String>)
 class TestCasesResponse(val testCases: List<String>)
 class StudentStagesResponse(val stages: List<StudentStage>)
 class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases:List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int,  val deadline: String, val codeLink: String)

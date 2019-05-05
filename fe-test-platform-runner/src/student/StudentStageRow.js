@@ -22,6 +22,7 @@ import TableCell from "@material-ui/core/TableCell/TableCell";
 import TextField from "@material-ui/core/TextField/TextField";
 import EditItemComponent from "../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../utils/UploadAndDownloadItemComponent";
+import * as Api from "../Api";
 
 class StudentStageRow extends Component {
 
@@ -153,13 +154,17 @@ class StudentStageRow extends Component {
         //TODO: do action
     };
 
+    handleDownloadStageDescription = () => {
+        Api.downloadStageDescription(this.props.projectName, this.props.stage.stageName)
+    };
+
     render() {
         return (
             <div className={this.props.classes.stageRow}>
                 <Typography className={this.props.classes.heading}>
                     <InputWrapper>
                         {this.props.stage.stageName}
-                        <IconButton aria-label="Pobierz opis etapu">
+                        <IconButton aria-label="Pobierz opis etapu" onClick={this.handleDownloadStageDescription}>
                             <DescriptionIcon/>
                         </IconButton>
                     </InputWrapper>

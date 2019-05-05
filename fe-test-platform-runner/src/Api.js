@@ -42,9 +42,37 @@ export function uploadProjectDescription(data) {
         })
 }
 
-
 export function downloadProjectDescription(projectName) {
     return axios.get(backendUrl('/' + projectName + "/description"), {responseType: "blob"})
+        .then((response) => {
+            console.log("Response", response);
+            let fileName = 'download';
+            const contentDisposition = response.headers['content-disposition'];
+            if (contentDisposition) {
+                const fileNameMatch = contentDisposition.match(/filename="(.+)"/);
+                if (fileNameMatch.length === 2)
+                    fileName = fileNameMatch[1];
+            }
+            saveAs(new Blob([response.data]), fileName);
+        }).catch(function (error) {
+            console.log(error);
+            if (error.response) {
+                console.log('Error', error.response.status);
+            } else {
+                console.log('Error', error.message);
+            }
+        });
+}
+
+export function uploadStageDescription(data) {
+    return axios.post(backendUrl("/stage/description"), data)
+        .then(function (response) {
+            console.log("success");
+        })
+}
+
+export function downloadStageDescription(projectName, stageName) {
+    return axios.get(backendUrl('/' + projectName + '/' + stageName + "/description"), {responseType: "blob"})
         .then((response) => {
             console.log("Response", response);
             let fileName = 'download';

@@ -40,8 +40,8 @@ class TestCaseService(val pathProvider: PathProvider) {
         if (!stageDir.exists()) {
             throw RuntimeException("Error. Stage $stageName doesn't exist")
         }
-
-        return stageDir.list().asList()
+        //TODO: fix add const dir "testCases"
+        return stageDir.list().filter { it -> it != "description" }
     }
 
     fun getTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileName: String): File {
