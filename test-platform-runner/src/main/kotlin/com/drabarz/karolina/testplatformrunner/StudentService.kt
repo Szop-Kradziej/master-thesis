@@ -44,7 +44,7 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
 
         //TODO: Delete this file
         if(dir.list().isNotEmpty()) {
-            JarService.log.info("Existing file to delete: " + File("${dir.path}/bin/${dir.list()[0]}").path)
+            File("${dir.path}/${dir.list()[0]}").delete()
         }
 
         val outputFile = File(dir.path, uploadedFile.originalFilename)
