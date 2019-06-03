@@ -154,6 +154,10 @@ class StudentStageRow extends Component {
         //TODO: do action
     };
 
+    handleDownloadBin = () => {
+        Api.downloadBin(this.props.projectName, this.props.stage.stageName)
+    };
+
     handleDownloadStageDescription = () => {
         Api.downloadStageDescription(this.props.projectName, this.props.stage.stageName)
     };
@@ -180,7 +184,7 @@ class StudentStageRow extends Component {
                                         <IconButton aria-label="Zmień" onClick={this.handleOpenAddBinaryDialog}>
                                             <UploadIcon/>
                                         </IconButton>
-                                        <IconButton aria-label="Pobierz">
+                                        <IconButton aria-label="Pobierz" onClick={this.handleDownloadBin}>
                                             <DownloadIcon/>
                                         </IconButton>
                                         <IconButton aria-label="Uruchom"

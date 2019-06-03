@@ -127,6 +127,16 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
     fun saveCodeLink(projectName: String, stageName: String, codeLink: String) {
         //TODO: Implement when conection to db will be set
     }
+
+    fun getJar(projectName: String, stageName: String): File {
+        val binDir = pathProvider.getStudentBinDir(projectName, stageName)
+
+        if(!binDir.exists() && binDir.list().size != 1) {
+            throw java.lang.RuntimeException("Error bin file doesn't exist")
+        }
+
+        return File(binDir, binDir.list()[0])
+    }
 }
 
 enum class FileType {

@@ -36,6 +36,13 @@ class TestPlatformApi(val studentService: StudentService,
         return "200"
     }
 
+    @GetMapping("/student/{projectName}/{stageName}/bin")
+    fun downloadJar(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String): ResponseEntity<*> {
+        return createFileResponse(studentService.getJar(projectName, stageName))
+    }
+
     @PostMapping("/upload/report")
     fun uploadReport(
             @RequestParam("file") uploadedFile: MultipartFile,
