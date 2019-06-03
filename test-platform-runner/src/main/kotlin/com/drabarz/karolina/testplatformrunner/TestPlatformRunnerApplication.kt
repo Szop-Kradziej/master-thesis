@@ -53,6 +53,13 @@ class TestPlatformApi(val studentService: StudentService,
         return "200"
     }
 
+    @GetMapping("/student/{projectName}/{stageName}/report")
+    fun downloadReport(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String): ResponseEntity<*> {
+        return createFileResponse(studentService.getReport(projectName, stageName))
+    }
+
     @PostMapping("/upload/code")
     fun uploadCode(
             @RequestParam("codeLink") codeLink: String,

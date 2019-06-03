@@ -37,7 +37,7 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
             dir = pathProvider.getStudentBinDir(projectName, stageName)
         }
         else {
-            dir = pathProvider.getStudentReportsDir(projectName, stageName)
+            dir = pathProvider.getStudentReportDir(projectName, stageName)
         }
 
         dir.mkdirs()
@@ -96,7 +96,7 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
             fileDir = pathProvider.getStudentBinDir(projectName, stageName)
         }
         else {
-            fileDir = pathProvider.getStudentReportsDir(projectName, stageName)
+            fileDir = pathProvider.getStudentReportDir(projectName, stageName)
         }
 
         if (!fileDir.exists() || fileDir.list().size != 1) {
@@ -129,13 +129,19 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
     }
 
     fun getJar(projectName: String, stageName: String): File {
-        val binDir = pathProvider.getStudentBinDir(projectName, stageName)
+        return getSingleFile(pathProvider.getStudentBinDir(projectName, stageName))
+    }
 
-        if(!binDir.exists() && binDir.list().size != 1) {
-            throw java.lang.RuntimeException("Error bin file doesn't exist")
+    fun getReport(projectName: String, stageName: String): File {
+        return getSingleFile(pathProvider.getStudentReportDir(projectName, stageName))
+    }
+
+    fun getSingleFile(dir: File): File {
+        if(!dir.exists() && dir.list().size != 1) {
+            throw java.lang.RuntimeException("Error file doesn't exist")
         }
 
-        return File(binDir, binDir.list()[0])
+        return File(dir, dir.list()[0])
     }
 }
 

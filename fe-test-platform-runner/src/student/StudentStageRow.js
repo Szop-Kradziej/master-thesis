@@ -151,7 +151,7 @@ class StudentStageRow extends Component {
     };
 
     handleDownloadReport = () => {
-        //TODO: do action
+        Api.downloadReport(this.props.projectName, this.props.stage.stageName)
     };
 
     handleDownloadBin = () => {

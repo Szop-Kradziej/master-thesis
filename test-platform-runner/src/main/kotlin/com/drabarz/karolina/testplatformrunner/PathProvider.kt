@@ -47,7 +47,7 @@ class PathProvider : PathProv {
         return  getStudentFileDir(projectName, stageName, RESULTS)
     }
 
-    fun getStudentReportsDir(projectName: String, stageName: String): File {
+    fun getStudentReportDir(projectName: String, stageName: String): File {
         return  getStudentFileDir(projectName, stageName, REPORT)
     }
 
