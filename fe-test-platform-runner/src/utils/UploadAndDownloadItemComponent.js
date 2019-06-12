@@ -10,10 +10,13 @@ class UploadAndDownloadItemComponent extends Component {
         return (
             <InputWrapper>
                 {this.props.header}
-                <IconButton aria-label={this.props.uploadInfo} onClick={this.props.uploadActionHandler}>
+                <IconButton aria-label={this.props.uploadInfo}
+                            onClick={this.props.uploadActionHandler}>
                     <UploadIcon/>
                 </IconButton>
-                <IconButton aria-label={this.props.downloadInfo} onClick={this.props.downloadActionHandler}>
+                <IconButton aria-label={this.props.downloadInfo}
+                            disabled={this.props.downloadDisabled}
+                            onClick={this.props.downloadActionHandler}>
                     <DownloadIcon/>
                 </IconButton>
             </InputWrapper>

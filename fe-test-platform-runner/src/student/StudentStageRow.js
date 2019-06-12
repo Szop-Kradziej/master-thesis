@@ -168,7 +168,8 @@ class StudentStageRow extends Component {
                 <Typography className={this.props.classes.heading}>
                     <InputWrapper>
                         {this.props.stage.stageName}
-                        <IconButton aria-label="Pobierz opis etapu" onClick={this.handleDownloadStageDescription}>
+                        <IconButton aria-label="Pobierz opis etapu"
+                                    onClick={this.handleDownloadStageDescription}>
                             <DescriptionIcon/>
                         </IconButton>
                     </InputWrapper>
@@ -184,7 +185,9 @@ class StudentStageRow extends Component {
                                         <IconButton aria-label="Zmień" onClick={this.handleOpenAddBinaryDialog}>
                                             <UploadIcon/>
                                         </IconButton>
-                                        <IconButton aria-label="Pobierz" onClick={this.handleDownloadBin}>
+                                        <IconButton aria-label="Pobierz"
+                                                    disabled={this.props.stage.binaryName === null}
+                                                    onClick={this.handleDownloadBin}>
                                             <DownloadIcon/>
                                         </IconButton>
                                         <IconButton aria-label="Uruchom"
@@ -206,6 +209,7 @@ class StudentStageRow extends Component {
                                         uploadInfo="Załaduj raport"
                                         uploadActionHandler={this.handleOpenAddReportDialog}
                                         downloadInfo="Pobierz raport"
+                                        downloadDisabled={this.props.stage.reportName === null}
                                         downloadActionHandler={this.handleDownloadReport}/>
                                 </CustomTableCell>
                                 <CustomTableCell/>

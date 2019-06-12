@@ -10,7 +10,6 @@ import DialogContentText from "@material-ui/core/es/DialogContentText/DialogCont
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import {saveAs} from "file-saver";
 
 class ProjectHeader extends Component {
 
@@ -67,6 +66,7 @@ class ProjectHeader extends Component {
                                                 uploadInfo="Załaduj opis projektu"
                                                 uploadActionHandler={this.handleOpenAddDescriptionDialog}
                                                 downloadInfo="Pobierz opis projektu"
+                                                downloadDisabled={this.props.projectDescription === null}
                                                 downloadActionHandler={this.handleDownloadProjectDescription}/>
                 <Dialog open={this.state.isAddDescriptionDialogVisible} onClose={this.handleCloseAddDescriptionDialog}
                         aria-labelledby="form-dialog-title">

@@ -63,6 +63,7 @@ class TestCaseRow extends Component {
                         uploadInfo="Załaduj plik wejściowy"
                         uploadActionHandler={this.handleUploadInputFile}
                         downloadInfo="Pobierz plik wejściowy"
+                        downloadDisabled={this.props.inputFileName === null}
                         downloadActionHandler={this.handleDownloadInputFile}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
@@ -71,6 +72,7 @@ class TestCaseRow extends Component {
                         uploadInfo="Załaduj plik wyjściowy"
                         uploadActionHandler={this.handleUploadOutputFile}
                         downloadInfo="Pobierz plik wyjściowy"
+                        downloadDisabled={this.props.outputFileName === null}
                         downloadActionHandler={this.handleDownloadOutputFile}/>
                 </CustomTableCell>
                 <CustomTableCell>

@@ -81,6 +81,7 @@ class StageHeader extends Component {
                                     uploadInfo="Załaduj opis etapu"
                                     uploadActionHandler={this.handleOpenAddDescriptionDialog}
                                     downloadInfo="Pobierz opis etapu"
+                                    downloadDisabled={this.props.stageDescription === null}
                                     downloadActionHandler={this.handleDownloadStageDescription}/>
                             </CustomTableCell>
                             <CustomTableCell width="50%"/>
