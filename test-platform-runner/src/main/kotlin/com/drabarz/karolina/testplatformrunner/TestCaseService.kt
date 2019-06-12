@@ -1,5 +1,6 @@
 package com.drabarz.karolina.testplatformrunner
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
@@ -72,8 +73,29 @@ class TestCaseService(val pathProvider: PathProvider) {
         throw java.lang.RuntimeException("Error file doesn't exist")
     }
 
+    fun deleteTestCase(projectName: String, stageName: String, testCaseName: String): String {
+
+        deleteTestCaseFileDirIfExists(pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, INPUT))
+        deleteTestCaseFileDirIfExists(pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, OUTPUT))
+        pathProvider.getTestCaseDir(projectName, stageName, testCaseName).delete()
+
+        return "200"
+    }
+
+    private fun deleteTestCaseFileDirIfExists(fileDir: File) {
+        if (fileDir.exists()) {
+            if (fileDir.list().isNotEmpty()) {
+                log.info("Existing file to delete: " + fileDir.list()[0] + " from: " + fileDir.absolutePath)
+                File("${fileDir.path}/${fileDir.list()[0]}").delete()
+            }
+            fileDir.delete()
+        }
+    }
+
     companion object {
         val INPUT = "input"
         val OUTPUT = "output"
+
+        val log = LoggerFactory.getLogger(TestCaseService::class.java)
     }
 }

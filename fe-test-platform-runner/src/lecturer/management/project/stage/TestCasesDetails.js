@@ -22,25 +22,12 @@ class TestCasesDetails extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            testCases: {testCases: []},
             isNewTestDialogVisible: false,
             newTestName: null,
             inputFile: null,
             outputFile: null
         };
-        this.state.testCases.testCases = this.props.testCases;
     }
-
-    fetchTestCases = () => {
-        fetch(backendUrl(`/${this.props.projectName}/${this.props.stageName}/testCases`), {
-            method: "GET",
-            credentials: "include"
-        })
-            .then(response => response.json())
-            .then(json => this.setState({
-                testCases: json
-            }))
-    };
 
     handleOpenNewTestDialog = () => {
         this.setState({isNewTestDialogVisible: true});
@@ -68,8 +55,8 @@ class TestCasesDetails extends Component {
             .then(function (response) {
                 console.log("success");
             })
-            .then(this.fetchTestCases)
             .then(this.handleCloseNewTestDialog)
+            .then(this.props.stageChangedHandler)
             .catch(function (error) {
                 console.log(error);
             });
@@ -99,11 +86,12 @@ class TestCasesDetails extends Component {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {this.state.testCases.testCases.map(testCase => (
+                        {this.props.testCases.map(testCase => (
                                 <TestCaseRow
                                     testCase={testCase}
                                     projectName={this.props.projectName}
-                                    stageName={this.props.stageName}/>
+                                    stageName={this.props.stageName}
+                                    stageChangedHandler={this.props.stageChangedHandler}/>
                             )
                         )}
                     </TableBody>

@@ -33,6 +33,16 @@ class TestCaseRow extends Component {
         //TODO: do action
     };
 
+    handleDeleteTestCase = (event) => {
+        event.preventDefault();
+
+        Api.deleteTestCase(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName)
+            .then(this.props.stageChangedHandler)
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
     render() {
         return (
             <TableRow>
@@ -62,7 +72,7 @@ class TestCaseRow extends Component {
                 </CustomTableCell>
                 <CustomTableCell>
                     <CustomTableCell>
-                        <IconButton aria-label="Usuń">
+                        <IconButton aria-label="Usuń" onClick={this.handleDeleteTestCase}>
                             <DeleteIcon/>
                         </IconButton>
                     </CustomTableCell>

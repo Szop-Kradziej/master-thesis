@@ -29,7 +29,8 @@ class StageComponent extends Component {
                             <TestCasesDetails
                                 testCases={this.props.stage.testCases}
                                 projectName={this.props.projectName}
-                                stageName={this.props.stage.stageName}/>
+                                stageName={this.props.stage.stageName}
+                                stageChangedHandler={this.props.stageChangedHandler}/>
                         </div>
                     </Typography>
                 </ExpansionPanelDetails>

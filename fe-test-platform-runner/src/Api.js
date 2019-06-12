@@ -90,3 +90,10 @@ export function downloadFile(url) {
             }
         });
 }
+
+export function deleteTestCase(projectName, stageName, testCaseName) {
+    return axios.delete(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName))
+        .then(function (response) {
+            console.log("success");
+        })
+}

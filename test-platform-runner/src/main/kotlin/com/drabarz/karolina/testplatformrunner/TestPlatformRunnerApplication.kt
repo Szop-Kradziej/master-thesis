@@ -131,11 +131,6 @@ class TestPlatformApi(val studentService: StudentService,
         return projectService.addStage(projectName, stageName)
     }
 
-    @GetMapping("/{projectName}/{stageName}/testCases")
-    fun getTestCasesList(@PathVariable("projectName") projectName: String, @PathVariable("stageName") stageName: String): TestCasesResponse {
-        return TestCasesResponse(testCaseService.getTestCasesNames(projectName, stageName))
-    }
-
     @PostMapping("/testCase")
     fun uploadTestCase(
             @RequestParam("input") inputFile: MultipartFile,
@@ -156,6 +151,14 @@ class TestPlatformApi(val studentService: StudentService,
         return createFileResponse(testCaseService.getTestCaseFile(projectName, stageName, testCaseName, fileName))
     }
 
+    @DeleteMapping("/{projectName}/{stageName}/{testCaseName}")
+    fun deleteTestCase(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String,
+            @PathVariable("testCaseName") testCaseName: String): String {
+        return testCaseService.deleteTestCase(projectName, stageName, testCaseName)
+    }
+
     fun createFileResponse(file: File) : ResponseEntity<*> {
         val headers = HttpHeaders()
         headers.add("X-Suggested-Filename", file.name);
@@ -169,7 +172,6 @@ class TestPlatformApi(val studentService: StudentService,
 class ProjectResponse(val projects: List<String>)
 class StagesResponse(val projectDescription: String?, val stages: List<Stage>)
 class Stage(val stageName: String, val stageDescription: String?, val testCases: List<TestCase>)
-class TestCasesResponse(val testCases: List<TestCase>)
 class TestCase(val testCaseName: String, val inputFileName: String?, val outputFileName: String?)
 class StudentStagesResponse(val stages: List<StudentStage>)
 class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases:List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int,  val deadline: String, val codeLink: String)
