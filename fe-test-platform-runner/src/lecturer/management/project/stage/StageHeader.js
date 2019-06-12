@@ -63,6 +63,14 @@ class StageHeader extends Component {
         Api.downloadStageDescription(this.props.projectName, this.props.stageName)
     };
 
+    handleDeleteStage = () => {
+        Api.deleteStage(this.props.projectName, this.props.stageName)
+            .then(this.props.stageChangedHandler)
+            .catch(function (error) {
+                console.log(error);
+            });
+    };
+
     render() {
         return (
             <div>
@@ -92,7 +100,7 @@ class StageHeader extends Component {
                                     editActionHandler={this.handleEditStageDeadline}/>
                             </CustomTableCell>
                             <CustomTableCell>
-                                <IconButton aria-label="Usuń">
+                                <IconButton aria-label="Usuń" onClick={this.handleDeleteStage}>
                                     <DeleteIcon/>
                                 </IconButton>
                             </CustomTableCell>

@@ -131,6 +131,12 @@ class TestPlatformApi(val studentService: StudentService,
         return projectService.addStage(projectName, stageName)
     }
 
+    @DeleteMapping("/{projectName}/{stageName}")
+    fun deleteStage(@PathVariable("projectName") projectName: String,
+                    @PathVariable("stageName") stageName: String): String {
+        return projectService.deleteStage(projectName, stageName)
+    }
+
     @PostMapping("/testCase")
     fun uploadTestCase(
             @RequestParam("input") inputFile: MultipartFile,

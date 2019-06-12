@@ -125,6 +125,38 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
         throw java.lang.RuntimeException("Error file doesn't exist")
     }
 
+    fun deleteStage(projectName: String, stageName: String): String {
+        val stageDir = pathProvider.getStageDir(projectName, stageName)
+
+        if (stageDir.exists()) {
+            if (stageDir.list().isNotEmpty()) {
+                deleteTestCases(projectName, stageName)
+                deleteStageDescriptionDir(projectName, stageName)
+            }
+            stageDir.delete()
+        }
+
+        return "200"
+    }
+
+    private fun deleteStageDescriptionDir(projectName: String, stageName: String) {
+        val stageDir = pathProvider.getStageDir(projectName, stageName)
+
+        if (stageDir.list().contains("description")) {
+            val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
+            deleteDescriptionFileIfExists(descriptionDir)
+            descriptionDir.delete()
+        }
+    }
+
+    private fun deleteTestCases(projectName: String, stageName: String) {
+        val stageDir = pathProvider.getStageDir(projectName, stageName)
+
+        stageDir.list()
+                .filter {it != "description"}
+                .forEach { testCaseService.deleteTestCase(projectName, stageName, it) }
+    }
+
     companion object {
         val log = LoggerFactory.getLogger(ProjectService::class.java);
     }

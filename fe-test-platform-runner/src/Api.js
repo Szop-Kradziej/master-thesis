@@ -97,3 +97,10 @@ export function deleteTestCase(projectName, stageName, testCaseName) {
             console.log("success");
         })
 }
+
+export function deleteStage(projectName, stageName) {
+    return axios.delete(backendUrl('/' + projectName + '/' + stageName))
+        .then(function (response) {
+            console.log("success");
+        })
+}
