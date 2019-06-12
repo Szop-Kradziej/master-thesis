@@ -65,6 +65,10 @@ export function downloadReport(projectName, stageName) {
     return downloadFile(backendUrl('/student/' + projectName + '/' + stageName + "/report"))
 }
 
+export function downloadTestCaseFile(projectName, stageName, testCaseName, fileType) {
+    return downloadFile(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType))
+}
+
 export function downloadFile(url) {
     return axios.get(url, {responseType: "blob"})
         .then((response) => {

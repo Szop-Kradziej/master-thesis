@@ -1,13 +1,11 @@
 import React, {Component} from "react";
-import backendUrl from "../../../../backendUrl";
-import axios from "axios";
-import {saveAs} from "file-saver";
 import {CustomTableCell} from "../../../../styles/ProjectBoardStyles";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import DeleteIcon from "@material-ui/icons/DeleteForever";
 import EditItemComponent from "../../../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
+import * as Api from "../../../../Api";
 
 class TestCaseRow extends Component {
 
@@ -19,21 +17,8 @@ class TestCaseRow extends Component {
         this.downloadFile("output");
     };
 
-    downloadFile = (fileName) => {
-        console.log(backendUrl('/' + this.props.projectName + '/' + this.props.stageName + '/' + this.props.testCaseName + '/' + fileName));
-        axios.get(backendUrl('/' + this.props.projectName + '/' + this.props.stageName + '/' + this.props.testCaseName + '/' + fileName), {responseType: "blob"})
-            .then((response) => {
-                console.log("Response", response);
-                console.log("File name", fileName);
-                saveAs(new Blob([response.data]), fileName);
-            }).catch(function (error) {
-            console.log(error);
-            if (error.response) {
-                console.log('Error', error.response.status);
-            } else {
-                console.log('Error', error.message);
-            }
-        });
+    downloadFile = (fileType) => {
+        Api.downloadTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName, fileType)
     };
 
     handleUploadInputFile = () => {
@@ -53,26 +38,26 @@ class TestCaseRow extends Component {
             <TableRow>
                 <CustomTableCell component="th" scope="row">
                     <EditItemComponent
-                        header={this.props.testCaseName}
+                        header={this.props.testCase.testCaseName}
                         info="Edytuj nazwę testu"
                         editActionHandler={this.handleEditTestName}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
                     <UploadAndDownloadItemComponent
-                        header="INPUT"
+                        header={this.props.testCase.inputFileName}
                         uploadInfo="Załaduj plik wejściowy"
                         uploadActionHandler={this.handleUploadInputFile}
                         downloadInfo="Pobierz plik wejściowy"
-                        downloadDisabled={this.props.inputFileName === null}
+                        downloadDisabled={this.props.testCase.inputFileName === null}
                         downloadActionHandler={this.handleDownloadInputFile}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
                     <UploadAndDownloadItemComponent
-                        header="OUTPUT"
+                        header={this.props.testCase.outputFileName}
                         uploadInfo="Załaduj plik wyjściowy"
                         uploadActionHandler={this.handleUploadOutputFile}
                         downloadInfo="Pobierz plik wyjściowy"
-                        downloadDisabled={this.props.outputFileName === null}
+                        downloadDisabled={this.props.testCase.outputFileName === null}
                         downloadActionHandler={this.handleDownloadOutputFile}/>
                 </CustomTableCell>
                 <CustomTableCell>

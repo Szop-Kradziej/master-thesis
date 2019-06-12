@@ -101,7 +101,7 @@ class TestCasesDetails extends Component {
                     <TableBody>
                         {this.state.testCases.testCases.map(testCase => (
                                 <TestCaseRow
-                                    testCaseName={testCase}
+                                    testCase={testCase}
                                     projectName={this.props.projectName}
                                     stageName={this.props.stageName}/>
                             )

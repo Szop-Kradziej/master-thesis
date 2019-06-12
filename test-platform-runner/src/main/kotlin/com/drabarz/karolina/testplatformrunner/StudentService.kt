@@ -31,19 +31,18 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
         file.writeBytes(out.toByteArray())
     }
 
-    fun saveFile(projectName:String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
+    fun saveFile(projectName: String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
         var dir = pathProvider.getStudentStageDir(projectName, stageName)
         if (fileType == FileType.BINARY) {
             dir = pathProvider.getStudentBinDir(projectName, stageName)
-        }
-        else {
+        } else {
             dir = pathProvider.getStudentReportDir(projectName, stageName)
         }
 
         dir.mkdirs()
 
         //TODO: Delete this file
-        if(dir.list().isNotEmpty()) {
+        if (dir.list().isNotEmpty()) {
             File("${dir.path}/${dir.list()[0]}").delete()
         }
 
@@ -59,11 +58,12 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
                             stage.stageName,
                             getBinaryName(projectName, stage.stageName),
                             getReportName(projectName, stage.stageName),
-                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases),
-                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases).count { it -> it.status == "SUCCESS" },
+                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }),
+                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }).count {it.status == "SUCCESS" },
                             stage.testCases.size,
                             getDeadline(),
-                            getCodeLink())}
+                            getCodeLink())
+                }
     }
 
     private fun getCodeLink(): String {
@@ -94,8 +94,7 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
         val fileDir: File
         if (fileType == FileType.BINARY) {
             fileDir = pathProvider.getStudentBinDir(projectName, stageName)
-        }
-        else {
+        } else {
             fileDir = pathProvider.getStudentReportDir(projectName, stageName)
         }
 
@@ -110,13 +109,13 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
         val resultFile = File(pathProvider.getStudentResultsDir(projectName, stageName), "result.json")
 
         if (!resultFile.exists()) {
-            return testCases.map { testCase -> TestCaseWithResult(testCase, "NO RUN", null)}
+            return testCases.map { testCase -> TestCaseWithResult(testCase, "NO RUN", null) }
         }
 
         val jsonData = resultFile.readBytes()
         val results = jacksonObjectMapper().readerFor(Array<TestResponse>::class.java).readValue<Array<TestResponse>>(jsonData).toList()
 
-        return testCases.map {testCase ->
+        return testCases.map { testCase ->
             TestCaseWithResult(
                     testCase,
                     results.find { it -> it.testCaseName == testCase }?.status ?: "NO RUN",
@@ -137,7 +136,7 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
     }
 
     fun getSingleFile(dir: File): File {
-        if(!dir.exists() && dir.list().size != 1) {
+        if (!dir.exists() && dir.list().size != 1) {
             throw java.lang.RuntimeException("Error file doesn't exist")
         }
 

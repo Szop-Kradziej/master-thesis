@@ -29,9 +29,9 @@ class JarService(val pathProvider: PathProvider, val containerFactory: Container
         val jarName = jarPath.list()[0]
 
         return testCasesNames.map {
-            val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it, "${jarPath.absolutePath}/$jarName")
+            val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it.testCaseName, "${jarPath.absolutePath}/$jarName")
             containerService.runTestCase(container)
-            checkCorrectness(projectName, stageName, it)
+            checkCorrectness(projectName, stageName, it.testCaseName)
         }
     }
 

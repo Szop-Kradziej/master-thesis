@@ -21,16 +21,21 @@ class TestCaseService(val pathProvider: PathProvider) {
         val testCaseDir = pathProvider.getTestCaseDir(projectName, stageName, testCaseName)
         testCaseDir.mkdirs()
 
-        val savedInputFile = File(testCaseDir, INPUT_FILE_NAME)
-        inputFile.transferTo(savedInputFile)
-
-        val savedOutputFile = File(testCaseDir, OUTPUT_FILE_NAME)
-        outputFile.transferTo(savedOutputFile)
+        saveTestCaseFile(inputFile, INPUT, projectName, stageName, testCaseName)
+        saveTestCaseFile(outputFile, OUTPUT, projectName, stageName, testCaseName)
 
         return "200"
     }
 
-    fun getTestCasesNames(projectName: String, stageName: String): List<String> {
+    fun saveTestCaseFile(file: MultipartFile, type:String, projectName: String, stageName: String, testCaseName: String) {
+        val fileDir = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, type)
+        fileDir.mkdirs()
+
+        val savedInputFile = File(fileDir, file.originalFilename)
+        file.transferTo(savedInputFile)
+    }
+
+    fun getTestCasesNames(projectName: String, stageName: String): List<TestCase> {
         val projectDir = pathProvider.getProjectDir(projectName)
         if (!projectDir.exists()) {
             throw RuntimeException("Error. Project $projectName doesn't exist")
@@ -41,20 +46,34 @@ class TestCaseService(val pathProvider: PathProvider) {
             throw RuntimeException("Error. Stage $stageName doesn't exist")
         }
         //TODO: fix add const dir "testCases"
-        return stageDir.list().filter { it -> it != "description" }
+        return stageDir.list()
+                .filter {it != "description" }
+                .map {TestCase(
+                        it,
+                        getTestCaseFileName(INPUT, projectName, stageName, it),
+                        getTestCaseFileName(OUTPUT, projectName, stageName, it))
+        }
     }
 
-    fun getTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileName: String): File {
-        val file = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, fileName)
-        if (file.exists()) {
-            return file
+    private fun getTestCaseFileName(fileType: String, projectName: String, stageName: String, testCaseName: String): String? {
+        val fileDir = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, fileType)
+        if (!fileDir.exists() || fileDir.list().size != 1) {
+            return null
+        }
+        return fileDir.list()[0]
+    }
+
+    fun getTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileType: String): File {
+        val fileDir = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, fileType)
+        if (fileDir.exists() && fileDir.list().size == 1) {
+            return File(fileDir, fileDir.list()[0])
         }
 
         throw java.lang.RuntimeException("Error file doesn't exist")
     }
 
     companion object {
-        val INPUT_FILE_NAME = "input"
-        val OUTPUT_FILE_NAME = "output"
+        val INPUT = "input"
+        val OUTPUT = "output"
     }
 }

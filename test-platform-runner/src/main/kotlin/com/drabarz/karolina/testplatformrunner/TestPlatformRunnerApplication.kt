@@ -168,8 +168,9 @@ class TestPlatformApi(val studentService: StudentService,
 
 class ProjectResponse(val projects: List<String>)
 class StagesResponse(val projectDescription: String?, val stages: List<Stage>)
-class Stage(val stageName: String, val stageDescription: String?, val testCases: List<String>)
-class TestCasesResponse(val testCases: List<String>)
+class Stage(val stageName: String, val stageDescription: String?, val testCases: List<TestCase>)
+class TestCasesResponse(val testCases: List<TestCase>)
+class TestCase(val testCaseName: String, val inputFileName: String?, val outputFileName: String?)
 class StudentStagesResponse(val stages: List<StudentStage>)
 class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases:List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int,  val deadline: String, val codeLink: String)
 class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?)
