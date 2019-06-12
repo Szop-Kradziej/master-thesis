@@ -1,5 +1,6 @@
 package com.drabarz.karolina.testplatformrunner
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
@@ -58,9 +59,7 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
         val descriptionDir = pathProvider.getProjectDescriptionDir(projectName)
         descriptionDir.mkdir()
 
-        if(descriptionDir.list().isNotEmpty()) {
-            JarService.log.info("Existing file to delete: " + descriptionDir.list()[0] + " from: " + descriptionDir.absolutePath)
-        }
+        deleteDescriptionFileIfExists(descriptionDir)
 
         val outputFile = File(descriptionDir.path, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
@@ -94,14 +93,19 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
         val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
         descriptionDir.mkdir()
 
-        if(descriptionDir.list().isNotEmpty()) {
-            JarService.log.info("Existing file to delete: " + descriptionDir.list()[0] + " from: " + descriptionDir.absolutePath)
-        }
+        deleteDescriptionFileIfExists(descriptionDir)
 
         val outputFile = File(descriptionDir.path, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
 
         return "200"
+    }
+
+    private fun deleteDescriptionFileIfExists(descriptionDir: File) {
+        if (descriptionDir.list().isNotEmpty()) {
+            log.info("Existing file to delete: " + descriptionDir.list()[0] + " from: " + descriptionDir.absolutePath)
+            File("${descriptionDir.path}/${descriptionDir.list()[0]}").delete()
+        }
     }
 
     fun getStageDescriptionName(projectName: String, stageName: String): String? {
@@ -119,5 +123,9 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
         }
 
         throw java.lang.RuntimeException("Error file doesn't exist")
+    }
+
+    companion object {
+        val log = LoggerFactory.getLogger(ProjectService::class.java);
     }
 }
