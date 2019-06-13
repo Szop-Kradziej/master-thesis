@@ -171,6 +171,42 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
         testCasesDir.delete()
     }
 
+    fun deleteProject(projectName: String): String {
+        val projectDir = pathProvider.getProjectDir(projectName)
+
+        if (projectDir.exists()) {
+            if (projectDir.list().isNotEmpty()) {
+                deleteStages(projectName)
+                deleteProjectDescriptionDir(projectName)
+            }
+            projectDir.delete()
+        }
+
+        return "200"
+    }
+
+    private fun deleteStages(projectName: String) {
+        val stagesDir = pathProvider.getStagesDir(projectName)
+        if (!stagesDir.exists()) {
+            return
+        }
+
+        stagesDir.list()
+                .forEach { deleteStage(projectName, it) }
+
+        stagesDir.delete()
+    }
+
+    private fun deleteProjectDescriptionDir(projectName: String) {
+        val projectDir = pathProvider.getProjectDir(projectName)
+
+        if (projectDir.list().contains(PathProvider.DESCRIPTION)) {
+            val descriptionDir = pathProvider.getProjectDescriptionDir(projectName)
+            deleteDescriptionFileIfExists(descriptionDir)
+            descriptionDir.delete()
+        }
+    }
+
     companion object {
         val log = LoggerFactory.getLogger(ProjectService::class.java);
     }

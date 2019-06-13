@@ -4,11 +4,11 @@ import Table from "@material-ui/core/Table/Table";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
-import {Link} from "react-router-dom";
 import {CustomTableCell, styles} from "../../styles/ProjectssBoardStyles";
 import AddNewItemComponent from "../../utils/AddNewItemComponent";
 import AddNewProjectDialog from "./AddNewProjectDialog";
 import * as Api from "../../Api";
+import ProjectRow from "./ProjectRow";
 
 class ProjectsBoard extends React.Component {
 
@@ -49,17 +49,14 @@ class ProjectsBoard extends React.Component {
                                     info="Dodaj nowy projekt"
                                     addActionHandler={this.handleOpenNewProjectDialog}/>
                             </CustomTableCell>
+                            <CustomTableCell/>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.projects.projects.map(project => (
-                            <TableRow key={project}>
-                                <CustomTableCell component="th" scope="row">
-                                    <Link to={`/projects/${project}`} className={this.props.classes.link}>
-                                        {project}
-                                    </Link>
-                                </CustomTableCell>
-                            </TableRow>
+                            <ProjectRow
+                                projectName={project}
+                                projectChangedHandler={this.fetchProjects}/>
                         ))}
                     </TableBody>
                 </Table>

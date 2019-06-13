@@ -87,6 +87,11 @@ class TestPlatformApi(val studentService: StudentService,
         return projectService.addProject(projectName)
     }
 
+    @DeleteMapping("/{projectName}")
+    fun deleteProject(@PathVariable("projectName") projectName: String): String {
+        return projectService.deleteProject(projectName)
+    }
+
     @PostMapping("/project/description")
     fun addProjectDescription(
             @RequestParam("file") uploadedFile: MultipartFile,

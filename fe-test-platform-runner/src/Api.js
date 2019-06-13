@@ -92,14 +92,19 @@ export function downloadFile(url) {
 }
 
 export function deleteTestCase(projectName, stageName, testCaseName) {
-    return axios.delete(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName))
-        .then(function (response) {
-            console.log("success");
-        })
+    return deleteItem(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName))
 }
 
 export function deleteStage(projectName, stageName) {
-    return axios.delete(backendUrl('/' + projectName + '/' + stageName))
+    return deleteItem(backendUrl('/' + projectName + '/' + stageName))
+}
+
+export function deleteProject(projectName) {
+    return deleteItem(backendUrl('/' + projectName))
+}
+
+function deleteItem(url) {
+    return axios.delete(url)
         .then(function (response) {
             console.log("success");
         })
