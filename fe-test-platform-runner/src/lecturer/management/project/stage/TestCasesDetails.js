@@ -69,33 +69,7 @@ class TestCasesDetails extends Component {
                     header="Testy"
                     info="Dodaj nowy test"
                     addActionHandler={this.handleOpenNewTestDialog}/>
-                <Table>
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell width="20%">
-                                Nazwa testu:
-                            </CustomTableCell>
-                            <CustomTableCell width="15%">
-                                Plik wejściowy
-                            </CustomTableCell>
-                            <CustomTableCell width="15%">
-                                Plik wyjściowy
-                            </CustomTableCell>
-                            <CustomTableCell width="5%"/>
-                            <CustomTableCell/>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.props.testCases.map(testCase => (
-                                <TestCaseRow
-                                    testCase={testCase}
-                                    projectName={this.props.projectName}
-                                    stageName={this.props.stageName}
-                                    stageChangedHandler={this.props.stageChangedHandler}/>
-                            )
-                        )}
-                    </TableBody>
-                </Table>
+                {this.isAnyTestCaseExist() ? this.renderTestCasesTable() : this.renderNoTestsLabel()}
                 <Dialog open={this.state.isNewTestDialogVisible} onClose={this.handleCloseNewTestDialog}
                         aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">Dodaj nowy test</DialogTitle>
@@ -135,12 +109,59 @@ class TestCasesDetails extends Component {
             </div>
         );
     }
+
+    isAnyTestCaseExist() {
+        return this.props.testCases && this.props.testCases.length > 0;
+    }
+
+    renderTestCasesTable() {
+        return (
+            <Table display={this.props.testCases}>
+                <TableHead>
+                    <TableRow>
+                        <CustomTableCell width="20%">
+                            Nazwa testu:
+                        </CustomTableCell>
+                        <CustomTableCell width="15%">
+                            Plik wejściowy
+                        </CustomTableCell>
+                        <CustomTableCell width="15%">
+                            Plik wyjściowy
+                        </CustomTableCell>
+                        <CustomTableCell width="5%"/>
+                        <CustomTableCell/>
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {this.props.testCases.map(testCase => (
+                            <TestCaseRow
+                                testCase={testCase}
+                                projectName={this.props.projectName}
+                                stageName={this.props.stageName}
+                                stageChangedHandler={this.props.stageChangedHandler}/>
+                        )
+                    )}
+                </TableBody>
+            </Table>
+        );
+    }
+
+    renderNoTestsLabel() {
+        return (
+            <p className={this.props.classes.noTestText}>
+                Brak testów
+            </p>
+        );
+    }
 }
 
 const styles = theme => ({
     root: {
         flexGrow: 1,
     },
+    noTestText: {
+        fontSize: 12
+    }
 });
 
 export default withStyles(styles)(TestCasesDetails);

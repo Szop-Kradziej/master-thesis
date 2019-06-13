@@ -12,35 +12,50 @@ class StudentTestCasesDetails extends Component {
     render() {
         return (
             <div className={this.props.classes.root}>
-                <Table width="1700">
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell>
-                                Nazwa:
-                            </CustomTableCell>
-                            <CustomTableCell>
-                                Status:
-                            </CustomTableCell>
-                            <CustomTableCell>
-                                Komunikat błędu:
-                            </CustomTableCell>
-                            <CustomTableCell>
-                                Logi:
-                            </CustomTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.props.testCases.map(testCase => (
-                                <StudentTestCaseRow
-                                    testCase={testCase}
-                                    projectName={this.props.projectName}
-                                    stageName={this.props.stageName}/>
-                            )
-                        )}
-                    </TableBody>
-                </Table>
-
+                {this.isAnyTestCaseExist() ? this.renderTestCasesTable() : this.renderNoTestsLabel()}
             </div>
+        );
+    }
+
+    isAnyTestCaseExist() {
+        return this.props.testCases && this.props.testCases.length > 0;
+    }
+
+    renderTestCasesTable() {
+        return <Table width="1700">
+            <TableHead>
+                <TableRow>
+                    <CustomTableCell>
+                        Nazwa:
+                    </CustomTableCell>
+                    <CustomTableCell>
+                        Status:
+                    </CustomTableCell>
+                    <CustomTableCell>
+                        Komunikat błędu:
+                    </CustomTableCell>
+                    <CustomTableCell>
+                        Logi:
+                    </CustomTableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {this.props.testCases.map(testCase => (
+                        <StudentTestCaseRow
+                            testCase={testCase}
+                            projectName={this.props.projectName}
+                            stageName={this.props.stageName}/>
+                    )
+                )}
+            </TableBody>
+        </Table>;
+    }
+
+    renderNoTestsLabel() {
+        return (
+            <p className={this.props.classes.noTestText}>
+                Brak testów
+            </p>
         );
     }
 }
@@ -74,6 +89,9 @@ const styles = theme => ({
         color: "black",
         marginTop: 20
     },
+    noTestText: {
+        fontSize: 12
+    }
 });
 
 export default withStyles(styles)(StudentTestCasesDetails);
