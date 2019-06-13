@@ -44,9 +44,8 @@ class StudentService(
 
         dir.mkdirs()
 
-        //TODO: Delete this file
         if (dir.list().isNotEmpty()) {
-            File("${dir.path}/${dir.list()[0]}").delete()
+            dir.listFiles().first().delete()
         }
 
         val outputFile = File(dir.path, uploadedFile.originalFilename)
@@ -105,7 +104,7 @@ class StudentService(
             return null
         }
 
-        return fileDir.list()[0]
+        return fileDir.list().first()
     }
 
     private fun getTestCasesWithResults(projectName: String, stageName: String, testCases: List<String>): List<TestCaseWithResult> {
@@ -143,7 +142,7 @@ class StudentService(
             throw java.lang.RuntimeException("Error file doesn't exist")
         }
 
-        return File(dir, dir.list()[0])
+        return dir.listFiles().first()
     }
 }
 

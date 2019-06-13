@@ -8,7 +8,7 @@ import java.io.File
 class StageService(
         val pathProvider: PathProvider,
         val testCaseService: TestCaseService,
-        val deleteFileService: DeleteFileService) {
+        val deleteFileHelper: DeleteFileHelper) {
 
     fun addStage(projectName: String, stageName: String): String {
         val projectDir = pathProvider.getProjectDir(projectName)
@@ -55,7 +55,7 @@ class StageService(
         val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
         descriptionDir.mkdir()
 
-        deleteFileService.deleteSingleFileFromDir(descriptionDir)
+        deleteFileHelper.deleteSingleFileFromDir(descriptionDir)
 
         val outputFile = File(descriptionDir.path, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
@@ -68,14 +68,14 @@ class StageService(
         if (!stageDescriptionDir.exists() || stageDescriptionDir.list().size != 1) {
             return null
         }
-        return stageDescriptionDir.list()[0]
+        return stageDescriptionDir.list().first()
     }
 
 
     fun getStageDescription(projectName: String, stageName: String): File {
         val stageDescriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
         if (stageDescriptionDir.exists() && stageDescriptionDir.list().size == 1) {
-            return File(stageDescriptionDir, stageDescriptionDir.list()[0])
+            return stageDescriptionDir.listFiles().first()
         }
 
         throw java.lang.RuntimeException("Error file doesn't exist")
@@ -112,7 +112,7 @@ class StageService(
 
         if (stageDir.list().contains(PathProvider.DESCRIPTION)) {
             val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
-            deleteFileService.deleteSingleFileWithDirectory(descriptionDir)
+            deleteFileHelper.deleteSingleFileWithDirectory(descriptionDir)
         }
     }
 }

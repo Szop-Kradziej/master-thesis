@@ -9,7 +9,7 @@ import java.io.File
 class ProjectService(
         val pathProvider: PathProvider,
         val stageService: StageService,
-        val deleteFileService: DeleteFileService) {
+        val deleteFileHelper: DeleteFileHelper) {
 
     fun addProject(projectName: String): String {
         val projectDir = pathProvider.getProjectDir(projectName)
@@ -36,7 +36,7 @@ class ProjectService(
         val descriptionDir = pathProvider.getProjectDescriptionDir(projectName)
         descriptionDir.mkdir()
 
-        deleteFileService.deleteSingleFileFromDir(descriptionDir)
+        deleteFileHelper.deleteSingleFileFromDir(descriptionDir)
 
         val outputFile = File(descriptionDir.path, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
@@ -49,13 +49,13 @@ class ProjectService(
         if (!projectDescriptionDir.exists() || projectDescriptionDir.list().size != 1) {
             return null
         }
-        return projectDescriptionDir.list()[0]
+        return projectDescriptionDir.list().first()
     }
 
     fun getProjectDescription(projectName: String): File {
         val projectDescriptionDir = pathProvider.getProjectDescriptionDir(projectName)
         if (projectDescriptionDir.exists() && projectDescriptionDir.list().size == 1) {
-            return File(projectDescriptionDir, projectDescriptionDir.list()[0])
+            return projectDescriptionDir.listFiles().first()
         }
 
         throw java.lang.RuntimeException("Error file doesn't exist")
@@ -92,7 +92,7 @@ class ProjectService(
 
         if (projectDir.list().contains(PathProvider.DESCRIPTION)) {
             val descriptionDir = pathProvider.getProjectDescriptionDir(projectName)
-            deleteFileService.deleteSingleFileWithDirectory(descriptionDir)
+            deleteFileHelper.deleteSingleFileWithDirectory(descriptionDir)
         }
     }
 

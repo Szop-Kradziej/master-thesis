@@ -8,7 +8,6 @@ import org.testcontainers.containers.output.OutputFrame
 import org.testcontainers.containers.output.ToStringConsumer
 import org.testcontainers.images.builder.ImageFromDockerfile
 import org.testcontainers.utility.MountableFile
-import java.io.File
 
 @Component
 class JarService(val pathProvider: PathProvider, val containerFactory: ContainerFactory, val containerService: ContainerService, val testCaseService: TestCaseService) {
@@ -26,7 +25,7 @@ class JarService(val pathProvider: PathProvider, val containerFactory: Container
             throw java.lang.RuntimeException("Invalid number of binaries or no binary")
         }
 
-        val jarName = jarPath.list()[0]
+        val jarName = jarPath.list().first()
 
         return testCasesNames.map {
             val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it.testCaseName, "${jarPath.absolutePath}/$jarName")

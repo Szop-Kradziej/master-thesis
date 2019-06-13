@@ -66,13 +66,13 @@ class TestCaseService(val pathProvider: PathProvider) {
         if (!fileDir.exists() || fileDir.list().size != 1) {
             return null
         }
-        return fileDir.list()[0]
+        return fileDir.list().first()
     }
 
     fun getTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileType: String): File {
         val fileDir = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, fileType)
         if (fileDir.exists() && fileDir.list().size == 1) {
-            return File(fileDir, fileDir.list()[0])
+            return fileDir.listFiles().first()
         }
 
         throw java.lang.RuntimeException("Error file doesn't exist")
@@ -90,8 +90,8 @@ class TestCaseService(val pathProvider: PathProvider) {
     private fun deleteTestCaseFileDirIfExists(fileDir: File) {
         if (fileDir.exists()) {
             if (fileDir.list().isNotEmpty()) {
-                log.info("Existing file to delete: " + fileDir.list()[0] + " from: " + fileDir.absolutePath)
-                File("${fileDir.path}/${fileDir.list()[0]}").delete()
+                log.info("Existing file to delete: " + fileDir.list().first() + " from: " + fileDir.absolutePath)
+                fileDir.listFiles().first().delete()
             }
             fileDir.delete()
         }
