@@ -71,7 +71,7 @@ class TestPlatformApi(val studentService: StudentService,
     }
 
     @PostMapping("/run")
-    fun uploadJar(
+    fun runJar(
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): List<TestResponse> {
         return studentService.runJar(projectName, stageName)
