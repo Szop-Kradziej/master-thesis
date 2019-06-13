@@ -28,7 +28,7 @@ class TestCaseService(val pathProvider: PathProvider) {
         return "200"
     }
 
-    fun saveTestCaseFile(file: MultipartFile, type:String, projectName: String, stageName: String, testCaseName: String) {
+    fun saveTestCaseFile(file: MultipartFile, type: String, projectName: String, stageName: String, testCaseName: String) {
         val fileDir = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, type)
         fileDir.mkdirs()
 
@@ -46,14 +46,19 @@ class TestCaseService(val pathProvider: PathProvider) {
         if (!stageDir.exists()) {
             throw RuntimeException("Error. Stage $stageName doesn't exist")
         }
-        //TODO: fix add const dir "testCases"
-        return stageDir.list()
-                .filter {it != "description" }
-                .map {TestCase(
-                        it,
-                        getTestCaseFileName(INPUT, projectName, stageName, it),
-                        getTestCaseFileName(OUTPUT, projectName, stageName, it))
+
+        val testCasesDir = pathProvider.getTestCasesDir(projectName, stageName)
+        if (!testCasesDir.exists()) {
+            return emptyList()
         }
+
+        return testCasesDir.list()
+                .map {
+                    TestCase(
+                            it,
+                            getTestCaseFileName(INPUT, projectName, stageName, it),
+                            getTestCaseFileName(OUTPUT, projectName, stageName, it))
+                }
     }
 
     private fun getTestCaseFileName(fileType: String, projectName: String, stageName: String, testCaseName: String): String? {

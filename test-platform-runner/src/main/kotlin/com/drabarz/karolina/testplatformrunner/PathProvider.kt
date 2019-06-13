@@ -16,15 +16,19 @@ class PathProvider : PathProv {
     final override val projectPath = "$pathPrefix/projects"
 
     fun getProjectDir(projectName: String): File {
-        return File("${projectPath}/$projectName")
+        return File("$projectPath/$projectName")
     }
 
     fun getStageDir(projectName: String, stageName: String): File {
         return File(getProjectDir(projectName), stageName)
     }
 
+    fun getTestCasesDir(projectName: String, stageName: String): File {
+        return File(getStageDir(projectName, stageName), TEST_CASES)
+    }
+
     fun getTestCaseDir(projectName: String, stageName: String, testCaseName: String): File {
-        return File(getStageDir(projectName, stageName), testCaseName)
+        return File(getTestCasesDir(projectName, stageName), testCaseName)
     }
 
     fun getTestCaseFileDir(projectName: String, stageName: String, testCaseName: String, fileName: String): File {
@@ -40,7 +44,7 @@ class PathProvider : PathProv {
     }
 
     fun getStudentStageDir(projectName: String, stageName: String): File {
-        return File("${jarPath}/$projectName/$stageName")
+        return File("$jarPath/$projectName/$stageName")
     }
 
     fun getStudentResultsDir(projectName: String, stageName: String): File {
@@ -65,5 +69,6 @@ class PathProvider : PathProv {
         const val BIN = "bin"
         const val REPORT = "report"
         const val RESULTS = "results"
+        const val TEST_CASES = "test_cases"
     }
 }

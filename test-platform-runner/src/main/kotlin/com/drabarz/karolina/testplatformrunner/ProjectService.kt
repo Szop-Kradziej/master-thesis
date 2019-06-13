@@ -47,7 +47,14 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
             throw RuntimeException("Error. Can not get stages for project. Project $projectName doesn't exist")
         }
         //TODO: fix add "stages" dir
-        return projectDir.list().asList().filter { it -> it != "description" }.map { it -> Stage(it, getStageDescriptionName(projectName, it), testCaseService.getTestCasesNames(projectName, it)) }
+        return projectDir.list().asList()
+                .filter { it != PathProvider.DESCRIPTION }
+                .map {
+                    Stage(
+                            it,
+                            getStageDescriptionName(projectName, it),
+                            testCaseService.getTestCasesNames(projectName, it))
+                }
     }
 
     fun addProjectDescription(uploadedFile: MultipartFile, projectName: String): String {
@@ -142,7 +149,7 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
     private fun deleteStageDescriptionDir(projectName: String, stageName: String) {
         val stageDir = pathProvider.getStageDir(projectName, stageName)
 
-        if (stageDir.list().contains("description")) {
+        if (stageDir.list().contains(PathProvider.DESCRIPTION)) {
             val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
             deleteDescriptionFileIfExists(descriptionDir)
             descriptionDir.delete()
@@ -150,11 +157,15 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
     }
 
     private fun deleteTestCases(projectName: String, stageName: String) {
-        val stageDir = pathProvider.getStageDir(projectName, stageName)
+        val testCasesDir = pathProvider.getTestCasesDir(projectName, stageName)
+        if (!testCasesDir.exists()) {
+            return
+        }
 
-        stageDir.list()
-                .filter {it != "description"}
+        testCasesDir.list()
                 .forEach { testCaseService.deleteTestCase(projectName, stageName, it) }
+
+        testCasesDir.delete()
     }
 
     companion object {
