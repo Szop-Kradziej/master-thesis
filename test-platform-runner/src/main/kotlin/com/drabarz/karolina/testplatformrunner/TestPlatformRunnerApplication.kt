@@ -23,6 +23,7 @@ fun main(args: Array<String>) {
 @RestController
 class TestPlatformApi(val studentService: StudentService,
                       val testCaseService: TestCaseService,
+                      val stagesService: StageService,
                       val projectService: ProjectService,
                       val applicationContext: ApplicationContext) {
 
@@ -110,7 +111,7 @@ class TestPlatformApi(val studentService: StudentService,
     fun downloadStageDescriptionFile(
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        return createFileResponse(projectService.getStageDescription(projectName, stageName))
+        return createFileResponse(stagesService.getStageDescription(projectName, stageName))
     }
 
     @PostMapping("/stage/description")
@@ -118,12 +119,12 @@ class TestPlatformApi(val studentService: StudentService,
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String) : String {
-        return projectService.addStageDescription(uploadedFile, projectName, stageName)
+        return stagesService.addStageDescription(uploadedFile, projectName, stageName)
     }
 
     @GetMapping("/{projectName}/stages")
     fun getStagesList(@PathVariable("projectName") projectName: String): StagesResponse {
-        return StagesResponse(projectService.getProjectDescriptionName(projectName), projectService.getStages(projectName))
+        return StagesResponse(projectService.getProjectDescriptionName(projectName), stagesService.getStages(projectName))
     }
 
     @GetMapping("/student/{projectName}/stages")
@@ -133,13 +134,13 @@ class TestPlatformApi(val studentService: StudentService,
 
     @PostMapping("/stage")
     fun addStage(@RequestParam("projectName") projectName: String, @RequestParam("stageName") stageName: String): String {
-        return projectService.addStage(projectName, stageName)
+        return stagesService.addStage(projectName, stageName)
     }
 
     @DeleteMapping("/{projectName}/{stageName}")
     fun deleteStage(@PathVariable("projectName") projectName: String,
                     @PathVariable("stageName") stageName: String): String {
-        return projectService.deleteStage(projectName, stageName)
+        return stagesService.deleteStage(projectName, stageName)
     }
 
     @PostMapping("/testCase")

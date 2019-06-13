@@ -8,7 +8,10 @@ import java.io.ByteArrayOutputStream
 import java.io.File
 
 @Component
-class StudentService(val projectService: ProjectService, val pathProvider: PathProvider, val jarService: JarService) {
+class StudentService(
+        val stageService: StageService,
+        val pathProvider: PathProvider,
+        val jarService: JarService) {
 
     fun runJar(projectName: String, stageName: String): List<TestResponse> {
         val testResponses = jarService.runJar(projectName, stageName)
@@ -51,7 +54,7 @@ class StudentService(val projectService: ProjectService, val pathProvider: PathP
     }
 
     fun getStudentStages(projectName: String): List<StudentStage> {
-        return projectService
+        return stageService
                 .getStages(projectName)
                 .map { stage ->
                     StudentStage(
