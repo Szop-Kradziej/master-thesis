@@ -24,13 +24,13 @@ class ProjectService(
     }
 
     fun getProjects(): List<String> {
-        return File(pathProvider.projectPath).list().asList()
+        return File(pathProvider.projectsPath).list().asList()
     }
 
     fun addProjectDescription(uploadedFile: MultipartFile, projectName: String): String {
         val projectDir = pathProvider.getProjectDir(projectName)
         if (!projectDir.exists()) {
-            throw RuntimeException("Error. Project $projectName doesn't not exist")
+            throw RuntimeException("Error. Project $projectName doesn't exist")
         }
 
         val descriptionDir = pathProvider.getProjectDescriptionDir(projectName)

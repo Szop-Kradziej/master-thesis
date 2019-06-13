@@ -49,7 +49,7 @@ class StageService(
     fun addStageDescription(uploadedFile: MultipartFile, projectName: String, stageName: String): String {
         val stageDir = pathProvider.getStageDir(projectName, stageName)
         if (!stageDir.exists()) {
-            throw RuntimeException("Error. Stage $stageName for project: $projectName doesn't not exist")
+            throw RuntimeException("Error. Stage $stageName for project: $projectName doesn't exist")
         }
 
         val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)

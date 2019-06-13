@@ -6,17 +6,17 @@ import java.io.File
 
 interface PathProv {
     val jarPath: String
-    val projectPath: String
+    val projectsPath: String
 }
 
 @Component
 class PathProvider : PathProv {
     private final val pathPrefix = "/home/karolina/MGR/platform"
     final override val jarPath = "$pathPrefix/jars"
-    final override val projectPath = "$pathPrefix/projects"
+    final override val projectsPath = "$pathPrefix/projects"
 
     fun getProjectDir(projectName: String): File {
-        return File("$projectPath/$projectName")
+        return File("$projectsPath/$projectName")
     }
 
     fun getStagesDir(projectName: String): File {
