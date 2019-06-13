@@ -19,8 +19,12 @@ class PathProvider : PathProv {
         return File("$projectPath/$projectName")
     }
 
+    fun getStagesDir(projectName: String): File {
+        return File(getProjectDir(projectName), STAGES)
+    }
+
     fun getStageDir(projectName: String, stageName: String): File {
-        return File(getProjectDir(projectName), stageName)
+        return File(getStagesDir(projectName), stageName)
     }
 
     fun getTestCasesDir(projectName: String, stageName: String): File {

@@ -46,9 +46,12 @@ class ProjectService(val pathProvider: PathProvider, val testCaseService: TestCa
         if (!projectDir.exists()) {
             throw RuntimeException("Error. Can not get stages for project. Project $projectName doesn't exist")
         }
-        //TODO: fix add "stages" dir
-        return projectDir.list().asList()
-                .filter { it != PathProvider.DESCRIPTION }
+        val stagesDir = pathProvider.getStagesDir(projectName)
+        if (!stagesDir.exists()) {
+            return emptyList()
+        }
+
+        return stagesDir.list().asList()
                 .map {
                     Stage(
                             it,
