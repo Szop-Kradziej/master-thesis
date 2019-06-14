@@ -1,5 +1,6 @@
 package com.drabarz.karolina.testplatformrunner
 
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.io.File
 
@@ -13,8 +14,12 @@ class DeleteFileHelper {
 
     fun deleteSingleFileFromDir(dir: File) {
         if (dir.list().isNotEmpty()) {
-            ProjectService.log.info("Existing file to delete: " + dir.list().first() + " from: " + dir.absolutePath)
+            log.info("Existing file to delete: " + dir.list().first() + " from: " + dir.absolutePath)
             dir.listFiles().first().delete()
         }
+    }
+
+    companion object {
+        val log = LoggerFactory.getLogger(TestCaseService::class.java)
     }
 }

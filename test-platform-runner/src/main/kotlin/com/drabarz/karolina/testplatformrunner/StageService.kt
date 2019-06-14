@@ -22,7 +22,7 @@ class StageService(
             throw RuntimeException("Warning. Stage already exists")
         }
 
-        stageDir.mkdir()
+        stageDir.mkdirs()
 
         return "200"
     }

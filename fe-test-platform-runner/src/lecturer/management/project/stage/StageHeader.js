@@ -18,7 +18,6 @@ class StageHeader extends Component {
         super(props);
         this.state = {
             isAddDescriptionDialogVisible: false,
-            inputDescriptionFile: null
         };
     }
 

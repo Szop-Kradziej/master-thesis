@@ -153,14 +153,24 @@ class TestPlatformApi(val studentService: StudentService,
         return testCaseService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
     }
 
-    @GetMapping("/{projectName}/{stageName}/{testCaseName}/{fileName}")
+    @GetMapping("/{projectName}/{stageName}/{testCaseName}/{fileType}")
     @ResponseBody
     fun downloadTestCaseFile(
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String,
-            @PathVariable("fileName") fileName: String): ResponseEntity<*> {
-        return createFileResponse(testCaseService.getTestCaseFile(projectName, stageName, testCaseName, fileName))
+            @PathVariable("fileType") fileType: String): ResponseEntity<*> {
+        return createFileResponse(testCaseService.getTestCaseFile(projectName, stageName, testCaseName, fileType))
+    }
+
+    @PostMapping("/{projectName}/{stageName}/{testCaseName}/{fileType}")
+    fun uploadTestCaseFile(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String,
+            @PathVariable("testCaseName") testCaseName: String,
+            @PathVariable("fileType") fileType: String,
+            @RequestParam("file") file: MultipartFile): String {
+        return testCaseService.uploadTestCaseFile(projectName, stageName, testCaseName, fileType, file)
     }
 
     @DeleteMapping("/{projectName}/{stageName}/{testCaseName}")

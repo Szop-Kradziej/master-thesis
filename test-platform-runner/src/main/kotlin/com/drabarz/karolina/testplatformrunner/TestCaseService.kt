@@ -1,12 +1,13 @@
 package com.drabarz.karolina.testplatformrunner
 
-import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 
 @Component
-class TestCaseService(val pathProvider: PathProvider) {
+class TestCaseService(
+        val pathProvider: PathProvider,
+        val deleteFileHelper: DeleteFileHelper) {
 
     fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, stageName: String, testCaseName: String): String {
         val projectDir = pathProvider.getProjectDir(projectName)
@@ -89,18 +90,24 @@ class TestCaseService(val pathProvider: PathProvider) {
 
     private fun deleteTestCaseFileDirIfExists(fileDir: File) {
         if (fileDir.exists()) {
-            if (fileDir.list().isNotEmpty()) {
-                log.info("Existing file to delete: " + fileDir.list().first() + " from: " + fileDir.absolutePath)
-                fileDir.listFiles().first().delete()
-            }
-            fileDir.delete()
+            deleteFileHelper.deleteSingleFileWithDirectory(fileDir)
         }
+    }
+
+    fun uploadTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileType: String, file: MultipartFile): String {
+        val fileDir = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, fileType)
+
+        if(fileDir.exists()) {
+            deleteFileHelper.deleteSingleFileFromDir(fileDir)
+        }
+
+        saveTestCaseFile(file, fileType, projectName, stageName, testCaseName)
+
+        return "200"
     }
 
     companion object {
         val INPUT = "input"
         val OUTPUT = "output"
-
-        val log = LoggerFactory.getLogger(TestCaseService::class.java)
     }
 }
