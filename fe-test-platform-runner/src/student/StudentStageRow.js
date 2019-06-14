@@ -2,27 +2,22 @@ import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
 import backendUrl from "../backendUrl";
 import Typography from '@material-ui/core/Typography';
-import Button from "@material-ui/core/Button/Button";
 import IconButton from '@material-ui/core/IconButton';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
 import UploadIcon from '@material-ui/icons/CloudUpload';
 import RunIcon from '@material-ui/icons/PlayArrow';
 import DescriptionIcon from '@material-ui/icons/Description';
-import axios from "axios";
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import Dialog from "@material-ui/core/Dialog/Dialog";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
-import TextField from "@material-ui/core/TextField/TextField";
 import EditItemComponent from "../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../utils/UploadAndDownloadItemComponent";
 import * as Api from "../Api";
+import StudentUploadBinaryDialog from "./StudentUploadBinaryDialog";
+import StudentUploadReportDialog from "./StudentUploadReportDialog";
+import StudentUploadCodeLinkDialog from "./StudentUploadCodeLinkDialog";
 
 class StudentStageRow extends Component {
 
@@ -47,26 +42,6 @@ class StudentStageRow extends Component {
         this.setState({isAddBinaryDialogVisible: false});
     };
 
-    handleAddBinary = (event) => {
-        event.preventDefault();
-
-        const data = new FormData();
-        data.append('file', this.inputBinaryFile.files[0]);
-        data.append('projectName', this.props.projectName);
-        data.append('stageName', this.props.stage.stageName);
-
-        axios.post(backendUrl("/upload/bin"), data)
-            .then(function (response) {
-                console.log("success");
-            })
-            // .then(this.handleBinaryFileSaved)
-            .then(this.handleCloseAddBinaryDialog)
-            .then(this.props.stageChangedHandler)
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
     handleRunTests = () => {
         fetch(backendUrl(`/run`), {
             method: "POST",
@@ -79,7 +54,6 @@ class StudentStageRow extends Component {
             })
     };
 
-
     handleOpenAddReportDialog = () => {
         this.setState({isAddReportDialogVisible: true});
     };
@@ -88,56 +62,12 @@ class StudentStageRow extends Component {
         this.setState({isAddReportDialogVisible: false});
     };
 
-    handleAddReport = (event) => {
-        event.preventDefault();
-
-        const data = new FormData();
-        data.append('file', this.inputReportFile.files[0]);
-        data.append('projectName', this.props.projectName);
-        data.append('stageName', this.props.stage.stageName);
-
-        axios.post(backendUrl("/upload/report"), data)
-            .then(function (response) {
-                console.log("success");
-            })
-            // .then(this.handleReportFileSaved)
-            .then(this.handleCloseAddReportDialog)
-            .then(this.props.stageChangedHandler)
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
     handleOpenAddCodeLinkDialog = () => {
         this.setState({isAddCodeLinkDialogVisible: true});
     };
 
     handleCloseAddCodeLinkDialog = () => {
         this.setState({isAddCodeLinkDialogVisible: false});
-    };
-
-    handleAddCodeLink = (event) => {
-        event.preventDefault();
-
-        const data = new FormData();
-        data.append('codeLink', this.state.codeLink);
-        data.append('projectName', this.props.projectName);
-        data.append('stageName', this.props.stage.stageName);
-
-        axios.post(backendUrl("/upload/code"), data)
-            .then(function (response) {
-                console.log("success");
-            })
-            // .then(this.handleReportFileSaved)
-            .then(this.handleCloseAddCodeLinkDialog)
-            .then(this.props.stageChangedHandler)
-            .catch(function (error) {
-                console.log(error);
-            });
-    };
-
-    handleCodeLinkAdded = () => event => {
-        this.setState({codeLink: event.target.value})
     };
 
     getCodeLink = () => {
@@ -243,77 +173,24 @@ class StudentStageRow extends Component {
                     </Table>
                 </div>
                 <InputWrapper>
-                    <Dialog open={this.state.isAddBinaryDialogVisible} onClose={this.handleCloseAddBinaryDialog}
-                            aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Dodaj binarkę</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Podaj ścieżkę pliku:
-                            </DialogContentText>
-                            {/*TODO: FIX: https://stackoverflow.com/questions/40589302/how-to-enable-file-upload-on-reacts-material-ui-simple-input*/}
-                            <div className="form-group">
-                                <input className="form-control" ref={(ref) => {
-                                    this.inputBinaryFile = ref;
-                                }} type="file"/>
-                            </div>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={this.handleCloseAddBinaryDialog} color="primary">
-                                Anuluj
-                            </Button>
-                            <Button onClick={this.handleAddBinary} color="primary">
-                                Dodaj
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                    <Dialog open={this.state.isAddReportDialogVisible} onClose={this.handleCloseAddReportDialog}
-                            aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Dodaj raport</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Podaj ścieżkę pliku:
-                            </DialogContentText>
-                            {/*TODO: FIX: https://stackoverflow.com/questions/40589302/how-to-enable-file-upload-on-reacts-material-ui-simple-input*/}
-                            <div className="form-group">
-                                <input className="form-control" ref={(ref) => {
-                                    this.inputReportFile = ref;
-                                }} type="file"/>
-                            </div>
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={this.handleCloseAddReportDialog} color="primary">
-                                Anuluj
-                            </Button>
-                            <Button onClick={this.handleAddReport} color="primary">
-                                Dodaj
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
-                    <Dialog open={this.state.isAddCodeLinkDialogVisible} onClose={this.handleCloseAddCodeLinkDialog}
-                            aria-labelledby="form-dialog-title">
-                        <DialogTitle id="form-dialog-title">Dodaj raport</DialogTitle>
-                        <DialogContent>
-                            <DialogContentText>
-                                Podaj adres kodu:
-                            </DialogContentText>
-                            <TextField
-                                id="standard-name"
-                                label="Adres kodu"
-                                className={this.props.classes.textField}
-                                value={this.state.codeLink}
-                                onChange={this.handleCodeLinkAdded()}
-                                margin="normal"
-                            />
-                        </DialogContent>
-                        <DialogActions>
-                            <Button onClick={this.handleCloseAddCodeLinkDialog} color="primary">
-                                Anuluj
-                            </Button>
-                            <Button onClick={this.handleAddCodeLink} color="primary">
-                                Dodaj
-                            </Button>
-                        </DialogActions>
-                    </Dialog>
+                    <StudentUploadBinaryDialog isOpen={this.state.isAddBinaryDialogVisible}
+                                               closeActionHandler={this.handleCloseAddBinaryDialog}
+                                               successActionHandler={this.props.stageChangedHandler}
+                                               projectName={this.props.projectName}
+                                               stageName={this.props.stage.stageName}
+                                               headerText="Dodaj binarkę"/>
+                    <StudentUploadReportDialog isOpen={this.state.isAddReportDialogVisible}
+                                               closeActionHandler={this.handleCloseAddReportDialog}
+                                               successActionHandler={this.props.stageChangedHandler}
+                                               projectName={this.props.projectName}
+                                               stageName={this.props.stage.stageName}
+                                               headerText="Dodaj raport"/>
+                    <StudentUploadCodeLinkDialog isOpen={this.state.isAddCodeLinkDialogVisible}
+                                                 closeActionHandler={this.handleCloseAddCodeLinkDialog}
+                                                 successActionHandler={this.props.stageChangedHandler}
+                                                 projectName={this.props.projectName}
+                                                 stageName={this.props.stage.stageName}
+                                                 headerText="Podaj adres kodu"/>
                 </InputWrapper>
             </div>
         );

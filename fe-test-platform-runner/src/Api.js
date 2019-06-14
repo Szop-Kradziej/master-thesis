@@ -36,27 +36,30 @@ export function addNewStage(projectName, stageName) {
 }
 
 export function uploadProjectDescription(data) {
-    return axios.post(backendUrl("/project/description"), data)
-        .then(function (response) {
-            console.log("success");
-        })
+    return uploadData(backendUrl("/project/description"), data)
 }
 
 export function uploadStageDescription(data) {
-    return axios.post(backendUrl("/stage/description"), data)
-        .then(function (response) {
-            console.log("success");
-        })
+    return uploadData(backendUrl("/stage/description"), data)
 }
 
 export function uploadTestCaseFile(projectName, stageName, testCaseName, fileType, data) {
-    return axios.post(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType), data)
-        .then(function (response) {
-            console.log("success");
-        })
+    return uploadData(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType), data)
 }
 
-function uploadFile(url, data) {
+export function uploadStudentBinary(data) {
+    return uploadData(backendUrl("/upload/bin"), data)
+}
+
+export function uploadStudentReport(data) {
+    return uploadData(backendUrl("/upload/report"), data)
+}
+
+export function uploadStudentCodeLink(data) {
+    return uploadData(backendUrl("/upload/code"), data)
+}
+
+function uploadData(url, data) {
     return axios.post(url, data)
         .then(function (response) {
             console.log("success");
