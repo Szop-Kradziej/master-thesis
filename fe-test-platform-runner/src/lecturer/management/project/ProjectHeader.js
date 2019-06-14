@@ -4,7 +4,7 @@ import {styles} from "../../../styles/ProjectBoardStyles";
 import EditItemComponent from "../../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../../utils/UploadAndDownloadItemComponent";
 import * as Api from "../../../Api";
-import AddFileDialog from "./AddFileDialog";
+import AddFileDialog from "./UploadProjectDescriptionDialog";
 
 class ProjectHeader extends Component {
 

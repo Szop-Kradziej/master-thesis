@@ -42,15 +42,29 @@ export function uploadProjectDescription(data) {
         })
 }
 
-export function downloadProjectDescription(projectName) {
-    return downloadFile(backendUrl('/' + projectName + "/description"))
-}
-
 export function uploadStageDescription(data) {
     return axios.post(backendUrl("/stage/description"), data)
         .then(function (response) {
             console.log("success");
         })
+}
+
+export function uploadTestCaseFile(projectName, stageName, testCaseName, fileType, data) {
+    return axios.post(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType), data)
+        .then(function (response) {
+            console.log("success");
+        })
+}
+
+function uploadFile(url, data) {
+    return axios.post(url, data)
+        .then(function (response) {
+            console.log("success");
+        })
+}
+
+export function downloadProjectDescription(projectName) {
+    return downloadFile(backendUrl('/' + projectName + "/description"))
 }
 
 export function downloadStageDescription(projectName, stageName) {

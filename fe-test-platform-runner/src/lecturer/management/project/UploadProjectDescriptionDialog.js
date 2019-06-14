@@ -9,7 +9,7 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 
-class UploadFile extends Component {
+class UploadProjectDescriptionDialog extends Component {
 
     constructor(props) {
         super(props);
@@ -62,4 +62,4 @@ class UploadFile extends Component {
     }
 }
 
-export default withStyles(styles)(UploadFile);
+export default withStyles(styles)(UploadProjectDescriptionDialog);
