@@ -2,6 +2,7 @@ package com.drabarz.karolina.testplatformrunner
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayOutputStream
@@ -120,9 +121,14 @@ class StudentService(
         return testCases.map { testCase ->
             TestCaseWithResult(
                     testCase,
-                    results.find { it -> it.testCaseName == testCase }?.status ?: "NO RUN",
-                    results.find { it -> it.testCaseName == testCase }?.message)
+                    results.find { it.testCaseName == testCase }?.status ?: "NO RUN",
+                    results.find { it.testCaseName == testCase }?.message,
+                    isLogsFileExist(projectName, stageName, testCase))
         }
+    }
+
+    private fun isLogsFileExist(projectName: String, stageName: String, testCase: String): Boolean {
+        return pathProvider.getStudentLogsFileDir(projectName, stageName, testCase).exists()
     }
 
     fun saveCodeLink(projectName: String, stageName: String, codeLink: String) {
@@ -137,12 +143,28 @@ class StudentService(
         return getSingleFile(pathProvider.getStudentReportDir(projectName, stageName))
     }
 
+    fun getLogsFile(projectName: String, stageName: String, testCaseName: String): File {
+        return getExactFile(pathProvider.getStudentLogsFileDir(projectName, stageName, testCaseName))
+    }
+
     fun getSingleFile(dir: File): File {
         if (!dir.exists() && dir.list().size != 1) {
             throw java.lang.RuntimeException("Error file doesn't exist")
         }
 
         return dir.listFiles().first()
+    }
+
+    fun getExactFile(file: File): File {
+        if (!file.exists()) {
+            throw java.lang.RuntimeException("Error file doesn't exist")
+        }
+
+        return file
+    }
+
+    companion object {
+        val log = LoggerFactory.getLogger(StudentService::class.java)
     }
 }
 

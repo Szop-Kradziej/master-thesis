@@ -83,6 +83,10 @@ export function downloadTestCaseFile(projectName, stageName, testCaseName, fileT
     return downloadFile(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType))
 }
 
+export function downloadStudentLogsFile(projectName, stageName, testCaseName) {
+    return downloadFile(backendUrl('/student/' + projectName + '/' + stageName + '/' + testCaseName + '/logs'))
+}
+
 export function downloadFile(url) {
     return axios.get(url, {responseType: "blob"})
         .then((response) => {

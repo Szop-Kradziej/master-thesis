@@ -4,8 +4,15 @@ import green from "@material-ui/core/es/colors/green";
 import red from "@material-ui/core/es/colors/red";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableCell from "@material-ui/core/TableCell/TableCell";
+import IconButton from "@material-ui/core/IconButton/IconButton";
+import DownloadIcon from "@material-ui/icons/CloudDownload";
+import * as Api from "../Api";
 
 class StudentTestCaseRow extends Component {
+
+    handleDownloadLogsFile = () => {
+        Api.downloadStudentLogsFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName)
+    };
 
     render() {
         return (
@@ -22,11 +29,12 @@ class StudentTestCaseRow extends Component {
                     <p>{this.props.testCase.message ? this.props.testCase.message : "Brak"}</p>
                 </CustomTableCell>
                 <CustomTableCell>
-                    <p>{this.props.testCase.logs ? this.props.testCase.logs : "Brak"}</p>
-                    {/*TODO: Logi*/}
-                    {/*<IconButton aria-label="Pobierz">*/}
-                    {/*<DownloadIcon/>*/}
-                    {/*</IconButton>*/}
+                    {this.props.testCase.logsFile === true ? "Logi" : "Brak"}
+                    <IconButton aria-label="Pobierz"
+                                disabled={!this.props.testCase.logsFile === true}
+                                onClick={this.handleDownloadLogsFile}>
+                        <DownloadIcon/>
+                    </IconButton>
                 </CustomTableCell>
             </TableRow>
         );

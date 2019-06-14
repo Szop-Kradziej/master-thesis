@@ -61,6 +61,14 @@ class TestPlatformApi(val studentService: StudentService,
         return createFileResponse(studentService.getReport(projectName, stageName))
     }
 
+    @GetMapping("/student/{projectName}/{stageName}/{testCaseName}/logs")
+    fun downloadStudentLogsFile(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String,
+            @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
+        return createFileResponse(studentService.getLogsFile(projectName, stageName, testCaseName))
+    }
+
     @PostMapping("/upload/code")
     fun uploadCode(
             @RequestParam("codeLink") codeLink: String,
@@ -197,4 +205,4 @@ class Stage(val stageName: String, val stageDescription: String?, val testCases:
 class TestCase(val testCaseName: String, val inputFileName: String?, val outputFileName: String?)
 class StudentStagesResponse(val stages: List<StudentStage>)
 class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases:List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int,  val deadline: String, val codeLink: String)
-class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?)
+class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)

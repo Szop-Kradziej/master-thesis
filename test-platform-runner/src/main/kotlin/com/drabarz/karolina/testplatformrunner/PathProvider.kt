@@ -55,16 +55,20 @@ class PathProvider : PathProv {
         return  getStudentFileDir(projectName, stageName, RESULTS)
     }
 
-    fun getStudentLogsDir(projectName: String, stageName: String): File {
-        return  getStudentFileDir(projectName, stageName, LOGS)
-    }
-
     fun getStudentReportDir(projectName: String, stageName: String): File {
         return  getStudentFileDir(projectName, stageName, REPORT)
     }
 
     fun getStudentBinDir(projectName: String, stageName: String): File {
         return  getStudentFileDir(projectName, stageName, BIN)
+    }
+
+    fun getStudentLogsDir(projectName: String, stageName: String): File {
+        return  getStudentFileDir(projectName, stageName, LOGS)
+    }
+
+    fun getStudentLogsFileDir(projectName: String, stageName: String, testCaseName: String): File {
+        return File(getStudentLogsDir(projectName, stageName), testCaseName)
     }
 
     fun getStudentFileDir(projectName: String, stageName: String, file: String) : File {
