@@ -8,6 +8,7 @@ import org.testcontainers.containers.output.OutputFrame
 import org.testcontainers.containers.output.ToStringConsumer
 import org.testcontainers.images.builder.ImageFromDockerfile
 import org.testcontainers.utility.MountableFile
+import java.io.File
 
 @Component
 class JarService(val pathProvider: PathProvider, val containerFactory: ContainerFactory, val containerService: ContainerService, val testCaseService: TestCaseService) {
@@ -30,13 +31,23 @@ class JarService(val pathProvider: PathProvider, val containerFactory: Container
         return testCasesNames.map {
             val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it.testCaseName, "${jarPath.absolutePath}/$jarName")
             containerService.runTestCase(container)
+                    .also { logs -> saveLogsToResultFile(logs, projectName, stageName, it.testCaseName) }
             checkCorrectness(projectName, stageName, it.testCaseName)
         }
     }
 
+    private fun saveLogsToResultFile(logs: String, projectName: String, stageName: String, testCaseName: String) {
+        val logsDir = pathProvider.getStudentLogsDir(projectName, stageName)
+        logsDir.mkdirs()
+
+        val file = File(logsDir, testCaseName);
+
+        file.writeText(logs)
+    }
+
     fun checkCorrectness(projectName: String, stageName: String, testCaseName: String): TestResponse {
         try {
-            val expectedOutput = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName,"output").reader().readText()
+            val expectedOutput = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().reader().readText()
             val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
@@ -54,7 +65,7 @@ class JarService(val pathProvider: PathProvider, val containerFactory: Container
     }
 }
 
-data class TestResponse constructor (val testCaseName: String, val status: String = "NO RUN", val message: String? = null)
+data class TestResponse constructor(val testCaseName: String, val status: String = "NO RUN", val message: String? = null)
 //class Success(val testCaseName: String) : TestResponse() {
 //    val status = "SUCCESS"
 //}
@@ -72,7 +83,7 @@ class ContainerFactory(val pathProvider: PathProvider) {
                         .withFileFromClasspath("Dockerfile", "static/Dockerfile")
         )
                 .withCopyFileToContainer(MountableFile.forHostPath("$jarPath"), "/home/example.jar")
-                .withFileSystemBind(pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, "input").absolutePath, "/home/input.txt", BindMode.READ_ONLY)
+                .withFileSystemBind(pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, "input").listFiles().first().absolutePath, "/home/input.txt", BindMode.READ_ONLY)
                 .withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
     }
 }
@@ -80,7 +91,7 @@ class ContainerFactory(val pathProvider: PathProvider) {
 @Component
 class ContainerService {
 
-    fun runTestCase(container: KGenericContainer) {
+    fun runTestCase(container: KGenericContainer): String {
         val log = LoggerFactory.logger(this.javaClass)
 
         container.start()
@@ -90,11 +101,12 @@ class ContainerService {
         val toStringConsumer = ToStringConsumer()
         container.followOutput(toStringConsumer, OutputFrame.OutputType.STDERR)
 
-        log.info(container.containerId)
-        log.info(toStringConsumer.toUtf8String())
-        log.info(container.logs)
+        val containerLogs = container.containerId + "\n" + toStringConsumer.toUtf8String() + "\n" + container.logs
+        log.info(containerLogs)
 
         container.stop()
+
+        return containerLogs
     }
 }
 
