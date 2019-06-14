@@ -10,12 +10,7 @@ import DeleteIcon from "@material-ui/icons/DeleteForever";
 import EditItemComponent from "../../../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
 import * as Api from "../../../../Api";
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent/DialogContent";
-import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import Button from "@material-ui/core/Button/Button";
-import Dialog from "@material-ui/core/Dialog/Dialog";
+import UploadStageDescriptionDialog from "./UploadStageDescriptionDialog";
 
 class StageHeader extends Component {
 
@@ -41,22 +36,6 @@ class StageHeader extends Component {
 
     handleCloseAddDescriptionDialog = () => {
         this.setState({isAddDescriptionDialogVisible: false});
-    };
-
-    handleUploadStageDescription = (event) => {
-        event.preventDefault();
-
-        const data = new FormData();
-        data.append('file', this.inputDescriptionFile.files[0]);
-        data.append('projectName', this.props.projectName);
-        data.append('stageName', this.props.stageName);
-
-        Api.uploadStageDescription(data)
-            .then(this.handleCloseAddDescriptionDialog)
-            .then(this.props.stageChangedHandler)
-            .catch(function (error) {
-                console.log(error);
-            });
     };
 
     handleDownloadStageDescription = () => {
@@ -120,29 +99,12 @@ class StageHeader extends Component {
                         <CustomTableCell component="th" scope="row"/>
                     </TableBody>
                 </Table>
-                <Dialog open={this.state.isAddDescriptionDialogVisible} onClose={this.handleCloseAddDescriptionDialog}
-                        aria-labelledby="form-dialog-title">
-                    <DialogTitle id="form-dialog-title">Dodaj opis etapu</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Podaj ścieżkę pliku:
-                        </DialogContentText>
-                        {/*TODO: FIX: https://stackoverflow.com/questions/40589302/how-to-enable-file-upload-on-reacts-material-ui-simple-input*/}
-                        <div className="form-group">
-                            <input className="form-control" ref={(ref) => {
-                                this.inputDescriptionFile = ref;
-                            }} type="file"/>
-                        </div>
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={this.handleCloseAddDescriptionDialog} color="primary">
-                            Anuluj
-                        </Button>
-                        <Button onClick={this.handleUploadStageDescription} color="primary">
-                            Dodaj
-                        </Button>
-                    </DialogActions>
-                </Dialog>
+                <UploadStageDescriptionDialog isOpen={this.state.isAddDescriptionDialogVisible}
+                                              closeActionHandler={this.handleCloseAddDescriptionDialog}
+                                              successActionHandler={this.props.stageChangedHandler}
+                                              projectName={this.props.projectName}
+                                              stageName={this.props.stageName}
+                                              headerText="Dodaj opis etapu"/>
             </div>
         );
     }
