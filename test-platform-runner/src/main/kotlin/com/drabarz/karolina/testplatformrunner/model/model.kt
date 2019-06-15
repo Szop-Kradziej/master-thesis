@@ -16,7 +16,7 @@ data class Project(
 
 @Repository
 interface ProjectsRepository : CrudRepository<Project, Long> {
-    override fun findAll(): MutableList<Project>
+    fun findByName(name: String) : Project
     fun deleteByName(name: String)
 }
 
@@ -36,3 +36,19 @@ data class User(
 interface UsersRepository : CrudRepository<User, Long> {
     fun findAllByIsStudentIsTrue(): MutableList<User>
 }
+
+@Entity
+@Table(name = "groups")
+data class Group(
+        @Id
+        @SequenceGenerator(name = "groups_id_generator", sequenceName = "groups_id_seq", allocationSize = 1)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "groups_id_generator")
+        val id: Long = -1,
+        val name: String = "",
+        @ManyToOne
+        @JoinColumn(name = "project_id")
+        val project: Project
+)
+
+@Repository
+interface GroupsRepository : CrudRepository<Group, Long>
