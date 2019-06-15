@@ -29,7 +29,14 @@ data class User(
         val id: Long = -1,
         val name: String = "",
         val password: String = "password",
-        val isStudent: Boolean = true
+        val isStudent: Boolean = true,
+        @ManyToMany(cascade = arrayOf(CascadeType.ALL))
+        @JoinTable(
+                name = "students_in_groups",
+                joinColumns = arrayOf(JoinColumn(name = "student_id")),
+                inverseJoinColumns = arrayOf(JoinColumn(name = "group_id"))
+        )
+        val groups: List<Group> = ArrayList()
 )
 
 @Repository
@@ -47,7 +54,9 @@ data class Group(
         val name: String = "",
         @ManyToOne
         @JoinColumn(name = "project_id")
-        val project: Project
+        val project: Project,
+        @ManyToMany(mappedBy = "groups")
+        val students: List<User> = ArrayList()
 )
 
 @Repository

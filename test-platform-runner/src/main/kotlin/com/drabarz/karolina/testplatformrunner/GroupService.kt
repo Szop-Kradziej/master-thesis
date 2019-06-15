@@ -1,6 +1,7 @@
 package com.drabarz.karolina.testplatformrunner
 
 import com.drabarz.karolina.testplatformrunner.model.*
+import com.drabarz.karolina.testplatformrunner.model.Group
 import org.springframework.stereotype.Component
 
 @Component
@@ -19,8 +20,21 @@ class GroupService(
         return usersRepository.findAllByIsStudentIsTrue().map { it.name }
     }
 
-    fun addGroup(groupName:String, projectName:String):String {
+    fun addGroup(groupName: String, projectName: String): String {
         groupsRepository.save(Group(name = groupName, project = projectsRepository.findByName(projectName)))
         return "200"
+    }
+
+    fun getGroups(): GroupsResponse {
+        val groups = groupsRepository.findAll()
+
+        return GroupsResponse(groups
+                .map {
+                    com.drabarz.karolina.testplatformrunner.Group(
+                            it.name,
+                            it.project.name,
+                            it.students.map { it.name })
+                }
+        )
     }
 }
