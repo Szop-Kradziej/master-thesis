@@ -1,5 +1,7 @@
 package com.drabarz.karolina.testplatformrunner
 
+import com.drabarz.karolina.testplatformrunner.model.ProjectsRepository
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ApplicationContext
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.GetMapping
+import java.io.ByteArrayOutputStream
 import java.io.File
 
 @SpringBootApplication
@@ -25,6 +28,7 @@ class TestPlatformApi(val studentService: StudentService,
                       val testCaseService: TestCaseService,
                       val stagesService: StageService,
                       val projectService: ProjectService,
+                      val projectsRepository: ProjectsRepository,
                       val applicationContext: ApplicationContext) {
 
     @PostMapping("/upload/bin")
@@ -196,6 +200,18 @@ class TestPlatformApi(val studentService: StudentService,
         headers.add("Access-Control-Expose-Headers", HttpHeaders.CONTENT_DISPOSITION + "," + HttpHeaders.CONTENT_LENGTH)
 
         return ResponseEntity.ok().headers(headers).body<Any>(file.readBytes())
+    }
+
+    //TODO: remove after model definition finished
+    @GetMapping("/db/projects")
+    fun getProjectsFromDb(): String {
+
+        val out = ByteArrayOutputStream()
+        val mapper = ObjectMapper()
+
+        mapper.writeValue(out, projectsRepository.findAll())
+
+        return out.toString()
     }
 }
 
