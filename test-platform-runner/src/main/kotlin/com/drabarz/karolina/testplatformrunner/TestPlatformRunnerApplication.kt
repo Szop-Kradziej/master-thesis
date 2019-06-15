@@ -219,6 +219,11 @@ class TestPlatformApi(val studentService: StudentService,
     fun addStudent(@RequestParam("studentName") studentName: String): String {
         return groupService.addStudent(studentName)
     }
+
+    @GetMapping("/db/students")
+    fun getStudents() : List<String> {
+        return groupService.getStudents()
+    }
 }
 
 class ProjectResponse(val projects: List<String>)

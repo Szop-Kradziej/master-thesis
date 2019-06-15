@@ -33,4 +33,6 @@ data class User(
 )
 
 @Repository
-interface UsersRepository : CrudRepository<User, Long>
+interface UsersRepository : CrudRepository<User, Long> {
+    fun findAllByIsStudentIsTrue(): MutableList<User>
+}
