@@ -1,6 +1,6 @@
 CREATE TABLE projects
 (
-    id   BIGINT       NOT NULL,
+    id   SERIAL,
     name VARCHAR(128) NOT NULL,
 
     CONSTRAINT projects_pk PRIMARY KEY (id),
@@ -9,7 +9,7 @@ CREATE TABLE projects
 
 CREATE TABLE groups
 (
-    id         BIGINT       NOT NULL,
+    id         SERIAL,
     name       VARCHAR(128) NOT NULL,
     project_id BIGINT       NOT NULL,
 
@@ -20,7 +20,7 @@ CREATE TABLE groups
 
 CREATE TABLE users
 (
-    id         BIGINT       NOT NULL,
+    id         SERIAL,
     name       VARCHAR(128) NOT NULL,
     password   VARCHAR(64)  NOT NULL DEFAULT 'password',
     is_student BOOLEAN      NOT NULL DEFAULT TRUE,
@@ -31,7 +31,7 @@ CREATE TABLE users
 
 CREATE TABLE students_in_groups
 (
-    id         BIGINT NOT NULL,
+    id         SERIAL,
     group_id   BIGINT NOT NULL,
     student_id BIGINT NOT NULL,
 
@@ -43,7 +43,7 @@ CREATE TABLE students_in_groups
 
 CREATE TABLE integrations
 (
-    id         BIGINT       NOT NULL,
+    id         SERIAL,
     name       VARCHAR(128) NOT NULL,
     project_id BIGINT       NOT NULL,
 
@@ -54,7 +54,7 @@ CREATE TABLE integrations
 
 CREATE TABLE stages
 (
-    id            BIGINT       NOT NULL,
+    id            SERIAL,
     name          VARCHAR(128) NOT NULL,
     start_date    TIMESTAMP,
     end_date      TIMESTAMP,
@@ -70,7 +70,7 @@ CREATE TABLE stages
 
 CREATE TABLE stages_in_integrations
 (
-    id             BIGINT       NOT NULL,
+    id             SERIAL,
     name           VARCHAR(128) NOT NULL,
     order_number   INT          NOT NULL,
     stage_id       BIGINT       NOT NULL,

@@ -1,14 +1,18 @@
 package com.drabarz.karolina.testplatformrunner
 
+import com.drabarz.karolina.testplatformrunner.model.Project
+import com.drabarz.karolina.testplatformrunner.model.ProjectsRepository
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
+import javax.transaction.Transactional
 
 @Component
 class ProjectService(
         val pathProvider: PathProvider,
         val stageService: StageService,
+        val projectsRepository: ProjectsRepository,
         val deleteFileHelper: DeleteFileHelper) {
 
     fun addProject(projectName: String): String {
@@ -19,6 +23,7 @@ class ProjectService(
         }
 
         projectDir.mkdir()
+        projectsRepository.save(Project(name = projectName))
 
         return "200"
     }
@@ -61,6 +66,7 @@ class ProjectService(
         throw java.lang.RuntimeException("Error file doesn't exist")
     }
 
+    @Transactional
     fun deleteProject(projectName: String): String {
         val projectDir = pathProvider.getProjectDir(projectName)
 
@@ -71,6 +77,8 @@ class ProjectService(
             }
             projectDir.delete()
         }
+
+        projectsRepository.deleteByName(projectName)
 
         return "200"
     }

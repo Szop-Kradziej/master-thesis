@@ -2,15 +2,14 @@ package com.drabarz.karolina.testplatformrunner.model
 
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
-import javax.persistence.Entity
-import javax.persistence.GeneratedValue
-import javax.persistence.Id
-import javax.persistence.Table
+import javax.persistence.*
 
 @Entity
 @Table(name = "projects")
 data class Project(
-        @Id @GeneratedValue
+        @Id
+        @SequenceGenerator(name="projects_id_generator", sequenceName = "projects_id_seq", allocationSize=1)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "projects_id_generator")
         val id: Long = -1,
         val name: String = ""
 )
@@ -18,4 +17,5 @@ data class Project(
 @Repository
 interface ProjectsRepository : CrudRepository<Project, Long> {
     override fun findAll(): MutableList<Project>
+    fun deleteByName(name: String)
 }
