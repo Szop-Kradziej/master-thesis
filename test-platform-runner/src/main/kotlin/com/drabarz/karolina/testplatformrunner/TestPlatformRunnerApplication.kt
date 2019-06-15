@@ -29,6 +29,7 @@ class TestPlatformApi(val studentService: StudentService,
                       val stagesService: StageService,
                       val projectService: ProjectService,
                       val projectsRepository: ProjectsRepository,
+                      val groupService: GroupService,
                       val applicationContext: ApplicationContext) {
 
     @PostMapping("/upload/bin")
@@ -108,7 +109,7 @@ class TestPlatformApi(val studentService: StudentService,
     @PostMapping("/project/description")
     fun addProjectDescription(
             @RequestParam("file") uploadedFile: MultipartFile,
-            @RequestParam("projectName") projectName: String) : String {
+            @RequestParam("projectName") projectName: String): String {
         return projectService.addProjectDescription(uploadedFile, projectName)
     }
 
@@ -130,7 +131,7 @@ class TestPlatformApi(val studentService: StudentService,
     fun addStageDescription(
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String) : String {
+            @RequestParam("stageName") stageName: String): String {
         return stagesService.addStageDescription(uploadedFile, projectName, stageName)
     }
 
@@ -193,7 +194,7 @@ class TestPlatformApi(val studentService: StudentService,
         return testCaseService.deleteTestCase(projectName, stageName, testCaseName)
     }
 
-    fun createFileResponse(file: File) : ResponseEntity<*> {
+    fun createFileResponse(file: File): ResponseEntity<*> {
         val headers = HttpHeaders()
         headers.add("X-Suggested-Filename", file.name);
         headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.name + "\"")
@@ -213,6 +214,11 @@ class TestPlatformApi(val studentService: StudentService,
 
         return out.toString()
     }
+
+    @PostMapping("/db/student")
+    fun addStudent(@RequestParam("studentName") studentName: String): String {
+        return groupService.addStudent(studentName)
+    }
 }
 
 class ProjectResponse(val projects: List<String>)
@@ -220,5 +226,5 @@ class StagesResponse(val projectDescription: String?, val stages: List<Stage>)
 class Stage(val stageName: String, val stageDescription: String?, val testCases: List<TestCase>)
 class TestCase(val testCaseName: String, val inputFileName: String?, val outputFileName: String?)
 class StudentStagesResponse(val stages: List<StudentStage>)
-class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases:List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int,  val deadline: String, val codeLink: String)
+class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val deadline: String, val codeLink: String)
 class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)
