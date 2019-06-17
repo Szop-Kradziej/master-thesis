@@ -63,4 +63,5 @@ data class Group(
 @Repository
 interface GroupsRepository : CrudRepository<Group, Long> {
     fun findByName(name: String): Group
+    fun findAllByProject_Name(projectName: String): List<Group>
 }

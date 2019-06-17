@@ -10,16 +10,18 @@ import * as Api from "../../../Api";
 import ProjectHeader from "./ProjectHeader";
 import StageComponent from "./stage/StageComponent";
 import AddNewStageDialog from "./AddNewStageDialog";
+import GroupComponent from "./group/GroupComponent";
 
 class ProjectBoard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {stages: {stages: []}, isNewStageDialogVisible: false};
+        this.state = {stages: {stages: []}, groups: {groups: []}, isNewStageDialogVisible: false};
     }
 
     componentDidMount() {
         this.fetchStages();
+        this.fetchGroups();
     }
 
     fetchStages = () => {
@@ -27,6 +29,14 @@ class ProjectBoard extends Component {
             .then(response => response.json())
             .then(json => this.setState({
                 stages: json
+            }))
+    };
+
+    fetchGroups = () => {
+        Api.fetchGroups(this.props.match.params.projectId)
+            .then(response => response.json())
+            .then(json => this.setState({
+                groups: json
             }))
     };
 
@@ -65,6 +75,36 @@ class ProjectBoard extends Component {
                                         stage={stage}
                                         projectName={this.props.match.params.projectId}
                                         stageChangedHandler={this.fetchStages}/>
+                                </CustomTableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <Table className={this.props.classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <CustomTableCell>
+                                <div display="inline">
+                                    <AddNewItemComponent
+                                        header="Grupy"
+                                        info="Dodaj nową grupę"
+                                        addActionHandler={this.handleOpenNewStageDialog}/>
+                                    <AddNewItemComponent
+                                        header="Grupy (JSON)"
+                                        info="Dodaj nową grupę"
+                                        addActionHandler={this.handleOpenNewStageDialog}/>
+                                </div>
+                            </CustomTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.groups.groups.map(group => (
+                            <TableRow key={group.name}>
+                                <CustomTableCell component="th" scope="row">
+                                    <GroupComponent
+                                        group={group}
+                                        projectName={this.props.match.params.projectId}
+                                        groupChangedHandler={this.fetchGroups}/>
                                 </CustomTableCell>
                             </TableRow>
                         ))}

@@ -30,8 +30,8 @@ class GroupService(
         return "200"
     }
 
-    fun getGroups(): GroupsResponse {
-        val groups = groupsRepository.findAll()
+    fun getGroups(projectName: String): GroupsResponse {
+        val groups = groupsRepository.findAllByProject_Name(projectName)
 
         return GroupsResponse(groups
                 .map {

@@ -26,6 +26,13 @@ export function fetchStages(projectName) {
     })
 }
 
+export function fetchGroups(projectName) {
+    return fetch(backendUrl(`/${projectName}/groups`), {
+        method: "GET",
+        credentials: "include"
+    })
+}
+
 export function addNewStage(projectName, stageName) {
     return fetch(backendUrl(`/stage`), {
         method: "POST",
@@ -122,6 +129,10 @@ export function deleteStage(projectName, stageName) {
 
 export function deleteProject(projectName) {
     return deleteItem(backendUrl('/' + projectName))
+}
+
+export function deleteGroup(projectName, groupName) {
+    return deleteItem(backendUrl('/' + projectName + '/groups/' + groupName))
 }
 
 function deleteItem(url) {

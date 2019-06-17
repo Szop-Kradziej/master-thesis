@@ -232,12 +232,12 @@ class TestPlatformApi(val studentService: StudentService,
         return groupService.addGroup(groupName, projectName)
     }
 
-    @GetMapping("/db/groups")
-    fun getGroups() : GroupsResponse {
-        return groupService.getGroups()
+    @GetMapping("/{projectName}/groups")
+    fun getGroups(@PathVariable("projectName") projectName: String) : GroupsResponse {
+        return groupService.getGroups(projectName)
     }
 
-    @PostMapping("/db/{projectName}/groups")
+    @PostMapping("/{projectName}/groups")
     fun addGroups(
             @RequestBody groups: GroupsDao,
             @PathVariable("projectName") projectName: String): String {
