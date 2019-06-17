@@ -16,7 +16,7 @@ data class Project(
 
 @Repository
 interface ProjectsRepository : CrudRepository<Project, Long> {
-    fun findByName(name: String) : Project
+    fun findByName(name: String): Project
     fun deleteByName(name: String)
 }
 
@@ -36,12 +36,13 @@ data class User(
                 joinColumns = arrayOf(JoinColumn(name = "student_id")),
                 inverseJoinColumns = arrayOf(JoinColumn(name = "group_id"))
         )
-        val groups: List<Group> = ArrayList()
+        val groups: MutableList<Group> = ArrayList()
 )
 
 @Repository
 interface UsersRepository : CrudRepository<User, Long> {
     fun findAllByIsStudentIsTrue(): MutableList<User>
+    fun findByName(name: String): User
 }
 
 @Entity
@@ -56,8 +57,10 @@ data class Group(
         @JoinColumn(name = "project_id")
         val project: Project,
         @ManyToMany(mappedBy = "groups")
-        val students: List<User> = ArrayList()
+        val students: MutableList<User> = ArrayList()
 )
 
 @Repository
-interface GroupsRepository : CrudRepository<Group, Long>
+interface GroupsRepository : CrudRepository<Group, Long> {
+    fun findByName(name: String): Group
+}

@@ -236,6 +236,13 @@ class TestPlatformApi(val studentService: StudentService,
     fun getGroups() : GroupsResponse {
         return groupService.getGroups()
     }
+
+    @PostMapping("/db/{projectName}/groups")
+    fun addGroups(
+            @RequestBody groups: GroupsDao,
+            @PathVariable("projectName") projectName: String): String {
+        return groupService.addGroups(groups, projectName)
+    }
 }
 
 class ProjectResponse(val projects: List<String>)
@@ -247,3 +254,5 @@ class StudentStage(val stageName: String, val binaryName: String?, val reportNam
 class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)
 class GroupsResponse(val groups: List<Group>)
 class Group(val groupName: String, val projectName: String, val students: List<String>)
+class GroupsDao (val groups: List<GroupDao>)
+class GroupDao (val name: String, val students: List<String>)
