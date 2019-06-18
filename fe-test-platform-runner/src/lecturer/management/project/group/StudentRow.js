@@ -3,13 +3,15 @@ import {CustomTableCell} from "../../../../styles/ProjectBoardStyles";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import DeleteIcon from "@material-ui/icons/DeleteForever";
+import * as Api from "../../../../Api";
 
 class StudentRow extends Component {
 
-    handleDeleteStudent = (event) => {
+    handleRemoveStudent = (event) => {
         event.preventDefault();
 
-        //TODO: Add
+        Api.removeStudentFromGroup(this.props.projectName, this.props.groupName, this.props.studentName)
+            .then(this.props.groupChangedHandler)
     };
 
     render() {
@@ -20,7 +22,7 @@ class StudentRow extends Component {
                 </CustomTableCell>
                 <CustomTableCell>
                     <CustomTableCell>
-                        <IconButton aria-label="Usuń" onClick={this.handleDeleteStudent}>
+                        <IconButton aria-label="Usuń" onClick={this.handleRemoveStudent}>
                             <DeleteIcon/>
                         </IconButton>
                     </CustomTableCell>

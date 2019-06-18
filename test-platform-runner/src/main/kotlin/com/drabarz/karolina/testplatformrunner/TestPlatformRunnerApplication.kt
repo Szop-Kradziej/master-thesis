@@ -232,6 +232,14 @@ class TestPlatformApi(val studentService: StudentService,
 
         return groupService.addGroups(groupsDao, projectName)
     }
+
+    @DeleteMapping("/group/student")
+        fun removeStudentFromGroup(
+            @RequestParam("studentName") studentName: String,
+            @RequestParam("groupName") groupName: String,
+            @RequestParam("projectName") projectName: String): String {
+        return groupService.removeStudentFromGroup(projectName, groupName, studentName)
+    }
 }
 
 class ProjectResponse(val projects: List<String>)

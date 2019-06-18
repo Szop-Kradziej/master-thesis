@@ -78,6 +78,17 @@ class GroupService(
         return "200"
     }
 
+    @Transactional
+    fun removeStudentFromGroup(projectName: String, groupName: String, studentName: String): String {
+        //TODO: Should be rather projectName and groupName
+        val student = usersRepository.findByName(studentName)
+        student.groups.remove(groupsRepository.findByName(groupName))
+
+        usersRepository.save(student)
+
+        return "200"
+    }
+
     companion object {
         val log = LoggerFactory.getLogger(GroupService::class.java)
     }

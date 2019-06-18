@@ -163,3 +163,12 @@ function deleteItem(url) {
             console.log("success");
         })
 }
+
+export function removeStudentFromGroup(projectName, groupName, studentName) {
+    return fetch(backendUrl(`/group/student`), {
+        method: "DELETE",
+        credentials: "include",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: "projectName=" + projectName + "&groupName=" + groupName + "&studentName=" + studentName
+    })
+}
