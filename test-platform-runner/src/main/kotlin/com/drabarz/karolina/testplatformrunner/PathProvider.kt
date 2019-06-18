@@ -52,26 +52,30 @@ class PathProvider : PathProv {
     }
 
     fun getStudentResultsDir(projectName: String, stageName: String): File {
-        return  getStudentFileDir(projectName, stageName, RESULTS)
+        return getStudentFileDir(projectName, stageName, RESULTS)
+    }
+
+    fun getStudentCodeDir(projectName: String, stageName: String): File {
+        return getStudentFileDir(projectName, stageName, CODE)
     }
 
     fun getStudentReportDir(projectName: String, stageName: String): File {
-        return  getStudentFileDir(projectName, stageName, REPORT)
+        return getStudentFileDir(projectName, stageName, REPORT)
     }
 
     fun getStudentBinDir(projectName: String, stageName: String): File {
-        return  getStudentFileDir(projectName, stageName, BIN)
+        return getStudentFileDir(projectName, stageName, BIN)
     }
 
     fun getStudentLogsDir(projectName: String, stageName: String): File {
-        return  getStudentFileDir(projectName, stageName, LOGS)
+        return getStudentFileDir(projectName, stageName, LOGS)
     }
 
     fun getStudentLogsFileDir(projectName: String, stageName: String, testCaseName: String): File {
         return File(getStudentLogsDir(projectName, stageName), testCaseName)
     }
 
-    fun getStudentFileDir(projectName: String, stageName: String, file: String) : File {
+    fun getStudentFileDir(projectName: String, stageName: String, file: String): File {
         return File(getStudentStageDir(projectName, stageName), file)
     }
 
@@ -80,6 +84,7 @@ class PathProvider : PathProv {
         const val DESCRIPTION = "description"
         const val BIN = "bin"
         const val REPORT = "report"
+        const val CODE = "code"
         const val RESULTS = "results"
         const val LOGS = "logs"
         const val TEST_CASES = "test_cases"

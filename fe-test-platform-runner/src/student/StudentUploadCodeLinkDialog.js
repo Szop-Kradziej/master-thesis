@@ -25,7 +25,7 @@ class UploadProjectDescriptionDialog extends Component {
         const data = new FormData();
         data.append('codeLink', this.state.codeLink);
         data.append('projectName', this.props.projectName);
-        data.append('stageName', this.propsstageName);
+        data.append('stageName', this.props.stageName);
 
         Api.uploadStudentCodeLink(data)
             .then(this.props.closeActionHandler)

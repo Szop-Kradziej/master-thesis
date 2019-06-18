@@ -62,16 +62,23 @@ class StudentService(
                             getBinaryName(projectName, stage.stageName),
                             getReportName(projectName, stage.stageName),
                             getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }),
-                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }).count {it.status == "SUCCESS" },
+                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }).count { it.status == "SUCCESS" },
                             stage.testCases.size,
                             getDeadline(),
-                            getCodeLink())
+                            getCodeLink(projectName, stage.stageName))
                 }
     }
 
-    private fun getCodeLink(): String {
-        //TODO: Implement after connection to db added
-        return "https://github.com/Szop-Kradziej/rail-learn/commits/master"
+    private fun getCodeLink(projectName: String, stageName: String): String? {
+        val dir = pathProvider.getStudentCodeDir(projectName, stageName)
+
+        val codeFile = File(dir.path, PathProvider.CODE)
+
+        if (!codeFile.exists() || codeFile.readText().isBlank()) {
+            return null
+        }
+
+        return codeFile.readText()
     }
 
     private fun getDeadline(): String {
@@ -131,8 +138,14 @@ class StudentService(
         return pathProvider.getStudentLogsFileDir(projectName, stageName, testCase).exists()
     }
 
-    fun saveCodeLink(projectName: String, stageName: String, codeLink: String) {
-        //TODO: Implement when conection to db will be set
+    fun saveCodeLink(projectName: String, stageName: String, codeLink: String): String {
+        val dir = pathProvider.getStudentCodeDir(projectName, stageName)
+        dir.mkdirs()
+
+        val outputFile = File(dir.path, PathProvider.CODE)
+        outputFile.writeText(codeLink)
+
+        return "200"
     }
 
     fun getJar(projectName: String, stageName: String): File {
