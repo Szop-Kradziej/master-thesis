@@ -65,6 +65,19 @@ class GroupService(
                     .also { log.info("Student: $studentName added to group ${group.name}") } }
     }
 
+    @Transactional
+    fun addStudentToGroup(projectName:String, groupName:String, studentName: String): String {
+        addStudent(studentName)
+
+        log.info("Adding student to group")
+        val group = groupsRepository.findByName(groupName)
+
+        usersRepository.findByName(studentName).groups.add(group)
+                    .also { log.info("Student: $studentName added to group ${group.name}") }
+
+        return "200"
+    }
+
     companion object {
         val log = LoggerFactory.getLogger(GroupService::class.java)
     }

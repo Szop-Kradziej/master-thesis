@@ -14,6 +14,7 @@ import Table from "@material-ui/core/Table/Table";
 import TableBody from "@material-ui/core/es/TableBody/TableBody";
 import AddNewItemComponent from "../../../../utils/AddNewItemComponent";
 import StudentRow from "./StudentRow";
+import * as Api from "../../../../Api";
 
 class StudentsDetails extends Component {
 
@@ -39,8 +40,10 @@ class StudentsDetails extends Component {
         this.setState({[name]: event.target.value});
     };
 
-    handleAddStudent = (ev) => {
-        //TODO: Add new student
+    handleAddStudent = () => {
+        Api.addNewStudent(this.props.projectName, this.props.groupName, this.state.newStudentName)
+            .then(this.handleCloseNewStudentDialog)
+            .then(this.props.groupChangedHandler)
     };
 
     render() {

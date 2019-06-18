@@ -204,26 +204,12 @@ class TestPlatformApi(val studentService: StudentService,
         return ResponseEntity.ok().headers(headers).body<Any>(file.readBytes())
     }
 
-    //TODO: remove after model definition finished
-    @GetMapping("/db/projects")
-    fun getProjectsFromDb(): String {
-
-        val out = ByteArrayOutputStream()
-        val mapper = ObjectMapper()
-
-        mapper.writeValue(out, projectsRepository.findAll())
-
-        return out.toString()
-    }
-
-    @PostMapping("/db/student")
-    fun addStudent(@RequestParam("studentName") studentName: String): String {
-        return groupService.addStudent(studentName)
-    }
-
-    @GetMapping("/db/students")
-    fun getStudents(): List<String> {
-        return groupService.getStudents()
+    @PostMapping("/group/student")
+    fun addStudent(
+            @RequestParam("studentName") studentName: String,
+            @RequestParam("groupName") groupName: String,
+            @RequestParam("projectName") projectName: String): String {
+        return groupService.addStudentToGroup(projectName, groupName, studentName)
     }
 
     @PostMapping("/group")
