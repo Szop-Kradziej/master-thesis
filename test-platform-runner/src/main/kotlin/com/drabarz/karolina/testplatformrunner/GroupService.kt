@@ -89,6 +89,16 @@ class GroupService(
         return "200"
     }
 
+    fun deleteGroup(groupName: String, projectName: String): String {
+        val group = groupsRepository.findByName(groupName)
+
+        group.students.forEach { removeStudentFromGroup(projectName, groupName, it.name) }
+
+        groupsRepository.delete(group)
+
+        return "200"
+    }
+
     companion object {
         val log = LoggerFactory.getLogger(GroupService::class.java)
     }

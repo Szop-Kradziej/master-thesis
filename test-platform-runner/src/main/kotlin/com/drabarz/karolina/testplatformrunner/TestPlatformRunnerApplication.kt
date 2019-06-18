@@ -204,6 +204,20 @@ class TestPlatformApi(val studentService: StudentService,
         return ResponseEntity.ok().headers(headers).body<Any>(file.readBytes())
     }
 
+    @PostMapping("/group")
+    fun addGroup(
+            @RequestParam("groupName") groupName: String,
+            @RequestParam("projectName") projectName: String): String {
+        return groupService.addGroup(groupName, projectName)
+    }
+
+    @DeleteMapping("/group")
+    fun deleteGroup(
+            @RequestParam("groupName") groupName: String,
+            @RequestParam("projectName") projectName: String): String {
+        return groupService.deleteGroup(groupName, projectName)
+    }
+
     @PostMapping("/group/student")
     fun addStudent(
             @RequestParam("studentName") studentName: String,
@@ -212,11 +226,12 @@ class TestPlatformApi(val studentService: StudentService,
         return groupService.addStudentToGroup(projectName, groupName, studentName)
     }
 
-    @PostMapping("/group")
-    fun addGroup(
+    @DeleteMapping("/group/student")
+    fun removeStudentFromGroup(
+            @RequestParam("studentName") studentName: String,
             @RequestParam("groupName") groupName: String,
             @RequestParam("projectName") projectName: String): String {
-        return groupService.addGroup(groupName, projectName)
+        return groupService.removeStudentFromGroup(projectName, groupName, studentName)
     }
 
     @GetMapping("/{projectName}/groups")
@@ -232,14 +247,6 @@ class TestPlatformApi(val studentService: StudentService,
 
         return groupService.addGroups(groupsDao, projectName)
     }
-
-    @DeleteMapping("/group/student")
-        fun removeStudentFromGroup(
-            @RequestParam("studentName") studentName: String,
-            @RequestParam("groupName") groupName: String,
-            @RequestParam("projectName") projectName: String): String {
-        return groupService.removeStudentFromGroup(projectName, groupName, studentName)
-    }
 }
 
 class ProjectResponse(val projects: List<String>)
@@ -251,5 +258,5 @@ class StudentStage(val stageName: String, val binaryName: String?, val reportNam
 class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)
 class GroupsResponse(val groups: List<Group>)
 class Group(val groupName: String, val projectName: String, val students: List<String>)
-data class GroupsDao (val groups: List<GroupDao> = ArrayList())
-data class GroupDao (val name: String = "", val students: List<String> = ArrayList())
+data class GroupsDao(val groups: List<GroupDao> = ArrayList())
+data class GroupDao(val name: String = "", val students: List<String> = ArrayList())

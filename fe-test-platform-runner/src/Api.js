@@ -154,7 +154,12 @@ export function deleteProject(projectName) {
 }
 
 export function deleteGroup(projectName, groupName) {
-    return deleteItem(backendUrl('/' + projectName + '/groups/' + groupName))
+    return fetch(backendUrl(`/group`), {
+        method: "DELETE",
+        credentials: "include",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: "projectName=" + projectName + "&groupName=" + groupName
+    })
 }
 
 function deleteItem(url) {
