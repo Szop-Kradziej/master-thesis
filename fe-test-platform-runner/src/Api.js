@@ -42,8 +42,21 @@ export function addNewStage(projectName, stageName) {
     })
 }
 
+export function addNewGroup(projectName, groupName) {
+    return fetch(backendUrl(`/group`), {
+        method: "POST",
+        credentials: "include",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: "projectName=" + projectName + "&groupName=" + groupName
+    })
+}
+
 export function uploadProjectDescription(data) {
     return uploadData(backendUrl("/project/description"), data)
+}
+
+export function uploadGroupsFile(projectName, data) {
+    return uploadData(backendUrl("/" + projectName + "/groups"), data)
 }
 
 export function uploadStageDescription(data) {

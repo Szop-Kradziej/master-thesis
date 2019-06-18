@@ -11,12 +11,21 @@ import ProjectHeader from "./ProjectHeader";
 import StageComponent from "./stage/StageComponent";
 import AddNewStageDialog from "./AddNewStageDialog";
 import GroupComponent from "./group/GroupComponent";
+import AddNewGroupsDialog from "./AddNewGroupsDialog";
+import AddNewSingleGroupDialog from "./AddNewSingleGroupDialog";
+import AddAndUploadItemComponent from "../../../utils/AddAndUploadItemComponent";
 
 class ProjectBoard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {stages: {stages: []}, groups: {groups: []}, isNewStageDialogVisible: false};
+        this.state = {
+            stages: {stages: []},
+            groups: {groups: []},
+            isNewStageDialogVisible: false,
+            isNewSingleGroupDialogVisible: false,
+            isNewGroupsDialogVisible: false
+        };
     }
 
     componentDidMount() {
@@ -46,6 +55,22 @@ class ProjectBoard extends Component {
 
     handleCloseNewStageDialog = () => {
         this.setState({isNewStageDialogVisible: false});
+    };
+
+    handleOpenNewSingleGroupDialog = () => {
+        this.setState({isNewSingleGroupDialogVisible: true});
+    };
+
+    handleCloseNewSingleGroupDialog = () => {
+        this.setState({isNewSingleGroupDialogVisible: false});
+    };
+
+    handleOpenNewGroupsDialog = () => {
+        this.setState({isNewGroupsDialogVisible: true});
+    };
+
+    handleCloseNewGroupsDialog = () => {
+        this.setState({isNewGroupsDialogVisible: false});
     };
 
     render() {
@@ -84,16 +109,12 @@ class ProjectBoard extends Component {
                     <TableHead>
                         <TableRow>
                             <CustomTableCell>
-                                <div display="inline">
-                                    <AddNewItemComponent
-                                        header="Grupy"
-                                        info="Dodaj nową grupę"
-                                        addActionHandler={this.handleOpenNewStageDialog}/>
-                                    <AddNewItemComponent
-                                        header="Grupy (JSON)"
-                                        info="Dodaj nową grupę"
-                                        addActionHandler={this.handleOpenNewStageDialog}/>
-                                </div>
+                                <AddAndUploadItemComponent
+                                    header="Grupy"
+                                    addInfo="Dodaj nową grupę"
+                                    addActionHandler={this.handleOpenNewSingleGroupDialog}
+                                    uploadInfo="Dodaj grupy z pliku"
+                                    uploadActionHandler={this.handleOpenNewGroupsDialog}/>
                             </CustomTableCell>
                         </TableRow>
                     </TableHead>
@@ -115,6 +136,17 @@ class ProjectBoard extends Component {
                     projectName={this.props.match.params.projectId}
                     closeActionHandler={this.handleCloseNewStageDialog}
                     successActionHandler={this.fetchStages}/>
+                <AddNewSingleGroupDialog
+                    isOpen={this.state.isNewSingleGroupDialogVisible}
+                    projectName={this.props.match.params.projectId}
+                    closeActionHandler={this.handleCloseNewSingleGroupDialog}
+                    successActionHandler={this.fetchGroups}/>
+                <AddNewGroupsDialog
+                    isOpen={this.state.isNewGroupsDialogVisible}
+                    projectName={this.props.match.params.projectId}
+                    headerText="Dodaj grupy z pliku"
+                    closeActionHandler={this.handleCloseNewGroupsDialog}
+                    successActionHandler={this.fetchGroups}/>
             </div>
         );
     }

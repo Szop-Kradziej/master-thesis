@@ -10,19 +10,19 @@ import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import * as Api from "../../../Api";
 
-class AddNewStageDialog extends Component {
+class AddNewSingleGroupDialog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {newStageName: null};
+        this.state = {newGroupName: null};
     }
 
-    handleNewStageNameAdded = () => event => {
-        this.setState({newStageName: event.target.value})
+    handleNewGroupNameAdded = () => event => {
+        this.setState({newGroupName: event.target.value})
     };
 
-    handleAddNewStage = () => {
-        Api.addNewStage(this.props.projectName, this.state.newStageName)
+    handleAddNewGroupName = () => {
+        Api.addNewGroup(this.props.projectName, this.state.newGroupName)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
     };
@@ -33,17 +33,17 @@ class AddNewStageDialog extends Component {
                 open={this.props.isOpen}
                 onClose={this.props.closeActionHandler}
                 aria-labelledby="form-dialog-title">
-                <DialogTitle id="form-dialog-title">Dodaj nowy etap</DialogTitle>
+                <DialogTitle id="form-dialog-title">Dodaj nową grupę</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Podaj nazwę etapu:
+                        Podaj nazwę grupy:
                     </DialogContentText>
                     <TextField
                         id="standard-name"
-                        label="Nazwa etapu"
+                        label="Nazwa grupy"
                         className={this.props.classes.textField}
-                        value={this.state.newStageName}
-                        onChange={this.handleNewStageNameAdded()}
+                        value={this.state.newGroupName}
+                        onChange={this.handleNewGroupNameAdded()}
                         margin="normal"
                     />
                 </DialogContent>
@@ -51,7 +51,7 @@ class AddNewStageDialog extends Component {
                     <Button onClick={this.props.closeActionHandler} color="primary">
                         Anuluj
                     </Button>
-                    <Button onClick={this.handleAddNewStage} color="primary">
+                    <Button onClick={this.handleAddNewGroupName} color="primary">
                         Dodaj
                     </Button>
                 </DialogActions>
@@ -60,4 +60,4 @@ class AddNewStageDialog extends Component {
     }
 }
 
-export default withStyles(styles)(AddNewStageDialog);
+export default withStyles(styles)(AddNewSingleGroupDialog);

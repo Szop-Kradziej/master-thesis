@@ -2,6 +2,7 @@ package com.drabarz.karolina.testplatformrunner
 
 import com.drabarz.karolina.testplatformrunner.model.ProjectsRepository
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ApplicationContext
@@ -221,11 +222,11 @@ class TestPlatformApi(val studentService: StudentService,
     }
 
     @GetMapping("/db/students")
-    fun getStudents() : List<String> {
+    fun getStudents(): List<String> {
         return groupService.getStudents()
     }
 
-    @PostMapping("/db/group")
+    @PostMapping("/group")
     fun addGroup(
             @RequestParam("groupName") groupName: String,
             @RequestParam("projectName") projectName: String): String {
@@ -233,15 +234,17 @@ class TestPlatformApi(val studentService: StudentService,
     }
 
     @GetMapping("/{projectName}/groups")
-    fun getGroups(@PathVariable("projectName") projectName: String) : GroupsResponse {
+    fun getGroups(@PathVariable("projectName") projectName: String): GroupsResponse {
         return groupService.getGroups(projectName)
     }
 
     @PostMapping("/{projectName}/groups")
     fun addGroups(
-            @RequestBody groups: GroupsDao,
+            @RequestParam("file") uploadedFile: MultipartFile,
             @PathVariable("projectName") projectName: String): String {
-        return groupService.addGroups(groups, projectName)
+        val groupsDao = ObjectMapper().readValue<GroupsDao>(uploadedFile.bytes)
+
+        return groupService.addGroups(groupsDao, projectName)
     }
 }
 
@@ -254,5 +257,5 @@ class StudentStage(val stageName: String, val binaryName: String?, val reportNam
 class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)
 class GroupsResponse(val groups: List<Group>)
 class Group(val groupName: String, val projectName: String, val students: List<String>)
-class GroupsDao (val groups: List<GroupDao>)
-class GroupDao (val name: String, val students: List<String>)
+data class GroupsDao (val groups: List<GroupDao> = ArrayList())
+data class GroupDao (val name: String = "", val students: List<String> = ArrayList())
