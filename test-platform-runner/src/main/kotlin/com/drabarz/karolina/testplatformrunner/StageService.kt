@@ -68,7 +68,7 @@ class StageService(
                             stageMetadata?.endDate.toFormattedString(),
                             stageMetadata?.pointsNumber?.toString(),
                             testCaseService.getTestCasesNames(projectName, it))
-                }
+                }.sortedBy { it.endDate }
     }
 
     fun addStageDescription(uploadedFile: MultipartFile, projectName: String, stageName: String): String {
