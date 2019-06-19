@@ -10,7 +10,10 @@ import DeleteIcon from "@material-ui/icons/DeleteForever";
 import EditItemComponent from "../../../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
 import * as Api from "../../../../Api";
-import UploadStageDescriptionDialog from "./UploadStageDescriptionDialog";
+import UploadStageDescriptionDialog from "./dialog/UploadStageDescriptionDialog";
+import EditStageStartDateDialog from "./dialog/EditStageStartDateDialog";
+import EditStageEndDateDialog from "./dialog/EditStageEndDateDialog";
+import EditStagePointsNumberDialog from "./dialog/EditStagePointsNumberDialog";
 
 class StageHeader extends Component {
 
@@ -18,22 +21,13 @@ class StageHeader extends Component {
         super(props);
         this.state = {
             isAddDescriptionDialogVisible: false,
+            isEditStartDateDialogVisible: false,
+            isEditEndDateDialogVisible: false,
+            isEditPointsNumberDialogVisible: false,
         };
     }
 
     handleEditStageName = () => {
-        //TODO: do action
-    };
-
-    handleEditStageStartDate = () => {
-        //TODO: do action
-    };
-
-    handleEditStageEndDate = () => {
-        //TODO: do action
-    };
-
-    handleEditPointsNumberDate = () => {
         //TODO: do action
     };
 
@@ -43,6 +37,30 @@ class StageHeader extends Component {
 
     handleCloseAddDescriptionDialog = () => {
         this.setState({isAddDescriptionDialogVisible: false});
+    };
+
+    handleOpenEditStartDateDialog = () => {
+        this.setState({isEditStartDateDialogVisible: true});
+    };
+
+    handleCloseEditStartDateDialog = () => {
+        this.setState({isEditStartDateDialogVisible: false});
+    };
+
+    handleOpenEditEndDateDialog = () => {
+        this.setState({isEditEndDateDialogVisible: true});
+    };
+
+    handleCloseEditEndDateDialog = () => {
+        this.setState({isEditEndDateDialogVisible: false});
+    };
+
+    handleOpenEditPointsNumberDialog = () => {
+        this.setState({isEditPointsNumberDialogVisible: true});
+    };
+
+    handleCloseEditPointsNumberDialog = () => {
+        this.setState({isEditPointsNumberDialogVisible: false});
     };
 
     handleDownloadStageDescription = () => {
@@ -83,19 +101,19 @@ class StageHeader extends Component {
                                 <EditItemComponent
                                     header="Rozpoczęcie:"
                                     info="Edytuj datę rozpoczęcia etapu"
-                                    editActionHandler={this.handleEditStageStartDate}/>
+                                    editActionHandler={this.handleOpenEditStartDateDialog}/>
                             </CustomTableCell>
                             <CustomTableCell width="15%">
                                 <EditItemComponent
                                     header="Zakończenie:"
                                     info="Edytuj datę zakończenia etapu"
-                                    editActionHandler={this.handleEditStageEndDate}/>
+                                    editActionHandler={this.handleOpenEditEndDateDialog}/>
                             </CustomTableCell>
                             <CustomTableCell width="15%">
                                 <EditItemComponent
                                     header="Punkty:"
                                     info="Edytuj liczbę punktów"
-                                    editActionHandler={this.handleEditPointsNumberDate}/>
+                                    editActionHandler={this.handleOpenEditPointsNumberDialog}/>
                             </CustomTableCell>
                             <CustomTableCell>
                                 <IconButton aria-label="Usuń" onClick={this.handleDeleteStage}>
@@ -130,6 +148,24 @@ class StageHeader extends Component {
                                               projectName={this.props.projectName}
                                               stageName={this.props.stage.stageName}
                                               headerText="Dodaj opis etapu"/>
+                <EditStageStartDateDialog isOpen={this.state.isEditStartDateDialogVisible}
+                                          closeActionHandler={this.handleCloseEditStartDateDialog}
+                                          successActionHandler={this.props.stageChangedHandler}
+                                          projectName={this.props.projectName}
+                                          stageName={this.props.stage.stageName}
+                                          headerText="Edytuj datę rozpoczęcia etapu"/>
+                <EditStageEndDateDialog isOpen={this.state.isEditEndDateDialogVisible}
+                                        closeActionHandler={this.handleCloseEditEndDateDialog}
+                                        successActionHandler={this.props.stageChangedHandler}
+                                        projectName={this.props.projectName}
+                                        stageName={this.props.stage.stageName}
+                                        headerText="Edytuj datę zakończenia etapu"/>
+                <EditStagePointsNumberDialog isOpen={this.state.isEditPointsNumberDialogVisible}
+                                             closeActionHandler={this.handleCloseEditPointsNumberDialog}
+                                             successActionHandler={this.props.stageChangedHandler}
+                                             projectName={this.props.projectName}
+                                             stageName={this.props.stage.stageName}
+                                             headerText="Edytuj liczbę punktów"/>
             </div>
         );
     }

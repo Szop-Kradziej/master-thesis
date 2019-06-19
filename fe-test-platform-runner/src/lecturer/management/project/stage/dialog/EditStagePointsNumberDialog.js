@@ -1,33 +1,38 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
-import {styles} from "../../../../styles/ProjectBoardStyles";
-import * as Api from "../../../../Api";
+import {styles} from "../../../../../styles/ProjectBoardStyles";
+import * as Api from "../../../../../Api";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Button from "@material-ui/core/Button/Button";
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import InputWrapper from "../../../../utils/InputWrapper";
+import InputWrapper from "../../../../../utils/InputWrapper";
+import TextField from "@material-ui/core/TextField";
 
-class UploadStageDescriptionDialog extends Component {
+class EditStagePointsNumberDialog extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            inputDescriptionFile: null
+            pointsNumber: null
         };
     }
 
-    handleUploadStageDescription = (event) => {
+    handlePointsNumberAdded = () => event => {
+        this.setState({pointsNumber: event.target.value})
+    };
+
+    handleEditStagePointsNumber = (event) => {
         event.preventDefault();
 
         const data = new FormData();
-        data.append('file', this.inputDescriptionFile.files[0]);
         data.append('projectName', this.props.projectName);
         data.append('stageName', this.props.stageName);
+        data.append('pointsNumber', this.state.pointsNumber);
 
-        Api.uploadStageDescription(data)
+        Api.editStagePointsNumber(data)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
             .catch(function (error) {
@@ -42,21 +47,19 @@ class UploadStageDescriptionDialog extends Component {
                         aria-labelledby="form-dialog-title">
                     <DialogTitle id="form-dialog-title">{this.props.headerText}</DialogTitle>
                     <DialogContent>
-                        <DialogContentText>
-                            Podaj ścieżkę pliku:
-                        </DialogContentText>
-                        {/*TODO: FIX: https://stackoverflow.com/questions/40589302/how-to-enable-file-upload-on-reacts-material-ui-simple-input*/}
-                        <div className="form-group">
-                            <input className="form-control" ref={(ref) => {
-                                this.inputDescriptionFile = ref;
-                            }} type="file"/>
-                        </div>
+                        <TextField
+                            id="standard-points"
+                            label="Liczba punktów"
+                            className={this.props.classes.textField}
+                            value={this.state.pointsNumber}
+                            onChange={this.handlePointsNumberAdded()}
+                            margin="normal"/>
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={this.props.closeActionHandler} color="primary">
                             Anuluj
                         </Button>
-                        <Button onClick={this.handleUploadStageDescription} color="primary">
+                        <Button onClick={this.handleEditStagePointsNumber} color="primary">
                             Dodaj
                         </Button>
                     </DialogActions>
@@ -66,4 +69,4 @@ class UploadStageDescriptionDialog extends Component {
     }
 }
 
-export default withStyles(styles)(UploadStageDescriptionDialog);
+export default withStyles(styles)(EditStagePointsNumberDialog);

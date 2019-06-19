@@ -60,7 +60,7 @@ class StageService(
 
         return stagesDir.list().asList()
                 .map {
-                    val stageMetadata : Stage? = stagesRepository.findByName(it) ?: Stage(project = Project())
+                    val stageMetadata: Stage? = stagesRepository.findByName(it) ?: Stage(project = Project())
                     StageDao(
                             it,
                             getStageDescriptionName(projectName, it),
@@ -140,6 +140,26 @@ class StageService(
             deleteFileHelper.deleteSingleFileWithDirectory(descriptionDir)
         }
     }
+
+    fun editStageDate(projectName: String, stageName: String, date: String?, type: String)=
+        stagesRepository.findByName(stageName)
+                .also { changeDate(it, date, type) }
+                ?.let { stagesRepository.save(it) }
+                .let { "200" }
+
+    private fun changeDate(it: Stage?, date: String?, type: String) {
+        if (type == "START") {
+            it?.startDate = date.toDate()
+        } else {
+            it?.endDate = date.toDate()
+        }
+    }
+
+    fun editStagePointsNumber(projectName: String, stageName: String, pointsNumber: String?) =
+        stagesRepository.findByName(stageName)
+                .also { it?.pointsNumber = pointsNumber?.toIntOrNull() }
+                ?.let { stagesRepository.save(it) }
+                .let { "200" }
 }
 
 private fun Date?.toFormattedString(): String? {

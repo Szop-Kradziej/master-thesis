@@ -61,34 +61,46 @@ export function addNewStudent(projectName, groupName, studentName) {
 }
 
 export function uploadProjectDescription(data) {
-    return uploadData(backendUrl("/project/description"), data)
+    return postData(backendUrl("/project/description"), data)
 }
 
 export function uploadGroupsFile(projectName, data) {
-    return uploadData(backendUrl("/" + projectName + "/groups"), data)
+    return postData(backendUrl("/" + projectName + "/groups"), data)
 }
 
 export function uploadStageDescription(data) {
-    return uploadData(backendUrl("/stage/description"), data)
+    return postData(backendUrl("/stage/description"), data)
 }
 
 export function uploadTestCaseFile(projectName, stageName, testCaseName, fileType, data) {
-    return uploadData(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType), data)
+    return postData(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType), data)
 }
 
 export function uploadStudentBinary(data) {
-    return uploadData(backendUrl("/upload/bin"), data)
+    return postData(backendUrl("/upload/bin"), data)
 }
 
 export function uploadStudentReport(data) {
-    return uploadData(backendUrl("/upload/report"), data)
+    return postData(backendUrl("/upload/report"), data)
 }
 
 export function uploadStudentCodeLink(data) {
-    return uploadData(backendUrl("/upload/code"), data)
+    return postData(backendUrl("/upload/code"), data)
 }
 
-function uploadData(url, data) {
+export function editStageStartDate(data) {
+    return postData(backendUrl("/stage/startDate"), data)
+}
+
+export function editStageEndDate(data) {
+    return postData(backendUrl("/stage/endDate"), data)
+}
+
+export function editStagePointsNumber(data) {
+    return postData(backendUrl("/stage/pointsNumber"), data)
+}
+
+function postData(url, data) {
     return axios.post(url, data)
         .then(function (response) {
             console.log("success");

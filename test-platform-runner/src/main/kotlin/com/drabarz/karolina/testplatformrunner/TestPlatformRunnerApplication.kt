@@ -29,7 +29,6 @@ class TestPlatformApi(val studentService: StudentService,
                       val testCaseService: TestCaseService,
                       val stagesService: StageService,
                       val projectService: ProjectService,
-                      val projectsRepository: ProjectsRepository,
                       val groupService: GroupService,
                       val applicationContext: ApplicationContext) {
 
@@ -132,6 +131,30 @@ class TestPlatformApi(val studentService: StudentService,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
         return stagesService.addStageDescription(uploadedFile, projectName, stageName)
+    }
+
+    @PostMapping("/stage/startDate")
+    fun editStageStartDate(
+            @RequestParam("startDate") startDate: String?,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
+        return stagesService.editStageDate(projectName, stageName, startDate, "START")
+    }
+
+    @PostMapping("/stage/endDate")
+    fun editStageEndDate(
+            @RequestParam("endDate") endDate: String?,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
+        return stagesService.editStageDate(projectName, stageName, endDate, "END")
+    }
+
+    @PostMapping("/stage/pointsNumber")
+    fun editStagePointsNumber(
+            @RequestParam("pointsNumber") pointsNumber: String?,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
+        return stagesService.editStagePointsNumber(projectName, stageName, pointsNumber)
     }
 
     @GetMapping("/{projectName}/stages")
