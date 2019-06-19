@@ -1,5 +1,6 @@
 package com.drabarz.karolina.testplatformrunner
 
+import com.drabarz.karolina.testplatformrunner.model.Project
 import com.drabarz.karolina.testplatformrunner.model.ProjectsRepository
 import com.drabarz.karolina.testplatformrunner.model.Stage
 import com.drabarz.karolina.testplatformrunner.model.StagesRepository
@@ -17,7 +18,7 @@ class StageService(
         val stagesRepository: StagesRepository,
         val projectsRepository: ProjectsRepository) {
 
-    fun addStage(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: Int?): String {
+    fun addStage(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: String?): String {
         val projectDir = pathProvider.getProjectDir(projectName)
         if (!projectDir.exists()) {
             throw RuntimeException("Error. Can not create stage for project. Project $projectName doesn't exist")
@@ -36,14 +37,14 @@ class StageService(
         return "200"
     }
 
-    private fun saveStageMetadata(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: Int?) {
+    private fun saveStageMetadata(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: String?) {
         stagesRepository.save(
                 Stage(
                         name = stageName,
                         project = projectsRepository.findByName(projectName),
                         startDate = startDate.toDate(),
                         endDate = endDate.toDate(),
-                        pointsNumber = pointsNumber
+                        pointsNumber = pointsNumber?.toIntOrNull()
                 ))
     }
 
@@ -59,9 +60,13 @@ class StageService(
 
         return stagesDir.list().asList()
                 .map {
+                    val stageMetadata : Stage? = stagesRepository.findByName(it) ?: Stage(project = Project())
                     StageDao(
                             it,
                             getStageDescriptionName(projectName, it),
+                            stageMetadata?.startDate.toFormattedString(),
+                            stageMetadata?.endDate.toFormattedString(),
+                            stageMetadata?.pointsNumber?.toString(),
                             testCaseService.getTestCasesNames(projectName, it))
                 }
     }
@@ -69,7 +74,7 @@ class StageService(
     fun addStageDescription(uploadedFile: MultipartFile, projectName: String, stageName: String): String {
         val stageDir = pathProvider.getStageDir(projectName, stageName)
         if (!stageDir.exists()) {
-            throw RuntimeException("Error. StageDao $stageName for project: $projectName doesn't exist")
+            throw RuntimeException("Error. Stage $stageName for project: $projectName doesn't exist")
         }
 
         val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
@@ -135,6 +140,14 @@ class StageService(
             deleteFileHelper.deleteSingleFileWithDirectory(descriptionDir)
         }
     }
+}
+
+private fun Date?.toFormattedString(): String? {
+    if (this == null) {
+        return null
+    }
+
+    return SimpleDateFormat("yyyy-MM-dd").format(this)
 }
 
 private fun String?.toDate(): Date? {

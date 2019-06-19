@@ -23,6 +23,6 @@ data class Stage(
 
 @Repository
 interface StagesRepository : CrudRepository<Stage, Long> {
-    fun findByName(name: String): Stage
+    fun findByName(name: String): Stage?
     fun findAllByProject_Name(projectName: String): List<Stage>
 }

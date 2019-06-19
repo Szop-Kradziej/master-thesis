@@ -25,7 +25,15 @@ class StageHeader extends Component {
         //TODO: do action
     };
 
-    handleEditStageDeadline = () => {
+    handleEditStageStartDate = () => {
+        //TODO: do action
+    };
+
+    handleEditStageEndDate = () => {
+        //TODO: do action
+    };
+
+    handleEditPointsNumberDate = () => {
         //TODO: do action
     };
 
@@ -38,11 +46,11 @@ class StageHeader extends Component {
     };
 
     handleDownloadStageDescription = () => {
-        Api.downloadStageDescription(this.props.projectName, this.props.stageName)
+        Api.downloadStageDescription(this.props.projectName, this.props.stage.stageName)
     };
 
     handleDeleteStage = () => {
-        Api.deleteStage(this.props.projectName, this.props.stageName)
+        Api.deleteStage(this.props.projectName, this.props.stage.stageName)
             .then(this.props.stageChangedHandler)
             .catch(function (error) {
                 console.log(error);
@@ -67,15 +75,27 @@ class StageHeader extends Component {
                                     uploadInfo="Załaduj opis etapu"
                                     uploadActionHandler={this.handleOpenAddDescriptionDialog}
                                     downloadInfo="Pobierz opis etapu"
-                                    downloadDisabled={this.props.stageDescription === null}
+                                    downloadDisabled={this.props.stage.stageDescription === null}
                                     downloadActionHandler={this.handleDownloadStageDescription}/>
                             </CustomTableCell>
-                            <CustomTableCell width="50%"/>
+                            <CustomTableCell width="20%"/>
                             <CustomTableCell width="15%">
                                 <EditItemComponent
-                                    header="Deadline:"
-                                    info="Edytuj deadline etapu"
-                                    editActionHandler={this.handleEditStageDeadline}/>
+                                    header="Rozpoczęcie:"
+                                    info="Edytuj datę rozpoczęcia etapu"
+                                    editActionHandler={this.handleEditStageStartDate}/>
+                            </CustomTableCell>
+                            <CustomTableCell width="15%">
+                                <EditItemComponent
+                                    header="Zakończenie:"
+                                    info="Edytuj datę zakończenia etapu"
+                                    editActionHandler={this.handleEditStageEndDate}/>
+                            </CustomTableCell>
+                            <CustomTableCell width="15%">
+                                <EditItemComponent
+                                    header="Punkty:"
+                                    info="Edytuj liczbę punktów"
+                                    editActionHandler={this.handleEditPointsNumberDate}/>
                             </CustomTableCell>
                             <CustomTableCell>
                                 <IconButton aria-label="Usuń" onClick={this.handleDeleteStage}>
@@ -86,14 +106,20 @@ class StageHeader extends Component {
                     </TableHead>
                     <TableBody>
                         <CustomTableCell component="th" scope="row">
-                            {this.props.stageName}
+                            {this.props.stage.stageName}
                         </CustomTableCell>
                         <CustomTableCell component="th" scope="row">
-                            {this.props.stageDescription ? this.props.stageDescription : 'Brak'}
+                            {this.props.stage.stageDescription ? this.props.stage.stageDescription : 'Brak'}
                         </CustomTableCell>
                         <CustomTableCell component="th" scope="row"/>
                         <CustomTableCell component="th" scope="row">
-                            10/06/2019 23:59
+                            {this.props.stage.startDate ? this.props.stage.startDate : 'Brak'}
+                        </CustomTableCell>
+                        <CustomTableCell component="th" scope="row">
+                            {this.props.stage.endDate ? this.props.stage.endDate : 'Brak'}
+                        </CustomTableCell>
+                        <CustomTableCell component="th" scope="row">
+                            {this.props.stage.pointsNumber ? this.props.stage.pointsNumber : 'Brak'}
                         </CustomTableCell>
                         <CustomTableCell component="th" scope="row"/>
                     </TableBody>
@@ -102,7 +128,7 @@ class StageHeader extends Component {
                                               closeActionHandler={this.handleCloseAddDescriptionDialog}
                                               successActionHandler={this.props.stageChangedHandler}
                                               projectName={this.props.projectName}
-                                              stageName={this.props.stageName}
+                                              stageName={this.props.stage.stageName}
                                               headerText="Dodaj opis etapu"/>
             </div>
         );

@@ -9,6 +9,7 @@
     "classnames": "latest",
     "file-saver": "^2.0.1",
     "lodash": "latest",
+    "moment": "^2.24.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "react-router-dom": "latest",

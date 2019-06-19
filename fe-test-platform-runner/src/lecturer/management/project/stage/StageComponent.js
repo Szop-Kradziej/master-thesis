@@ -18,8 +18,7 @@ class StageComponent extends Component {
                     <Typography className={this.props.classes.heading}>
                         <StageHeader
                             projectName={this.props.projectName}
-                            stageName={this.props.stage.stageName}
-                            stageDescription={this.props.stage.stageDescription}
+                            stage={this.props.stage}
                             stageChangedHandler={this.props.stageChangedHandler}/>
                     </Typography>
                 </ExpansionPanelSummary>
