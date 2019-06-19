@@ -1,5 +1,6 @@
 package com.drabarz.karolina.testplatformrunner
 
+import com.drabarz.karolina.testplatformrunner.model.GroupsRepository
 import com.drabarz.karolina.testplatformrunner.model.Project
 import com.drabarz.karolina.testplatformrunner.model.ProjectsRepository
 import org.slf4j.LoggerFactory
@@ -13,6 +14,8 @@ class ProjectService(
         val pathProvider: PathProvider,
         val stageService: StageService,
         val projectsRepository: ProjectsRepository,
+        val groupsRepository: GroupsRepository,
+        val groupService: GroupService,
         val deleteFileHelper: DeleteFileHelper) {
 
     fun addProject(projectName: String): String {
@@ -77,6 +80,9 @@ class ProjectService(
             }
             projectDir.delete()
         }
+
+        groupsRepository.findAllByProject_Name(projectName)
+                .let { it.forEach { groupService.deleteGroup(it.name, projectName) } }
 
         projectsRepository.deleteByName(projectName)
 
