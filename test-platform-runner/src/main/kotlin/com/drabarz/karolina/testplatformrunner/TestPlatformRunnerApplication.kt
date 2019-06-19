@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.GetMapping
 import java.io.File
+import java.util.*
 
 @SpringBootApplication
 class TestPlatformRunnerApplication
@@ -144,8 +145,13 @@ class TestPlatformApi(val studentService: StudentService,
     }
 
     @PostMapping("/stage")
-    fun addStage(@RequestParam("projectName") projectName: String, @RequestParam("stageName") stageName: String): String {
-        return stagesService.addStage(projectName, stageName)
+    fun addStage(
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String,
+            @RequestParam("startDate") startDate: String?,
+            @RequestParam("endDate") endDate: String?,
+            @RequestParam("pointsNumber") pointsNumber: Int?): String {
+        return stagesService.addStage(projectName, stageName, startDate, endDate, pointsNumber)
     }
 
     @DeleteMapping("/{projectName}/{stageName}")

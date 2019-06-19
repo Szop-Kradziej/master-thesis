@@ -33,12 +33,12 @@ export function fetchGroups(projectName) {
     })
 }
 
-export function addNewStage(projectName, stageName) {
+export function addNewStage(projectName, stageName, startDate, endDate, points) {
     return fetch(backendUrl(`/stage`), {
         method: "POST",
         credentials: "include",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: "projectName=" + projectName + "&stageName=" + stageName
+        body: "projectName=" + projectName + "&stageName=" + stageName + "&startDate=" + startDate + "&endDate=" + endDate + "&pointsNumber=" + points
     })
 }
 

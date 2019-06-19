@@ -6,6 +6,8 @@ import com.drabarz.karolina.testplatformrunner.model.StagesRepository
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
+import java.text.SimpleDateFormat
+import java.util.*
 
 @Component
 class StageService(
@@ -15,7 +17,7 @@ class StageService(
         val stagesRepository: StagesRepository,
         val projectsRepository: ProjectsRepository) {
 
-    fun addStage(projectName: String, stageName: String): String {
+    fun addStage(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: Int?): String {
         val projectDir = pathProvider.getProjectDir(projectName)
         if (!projectDir.exists()) {
             throw RuntimeException("Error. Can not create stage for project. Project $projectName doesn't exist")
@@ -29,9 +31,20 @@ class StageService(
 
         stageDir.mkdirs()
 
-        stagesRepository.save(Stage(name = stageName, project = projectsRepository.findByName(projectName)))
+        saveStageMetadata(projectName, stageName, startDate, endDate, pointsNumber)
 
         return "200"
+    }
+
+    private fun saveStageMetadata(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: Int?) {
+        stagesRepository.save(
+                Stage(
+                        name = stageName,
+                        project = projectsRepository.findByName(projectName),
+                        startDate = startDate.toDate(),
+                        endDate = endDate.toDate(),
+                        pointsNumber = pointsNumber
+                ))
     }
 
     fun getStages(projectName: String): List<StageDao> {
@@ -122,4 +135,12 @@ class StageService(
             deleteFileHelper.deleteSingleFileWithDirectory(descriptionDir)
         }
     }
+}
+
+private fun String?.toDate(): Date? {
+    if (this.isNullOrBlank()) {
+        return null
+    }
+
+    return SimpleDateFormat("yyyy-MM-dd").parse(this);
 }

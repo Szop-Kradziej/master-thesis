@@ -14,15 +14,27 @@ class AddNewStageDialog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {newStageName: null};
+        this.state = {stageName: null, startDate: "2019-06-19", endDate: "2019-09-15", pointsNumber: null};
     }
 
-    handleNewStageNameAdded = () => event => {
-        this.setState({newStageName: event.target.value})
+    handleStageNameAdded = () => event => {
+        this.setState({stageName: event.target.value})
+    };
+
+    handleStartDateAdded = () => event => {
+        this.setState({startDate: event.target.value})
+    };
+
+    handleEndDateAdded = () => event => {
+        this.setState({endDate: event.target.value})
+    };
+
+    handlePointsNumberAdded = () => event => {
+        this.setState({pointsNumber: event.target.value})
     };
 
     handleAddNewStage = () => {
-        Api.addNewStage(this.props.projectName, this.state.newStageName)
+        Api.addNewStage(this.props.projectName, this.state.stageName, this.state.startDate, this.state.endDate, this.state.pointsNumber)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
     };
@@ -36,16 +48,46 @@ class AddNewStageDialog extends Component {
                 <DialogTitle id="form-dialog-title">Dodaj nowy etap</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Podaj nazwę etapu:
+                        Podaj informacje o etapie:
                     </DialogContentText>
                     <TextField
                         id="standard-name"
                         label="Nazwa etapu"
                         className={this.props.classes.textField}
-                        value={this.state.newStageName}
-                        onChange={this.handleNewStageNameAdded()}
-                        margin="normal"
-                    />
+                        value={this.state.stageName}
+                        onChange={this.handleStageNameAdded()}
+                        margin="normal"/>
+                    <div>
+                        <TextField
+                            id="start-date"
+                            label="Data rozpoczęcia"
+                            type="date"
+                            defaultValue="2019-06-19"
+                            className={this.props.classes.textField}
+                            value={this.state.startDate}
+                            onChange={this.handleStartDateAdded()}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}/>
+                        <TextField
+                            id="end-date"
+                            label="Data zakończenia"
+                            type="date"
+                            defaultValue="2019-09-15"
+                            className={this.props.classes.textField}
+                            value={this.state.endDate}
+                            onChange={this.handleEndDateAdded()}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}/>
+                    </div>
+                    <TextField
+                        id="standard-points"
+                        label="Liczba punktów"
+                        className={this.props.classes.textField}
+                        value={this.state.pointsNumber}
+                        onChange={this.handlePointsNumberAdded()}
+                        margin="normal"/>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.closeActionHandler} color="primary">

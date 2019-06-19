@@ -2,6 +2,7 @@ package com.drabarz.karolina.testplatformrunner.model
 
 import org.springframework.data.repository.CrudRepository
 import org.springframework.stereotype.Repository
+import java.util.ArrayList
 import javax.persistence.*
 
 @Entity
