@@ -117,6 +117,9 @@ class StageService(
             stageDir.delete()
         }
 
+        stagesRepository.findByName(stageName)
+                ?.let { stagesRepository.delete(it) }
+
         return "200"
     }
 
@@ -141,11 +144,11 @@ class StageService(
         }
     }
 
-    fun editStageDate(projectName: String, stageName: String, date: String?, type: String)=
-        stagesRepository.findByName(stageName)
-                .also { changeDate(it, date, type) }
-                ?.let { stagesRepository.save(it) }
-                .let { "200" }
+    fun editStageDate(projectName: String, stageName: String, date: String?, type: String) =
+            stagesRepository.findByName(stageName)
+                    .also { changeDate(it, date, type) }
+                    ?.let { stagesRepository.save(it) }
+                    .let { "200" }
 
     private fun changeDate(it: Stage?, date: String?, type: String) {
         if (type == "START") {
@@ -156,10 +159,10 @@ class StageService(
     }
 
     fun editStagePointsNumber(projectName: String, stageName: String, pointsNumber: String?) =
-        stagesRepository.findByName(stageName)
-                .also { it?.pointsNumber = pointsNumber?.toIntOrNull() }
-                ?.let { stagesRepository.save(it) }
-                .let { "200" }
+            stagesRepository.findByName(stageName)
+                    .also { it?.pointsNumber = pointsNumber?.toIntOrNull() }
+                    ?.let { stagesRepository.save(it) }
+                    .let { "200" }
 }
 
 private fun Date?.toFormattedString(): String? {
