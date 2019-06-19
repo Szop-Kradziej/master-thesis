@@ -32,7 +32,7 @@ class ProjectService(
     }
 
     fun getProjects(): List<String> {
-        return File(pathProvider.projectsPath).list().asList()
+        return File(pathProvider.projectsPath).list().asList().sortedBy { it }
     }
 
     fun addProjectDescription(uploadedFile: MultipartFile, projectName: String): String {
