@@ -59,7 +59,6 @@ CREATE TABLE stages
     start_date    TIMESTAMP,
     end_date      TIMESTAMP,
     points_number INT,
-    order_number  INT          NOT NULL,
     project_id    BIGINT       NOT NULL,
 
     CONSTRAINT stages_pk PRIMARY KEY (id),

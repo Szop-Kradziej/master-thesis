@@ -18,8 +18,7 @@ data class Stage(
         val project: Project,
         val startDate: Date = Date(),
         val endDate: Date = Date(),
-        val pointsNumber: Int = 0,
-        val orderNumber: Int = 0
+        val pointsNumber: Int = 0
 )
 
 @Repository
