@@ -61,7 +61,7 @@ class StudentService(
                             stage.stageName,
                             getBinaryName(projectName, stage.stageName),
                             getReportName(projectName, stage.stageName),
-                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }),
+                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }).sortedBy { it.testCaseName },
                             getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }).count { it.status == "SUCCESS" },
                             stage.testCases.size,
                             getDeadline(),

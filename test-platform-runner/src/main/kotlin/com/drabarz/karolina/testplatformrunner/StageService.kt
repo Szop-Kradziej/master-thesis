@@ -67,7 +67,7 @@ class StageService(
                             stageMetadata?.startDate.toFormattedString(),
                             stageMetadata?.endDate.toFormattedString(),
                             stageMetadata?.pointsNumber?.toString(),
-                            testCaseService.getTestCasesNames(projectName, it))
+                            testCaseService.getTestCasesNames(projectName, it).sortedBy { it.testCaseName })
                 }.sortedBy { it.endDate }
     }
 
