@@ -144,7 +144,9 @@ class StudentStageRow extends Component {
                                 </CustomTableCell>
                                 <CustomTableCell/>
                                 <CustomTableCell>Zaliczone:</CustomTableCell>
-                                <CustomTableCell>Deadline:</CustomTableCell>
+                                <CustomTableCell>Punkty:</CustomTableCell>
+                                <CustomTableCell>Rozpoczęcie:</CustomTableCell>
+                                <CustomTableCell>Zakończenie:</CustomTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -165,8 +167,14 @@ class StudentStageRow extends Component {
                                 <CustomTableCell component="th" scope="row" width="5%">
                                     <p> {this.props.stage.passedTestCasesCount}/{this.props.stage.allTestCasesCount}</p>
                                 </CustomTableCell>
-                                <CustomTableCell component="th" scope="row" width="10%">
-                                    <p>{this.props.stage.deadline}</p>
+                                <CustomTableCell component="th" scope="row" width="5%">
+                                    <p> {this.props.stage.pointsNumber}/{this.props.stage.totalPointsNumber}</p>
+                                </CustomTableCell>
+                                <CustomTableCell component="th" scope="row" width="5%">
+                                    <p>{this.props.stage.startDate ? this.props.stage.startDate : 'Brak'}</p>
+                                </CustomTableCell>
+                                <CustomTableCell component="th" scope="row" width="5%">
+                                    <p>{this.props.stage.endDate ? this.props.stage.endDate : 'Brak'}</p>
                                 </CustomTableCell>
                             </TableRow>
                         </TableBody>

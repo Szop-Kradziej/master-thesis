@@ -64,10 +64,15 @@ class StudentService(
                             getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }).sortedBy { it.testCaseName },
                             getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }).count { it.status == "SUCCESS" },
                             stage.testCases.size,
-                            getDeadline(),
+                            stage.startDate,
+                            stage.endDate,
+                            "0",
+                            stage.pointsNumber,
                             getCodeLink(projectName, stage.stageName))
-                }
+                }.sortedBy { it.endDate }
     }
+
+
 
     private fun getCodeLink(projectName: String, stageName: String): String? {
         val dir = pathProvider.getStudentCodeDir(projectName, stageName)
@@ -79,11 +84,6 @@ class StudentService(
         }
 
         return codeFile.readText()
-    }
-
-    private fun getDeadline(): String {
-        //TODO: Implement after connection to db added
-        return "10/06/2019 23:59"
     }
 
     private fun getBinaryName(projectName: String, stageName: String): String? {

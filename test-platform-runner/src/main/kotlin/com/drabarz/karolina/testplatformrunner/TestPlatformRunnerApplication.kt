@@ -280,7 +280,7 @@ class StagesResponse(val projectDescription: String?, val stages: List<StageDao>
 class StageDao(val stageName: String, val stageDescription: String?, val startDate: String?, val endDate: String?, val pointsNumber: String?, val testCases: List<TestCase>)
 class TestCase(val testCaseName: String, val inputFileName: String?, val outputFileName: String?)
 class StudentStagesResponse(val stages: List<StudentStage>)
-class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val deadline: String, val codeLink: String?)
+class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val startDate: String?, val endDate: String?, val pointsNumber: String?, val totalPointsNumber: String?, val codeLink: String?)
 class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)
 class GroupsResponse(val groups: List<Group>)
 class Group(val groupName: String, val projectName: String, val students: List<String>)
