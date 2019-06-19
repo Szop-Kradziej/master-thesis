@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.GetMapping
-import java.io.ByteArrayOutputStream
 import java.io.File
 
 @SpringBootApplication
@@ -248,8 +247,8 @@ class TestPlatformApi(val studentService: StudentService,
 }
 
 class ProjectResponse(val projects: List<String>)
-class StagesResponse(val projectDescription: String?, val stages: List<Stage>)
-class Stage(val stageName: String, val stageDescription: String?, val testCases: List<TestCase>)
+class StagesResponse(val projectDescription: String?, val stages: List<StageDao>)
+class StageDao(val stageName: String, val stageDescription: String?, val testCases: List<TestCase>)
 class TestCase(val testCaseName: String, val inputFileName: String?, val outputFileName: String?)
 class StudentStagesResponse(val stages: List<StudentStage>)
 class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val deadline: String, val codeLink: String?)

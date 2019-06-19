@@ -17,7 +17,7 @@ class TestCaseService(
 
         val stageDir = pathProvider.getStageDir(projectName, stageName)
         if (!stageDir.exists()) {
-            throw RuntimeException("Error. Can not create test case for stage. Stage $stageName doesn't exist")
+            throw RuntimeException("Error. Can not create test case for stage. StageDao $stageName doesn't exist")
         }
 
         val testCaseDir = pathProvider.getTestCaseDir(projectName, stageName, testCaseName)
@@ -45,7 +45,7 @@ class TestCaseService(
 
         val stageDir = pathProvider.getStageDir(projectName, stageName)
         if (!stageDir.exists()) {
-            throw RuntimeException("Error. Stage $stageName doesn't exist")
+            throw RuntimeException("Error. StageDao $stageName doesn't exist")
         }
 
         val testCasesDir = pathProvider.getTestCasesDir(projectName, stageName)
