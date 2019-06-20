@@ -60,7 +60,7 @@ class StageService(
 
         return stagesDir.list().asList()
                 .map {
-                    val stageMetadata: Stage? = stagesRepository.findByName(it) ?: Stage(project = Project())
+                    val stageMetadata: Stage? = stagesRepository.findByNameAndProject_Name(it, projectName) ?: Stage(project = Project())
                     StageDao(
                             it,
                             getStageDescriptionName(projectName, it),
@@ -117,7 +117,7 @@ class StageService(
             stageDir.delete()
         }
 
-        stagesRepository.findByName(stageName)
+        stagesRepository.findByNameAndProject_Name(stageName, projectName)
                 ?.let { stagesRepository.delete(it) }
 
         return "200"
@@ -145,7 +145,7 @@ class StageService(
     }
 
     fun editStageDate(projectName: String, stageName: String, date: String?, type: String) =
-            stagesRepository.findByName(stageName)
+            stagesRepository.findByNameAndProject_Name(stageName, projectName)
                     .also { changeDate(it, date, type) }
                     ?.let { stagesRepository.save(it) }
                     .let { "200" }
@@ -159,7 +159,7 @@ class StageService(
     }
 
     fun editStagePointsNumber(projectName: String, stageName: String, pointsNumber: String?) =
-            stagesRepository.findByName(stageName)
+            stagesRepository.findByNameAndProject_Name(stageName, projectName)
                     .also { it?.pointsNumber = pointsNumber?.toIntOrNull() }
                     ?.let { stagesRepository.save(it) }
                     .let { "200" }
