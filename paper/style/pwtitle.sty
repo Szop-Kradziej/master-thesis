@@ -1,0 +1,18 @@
+%===============================================================================
+
+\ProvidesPackage{pwtitle}
+%\usepackage[latin2]{inputenc}
+%\usepackage[cp1250]{inputenc}
+%\usepackage[utf8]{inputenc}				% kodowanie �r�d�a
+\usepackage[polish]{babel}					% polskie przenoszenie wyraz�w (hyph.)
+\usepackage[OT4]{fontenc}					% font PL
+\usepackage{graphicx}						% wstawianie grafiki
+
+%===============================================================================
+% Strona tytu�owa
+
+\makeatletter
+
+\def\promotor#1{\def\@promotor{#1}}
+\def\city#1{\def\@city{#1}}
+\def\year#1{\def\@year{#1}}

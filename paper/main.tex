@@ -1,0 +1,46 @@
+\input{style//documentclass.tex}
+\input{style//language.tex}
+\input{style//dependencies.tex}
+\input{style//style.tex}
+
+%\input{listing.tex}
+\counterwithout{figure}{chapter}
+\counterwithout{equation}{chapter}
+\lstset{
+  numberbychapter=false,
+	extendedchars=true
+}
+%\counterwithout{lstlisting}{chapter}
+
+
+\titleformat{\chapter}{\sffamily\huge\bf}{\thechapter.}{20pt}{\huge\bf}
+\begin{document}
+\hyphenation{Par-tial-ac-ti-vi-ty}
+\hyphenation{zwra-ca}
+\hyphenation{get-Ho-ri-zon-tal-View-Angle}
+
+%===============================================================================
+% Front
+
+\input{front//front.tex}
+
+%===============================================================================
+
+\pagestyle{fancy}
+\mainmatter
+\newgeometry{inner=40mm, outer=20mm}
+
+\input{chapter01//chapter01.tex}
+\input{chapter02//chapter02.tex}
+\input{chapter03//chapter03.tex}
+\input{chapter04//chapter04.tex}
+
+\backmatter
+
+\pagestyle{fancy}
+
+\input{back//back.tex}
+
+\end{document}
+
+%===============================================================================
