@@ -124,7 +124,7 @@ class StageService(
     }
 
     private fun deleteTestCases(projectName: String, stageName: String) {
-        val testCasesDir = pathProvider.getTestCasesDir(projectName, stageName)
+        val testCasesDir = pathProvider.getStageTestCasesDir(projectName, stageName)
         if (!testCasesDir.exists()) {
             return
         }

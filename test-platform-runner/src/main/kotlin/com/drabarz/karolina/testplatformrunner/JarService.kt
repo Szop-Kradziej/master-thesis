@@ -47,7 +47,7 @@ class JarService(val pathProvider: PathProvider, val containerFactory: Container
 
     fun checkCorrectness(projectName: String, stageName: String, testCaseName: String): TestResponse {
         try {
-            val expectedOutput = pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().reader().readText()
+            val expectedOutput = pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().reader().readText()
             val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
@@ -83,7 +83,7 @@ class ContainerFactory(val pathProvider: PathProvider) {
                         .withFileFromClasspath("Dockerfile", "static/Dockerfile")
         )
                 .withCopyFileToContainer(MountableFile.forHostPath("$jarPath"), "/home/example.jar")
-                .withFileSystemBind(pathProvider.getTestCaseFileDir(projectName, stageName, testCaseName, "input").listFiles().first().absolutePath, "/home/input.txt", BindMode.READ_ONLY)
+                .withFileSystemBind(pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, "input").listFiles().first().absolutePath, "/home/input.txt", BindMode.READ_ONLY)
                 .withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
     }
 }

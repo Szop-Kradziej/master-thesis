@@ -27,16 +27,36 @@ class PathProvider : PathProv {
         return File(getStagesDir(projectName), stageName)
     }
 
-    fun getTestCasesDir(projectName: String, stageName: String): File {
+    fun getStageTestCasesDir(projectName: String, stageName: String): File {
         return File(getStageDir(projectName, stageName), TEST_CASES)
     }
 
-    fun getTestCaseDir(projectName: String, stageName: String, testCaseName: String): File {
-        return File(getTestCasesDir(projectName, stageName), testCaseName)
+    fun getStageTestCaseDir(projectName: String, stageName: String, testCaseName: String): File {
+        return File(getStageTestCasesDir(projectName, stageName), testCaseName)
     }
 
-    fun getTestCaseFileDir(projectName: String, stageName: String, testCaseName: String, fileName: String): File {
-        return File(getTestCaseDir(projectName, stageName, testCaseName), fileName)
+    fun getStageTestCaseFileDir(projectName: String, stageName: String, testCaseName: String, fileName: String): File {
+        return File(getStageTestCaseDir(projectName, stageName, testCaseName), fileName)
+    }
+
+    fun getIntegrationsDir(projectName: String): File {
+        return File(getProjectDir(projectName), INTEGRATIONS)
+    }
+
+    fun getIntegrationDir(projectName: String, integrationName: String): File {
+        return File(getIntegrationsDir(projectName), integrationName)
+    }
+
+    fun getIntegrationTestCasesDir(projectName: String, integrationName: String): File {
+        return File(getIntegrationDir(projectName, integrationName), TEST_CASES)
+    }
+
+    fun getIntegrationTestCaseDir(projectName: String, integrationName: String, testCaseName: String): File {
+        return File(getIntegrationTestCasesDir(projectName, integrationName), testCaseName)
+    }
+
+    fun getIntegrationTestCaseFileDir(projectName: String, integrationName: String, testCaseName: String, fileName: String): File {
+        return File(getIntegrationTestCaseDir(projectName, integrationName, testCaseName), fileName)
     }
 
     fun getProjectDescriptionDir(projectName: String): File {
@@ -81,6 +101,7 @@ class PathProvider : PathProv {
 
     companion object {
         const val STAGES = "stages"
+        const val INTEGRATIONS = "integrations"
         const val DESCRIPTION = "description"
         const val BIN = "bin"
         const val REPORT = "report"

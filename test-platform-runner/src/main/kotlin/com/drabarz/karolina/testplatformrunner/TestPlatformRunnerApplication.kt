@@ -281,6 +281,11 @@ class TestPlatformApi(val studentService: StudentService,
             @RequestParam("integrationName") integrationName: String): String {
         return integrationService.addIntegration(projectName, integrationName)
     }
+
+    @GetMapping("/{projectName}/integrations")
+    fun getIntegrations(@PathVariable("projectName") projectName: String): List<String> {
+        return integrationService.getIntegrations(projectName)
+    }
 }
 
 class ProjectResponse(val projects: List<String>)
