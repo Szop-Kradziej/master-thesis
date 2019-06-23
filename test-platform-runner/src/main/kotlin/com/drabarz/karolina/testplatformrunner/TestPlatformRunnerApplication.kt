@@ -30,6 +30,7 @@ class TestPlatformApi(val studentService: StudentService,
                       val stagesService: StageService,
                       val projectService: ProjectService,
                       val groupService: GroupService,
+                      val integrationService: IntegrationService,
                       val applicationContext: ApplicationContext) {
 
     @PostMapping("/upload/bin")
@@ -272,6 +273,13 @@ class TestPlatformApi(val studentService: StudentService,
         val groupsDao = ObjectMapper().readValue<GroupsDao>(uploadedFile.bytes)
 
         return groupService.addGroups(groupsDao, projectName)
+    }
+
+    @PostMapping("/{projectName}/integrations")
+    fun addIntegration(
+            @PathVariable("projectName") projectName: String,
+            @RequestParam("integrationName") integrationName: String): String {
+        return integrationService.addIntegration(projectName, integrationName)
     }
 }
 
