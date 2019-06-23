@@ -1,280 +1,175 @@
-\chapter{Dekompozycja liniowa}
-\label{chapter:decomposition}
+\chapter{Platforma od strony użytkowej}
+\label{chapter:interfaces}
 
-Redukcja argumentów umożliwia zmniejszenie liczby wejść potrzebnych do realizacji funkcji w~układzie kombinacyjnym.
-Jednak wyniki uzyskane w~czasie takiej optymalizacji nie są ostateczne.
-Dalsze zmniejszanie rozmiaru pamięci niezbędnej w~procesie generowania indeksów (zgodnie z~algorytmem profesora Sasao) można osiągnąć,
-stosując dekompozycję liniową.
+W ramach platformy wyróżnia się dwa podstawowe interfejsy: prowadzącego i studenta.
+Dla pierwszego z nich wyróżnia się dwa widoki: zarządzania projektami i podglądu postępów studentów.
 
-Dekompozycja liniowa polega na  łączeniu zmiennych w~pary i~wprowadzaniu ich za pośrednictwem bramek XOR do głównego układu realizującego detekcję i~klasyfikację (czyli indeksowanie) danych.
-Jest to istotne,
-gdyż prowadzi do dalszego redukowania liczby wejść w~generatorach indeksu.
-Z~tych powodów dekompozycja liniowa jest intensywnie wykorzystywana w~syntezie funkcji generowania indeksów [12-15].
+\section{Interfejs prowadzącego}
 
-Dobrym przykładem,
-gdzie wyraźnie widać zastosowania dekompozycji liniowej,
-jest funkcja przedstawiona na rysunku numer \ref{fig:required-decomposition}.
-Została ona celowo spreparowana w~taki sposób,
-że wszystkie argumenty są niezbędne.
-W~takim wypadku redukcja argumentów nie przynosi żadnych rezultatów.
-Dodatkowo łatwo zauważyć,
-że pierwszy i~drugi argument można z~powodzeniem zastąpić innym,
-będącym wynikiem zwykłej funkcji XOR tych argumentów.
+\subsection{Zarządzanie projektami}
 
-\begin{figure}
-\centering
-\includegraphics[width = 13cm]{chapter03/required-decomposition.png}
-\caption{Przykład obrazujący zalety dekompozycji funkcji z~argumentami niezbędnymi (źródło własne).}
-\label{fig:required-decomposition}
-\end{figure}
-
-Zmniejszenie rozmiaru pamięci z~trzech argumentów do dwóch nie jest zbyt spektakularne i~nie miałoby znaczenia w~praktycznym zastosowaniu.
-Jednak dla innego badanego przypadku nieredukowalnej funkcji 41 argumentowej,
-dekompozycja metodą proponowaną w~niniejszej pracy powoduje zmniejszenie liczby argumentów do 7.
-
-Problem generowania indeksów posiada pewną specyficzną własność.
-Każdy wektor wyjściowy rozważanej funkcji ma inną wartość.
-Dotychczasowe rozwiązania problemu dekompozycji liniowej ograniczały się właśnie do takiego przypadku.
-Zaprezentowany w~tej pracy algorytm jest pod tym względem bardziej uniwersalny.
-Można go stosować dla wszystkich funkcji boolowskich o~dowolnych wyjściach.
-
-\section{Macierz rozróżnialności}
-
-Pierwszym krokiem w~dekompozycji liniowej jest wygenerowanie opisanej wcześniej macierzy rozróżnialności.
-Może to oczywiście wiązać się z~podobnymi problemami związanymi ze złożonością pamięciową jak w~czasie redukcji.
-Sytuacja taka będzie miała miejsce przy problemie generowania indeksów.
-Charakteryzuje się on tym,
-że wszystkie wiersze funkcji mają różne wartości.
-Z~tego powodu liczba wierszy po redukcji argumentów nie zmaleje.
-
-Przy zastosowaniu algorytmu w~innych problemach,
-gdzie różnych wartości funkcji jest stosunkowo niewiele,
-na etapie dekompozycji funkcja zredukowana często nie będzie zawierała wszystkich wierszy.
-Część z~nich po usunięciu redundantnych argumentów będzie zduplikowana.
-Na przykładzie badanej funkcji ,,P5.PLA'' w~wyniku redukcji argumentów nastąpiło ograniczenie liczby wierszy z~2048 do 128.
-Na takim przykładzie łatwo oszacować,
-że tablica rozróżnialności,
-wygenerowana na potrzeby dekompozycji,
-będzie miała 250 razy mniejszy rozmiar od pierwotnej.
-
-\section{Dekompozycja z bramką XOR o dwóch zmiennych}
-\label{section:single-decomposition}
-Celem dekompozycji liniowej z dwuwejściową bramką XOR jest znalezienie takich dwóch argumentów,
-które można zastąpić jednym.
-Miałby on być wynikiem operacji XOR tych dwóch argumentów.
-Bardziej formalnie poszukujemy takich funkcji $G$ i~$H$,
-które pozwolą na przedstawienie funkcji $F$ w~poniższej postaci:
-\begin{equation}
-F = H( G ( X_a ), X_b)
-\end{equation}
-gdzie: $X_a = \{x_i, x_j\}$, $X_b = X / X_a$, $G = XOR$
-
-Aby taka dekompozycja była możliwa,
-funkcja $G$ nie może powodować utraty niezbędnych informacji.
-Inaczej mówiąc po przekształceniu wierszy danych funkcją $G$ nie mogą powstać wiersze sprzeczne (identyczne wiersze o~różnej wartości funkcji).
-Ze względu na użycie w~dekompozycji funkcji XOR liczba argumentów funkcji $H$ jest mniejsza o~jeden od wyjściowej liczby argumentów funkcji $F$.
-
-Warunkiem poprawnej dekompozycji jest zachowanie wszystkich rozróżnień funkcji $F$.
-Istnieje możliwość zapewnienia tego warunku poprzez analizę zawartości macierzy porównań.
-Odpowiednikiem pary wierszy sprzecznych na poziomie tablicy rozróżnialności jest wiersz samych zer.
-Dzieje się tak dlatego,
-że wiersze sprzeczne mają identyczne wartości na wszystkich pozycjach,
-więc operacja XOR,
-używana przy tworzeniu macierzy zwraca same zera.
-
-Dekompozycję liniową bramką XOR w~celu weryfikacji jej poprawności można przeprowadzić zarówno bezpośrednio na funkcji $F$,
-jak i~na powstałej na jej podstawie tablicy rozróżnialności.
-Jest tak ze względu na to,
-że operacja XOR,
-użyta przy tworzeniu tablicy rozróżnialności i~dekompozycji,
-jest przemienna.
-Inaczej mówiąc,
-kolejność zastosowania dekompozycji oraz generowania macierzy jest przemienna,
-co zostało zobrazowane na rysunku numer \ref{fig:xor}.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width = 13cm]{chapter03/xor.png}
-\caption{Przykład obrazujący przemienność funkcji XOR z~generowaniem macierzy rozróżnialności (źródło własne).}
-\label{fig:xor}
-\end{figure}
-
-Wartości w~pierwszym wierszu macierzy rozróżnialności można wyrazić w~następujący sposób:
-\begin{equation}
-x_{1_{w_1}} \oplus x_{1_{w_2}} \quad oraz \quad x_{2_{w_1}} \oplus x_{2_{w_2}}.
-\end{equation}
-Operacje wykonane na argumentach w~czasie dekompozycji dla dwóch pierwszych wierszy można z~kolei przedstawić jako:
-\begin{equation}
-x_{1_{w_1}} \oplus x_{2_{w_1}} \quad oraz \quad x_{1_{w_2}} \oplus x_{2_{w_2}}.
-\end{equation}
-Zatem w~nowej tablicy rozróżnialności otrzymujemy wartość:
-\begin{equation}
-(x_{1_{w_1}} \oplus x_{2_{w_1}}) \oplus (x_{1_{w_2}} \oplus x_{2_{w_2}}),
-\end{equation}
- co jest równoważne wykonaniu operacji XOR na istniejącej macierzy rozróżnialności:
-\begin{equation}
-x_{1_{w_1}} \oplus x_{2_{w_1}} \oplus x_{1_{w_2}} \oplus x_{2_{w_2}}.
-\end{equation}
-
-Pośrednim warunkiem zachowania spójności danych jest niepowstanie ani jednego wiersza samych zer w~tablicy rozróżnialności.
-Wiersze,
-które po dekompozycji bramką XOR zawierają same zera,
-musiały przed dekompozycją przede wszystkim zawierać same zera dla argumentów,
-które nie uległy zmianie.
-Spośród tych wierszy jedynie te,
-które zawierają dwa zera lub dwie jedynki,
-na pozycjach uwzględnionych w~dekompozycji,
-dają wiersz samych zer.
-W~pierwszym wypadku wiersz już wcześniej zawierał same zera.
-Czyli już wcześniej dane były sprzeczne.
-W~drugim wypadku,
-kiedy któryś z~wierszy zawiera jedynie dwie jedynki dla dekomponowanych argumentów,
-następuje faktyczna utrata informacji.
-Brak takiego wiersza jest w~takim razie warunkiem wystarczającym do istnienia dekompozycji pojedynczą bramką XOR.
-Na rysunku \ref{fig:single-decomposition} widać jak brak pary $x_2$, $x_4$ pozwala na przeprowadzenie dekompozycji właśnie dla tej pary argumentów.
-
-\begin{figure}[H]
-\centering
-\includegraphics[width = 14cm]{chapter03/single-decomposition.png}
-\caption{Przykład dekompozycji pojedynczą bramką XOR (źródło własne).}
-\label{fig:single-decomposition}
-\end{figure}
-
-\section{Dekompozycja z wieloma bramkami XOR}
-
-Na podobnej zasadzie możliwa jest również dekompozycja z~użyciem wielu bramek XOR.
-W~przypadku,
-jeżeli wszystkie pary jedynek występują w~macierzy rozróżnialności,
-możemy przystąpić do szukania brakujących trójek jedynek.
-Każdą taką trójkę argumentów,
-dla której brakuje trójki jedynek pośród wierszy tablicy porównań,
-można, z~użyciem dwóch bramek XOR,
-skompresować do dwóch argumentów.
-Nowe argumenty przyjmują wtedy postać np. $x_1 \oplus x_2$ oraz $x_2 \oplus x_3$.
-Analogicznie można postępować dalej.
-Brak jakiegokolwiek wiersza w~macierzy rozróżnialność można zamienić przy użyciu pewnej liczby bramek XOR na redukcję jednego argumentu w~końcowej funkcji.
-W~każdym z~tych przypadków operacja XOR wykonywana jest na kolejnych parach argumentów,
-czyli pierwszy z~drugim,
-drugi z~trzecim,
-trzeci z~czwartym i~tak dalej.
-
-Dowód,
-że brak dowolnego wiersza w~macierzy rozróżnialności jest warunkiem wystarczającym do istnienia dekompozycji,
-sprowadza się ponownie do analizy zmian w~macierzy rozróżnialności.
-Aby zdekomponowana funkcja pozostała spójna,
-w~tablicy porównań nie może pojawić się wiersz samych zer.
-Czyli nie może istnieć taki wiersz w~tablicy porównań,
-który w~obrębie modyfikowanych argumentów zawierał co najmniej jedną jedynkę,
-lecz po dekompozycji zostały w~nim same zera.
-
-Dowód przez zaprzeczenie zacznijmy od pierwszej pary argumentów.
-Aby w~wyniku operacji XOR argumentów pierwszego z~drugim powstało zero,
-w~pierwotnej macierzy porównań musiały znajdować się albo dwa zera,
-albo dwie jedynki.
-
-Zacznijmy od przypadku dwóch zer.
-Przechodząc do kolejnej pary (drugi i~trzeci argument),
-aby otrzymać kolejne zero w~wyniku operacji XOR,
-ponieważ argument drugi był zerem,
-również trzeci argument musiał być zerem.
-Przechodząc w~ten sposób po wszystkich parach argumentów biorących udział w~dekompozycji,
-okazuje się,
-że wszystkie z~nich musiały być zerami.
-Z~tego wynika,
-że w~tym przypadku nie została naruszona spójność danych.
-
-Drugim przypadkiem jest para jedynek dla argumentu pierwszego i~drugiego.
-W~takim wypadku,
-aby para dwa i~trzy w~wyniku operacji XOR dawała zero,
-również argument trzeci musiał być zerem.
-Podobnie jak w~poprzednim przypadku przechodząc przez wszystkie pary otrzymujemy,
-że wejściowym wierszem tablicy rozróżnialności,
-musiał być wiersz samych jedynek w~obrębie dekomponowanych argumentów.
-Taka sytuacja również nie mogła mieć miejsca ze względu na sposób wyboru tych argumentów.
-
-Operacje wykonywane w~czasie tak przeprowadzonej dekompozycji nie mają wpływu na spójność danych.
-Tym samym udowodniliśmy,
-że brak dowolnego wiersza w~macierzy rozróżnialności jest warunkiem wystarczającym do istnienia dekompozycji liniowej.
-
-Przykład dekompozycji wieloma bramkami XOR został przedstawiony na rysunku \ref{fig:multiple}.
-Zaprezentowana tam funkcja $F$ została zdekomponowana do postaci:
-\begin{equation}
-F = H(x_1 \oplus x_2, x_2 \oplus x_3, x_4).
-\end{equation}
+Na rysunku \ref{fig:lecturer-interface-management} został przedstawiony widok zarządzania projektami.
+W ramach interfejsu udostępnione jest tworzenie i edytowanie projektów, w tym wyznaczanie etapów i dodawanie do nich przypadków testowych.
+Definiowanie projektu przebiega następująco:
+\begin {itemize}
+    \item Prowadzący tworzy nowy projekt.
+    \item Prowadzący tworzy etapy w ramach danego projektu.
+    \item Prowadzący tworzy przypadki testowe dla etapów.
+    \item Prowadzący tworzy procesy integracji w ramach danego projektu.
+    \item Prowadzący tworzy grupy projektowe.
+\end {itemize}
 
 \begin{figure}[h]
-\centering
-\includegraphics[width = 14cm]{chapter03/multiple-decomposition.png}
-\caption{Przykład dekompozycji dwoma bramkami XOR (źródło własne).}
-\label{fig:multiple}
+    \centering
+    \includegraphics[width = 13cm]{chapter03/lecturer_interface_management.png}
+    \caption{Interfejs prowadzącego - zarządzanie projektami (źródło własne).}
+    \label{fig:lecturer-interface-management}
 \end{figure}
 
-\section{Dekompozycja wielokrotna i~wielopoziomowa}
+Nowy projekt definiowany jest przez następujące dane:
+\begin {itemize}
+    \item Nazwę projektu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi projektu.
+    Nazwa jest parametrem będącym ciągiem znaków (String).
+    \item Plik z opisem projektu o dowolnym formacie.
+    \item Plik Dockerfile definiujący środowisko uruchomieniowe programów.
+\end {itemize}
 
-Problem dekompozycji liniowej nie kończy się na znalezieniu pojedynczej dekompozycji.
-Dekompozycję można przeprowadzać wielokrotnie tworząc kaskadę jak na rysunku numer \ref{fig:multiple-levels}.
+Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
+Dla wszystkich parametrów będących plikami interfejs umożliwia dodanie ich poprzez wskazanie, w oknie dialogowym, ścieżki na dysku użytkownika, pod którą znajduje się plik.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width = 5cm]{chapter03/multiple-levels.png}
-\caption{Przykład dekompozycji wielopoziomowej (źródło własne).}
-\label{fig:multiple-levels}
-\end{figure}
+Nowy etap definiowany jest przez następujące dane:
+\begin {itemize}
+    \item Nazwę etapu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi etapu.
+    Nazwa jest parametrem będącym ciągiem znaków (String).
+    \item Plik z opisem etapu o dowolnym formacie.
+    \item Metadane dotyczące etapu, takie jak:
+    \begin {itemize}
+        \item Data rozpoczęcia etapu.
+        Data rozpoczęcia jest rozumiana jako data, od której studenci mają możliwość rozpoczęcia prac nad etapem (dostęp do opisu etapu, możliwość zaimportowania i uruchomienia swoich programów),
+        \item Data zakończenia etapu.
+        Data zakończenia jest rozumiana jako data, do której studenci mają możliwość zaimportowania i uruchomienia swoich programów.
+        Po przekroczeniu tej daty zmian programów i ponownych uruchomień może dokonywać tylko prowadzący,
+        \item Punktacja za wskazany etap, podawana w postaci liczby całkowitej.
+        Na podstawie punktacji poszczególnych etapów zliczana jest automatycznie ocena końcowa dla projektu.
+    \end{itemize}
+\end {itemize}
 
-W~takim przypadku wejściami niektórych bramek XOR są wyjścia poprzednich.
-Wartość na wyjściu takiej kaskadowej bramki przyjmuje wtedy postać:
-\begin{equation}
-(x_1 \oplus x_2) \oplus x_3.
-\end{equation}
-Jest to równoznaczne użyciu bramki XOR o~trzech wejściach.
-Z~tego powodu schemat z~rysunku numer \ref{fig:multiple-levels} można uprościć do postaci przedstawionej na rysunku numer \ref{fig:multiple-entries}.
+Etapy, które nie mają zdefiniowanej daty rozpoczęcia nie są widoczne dla studentów.
+Interfejs umożliwia wskazanie daty poprzez wybór jej w oknie dialogowym z kalendarzem.
 
-\begin{figure}[h]
-\centering
-\includegraphics[width = 5cm]{chapter03/multiple-entries.png}
-\caption{Przykład dekompozycji wielokrotnej (źródło własne).}
-\label{fig:multiple-entries}
-\end{figure}
+Nowy przypadek testowy jest definiowany przez następujące dane:
+\begin {itemize}
+    \item Nazwę przypadku testowego, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego przypadku.
+    Nazwa jest parametrem będącym ciągiem znaków(String).
+    \item Parametry uruchomienia programu, podawane jako ciąg znaków (String).
+    \item Plik z danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
+    Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego.
+    \item oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
+    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w wyniku działania programów studentów i na jego podstawie oceniana jest poprawność programów.
+\end {itemize}
 
-Jest to istotne,
-ponieważ dzięki takiej własności operacji XOR i~wykorzystaniu bramek o~wielu wejściach,
-nigdy nie powstaną długie ścieżki krytyczne.
-Oznacza to,
-że sygnał wchodzący na wejścia pamięci ROM nigdy nie będzie przechodził przez wiele kaskadowo ustawionych bramek,
-co miałoby wpływ na pogorszenie wydajność układu.
+Opis uruchamianie i testowania programów studentów został zamieszczony w rodziale \ref{chapter:platform-technical}.
 
-Algorytm dekompozycji zapisany w~pseudokodzie został przedstawiony poniżej (algorytm \ref{alg:decomposition}).
+Oprócz możliwości tworzenia przypadków testowych w ramach widoku istnieje również możliwość utworzenia procesów integracji w obrębie projektu.
+Nowy proces integracji jest definiowany przez następujące dane:
+\begin {itemize}
+    \item Nazwę procesu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego procesu.
+    Nazwa jest parametrem będącym ciągiem znaków (String).
+    \item Plik z danymi wejściowymi o dowolnym, najczęściej tekstowym, formacie.
+    Plik wejściowy jest używany jako dana wejściowa dla danego procesu integracji.
+    \item Oczekiwany plik wyjściowy o dowolnym, najczęściej tekstowym, formacie.
+    \item Priorytetyzowaną listę etapów, które zostaną wykonane kolejno w ramach procesu integracji.
+\end {itemize}
 
-\begin{algorithm}[h]
-    \KwIn{$F$}
-    \KwOut{$F$}
-    $MR=\emptyset$\;
-    \For{$\forall(w_i, w_j): w_i, w_j \in{F} \land w_i \neq w_j \land F(w_i) \neq F(w_j)$}{
-        $MR = MR \cup \{w_i \oplus w_j\}$ \;
-    }
-    $a = 2$\;
-    \While{$a <= n$}{
-        \For{$\forall P \subseteq X : \left\vert{P}\right\vert = a$}{
-           %\If{$\forall w_i \in{MR} : \exists x_j \in{X} : MR[i][j] = 0 \land x_j \in{P} \lor MR[i][j] = 1 \land x_j \not\in{P}$}{
-            \If{$\not\exists w_i \in{MR} : \forall x_j \in{X} : MR[i][j] = 1 \iff x_j \in{P}$}{
-                $F = H(XOR(P), X \backslash P)$ \;
-                Ponów algorytm dla funkcji $F=H$\;
-            }
+Prowadzący ma również możliwość utworzenia grup projektowych wraz z przypisaniem do nich studentów.
+Utworzenie grup projektowych może zostać zrobione na dwa sposoby.
+Pierwszy z nich to manualne utworzenie grup, definiowanych przez nazwę i dodanie kolejnych studentów w oknie dialogowym.
+Drugi to wczytanie danych dotyczących podziału na grupy z pliku w formacie JSON.
+Przykład struktury akceptowalnego pliku wygląda następująco:
+
+{\fontfamily{qcr}\selectfont
+\footnotesize
+\begin{lstlisting}
+{
+    "groups":[
+        {
+            "name":"A",
+            "students":[
+                "Student1",
+                "Student2"
+            ]
+        },
+        {
+            "name":"B",
+            "students":[
+                "Student3",
+                "Student4"
+            ]
         }
-    }
-    \caption{Algorytm dekompozycji liniowej}
-    \label{alg:decomposition}
-\end{algorithm}
-%- rekurencja, wytłumaczenie schematu dekompozycji przy rekurencji
-%- zapis w~pseudokodzie
-%- przykład
-%
-%Kroki:
-%Generowanie tablicy rozróżnialności
-%Poszukiwanie brakujących zbiorów n-elementowych w~macierzy porównań (n=2)
-%Jeżeli nie znaleziono
-%Koniec jeżeli n >= liczba kolumn
-%Powrót do punktu 2 i~poszukiwanie brakujących zbiorów o~jeden liczniejszych
-%Modyfikacja danych oraz zapamiętanie znalezionej dekompozycji
-%
-%
+    ]
+}
+\end{lstlisting}
+}
+
+\subsection{Podgląd postępów studentów}
+
+Na rysunku \ref{fig:lecturer-interface-view} został przedstawiony widok podglądu postępów studentów.
+W ramach interfejsu prowadzący ma możliwość przeglądania postępów za równo poprzez wyszukanie po nazwie grupy, jak i po identyfikatorze poszczególnych studentów.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter03/lecturer_interface_view.png}
+    \caption{Interfejs prowadzącego - podgląd postępów studentów (źródło własne).}
+    \label{fig:lecturer-interface-view}
+\end{figure}
+
+Prowadzący ma umożliwiony wgląd w:
+\begin {itemize}
+    \item Aktualną punktację projektu dla grupy.
+    \item Liczbę prób podjętych przez daną grupę, dla każdego z etapów.
+    \item Daty wykonania poszczególnych prób oraz ich statusy.
+    \item Pełne komunikaty błędów i logi z ostatniej wykonanej przez studentów próby.
+    \item Link do kodu źródłowego, który został użyty przez studentów do zbudowania programu.
+    \item Sprawozdanie wykonane dla zadanego etapu.
+\end {itemize}
+
+Dodatkowo prowadzący ma możliwość edycji danych studentów z dodatkowymi uprawnieniami administratora.
+Pozwalają one między innymi na edycję wprowadzonych przez studentów danych po upływie terminów realizacji poszczególnych etapów.
+Są to uprawnienia, które nie powinny być nadużywane przez prowadzącego, jednak mogą okazać się użyteczne w wyjątkowych sytuacjach.
+
+
+\section{Interfejs studenta}
+
+Na rysunku \ref{fig:student-interface} został przedstawiony interfejs studenta.
+Umożliwia on dodawanie i edycję danych dla kolejnych etapów projektu oraz podgląd aktualnych postępów.
+W ramach projektu student ma między innymi dostęp do dwóch plików: z opisem zadania oraz definicją środowiska Dockerowego.
+Interfejs umożliwia też dostęp do opisów kolejnych etapów, terminów ich realizacji i punktacji.
+
+Dla zadanego etapu student ma możliwość załączenia:
+\begin {itemize}
+    \item Pliku wykonywalnego z programem, który będzie testowany na platformie.
+    \item Linku do kodu, z którego został zbudowany plik wykonywalny.
+    \item Sprawozdania, sporządzonego w ramach etapu.
+\end {itemize}
+
+Po załączeniu programu student ma możliwość uruchomienia go na platformie.
+Wynik działania programu jest przedstawiony studentowi w postaci listy rezultatów z wykonania poszczególnych przypadków testowych.
+Poszczególny rekord zawiera informacje o:
+\begin {itemize}
+    \item Nazwie przypadku testowego, którego dotyczy wynik.
+    \item Parametrach wejściowych, które zostały użyte przy uruchomieniu programu.
+    \item Statusie wykonania przypadku testowego (sukces/porażka).
+    \item Komunikatu błędu, w przypadku porażki.
+    \item Pliku z logami z wykonania danego przypadku testowego.
+\end{itemize}
+
+W ramach podglądu postępów student ma dostęp do:
+\begin {itemize}
+    \item Wyników wszystkich dotychczasowych etapów.
+    \item Informacji zbiorczej o liczbie zaliczonych etapów i aktualnej punktacji.
+    \item Zbiorczej informacji o postępach innych grup.
+    Informacja ta jest przedstawiono jako liczba grup, które zaliczyły wskazany etap w stosunku do wszystkich grup.
+\end {itemize}
+
+Student po zakończeniu odpowiedniej liczby etapów wchodzących w skład zdefiniowanego procesu integracji ma możliwość uruchomienia tego procesu.
+Wynik działania procesu jest reprezentowany w taki sam sposób jak wynik uruchomienia poszczególnego etapu.
