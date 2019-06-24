@@ -16,9 +16,9 @@ data class Stage(
         @ManyToOne
         @JoinColumn(name = "project_id")
         val project: Project,
-        var startDate: Date? = Date(),
-        var endDate: Date? = Date(),
-        var pointsNumber: Int? = 0
+        var startDate: Date? = null,
+        var endDate: Date? = null,
+        var pointsNumber: Int? = null
 )
 
 @Repository

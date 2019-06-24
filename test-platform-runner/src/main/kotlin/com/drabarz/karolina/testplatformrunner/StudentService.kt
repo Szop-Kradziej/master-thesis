@@ -56,6 +56,7 @@ class StudentService(
     fun getStudentStages(projectName: String): List<StudentStage> {
         return stageService
                 .getStages(projectName)
+                .filter { !it.startDate.isNullOrBlank() }
                 .map { stage ->
                     StudentStage(
                             stage.stageName,
