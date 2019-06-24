@@ -63,8 +63,7 @@ CREATE TABLE stages
 
     CONSTRAINT stages_pk PRIMARY KEY (id),
     CONSTRAINT stages_projects_fk FOREIGN KEY (project_id) REFERENCES projects (id),
-    CONSTRAINT stages_name_project_uk UNIQUE (name, project_id),
-    CONSTRAINT stages_project_and_order_number UNIQUE (project_id)
+    CONSTRAINT stages_name_project_uk UNIQUE (name, project_id)
 );
 
 CREATE TABLE stages_in_integrations
