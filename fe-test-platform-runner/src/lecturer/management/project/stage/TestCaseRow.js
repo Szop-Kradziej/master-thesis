@@ -7,12 +7,14 @@ import EditItemComponent from "../../../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
 import * as Api from "../../../../Api";
 import UploadTestCaseFileDialog from "./UploadTestCaseFileDialog";
+import EditParametersDialog from "./dialog/EditParametersDialog";
 
 class TestCaseRow extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
+            isEditTestCaseParametersVisible: false,
             isAddInputTestCaseFileVisible: false,
             isAddOutputTestCaseFileVisible: false
         };
@@ -28,6 +30,14 @@ class TestCaseRow extends Component {
 
     downloadFile = (fileType) => {
         Api.downloadTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName, fileType)
+    };
+
+    handleOpenEditTestCaseParametersDialog = () => {
+        this.setState({isEditTestCaseParametersVisible: true});
+    };
+
+    handleCloseEditTestCaseParametersDialog = () => {
+        this.setState({isEditTestCaseParametersVisible: false});
     };
 
     handleOpenAddInputTestCaseFileDialog = () => {
@@ -48,10 +58,6 @@ class TestCaseRow extends Component {
 
     handleEditTestName = () => {
         //TODO: do action
-    };
-
-    handleEditParameters = () => {
-
     };
 
     handleDeleteTestCase = (event) => {
@@ -77,7 +83,15 @@ class TestCaseRow extends Component {
                     <EditItemComponent
                         header={this.props.testCase.parameters ? this.props.testCase.parameters : 'Brak'}
                         info="Edytuj parametry"
-                        editActionHandler={this.handleEditParameters}/>
+                        editActionHandler={this.handleOpenEditTestCaseParametersDialog}/>
+                    <EditParametersDialog isOpen={this.state.isEditTestCaseParametersVisible}
+                                          closeActionHandler={this.handleCloseEditTestCaseParametersDialog}
+                                          successActionHandler={this.props.stageChangedHandler}
+                                          projectName={this.props.projectName}
+                                          stageName={this.props.stageName}
+                                          testCaseName={this.props.testCase.testCaseName}
+                                          headerText="Dodaj parametry uruchomienia"
+                                          defaultValue={this.props.testCase.parameters}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
                     <UploadAndDownloadItemComponent

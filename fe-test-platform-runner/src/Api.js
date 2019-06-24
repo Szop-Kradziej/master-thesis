@@ -116,6 +116,10 @@ export function editStagePointsNumber(data) {
     return postData(backendUrl("/stage/pointsNumber"), data)
 }
 
+export function editTestCaseParameters(data) {
+    return postData(backendUrl("/testCase/parameters"), data)
+}
+
 function postData(url, data) {
     return axios.post(url, data)
         .then(function (response) {
