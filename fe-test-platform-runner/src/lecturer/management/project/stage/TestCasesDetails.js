@@ -122,6 +122,9 @@ class TestCasesDetails extends Component {
                         <CustomTableCell width="20%">
                             Nazwa testu:
                         </CustomTableCell>
+                        <CustomTableCell width="20%">
+                            Parametry:
+                        </CustomTableCell>
                         <CustomTableCell width="15%">
                             Plik wejściowy
                         </CustomTableCell>

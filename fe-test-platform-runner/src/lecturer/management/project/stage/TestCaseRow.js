@@ -50,6 +50,10 @@ class TestCaseRow extends Component {
         //TODO: do action
     };
 
+    handleEditParameters = () => {
+
+    };
+
     handleDeleteTestCase = (event) => {
         event.preventDefault();
 
@@ -68,6 +72,12 @@ class TestCaseRow extends Component {
                         header={this.props.testCase.testCaseName}
                         info="Edytuj nazwę testu"
                         editActionHandler={this.handleEditTestName}/>
+                </CustomTableCell>
+                <CustomTableCell>
+                    <EditItemComponent
+                        header={this.props.testCase.parameters ? this.props.testCase.parameters : 'Brak'}
+                        info="Edytuj parametry"
+                        editActionHandler={this.handleEditParameters}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
                     <UploadAndDownloadItemComponent
