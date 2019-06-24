@@ -66,7 +66,7 @@ class StudentProjectBoard extends Component {
                         {this.state.stages.stages.map(stage => (
                             <TableRow key={stage.stageName}>
                                 <CustomTableCell component="th" scope="row">
-                                    <ExpansionPanel>
+                                    <ExpansionPanel disabled={!stage.enable}>
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                             <StudentStageRow
                                                 stage={stage}

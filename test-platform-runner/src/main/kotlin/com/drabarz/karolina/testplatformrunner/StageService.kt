@@ -173,7 +173,7 @@ private fun Date?.toFormattedString(): String? {
     return SimpleDateFormat("yyyy-MM-dd").format(this)
 }
 
-private fun String?.toDate(): Date? {
+fun String?.toDate(): Date? {
     if (this.isNullOrBlank()) {
         return null
     }

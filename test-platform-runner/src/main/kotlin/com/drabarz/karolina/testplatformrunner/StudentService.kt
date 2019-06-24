@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.util.*
 
 @Component
 class StudentService(
@@ -69,11 +70,14 @@ class StudentService(
                             stage.endDate,
                             "0",
                             stage.pointsNumber,
-                            getCodeLink(projectName, stage.stageName))
+                            getCodeLink(projectName, stage.stageName),
+                            isEnable(stage.endDate))
                 }.sortedBy { it.endDate }
     }
 
-
+    private fun isEnable(endDate: String?): Boolean {
+        return endDate.isNullOrBlank() || endDate.toDate()!!.after(Date())
+    }
 
     private fun getCodeLink(projectName: String, stageName: String): String? {
         val dir = pathProvider.getStudentCodeDir(projectName, stageName)
