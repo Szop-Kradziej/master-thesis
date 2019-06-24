@@ -63,8 +63,8 @@ class StudentService(
                             stage.stageName,
                             getBinaryName(projectName, stage.stageName),
                             getReportName(projectName, stage.stageName),
-                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }).sortedBy { it.testCaseName },
-                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { it.testCaseName }).count { it.status == "SUCCESS" },
+                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).sortedBy { it.testCaseName },
+                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
                             stage.testCases.size,
                             stage.startDate,
                             stage.endDate,
@@ -120,11 +120,11 @@ class StudentService(
         return fileDir.list().first()
     }
 
-    private fun getTestCasesWithResults(projectName: String, stageName: String, testCases: List<String>): List<TestCaseWithResult> {
+    private fun getTestCasesWithResults(projectName: String, stageName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
         val resultFile = File(pathProvider.getStudentResultsDir(projectName, stageName), "result.json")
 
         if (!resultFile.exists()) {
-            return testCases.map { testCase -> TestCaseWithResult(testCase, "NO RUN", null) }
+            return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters,"NO RUN", null) }
         }
 
         val jsonData = resultFile.readBytes()
@@ -132,10 +132,11 @@ class StudentService(
 
         return testCases.map { testCase ->
             TestCaseWithResult(
-                    testCase,
-                    results.find { it.testCaseName == testCase }?.status ?: "NO RUN",
-                    results.find { it.testCaseName == testCase }?.message,
-                    isLogsFileExist(projectName, stageName, testCase))
+                    testCase.name,
+                    testCase.parameters,
+                    results.find { it.testCaseName == testCase.name }?.status ?: "NO RUN",
+                    results.find { it.testCaseName == testCase.name }?.message,
+                    isLogsFileExist(projectName, stageName, testCase.name))
         }
     }
 
@@ -191,3 +192,5 @@ enum class FileType {
     REPORT,
     RESULTS
 }
+
+data class StudentTestCase(val name:String, val parameters: String?)

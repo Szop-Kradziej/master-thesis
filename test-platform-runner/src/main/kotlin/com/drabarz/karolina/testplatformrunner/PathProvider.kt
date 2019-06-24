@@ -39,6 +39,10 @@ class PathProvider : PathProv {
         return File(getStageTestCaseDir(projectName, stageName, testCaseName), fileName)
     }
 
+    fun getStageTestCaseParametersDir(projectName: String, stageName: String, testCaseName: String): File {
+        return File(getStageTestCaseDir(projectName, stageName, testCaseName), PARAMETERS)
+    }
+
     fun getIntegrationsDir(projectName: String): File {
         return File(getProjectDir(projectName), INTEGRATIONS)
     }
@@ -109,5 +113,6 @@ class PathProvider : PathProv {
         const val RESULTS = "results"
         const val LOGS = "logs"
         const val TEST_CASES = "test_cases"
+        const val PARAMETERS = "parameters"
     }
 }

@@ -157,6 +157,15 @@ class TestPlatformApi(val studentService: StudentService,
         return stagesService.editStagePointsNumber(projectName, stageName, pointsNumber)
     }
 
+    @PostMapping("/testCase/parameters")
+    fun editTestCaseParameters(
+            @RequestParam("parameters") parameters: String?,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String,
+            @RequestParam("testCaseName") testCaseName: String): String {
+        return testCaseService.editParameters(projectName, stageName, testCaseName, parameters)
+    }
+
     @GetMapping("/{projectName}/stages")
     fun getStagesList(@PathVariable("projectName") projectName: String): StagesResponse {
         return StagesResponse(projectService.getProjectDescriptionName(projectName), stagesService.getStages(projectName))
@@ -290,10 +299,10 @@ class TestPlatformApi(val studentService: StudentService,
 class ProjectResponse(val projects: List<String>)
 class StagesResponse(val projectDescription: String?, val stages: List<StageDao>)
 class StageDao(val stageName: String, val stageDescription: String?, val startDate: String?, val endDate: String?, val pointsNumber: String?, val testCases: List<TestCase>)
-class TestCase(val testCaseName: String, val inputFileName: String?, val outputFileName: String?)
+class TestCase(val testCaseName: String, val parameters: String?, val inputFileName: String?, val outputFileName: String?)
 class StudentStagesResponse(val stages: List<StudentStage>)
 class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val startDate: String?, val endDate: String?, val pointsNumber: String?, val totalPointsNumber: String?, val codeLink: String?, val enable: Boolean)
-class TestCaseWithResult(val testCaseName: String, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)
+class TestCaseWithResult(val testCaseName: String, val parameters: String?, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)
 class GroupsResponse(val groups: List<Group>)
 class Group(val groupName: String, val projectName: String, val students: List<String>)
 data class GroupsDao(val groups: List<GroupDao> = ArrayList())

@@ -57,9 +57,22 @@ class TestCaseService(
                 .map {
                     TestCase(
                             it,
+                            getTestCaseParameters(projectName, stageName, it),
                             getTestCaseFileName(INPUT, projectName, stageName, it),
                             getTestCaseFileName(OUTPUT, projectName, stageName, it))
                 }
+    }
+
+    private fun getTestCaseParameters(projectName: String, stageName: String, testCaseName: String): String? {
+        val dir = pathProvider.getStageTestCaseParametersDir(projectName, stageName, testCaseName)
+
+        val testCaseParametersFile = File(dir.path, PathProvider.PARAMETERS)
+
+        if (!testCaseParametersFile.exists() || testCaseParametersFile.readText().isBlank()) {
+            return null
+        }
+
+        return testCaseParametersFile.readText()
     }
 
     private fun getTestCaseFileName(fileType: String, projectName: String, stageName: String, testCaseName: String): String? {
@@ -102,6 +115,21 @@ class TestCaseService(
         }
 
         saveTestCaseFile(file, fileType, projectName, stageName, testCaseName)
+
+        return "200"
+    }
+
+    fun editParameters(projectName: String, stageName: String, testCaseName: String, parameters: String?): String {
+        val dir = pathProvider.getStageTestCaseParametersDir(projectName, stageName, testCaseName)
+        dir.mkdirs()
+
+        val outputFile = File(dir.path, PathProvider.PARAMETERS)
+        if (parameters.isNullOrBlank()) {
+            outputFile.writeText("")
+            return "200"
+        }
+
+        outputFile.writeText(parameters)
 
         return "200"
     }
