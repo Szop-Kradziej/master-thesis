@@ -14,6 +14,8 @@ import GroupComponent from "./group/GroupComponent";
 import AddNewGroupsDialog from "./AddNewGroupsDialog";
 import AddNewSingleGroupDialog from "./AddNewSingleGroupDialog";
 import AddAndUploadItemComponent from "../../../utils/AddAndUploadItemComponent";
+import AddNewIntegrationDialog from "./AddNewIntegrationDialog";
+import IntegrationComponent from "./integration/IntegrationComponent";
 
 class ProjectBoard extends Component {
 
@@ -22,7 +24,9 @@ class ProjectBoard extends Component {
         this.state = {
             stages: {stages: []},
             groups: {groups: []},
+            integrations: {integrations: []},
             isNewStageDialogVisible: false,
+            isNewIntegrationDialogVisible: false,
             isNewSingleGroupDialogVisible: false,
             isNewGroupsDialogVisible: false
         };
@@ -31,6 +35,7 @@ class ProjectBoard extends Component {
     componentDidMount() {
         this.fetchStages();
         this.fetchGroups();
+        this.fetchIntegrations();
     }
 
     fetchStages = () => {
@@ -49,12 +54,28 @@ class ProjectBoard extends Component {
             }))
     };
 
+    fetchIntegrations = () => {
+        Api.fetchIntegrations(this.props.match.params.projectId)
+            .then(response => response.json())
+            .then(json => this.setState({
+                integrations: json
+            }))
+    };
+
     handleOpenNewStageDialog = () => {
         this.setState({isNewStageDialogVisible: true});
     };
 
     handleCloseNewStageDialog = () => {
         this.setState({isNewStageDialogVisible: false});
+    };
+
+    handleOpenNewIntegrationDialog = () => {
+        this.setState({isNewIntegrationDialogVisible: true});
+    };
+
+    handleCloseNewIntegrationDialog = () => {
+        this.setState({isNewIntegrationDialogVisible: false});
     };
 
     handleOpenNewSingleGroupDialog = () => {
@@ -131,11 +152,40 @@ class ProjectBoard extends Component {
                         ))}
                     </TableBody>
                 </Table>
+                <Table className={this.props.classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <CustomTableCell>
+                                <AddNewItemComponent
+                                    header="Integracje"
+                                    info="Dodaj nową integrację"
+                                    addActionHandler={this.handleOpenNewIntegrationDialog}/>
+                            </CustomTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.integrations.integrations.map(integration => (
+                            <TableRow key={integration.name}>
+                                <CustomTableCell component="th" scope="row">
+                                    <IntegrationComponent
+                                        integration={integration}
+                                        projectName={this.props.match.params.projectId}
+                                        integrationChangedHandler={this.fetchIntegrations}/>
+                                </CustomTableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
                 <AddNewStageDialog
                     isOpen={this.state.isNewStageDialogVisible}
                     projectName={this.props.match.params.projectId}
                     closeActionHandler={this.handleCloseNewStageDialog}
                     successActionHandler={this.fetchStages}/>
+                <AddNewIntegrationDialog
+                    isOpen={this.state.isNewIntegrationDialogVisible}
+                    projectName={this.props.match.params.projectId}
+                    closeActionHandler={this.handleCloseNewIntegrationDialog}
+                    successActionHandler={this.fetchIntegrations}/>
                 <AddNewSingleGroupDialog
                     isOpen={this.state.isNewSingleGroupDialogVisible}
                     projectName={this.props.match.params.projectId}

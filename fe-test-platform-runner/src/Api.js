@@ -33,12 +33,28 @@ export function fetchGroups(projectName) {
     })
 }
 
+export function fetchIntegrations(projectName) {
+    return fetch(backendUrl(`/${projectName}/integrations`), {
+        method: "GET",
+        credentials: "include"
+    })
+}
+
 export function addNewStage(projectName, stageName, startDate, endDate, points) {
     return fetch(backendUrl(`/stage`), {
         method: "POST",
         credentials: "include",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: "projectName=" + projectName + "&stageName=" + stageName + "&startDate=" + startDate + "&endDate=" + endDate + "&pointsNumber=" + points
+    })
+}
+
+export function addNewIntegration(projectName, integrationName) {
+    return fetch(backendUrl(`/${projectName}/integrations`), {
+        method: "POST",
+        credentials: "include",
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: "integrationName=" + integrationName
     })
 }
 
@@ -163,6 +179,15 @@ export function deleteStage(projectName, stageName) {
 
 export function deleteProject(projectName) {
     return deleteItem(backendUrl('/' + projectName))
+}
+
+export function deleteIntegration(projectName, integrationName) {
+    return fetch(backendUrl('/integration'), {
+        method: "DELETE",
+            credentials: "include",
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: "projectName=" + projectName + "&integrationName=" + integrationName
+    })
 }
 
 export function deleteGroup(projectName, groupName) {

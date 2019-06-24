@@ -33,8 +33,8 @@ class IntegrationService(
         return "200"
     }
 
-    fun getIntegrations(projectName: String): List<String> {
-        return integrationsRepository.findAllByProject_Name(projectName)
-                .map { it.name }
+    fun getIntegrations(projectName: String): IntegrationsDao {
+        return IntegrationsDao(integrationsRepository.findAllByProject_Name(projectName)
+                .map { IntegrationDao(it.name) })
     }
 }
