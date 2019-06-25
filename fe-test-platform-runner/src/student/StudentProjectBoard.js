@@ -15,6 +15,8 @@ import StudentTestCasesDetails from "./StudentTestCasesDetails"
 import StudentStageRow from "./StudentStageRow";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import DescriptionIcon from "@material-ui/icons/Description";
+import SettingsIcon from "@material-ui/icons/Settings";
+
 import * as Api from "../Api";
 
 class StudentProjectBoard extends Component {
@@ -47,6 +49,10 @@ class StudentProjectBoard extends Component {
         Api.downloadProjectDescription(this.props.match.params.projectId)
     };
 
+    handleDownloadProjectEnvironment = () => {
+        Api.downloadProjectEnvironment(this.props.match.params.projectId)
+    };
+
     render() {
         return (
             <div className={this.props.classes.app}>
@@ -54,6 +60,9 @@ class StudentProjectBoard extends Component {
                     {this.props.match.params.projectId}
                     <IconButton aria-label="Pobierz opis projektu" onClick={this.handleDownloadProjectDescription}>
                         <DescriptionIcon/>
+                    </IconButton>
+                    <IconButton aria-label="Pobierz konfigurację środowiska" onClick={this.handleDownloadProjectEnvironment}>
+                        <SettingsIcon/>
                     </IconButton>
                 </div>
                 <Table className={this.props.classes.table}>
@@ -71,8 +80,7 @@ class StudentProjectBoard extends Component {
                                             <StudentStageRow
                                                 stage={stage}
                                                 projectName={this.props.match.params.projectId}
-                                                stageChangedHandler={this.stageChangedHandler}
-                                            />
+                                                stageChangedHandler={this.stageChangedHandler}/>
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>
                                             <Typography>
@@ -81,8 +89,7 @@ class StudentProjectBoard extends Component {
                                                     <StudentTestCasesDetails
                                                         testCases={stage.testCases}
                                                         projectName={this.props.match.params.projectId}
-                                                        stageName={stage.stageName}
-                                                    />
+                                                        stageName={stage.stageName}/>
                                                 </div>
                                             </Typography>
                                         </ExpansionPanelDetails>
