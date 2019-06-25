@@ -18,14 +18,14 @@ class UploadProjectDescriptionDialog extends Component {
         };
     }
 
-    handleUploadProjectDescription = (event) => {
+    handleUploadProjectFile = (event) => {
         event.preventDefault();
 
         const data = new FormData();
         data.append('file', this.inputDescriptionFile.files[0]);
         data.append('projectName', this.props.projectName);
 
-        Api.uploadProjectDescription(data)
+        Api.uploadProjectFile(data, this.props.type)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
             .catch(function (error) {
@@ -53,7 +53,7 @@ class UploadProjectDescriptionDialog extends Component {
                     <Button onClick={this.props.closeActionHandler} color="primary">
                         Anuluj
                     </Button>
-                    <Button onClick={this.handleUploadProjectDescription} color="primary">
+                    <Button onClick={this.handleUploadProjectFile} color="primary">
                         Dodaj
                     </Button>
                 </DialogActions>

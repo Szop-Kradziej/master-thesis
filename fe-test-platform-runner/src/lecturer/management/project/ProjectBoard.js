@@ -101,6 +101,7 @@ class ProjectBoard extends Component {
                     display="block"
                     projectName={this.props.match.params.projectId}
                     projectDescription={this.state.stages.projectDescription}
+                    projectEnvironment={this.state.stages.projectEnvironment}
                     projectChangedHandler={this.fetchStages}/>
                 <Table className={this.props.classes.table}>
                     <TableHead>

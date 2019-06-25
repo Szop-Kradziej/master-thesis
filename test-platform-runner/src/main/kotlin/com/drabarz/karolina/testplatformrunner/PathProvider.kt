@@ -67,6 +67,10 @@ class PathProvider : PathProv {
         return File(getProjectDir(projectName), DESCRIPTION)
     }
 
+    fun getProjectEnvironmentDir(projectName: String): File {
+        return File(getProjectDir(projectName), ENVIRONMENT)
+    }
+
     fun getStageDescriptionDir(projectName: String, stageName: String): File {
         return File(getStageDir(projectName, stageName), DESCRIPTION)
     }
@@ -107,6 +111,7 @@ class PathProvider : PathProv {
         const val STAGES = "stages"
         const val INTEGRATIONS = "integrations"
         const val DESCRIPTION = "description"
+        const val ENVIRONMENT = "environment"
         const val BIN = "bin"
         const val REPORT = "report"
         const val CODE = "code"

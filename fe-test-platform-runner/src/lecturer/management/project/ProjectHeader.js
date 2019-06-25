@@ -12,7 +12,7 @@ class ProjectHeader extends Component {
         super(props);
         this.state = {
             isAddDescriptionDialogVisible: false,
-            inputDescriptionFile: null
+            isAddEnvironmentDialogVisible: false
         };
     }
 
@@ -28,9 +28,20 @@ class ProjectHeader extends Component {
         this.setState({isAddDescriptionDialogVisible: false});
     };
 
+    handleOpenAddEnvironmentDialog = () => {
+        this.setState({isAddEnvironmentDialogVisible: true});
+    };
+
+    handleCloseAddEnvironmentDialog = () => {
+        this.setState({isAddEnvironmentDialogVisible: false});
+    };
+
     handleDownloadProjectDescription = () => {
         Api.downloadProjectDescription(this.props.projectName)
+    };
 
+    handleDownloadProjectEnvironment = () => {
+        Api.downloadProjectEnvironment(this.props.projectName)
     };
 
     render() {
@@ -47,11 +58,25 @@ class ProjectHeader extends Component {
                                                 downloadInfo="Pobierz opis projektu"
                                                 downloadDisabled={this.props.projectDescription === null}
                                                 downloadActionHandler={this.handleDownloadProjectDescription}/>
+                <UploadAndDownloadItemComponent className={this.props.classes.projectDescription}
+                                                header={"Środowisko projektu: " + (this.props.projectEnvironment ? this.props.projectEnvironment : "Brak")}
+                                                uploadInfo="Załaduj środowisko projektu"
+                                                uploadActionHandler={this.handleOpenAddEnvironmentDialog}
+                                                downloadInfo="Pobierz środowisko projektu"
+                                                downloadDisabled={this.props.projectDescription === null}
+                                                downloadActionHandler={this.handleDownloadProjectEnvironment}/>
                 <AddFileDialog isOpen={this.state.isAddDescriptionDialogVisible}
                                closeActionHandler={this.handleCloseAddDescriptionDialog}
                                successActionHandler={this.props.projectChangedHandler}
                                projectName={this.props.projectName}
-                               headerText="Dodaj opis projektu"/>
+                               headerText="Dodaj opis projektu"
+                               type="description"/>
+                <AddFileDialog isOpen={this.state.isAddEnvironmentDialogVisible}
+                               closeActionHandler={this.handleCloseAddEnvironmentDialog}
+                               successActionHandler={this.props.projectChangedHandler}
+                               projectName={this.props.projectName}
+                               headerText="Dodaj środowisko"
+                               type="environment"/>
             </div>
         );
     }

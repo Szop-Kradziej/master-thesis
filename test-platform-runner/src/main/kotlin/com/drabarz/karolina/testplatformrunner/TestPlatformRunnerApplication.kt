@@ -111,10 +111,23 @@ class TestPlatformApi(val studentService: StudentService,
         return projectService.addProjectDescription(uploadedFile, projectName)
     }
 
+    @PostMapping("/project/environment")
+    fun addProjectEnvironment(
+            @RequestParam("file") uploadedFile: MultipartFile,
+            @RequestParam("projectName") projectName: String): String {
+        return projectService.addProjectEnvironment(uploadedFile, projectName)
+    }
+
     @GetMapping("/{projectName}/description")
     @ResponseBody
     fun downloadProjectDescriptionFile(@PathVariable("projectName") projectName: String): ResponseEntity<*> {
         return createFileResponse(projectService.getProjectDescription(projectName))
+    }
+
+    @GetMapping("/{projectName}/environment")
+    @ResponseBody
+    fun downloadProjectEnvironmentFile(@PathVariable("projectName") projectName: String): ResponseEntity<*> {
+        return createFileResponse(projectService.getProjectEnvironment(projectName))
     }
 
     @GetMapping("/{projectName}/{stageName}/description")
@@ -168,7 +181,10 @@ class TestPlatformApi(val studentService: StudentService,
 
     @GetMapping("/{projectName}/stages")
     fun getStagesList(@PathVariable("projectName") projectName: String): StagesResponse {
-        return StagesResponse(projectService.getProjectDescriptionName(projectName), stagesService.getStages(projectName))
+        return StagesResponse(
+                projectService.getProjectDescriptionName(projectName),
+                projectService.getProjectEnvironmentName(projectName),
+                stagesService.getStages(projectName))
     }
 
     @GetMapping("/student/{projectName}/stages")
@@ -297,7 +313,7 @@ class TestPlatformApi(val studentService: StudentService,
 }
 
 class ProjectResponse(val projects: List<String>)
-class StagesResponse(val projectDescription: String?, val stages: List<StageDao>)
+class StagesResponse(val projectDescription: String?, val projectEnvironment: String?, val stages: List<StageDao>)
 class StageDao(val stageName: String, val stageDescription: String?, val startDate: String?, val endDate: String?, val pointsNumber: String?, val testCases: List<TestCase>)
 class TestCase(val testCaseName: String, val parameters: String?, val inputFileName: String?, val outputFileName: String?)
 class StudentStagesResponse(val stages: List<StudentStage>)

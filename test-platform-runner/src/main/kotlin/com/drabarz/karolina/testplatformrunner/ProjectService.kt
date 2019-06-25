@@ -36,34 +36,57 @@ class ProjectService(
     }
 
     fun addProjectDescription(uploadedFile: MultipartFile, projectName: String): String {
+        addProjectFile(uploadedFile, projectName, pathProvider.getProjectDescriptionDir(projectName))
+
+        return "200"
+    }
+
+    fun addProjectEnvironment(uploadedFile: MultipartFile, projectName: String): String {
+        addProjectFile(uploadedFile, projectName, pathProvider.getProjectEnvironmentDir(projectName))
+
+        return "200"
+    }
+
+    fun addProjectFile(uploadedFile: MultipartFile, projectName: String, fileDir: File) {
         val projectDir = pathProvider.getProjectDir(projectName)
         if (!projectDir.exists()) {
             throw RuntimeException("Error. Project $projectName doesn't exist")
         }
 
-        val descriptionDir = pathProvider.getProjectDescriptionDir(projectName)
-        descriptionDir.mkdir()
+        fileDir.mkdir()
 
-        deleteFileHelper.deleteSingleFileFromDir(descriptionDir)
+        deleteFileHelper.deleteSingleFileFromDir(fileDir)
 
-        val outputFile = File(descriptionDir.path, uploadedFile.originalFilename)
+        val outputFile = File(fileDir.path, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
-
-        return "200"
     }
 
     fun getProjectDescriptionName(projectName: String): String? {
-        val projectDescriptionDir = pathProvider.getProjectDescriptionDir(projectName)
-        if (!projectDescriptionDir.exists() || projectDescriptionDir.list().size != 1) {
+        return getProjectFileName(pathProvider.getProjectDescriptionDir(projectName))
+    }
+
+    fun getProjectEnvironmentName(projectName: String): String? {
+        return getProjectFileName(pathProvider.getProjectEnvironmentDir(projectName))
+    }
+
+    fun getProjectFileName(fileDir: File): String? {
+        if (!fileDir.exists() || fileDir.list().size != 1) {
             return null
         }
-        return projectDescriptionDir.list().first()
+        return fileDir.list().first()
     }
 
     fun getProjectDescription(projectName: String): File {
-        val projectDescriptionDir = pathProvider.getProjectDescriptionDir(projectName)
-        if (projectDescriptionDir.exists() && projectDescriptionDir.list().size == 1) {
-            return projectDescriptionDir.listFiles().first()
+        return getProjectFile(pathProvider.getProjectDescriptionDir(projectName))
+    }
+
+    fun getProjectEnvironment(projectName: String): File {
+       return getProjectFile(pathProvider.getProjectEnvironmentDir(projectName))
+    }
+
+    fun getProjectFile(fileDir: File): File {
+        if (fileDir.exists() && fileDir.list().size == 1) {
+            return fileDir.listFiles().first()
         }
 
         throw java.lang.RuntimeException("Error file doesn't exist")

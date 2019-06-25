@@ -76,8 +76,8 @@ export function addNewStudent(projectName, groupName, studentName) {
     })
 }
 
-export function uploadProjectDescription(data) {
-    return postData(backendUrl("/project/description"), data)
+export function uploadProjectFile(data, type) {
+    return postData(backendUrl('/project/' + type), data)
 }
 
 export function uploadGroupsFile(projectName, data) {
@@ -129,6 +129,10 @@ function postData(url, data) {
 
 export function downloadProjectDescription(projectName) {
     return downloadFile(backendUrl('/' + projectName + "/description"))
+}
+
+export function downloadProjectEnvironment(projectName) {
+    return downloadFile(backendUrl('/' + projectName + "/environment"))
 }
 
 export function downloadStageDescription(projectName, stageName) {
