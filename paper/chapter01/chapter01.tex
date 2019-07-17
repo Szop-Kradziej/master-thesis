@@ -1,4 +1,5 @@
 \chapter{Wstęp}
+\label{intro}
 
 TODO:
 Rozwinięcie rodziału pierwszego
@@ -6,3 +7,118 @@ Dokładne omówienie tematu i problemów z przykładami
 Abstrakcyjny opis narzędzia do wspomagania weryfikacji pracy studentów
 Opis funkcjonalności z uzasadnieniem
 Napisać o tym, że będzie nacisk na projekty tego typu (rozporządzenie) i dopisać coś z artykułów o metodach nauczania i o Agile.
+
+
+Opis problemu:
+	- usprawnienie procesu weryfikacji pracy studentów
+	- te same zadania dla grup
+
+Projekty grupowe:
+	- korzyści z projektów grupowych
+	- ważna umiejętność - praca w grupie
+	- agile values - communication, respect
+	- w myśl nowego rozporządzenia, będzie więcej projektów grupowych
+
+Narzędzia do usprawniania procesów:
+	- są powszechne
+	- w formie gry i wizualizacji
+	- paraller programing
+	- nauka pisania testów
+	- nauka programowania
+	- usprawnianie wybierania ścieżek nauki
+	- testy umiejętności algorytmicznych
+	- są powszechne, ale skupiają się na pojedynczych, odseparowanych, indywidualnych zadaniach
+	- przydałoby się coś do cało semestrowego projektu
+	- coś co umożliwai ocenę całego procesu a nie tylko pojedynczych interakcji
+	- narzędzie powinno być generyczne
+
+Co chcemy osiągnąć i gdzie są trudności:
+    - indywidualne podejście do studentów
+    - brak feedbacku
+    - czasochłonne
+    - powtarzalne
+    - brak informacji o statusie innych
+    - chęć poznania statystyk i lepszego zrozumienia procesu
+
+Zalety:
+	- szybki feedback
+	- proste sprawdzenie poprawności zrozumienia zadania i założeń
+	- większa szansa na oddanie poprawnego rozwiązania
+	- nauka dobrych praktyk (warto testować kod)
+	- wiedza o aktualnych postępach innych
+	- brak indywidualnego podejścia
+	- wszelkie usprawnienia dla prowadzącego
+	- zbieranie statystyk i dalsza analiza sposobu pracy studentów
+
+Przypadki testowe:
+	- testowanie jest ważną umiejętnością i pożądaną
+	- testowanie potrzebne od samego początku
+	- pomysły nauki TDD od razu
+	- co raz większy nacisk
+	- software house - "developer" a nie "programista"
+	- podejście agile i ścisła współpraca między członkami zespołu (tester- programista)
+	- agile values - feedback
+	- umiejętności typu T
+	- problem, ciężko ocenić trafność przypadków testowych studentów (indywidualne podejście)
+	- problem na początku, przy braku wiedzy na temat programowania
+	- nie można poświęcić całego przedmiotu (przepełniony program studiów)
+	- warto "przemycać"
+	- black box/white box and grey box testy
+	- można się uczyć z dobrze napisanych przypadków testowych
+	- czasochłonne wymyślanie przypadków testowych przez prowadzących
+	- starsi studenci sami mogą pisać przypadki testowe
+	- można przepuszczać programy przez wszystkie przypadki testowe studentów
+	- trzeba ocenić te przypadki testowe - też czasochłonne
+	- można napisać program i generować losowo dane wejściowe
+	- najlepiej wykorzystać ML żeby te generowane przypadki miały duże pokrycie
+	- trzeba mieć dane z poprzednich lat do uczenia
+	- można to wykorzystać w celu rozszerzenia pracy
+
+
+
+
+W~ramach pracy rozpatrywany jest problem weryfikacji aktywności i~działań studentów dla przedmiotu, dla którego mamy zdefiniowane kilka grup projektowych.
+Zadaniem każdego z~zespołów jest wykonanie, podczas trwania semestru, tego samego projektu.
+Studenci przybliżają się do jego ukończenia przez zaliczanie kolejnych etapów.
+Przykładem takiego przedmiotu są miedzy innymi ”Podstawy Programowania”, prowadzone na wydziale EiTI.
+
+\section{Trendy}
+
+TODO:
+Napisać o tym, że będzie nacisk na projekty tego typu (rozporządzenie) i dopisać coś z artykułów o metodach nauczania i o Agile.
+
+\section {Problemy}
+
+Obecnie proces weryfikacji cząstkowych wyników jest czasochłochonny.
+Nie tylko ze względu na dużą liczbę grup, ale również z powodu indywidualnego rozpatrywania postępów poszczególnych zespołów.
+Istotnym problemem jest również to, że studenci nie pracują systematycznie podczas semestru.
+Może to wynikać częściowo z braku posiadania oficjalnej wiedzy o~aktualnych postępach innych grup.
+Przedstawienie prowadzącym wyników cząstkowych oraz końcowych przez studentów również może okazać się czasochłonne i~kłopotliwe.
+Manualne uruchamianie programów na prywatnych maszynach studentów zajmuje czas.
+Jednak często podczas prezentacji prac zdarzają się błędy np. niepoprawna konfiguracja środowiska, niewłaściwie wybrany plik z przypadkiem testowym czy problem z siecią.
+W przypadku gdy studenci mają za zadanie zaprezentowania integracji swoich programów prawdopodobieństwo wystąpienia błędów rośnie.
+
+\section {Rozwiązanie}
+
+Proponowanym rozwiązaniem powyżej przedstawionych problemów jest wprowadzenie platformy wspomagającej weryfikację pracy studentów (nazywanej dalej w skrócie platformą testową lub platformą).
+Jej podstawowe moduły to:
+\begin{itemize}
+    \item GUI (ang. Graphical User Interface) prowadzącego, będące interfejsem Webowym. Umożliwia ono zarządzanie projektami oraz podgląd postępów studentów.
+    \item GUI studenta, będące interfejsem Webowym. Pozwala na dodawanie i~uruchamianie programów oraz przeglądanie wyników,
+    \item Serwis umożliwiający przechowywanie danych oraz uruchamianie programów dla wskazanych przypadków testowych.
+\end{itemize}
+
+\section{Zalety zastosowania rozwiązania}
+
+Zastosowanie platformy w~celu weryfikacji pracy studentów niesie ze sobą wiele korzyści.
+Podstawową zaletą płynącą z jej użycia jest automatyzacja procesu udostępniania oraz sprawdzania poprawności programów studentów.
+Przyśpiesza ona proces sprawdzania kolejnych etapów prac i umożliwia zwiększenie ich liczby.
+Student korzystający z platformy uzyskuje szybką informację zwrotną dotyczącą poprawności działania jego kodu poprzez wgląd do raportu wyników testów automatycznych.
+GUI studenta przedstawia również informację o zbiorczych postępach innych grup.
+Podgląd statusu prac pozostałych zespołów mógłby być dodatkową motywacją dla studentów do wykonania danego etapu.
+Dzięki platformie prowadzący otrzymuje ujednolicony wgląd w bieżące postępy studentów, co za tym idzie nie ma potrzeby rozpatrywać już kolejnych grup indywidualnie.
+Platforma testowa rozwiązuje też problem różnych konfiguracji systemów.
+W ramach danego projektu studenci mają dostęp do skonfigurowanego wcześniej kontenera Dockerowego, na którym żądane jest, aby zadziałał ich projekt.
+Samo środowisko jest wyeksportowane dla studenta, tak aby mógł testować swój program lokalnie.
+Platforma umożliwia także zbieranie danych statystycznych dotyczących procesu pracy studentów.
+Te informacje mogą posłużyć dalszym usprawnieniom weryfikacji pracy grup projektowych.

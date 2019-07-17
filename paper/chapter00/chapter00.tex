@@ -1,17 +1,14 @@
 \chapter{Cel pracy}
 
-W~ramach pracy rozpatrywany jest problem weryfikacji aktywności i~działań studentów dla przedmiotu, dla którego mamy zdefiniowane kilka grup projektowych.
+W~ramach pracy rozpatrywany jest problem weryfikacji aktywności i~działań studentów w ramach przedmiotu, dla którego mamy zdefiniowane kilka grup projektowych.
 Zadaniem każdego z~zespołów jest wykonanie, podczas trwania semestru, tego samego projektu.
 Studenci przybliżają się do jego ukończenia przez zaliczanie kolejnych etapów.
 Przykładem takiego przedmiotu są miedzy innymi ”Podstawy Programowania”, prowadzone na wydziale EiTI.
 
-\section{Trendy}
-
-TODO:
-Napisać o tym, że będzie nacisk na projekty tego typu (rozporządzenie) i dopisać coś z artykułów o metodach nauczania i o Agile.
-
-\section {Problemy}
-
+Proces prowadzenia projektów grupowych jest aktualnie usprawniany.
+Wśród tych usprawnień moża wyróżnić między innymi zobligowanie studentów do zamieszczania swojego kodu do systemu kontroli wersji.
+Jest to istotne usprawnienie, jednak studenci (zwłaszcza pierwszego roku) nie potrafią w pełni wykorzystać zalet sytemu.
+Dodatkowo usprawnienie tej postaci nie niweluje wszystkich problemów związanych z procesem oceny pracy studentów w trakcie semestru.
 Obecnie proces weryfikacji cząstkowych wyników jest czasochłochonny.
 Nie tylko ze względu na dużą liczbę grup, ale również z powodu indywidualnego rozpatrywania postępów poszczególnych zespołów.
 Istotnym problemem jest również to, że studenci nie pracują systematycznie podczas semestru.
@@ -20,28 +17,15 @@ Przedstawienie prowadzącym wyników cząstkowych oraz końcowych przez student�
 Manualne uruchamianie programów na prywatnych maszynach studentów zajmuje czas.
 Jednak często podczas prezentacji prac zdarzają się błędy np. niepoprawna konfiguracja środowiska, niewłaściwie wybrany plik z przypadkiem testowym czy problem z siecią.
 W przypadku gdy studenci mają za zadanie zaprezentowania integracji swoich programów prawdopodobieństwo wystąpienia błędów rośnie.
+W rozdziale \ref{intro} zostały szerzej opisane motywacje do powstania pracy.
 
-\section {Rozwiązanie}
+W ramach pracy zaproponowano, zaimplementowano i zbadano narzędzie umożliwiające automatyzację procesu weryfikacji pracy studentów.
+Opis techniczny platformy testowej, będącej proponowanym rozwiązaniem, znajduje się w rodziale \ref{chapter:platform-technical}.
+Rozdział \ref{{chapter:interfaces} zawiera opisy i instrukcje użytkowania dostępnych dla prowadzącego i studentów interfejsów.
 
-Proponowanym rozwiązaniem powyżej przedstawionych problemów jest wprowadzenie platformy wspomagającej weryfikację pracy studentów (nazywanej dalej w skrócie platformą testową lub platformą).
-Jej podstawowe moduły to:
-\begin{itemize}
-    \item GUI (ang. Graphical User Interface) prowadzącego, będące interfejsem Webowym. Umożliwia ono zarządzanie projektami oraz podgląd postępów studentów.
-    \item GUI studenta, będące interfejsem Webowym. Pozwala na dodawanie i~uruchamianie programów oraz przeglądanie wyników,
-    \item Serwis umożliwiający przechowywanie danych oraz uruchamianie programów dla wskazanych przypadków testowych.
-\end{itemize}
+Badania i weryfikacja platformy zostały opisane w rozdziale \ref{chapter:research}.
+Weryfikacja odbyła się na podstawie historycznych programów studentów.
 
-\section{Zalety zastosowania rozwiązania}
 
-Zastosowanie platformy w~celu weryfikacji pracy studentów niesie ze sobą wiele korzyści.
-Podstawową zaletą płynącą z jej użycia jest automatyzacja procesu udostępniania oraz sprawdzania poprawności programów studentów.
-Przyśpiesza ona proces sprawdzania kolejnych etapów prac i umożliwia zwiększenie ich liczby.
-Student korzystający z platformy uzyskuje szybką informację zwrotną dotyczącą poprawności działania jego kodu poprzez wgląd do raportu wyników testów automatycznych.
-GUI studenta przedstawia również informację o zbiorczych postępach innych grup.
-Podgląd statusu prac pozostałych zespołów mógłby być dodatkową motywacją dla studentów do wykonania danego etapu.
-Dzięki platformie prowadzący otrzymuje ujednolicony wgląd w bieżące postępy studentów, co za tym idzie nie ma potrzeby rozpatrywać już kolejnych grup indywidualnie.
-Platforma testowa rozwiązuje też problem różnych konfiguracji systemów.
-W ramach danego projektu studenci mają dostęp do skonfigurowanego wcześniej kontenera Dockerowego, na którym żądane jest, aby zadziałał ich projekt.
-Samo środowisko jest wyeksportowane dla studenta, tak aby mógł testować swój program lokalnie.
-Platforma umożliwia także zbieranie danych statystycznych dotyczących procesu pracy studentów.
-Te informacje mogą posłużyć dalszym usprawnieniom weryfikacji pracy grup projektowych.
+
+
