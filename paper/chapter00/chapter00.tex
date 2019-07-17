@@ -7,8 +7,9 @@ Przykładem takiego przedmiotu są miedzy innymi ”Podstawy Programowania”, p
 
 Proces prowadzenia projektów grupowych jest aktualnie usprawniany.
 Wśród tych usprawnień moża wyróżnić między innymi zobligowanie studentów do zamieszczania swojego kodu do systemu kontroli wersji.
-Jest to istotne usprawnienie, jednak studenci (zwłaszcza pierwszego roku) nie potrafią w pełni wykorzystać zalet sytemu.
+Jest to istotne usprawnienie, jednak studenci (zwłaszcza Kpierwszego roku) nie potrafią w pełni wykorzystać zalet sytemu.
 Dodatkowo usprawnienie tej postaci nie niweluje wszystkich problemów związanych z procesem oceny pracy studentów w trakcie semestru.
+
 Obecnie proces weryfikacji cząstkowych wyników jest czasochłochonny.
 Nie tylko ze względu na dużą liczbę grup, ale również z powodu indywidualnego rozpatrywania postępów poszczególnych zespołów.
 Istotnym problemem jest również to, że studenci nie pracują systematycznie podczas semestru.
@@ -19,12 +20,26 @@ Jednak często podczas prezentacji prac zdarzają się błędy np. niepoprawna k
 W przypadku gdy studenci mają za zadanie zaprezentowania integracji swoich programów prawdopodobieństwo wystąpienia błędów rośnie.
 W rozdziale \ref{intro} zostały szerzej opisane motywacje do powstania pracy.
 
-W ramach pracy zaproponowano, zaimplementowano i zbadano narzędzie umożliwiające automatyzację procesu weryfikacji pracy studentów.
+Proponowanym rozwiązaniem powyżej przedstawionych problemów jest wprowadzenie platformy testowej, wspomagającej weryfikację pracy studentów.
+W ramach pracy zaproponowano, zaimplementowano i zbadano narzędzie pozwalające na lepszą automatyzację procesu.
+Można wyróżnić trzy podstawowe moduły platformy:
+\begin{itemize}
+    \item GUI (ang. Graphical User Interface) prowadzącego, będące interfejsem Webowym. Umożliwia ono zarządzanie projektami oraz podgląd postępów studentów.
+    \item GUI studenta, będące interfejsem Webowym. Pozwala na dodawanie i~uruchamianie programów oraz przeglądanie wyników,
+    \item Serwis umożliwiający przechowywanie danych oraz uruchamianie programów dla wskazanych przypadków testowych.
+\end{itemize}
+Rozdział \ref{chapter:interfaces} zawiera opisy i instrukcje użytkowania dostępnych dla prowadzącego i studentów interfejsów (GUI prowadzącego oraz GUI studenta).
 Opis techniczny platformy testowej, będącej proponowanym rozwiązaniem, znajduje się w rodziale \ref{chapter:platform-technical}.
-Rozdział \ref{{chapter:interfaces} zawiera opisy i instrukcje użytkowania dostępnych dla prowadzącego i studentów interfejsów.
 
 Badania i weryfikacja platformy zostały opisane w rozdziale \ref{chapter:research}.
 Weryfikacja odbyła się na podstawie historycznych programów studentów.
+W celu zbadania platformy zasymulowano dwa typy projektów.
+Pierwszy z nich jest projektem analogicznym do projektu wykonywanego przez studentów w poprzenich latach.
+Drugi typ zadania ma na celu symulację złożonego środowiska.
+
+W rozdziale \ref{chapter:conclusion} zostały przedstatione wnioski z implementacji i badań platformy.
+Omówiono również możliwości usprawnienia i dodatkowych funkcjonalności platformy, które mogłyby zostać dodane w ramach rozszerzenia pracy.
+
 
 
 
