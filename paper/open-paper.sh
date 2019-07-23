@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-sh paper/build-paper.sh
-xdg-open paper/build/main.pdf
+sh build-paper.sh
+xdg-open build/main.pdf
 
