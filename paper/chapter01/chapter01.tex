@@ -15,7 +15,9 @@ Przybliżone są w nim problemy, na jakie napotykają prowadzący oraz studenci 
 W podrozdziale \ref{programs-testing} omówiono potrzebę nauki umiejętności testowania aplikacji przez studentów studiów informatycznych.
 Przedstawiono także podstawowe rodzaje metod testowania: testowanie białej i czarnej skrzynki, wraz z wadami oraz zaletami tych podejść.
 
-Ostatni podrozdział zawiera przegląd dostępnych, istniejących narzędzi wspomagających weryfikację umiejętności programistycznych użytkowników oraz ich zastosowanie w branży informatycznej.
+Podrozdział \ref{tools} zawiera przegląd dostępnych, istniejących narzędzi wspomagających weryfikację umiejętności programistycznych użytkowników oraz ich zastosowanie w branży informatycznej.
+
+Ogólne założenia dotyczące funkcjonalności platformy wraz z uzasadnieniem ich stosowności zostały omówione w rozdziale \ref{requirements}.
 
 \vfill
 
@@ -88,7 +90,7 @@ Ze względu na indywidualne podejście do każdego z zespołów i etapów proces
 
 Studenci otrzymują informację dotyczącą oceny danego etapu, po jego zakończeniu.
 W trakcie zadania oczywiście mogą doprecyzować szczegóły z prowadzącym.
-Zdarza się jednak, że niektóre założenia są przez studentów zrozumiane w inny sposób niż oczekiwałby tego prowadzący.
+Zdarza się jednak, że pomimo dodatkowego uszczegółowienia, niektóre założenia są przez studentów zrozumiane w inny sposób niż oczekiwałby tego prowadzący.
 W takim przypadku studenci podczas trwania etapu mogą napisać program zgodny z błędnie rozumianymi założeniami i dopiero po złożeniu kompletnego sprawozdania z etapu dowiedzieć się o niepoprawnej interpretacji zadania.
 Dla obecnego procesu prowadzenia projektu informacja zwrotna dotycząca postępów pracy dociera do studentów stosunkowo późno.
 
@@ -111,9 +113,9 @@ Nie eliminuje to jednak czasochłonnego, indywidualnego podejścia do oceny każ
 \label{programs-testing}
 
 Dzięki wprowadzeniu systemu kontroli wersji można uzyskać szereg statystyk dotyczących pracy studentów.
-Nie są to jednak pełne statystyki, które mogłyby interesować prowadzącego.
+Nie są to jednak pełne informacje, które mogłyby interesować prowadzącego.
 Sam kod zamieszczany w systemie, nie jest wystarczający do oceny etapu.
-Co więcej, jego samodzielna analiza nie poprawiłaby a być może nawet pogorszyła czasochłonność weryfikacji wyników cząstkowych.
+Co więcej, jego samodzielna analiza nie poprawiłaby, a być może nawet pogorszyła, czasochłonność weryfikacji wyników cząstkowych.
 Ważnym elementem oceny poszczególnych etapów jest ocena poprawności działania uruchomionych programów dla zadanych danych wejściowych.
 
 Można byłoby oczekiwać, że studenci sami dodawaliby przypadki testowe dla swoich aplikacji. 
@@ -159,7 +161,7 @@ W takich software house'ach zadaniem inżyniera oprogramowanie jest nie tylko na
 W dużych korporacjach wykorzystujących metodyki Agile umiejętność testowania jest również istotna ze względu na ścisłą współpracę między interdyscyplinarnymi członkami zespołu.
 
 Wśród wartości fundamentalnych dla podejścia XP (ang. Extreem Programming) do wytwarzania oprogramowania jest wymieniona informacja zwrotna (ang. feedback) \cite{extreem-programming}.
-Opisywana jest ona jako szybkość oceny poprawności dodawanego kodu oraz jego interakcji z innymi częściami systemu i ocenie regresji.
+Opisywana jest ona jako szybkość oceny poprawności dodawanego kodu i jego interakcji z innymi częściami systemu oraz oszacowania regresji.
 Szybką informację zwrotną dotyczącą dodawanej funkcjonalności można osiągnąć między innymi przez utrzymywanie poprawnych przypadków testowych.
 
 Jedną z kategorii podziału testów, jest klasyfikacja ze względu na wiedzę na temat testowanego programu.
@@ -190,8 +192,8 @@ Testy czarnej skrzynki mają zastosowanie na następujących poziomach:
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 13cm]{chapter01/tests_levels.jpg}
-    \caption{Poziomy testów (źródło własne).}
+    \includegraphics[width = 7cm]{chapter01/tests_levels.jpg}
+    \caption{Poziomy testów (źródło: \cite{tests-levels}).}
     \label{fig:tests-levels}
 \end{figure}
 
@@ -269,15 +271,16 @@ W tym przypadku dane wejściowe mogłyby być generowane losowo.
 Ten sposób chroniłby przed próbą sztywnej implementacji programu, która generowałaby właściwy wynik tylko dla znanych wcześniej przypadków testowych.
 To podejście ma też swoje wady, ponieważ używając zwykłego generatora losowego można uzyskać bardzo niskie pokrycie i nie przetestować poprawnie przypadków brzegowych.
 
-Kolejnych innowacyjnym podejściem jest wykorzystanie metod ML (ang. Machine Learning) do generowania przypadków testowych. 
+Kolejnym innowacyjnym podejściem jest wykorzystanie metod ML (ang. Machine Learning) do generowania przypadków testowych. 
 Ta metoda została opisana w pracy doktorskiej \cite{teach-testing-thesis}. 
 Dzięki uczeniu maszynowemu z wykorzystaniem prac studentów z poprzednich lat uzyskano narzędzie pozwalające generować przypadki testowe z bardzo wysokim pokryciem.
-Trudno byłoby jednak zastosować podobną metodę do poprawienia procesu weryfikacji prac studentów, ze względu na brak dostępnych i dobrze opisanych programów studentów poprzednich lat.
+Trudno byłoby jednak zastosować podobną metodę w ramach proponowanej platformy, ze względu na brak dostępnych i dobrze opisanych programów studentów poprzednich lat.
 
 
 
 
 \section{Narzędzia wspomagające ocenę umiejętności programistycznych}
+\label{tools}
 
 Obecnie istnieje wiele narzędzi wspomagających ocenę umiejętności programistycznych użytkowników.
 Są to najczęściej platformy z interfejsem webowych dostępne dla wszystkich.
@@ -302,16 +305,17 @@ W ramach pracy doktorskiej \cite{teach-testing-thesis} opisano narzędzie pozwal
 Bazując na danych historycznych, zaproponowano platformę pozwalającą na ocenę jakości testów pisanych przez użytkowników.
 Jest to bardzo ciekawe i godne uwagi podejście do oceny umiejętności testowania programów przez studentów.
 
-Narzędzia wspomagające ocenę umiejętności programistycznych są powszechne i mają różne zastosowania.
+Narzędzia wspomagające ocenę umiejętności programistycznych są powszechne i~mają różne zastosowania.
 Skupiają się one jednak na niewielkich, pojedynczych, indywidualnych zadaniach.
-Ze względu na powyższe cechy użycie ich w ramach wieloetapowego, długoterminowego i grupowego projektu nie jest wskazane.
+Ze względu na powyższe cechy użycie ich w ramach wieloetapowego, długoterminowego i grupowego projektu nie pomoże znacząco usprawnić procesu weryfikacji pracy studentów.
 W ramach pracy zaimplementowano i zbadano platformę umożliwiającą lepszą ocenę całego procesu tworzenia projektu z uwzględnieniem każdego etapu.
-Proponowane rozwiązanie jest generyczne i poprzez odpowiednie zdefiniowanie środowiska uruchomieniowego może zostać użyte dla dowolnego języka programowania.
+Proponowane rozwiązanie jest generyczne i poprzez odpowiednie zdefiniowanie środowiska uruchomieniowego może zostać użyte dla dowolnego języka programowania na każdym etapie studiów.
 
 \vfill
 
 
 \section{Platforma testowa - założenia}
+\label{requirements}
 
 W ramach pracy zaproponowano i zaimplementowano platformę wspomagającą weryfikację pracy studentów podczas projektu grupowego. 
 Omawiane narzędzie zostało utworzone jako MVP (ang. Minimal Value Product). 
@@ -326,7 +330,7 @@ Wynik testów byłby znany zarówno dla prowadzącego, jak i studentów.
 Otrzymane rezultaty byłby jednoznaczne.
 Jeśli wszystkie testy zakończyłyby się sukcesem, to dana grupa zaliczyłaby w pełni zadany etap.
 W przypadku, gdy któryś z testów ukończyłby się błędem, aplikacja studencka nie spełniałaby wszystkich założeń projektowych.
-Na podstawie znajomości ilości i rodzaju testów, które zakończyły się niepoprawnie, prowadzący miałby jasną sytuację co do postępów pracy dla zadanego etapu.
+Na podstawie znajomości ilości i rodzaju testów, które zakończyły się niepoprawnie, prowadzący miałby jasną sytuację co do postępów pracy danego zespołu dla zadanego etapu.
 Te same testy służyłyby do weryfikacji cząstkowej pracy każdej z grup, dzięki czemu prowadzący nie musiałby już indywidualnie oceniać poprawności programów.
 
 Wymuszenie usunięcia indywidualnego podejścia do grup nie jest w pełni możliwe. 
@@ -366,7 +370,7 @@ Podczas prezentacji mogą zaistnieć komplikacje związane między innymi z niep
 W sytuacji, gdy zadaniem studentów jest zaprezentowanie interakcji pomiędzy stworzonymi
 przez nich modułami programów, prawdopodobieństwo wystąpienia powyższych błędów
 wzrasta.
-Proponowane narzędzie powinno zachowywać wspólną konfigurację środowiska uruchomieniowego w ramach projektu i umożliwiać definiowanie procesu integracji poszczególnych modułów. 
+Proponowane narzędzie powinno przechowywać i udostępniać wspólną konfigurację środowiska uruchomieniowego w ramach projektu i umożliwiać definiowanie procesu integracji poszczególnych modułów. 
 W ramach procesu integracji prowadzący powinien móc zdefiniować przypadki testowe pozwalające na ocenę interakcji programów.
 
 Wszystkie wprowadzane przez użytkowników dane powinny być edytowalne.
@@ -375,7 +379,7 @@ Ich edycja powinna być możliwa przez studentów od daty rozpoczęcia do daty z
 Oba terminy powinny być dostępne dla użytkowników.
 
 Platforma powinna udostępniać studentom wyniki poszczególnych etapów ich pracy.
-Dla aktualnie prowadzonego etapu powinny być do pełne wyniki testów.
+Dla aktualnie prowadzonego etapu powinny być to pełne, opisane wyżej, wyniki testów.
 W przypadku już zakończonych etapów studenci powinni mieć wgląd do podsumowanego statusu ich pracy, mówiącego o tym ile z testów akceptacyjnych zostało przez nich zaliczone.
 Jak zostało wspomniane wcześniej, studenci nie pracują systematycznie.
 Aby zmotywować ich do regularnych działań, platforma powinna udostępniać zbiorczy podgląd wyników innych grup, tak aby mogli oni sklasyfikować swoje postępy na tle innych.
@@ -385,8 +389,8 @@ W myśl tego założenia prowadzący powinien mieć możliwość konfiguracji na
 Dodanie zespołów projektowych powinno być proste i nie wymagać powielania tych samych czynności w obu narzędziach.
 Platforma powinna umożliwiać wgranie grup bezpośrednio z pliku w formacie JSON, wyeksportowanego wcześniej z systemu kontroli wersji.
 
-W celu lepszego zrozumienia procesu pracy studentów podczas semestru powinny zostać zbierane i przechowywane statystyki z wykonania kolejnych projektów.
-Platforma powinna umożliwiać zbieranie prostych danych audytowych, dotyczących każdej z prób uruchomienia programu.
+W celu lepszego zrozumienia procesu pracy studentów podczas semestru powinny zostać zbierane i przechowywane statystyki z wykonania kolejnych etapów.
+Platforma powinna umożliwiać zapisywanie prostych danych audytowych, dotyczących każdej z prób uruchomienia programu.
 W skład gromadzonych informacji powinny wchodzić:
 \begin{itemize}
 \item identyfikator użytkownika,
@@ -400,7 +404,8 @@ Proponowane narzędzie powinno być generyczne.
 Prowadzący powinien móc zdefiniować w analogiczny sposób wiele projektów, etapów, integracji, grup oraz przypadków testowych.
 Obecnie w ramach programu kształcenia kładzie się nacisk na projekty grupowe.
 Proponowane narzędzie powinno być uniwersalne i umożliwiać prostą definicję różnych środowisk uruchomieniowych z dowolną ich konfiguracją.
-Pliki konfiguracyjne powinny być udostępnione dla użytkowników.
+Pliki konfiguracyjne powinny być udostępnione dla użytkowników. 
+Takie podejście umożliwia zastosowanie platformy na każdym etapie studiów dla projektów prowadzonych w dowolnym języku programowania.
 
 Zarówno od strony interfejsu użytkownika, jak i prowadzącego narzędzie powinno być proste i intuicyjne.
 Dostępne dla użytkowników widoki powinny wyświetlać minimum niezbędnych informacji i być stworzone w myśl dobrych praktyk UX (ang. User Experience)~\cite{ux-good-practicies}.
@@ -414,6 +419,6 @@ Narzędzie powinno być skalowalne i proste w konfiguracji tak, aby umożliwiać
 Czas uruchamiania platformy oraz przeprowadzania testów akceptacyjnych na programach studentów powinien być stosunkowo szybki.
  
 Warto podkreślić, że celem wprowadzenia platformy nie jest eliminacja spotkań z prowadzącym.
-Zastosowanie narzędzia nie ma również na celu eliminacji używania systemów do kontroli wersji, których interfejs usprawnia przeglądanie kodu, tylko uzupełnienie funkcjonalności tych programów.
+Zastosowanie narzędzia nie dąży również do zastąpienia funkcjonalności systemów do kontroli wersji, których interfejs usprawnia przeglądanie kodu.
 Podstawowym zadaniem platformy jest usprawnienie procesu weryfikacji pracy postępów pracy w ramach studenckiego grupowego projektu informatycznego, zarówno dla nauczycieli akademickich, jak i studentów.	
 	
