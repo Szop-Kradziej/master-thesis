@@ -15,18 +15,26 @@ Oba interfejsy zostały napisane w technologii ReactJS z użyciem MaterialUI.
 Moduł serwera został napisany w języku Kotlin z użyciem SpringBoot’a w wersji 2.0.
 
 Serwer przechowuje dane w formie rekordów w bazie danych oraz plików.
-Metadane, takie jak termin prowadzącegorealizacji wskazanego etapu lub grupy, do których są przypisani studenci, są przechowywane w bazie PostgreSQL.
-Dane w postaci plików są przechowywane na dysku w systemie plików Linux.
+Metadane, takie jak termin realizacji wskazanego etapu lub grupy, do których są przypisani studenci, są zapisywane w bazie PostgreSQL.
+Schematy tabel i ich relacji zostały omówione w podrozdziale \ref{database}.
+Dane w postaci plików są przechowywane na dysku serwera w systemie plików Linux.
+W podrozdziale \ref{directories} opisano użyte struktury katalogów.
 
 Programy studentów są uruchamiane w kontenerach Dockerowych.
+Proces testowania aplikacji studentów został opisany w podrodziale \ref{run-and-test}.
+Kolejna sekcja przedstawia utworzenie nowego środowiska uruchomieniowego w postaci Dockerfile.
+
+Opis zastosowanej autoryzacji i autentykacji użytkowników można znaleźć w podrozdziale \ref{authorization}.
+
+Przykład konfiguracji i uruchomienia platformy na dowolnym serwerze został omówiony w ramach sekcji \ref{run-platform}.
 
 Platformę można zintegrować z zewnętrznymi narzędziami.
 Przykładem takiej integracji może być repozytorium kodu oraz system CI (ang. Continious Integration).
-System CI (przykładowo Travis) można skonfigurować w taki sposób, aby bezpośrednio po zaakceptowaniu PR (ang. Pull Request) do repozytorium kodu (przykładowo GitLab) uruchamiany był job, który po poprawnym zbudowaniu programu automatycznie przesyłał go do platformy i uruchamiał.
+System CI (Travis) można skonfigurować w taki sposób, aby bezpośrednio po zaakceptowaniu PR (ang. Pull Request) do repozytorium kodu (GitLab) uruchamiany był job, który po poprawnym zbudowaniu programu automatycznie przesyłał go do platformy i uruchamiał.
+Przykład takiej integracji platformy z zewnętrznymi narzędziami został opisany w podrozdziale \ref{ci-integration}.
 
 \section{Schemat bazy}
-
-Schemat bazy danych znajduje się na rysunku \ref{fig:platform-db-schema}.
+\label{database}
 
 \begin{figure}[h]
     \centering
@@ -35,11 +43,29 @@ Schemat bazy danych znajduje się na rysunku \ref{fig:platform-db-schema}.
     \label{fig:platform-db-schema}
 \end{figure}
 
-TODO: Opisać schemat i napisać o archiwizacji danych
+Schemat table i relacji bazodanowych, utworzony w ramach pracy, znajduje się na rysunku \ref{fig:platform-db-schema}.
+Do przechowywania metadanych wykorzystano siedem tabel.
+W przedstawionych strukturach przechowywane są informacje o:
+\begin{itemize}
+    \item istniejących projektach,
+    \item grupach w ramach projektów,
+    \item studentach w ramach grup,
+    \item etapach w ramach projektów,
+    \item integracjach w ramach projektów wraz z wykorzystywanymi do przeprowadzenia integracji etapami.
+\end{itemize}
+
+Do przechowywania danych użyto relacyjnej bazy PostgreSQL.
+Pełne definicje tabel wraz z użytymi typami danych i więzami znajdują się w załączniku \ref{file:database-schema}.
+
 
 \section{Schemat katalogów plików}
+\label{directories}
 
-Schemat katalogów plików znajduje się na rysunku \ref{fig:platform-directories}.
+Pełny schemat katalogów plików znajduje się na rysunku \ref{fig:platform-directories}.
+Można wyróżnić na nim dwa podstawowe foldery: students oraz projects.
+Wewnątrz pierwszego z nich zapisywane są wszystkie dane i pliki związane z aktywnością studentów zarejestrowaną na platformie.
+Do zapamiętywanych informacji należą: raporty, linki do kodu, programy, logi z przebiegu aplikacji oraz wyniki przeprowadzonych testów akceptacyjnych.
+Drugi folder zawiera definicje projektów wraz z etapami i integracjami oraz utworzone przez prowadzących przypadki testowe.
 
 \begin{figure}[h]
     \centering
@@ -48,9 +74,10 @@ Schemat katalogów plików znajduje się na rysunku \ref{fig:platform-directorie
     \label{fig:platform-directories}
 \end{figure}
 
-TODO: Opisać schemat i napisać o archiwizacji danych
+\vfill
 
 \section{Uruchomianie i testowanie programów studentów}
+\label{run-and-test}
 
 Programy studentów są uruchamiane w kontenerach Dockerowych.
 Obraz środowiska jest ustalany dla zadanego projektu.
@@ -66,7 +93,7 @@ Samo uruchamianie kontenerów, ich integracja oraz konfiguracja nowych środowis
     \label{fig:single-test-case}
 \end{figure}
 
-Schemat sprawdzenia poprawności działania programów studentów został przedstawiony na rysunku \ref(fig:single-test-case).
+Schemat sprawdzenia poprawności działania programów studentów został przedstawiony na rysunku \ref{fig:single-test-case}.
 Po uruchomieniu programu studenta na platformie, uruchamiane są wszystkie przypadki testowe dla zadanego etapu.
 Uruchomienie pojedynczego przypadku testowego sprowadza się do utworzenia nowego kontenera Dockerowego i podania mu jako volumenu ścieżki do programu studenta oraz ścieżki do pliku wejściowego.
 Program studenta jest uruchamiany dla zadanych danych wejściowych w kontenerze.
@@ -80,7 +107,7 @@ Zawartość tego pliku zostanie porównana z zawartością oczekiwanego pliku we
     \label{fig:integration}
 \end{figure}
 
-Schemat przebiegu procesu integracji został przedstawiony na rysunku \ref(fig:integration).
+Schemat przebiegu procesu integracji został przedstawiony na rysunku \ref{fig:integration}.
 Prowadzący definiuje kolejne etapy wykonywane w ramach procesu integracji.
 Przebieg procesu integracji jest bardzo podobny do wykonania pojedynczego przypadku testowego.
 Różnica polega na tym, że plik wyjściowy utworzony w wyniku uruchomienia poprzedniego etapu jest plikiem wejściowym dla kolejnego, następującego po nim.
@@ -91,6 +118,7 @@ Plik wyjściowy dla ostatniego etapu jest porównywany ze zdefiniowanym oczekiwa
 TODO: Opis i przykład
 
 \section {Uwierzytelnienie użytkowników}
+\label{authorization}
 
 TODO: opis:
 1) proste uwierzytelnienie oparte o login i hasło
@@ -98,10 +126,12 @@ TODO: opis:
 oraz ograniczenie praw wykonania studentom,
 
 \section {Zestawienie platformy na serwerze}
+\label{run-platform}
 
 TODO: Opis i przykład
 
 \section {Przykład integracji platformy z narzędziem CI oraz repozytorium kodu}
+\label{ci-integration}
 
 TODO: opis i przykład integracji platformy z narzędziem CI oraz repozytorium
 kodu.
