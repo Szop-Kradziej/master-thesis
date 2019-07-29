@@ -23,4 +23,5 @@ data class IntegrationStage(
 
 @Repository
 interface IntegrationStagesRepository : CrudRepository<IntegrationStage, Long> {
+    fun findAllByIntegration(integration: Integration): List<IntegrationStage>
 }

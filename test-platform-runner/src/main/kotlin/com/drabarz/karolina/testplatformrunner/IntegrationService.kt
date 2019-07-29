@@ -47,6 +47,13 @@ class IntegrationService(
     //TODO: Fix empty list
     fun getIntegrations(projectName: String): IntegrationsDao {
         return IntegrationsDao(integrationsRepository.findAllByProject_Name(projectName)
-                .map { IntegrationDao(it.name, emptyList()) })
+                .map { IntegrationDao(
+                        it.name,
+                        getIntegrationStages(it)) })
+    }
+
+    private fun getIntegrationStages(it: Integration): List<IntegrationStageDao> {
+        return integrationStagesRepository.findAllByIntegration(it)
+                .map { IntegrationStageDao(it.name, it.orderNumber, it.stage.name) }
     }
 }
