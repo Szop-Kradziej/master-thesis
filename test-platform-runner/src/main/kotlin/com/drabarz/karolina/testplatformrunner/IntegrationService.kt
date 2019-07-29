@@ -44,7 +44,6 @@ class IntegrationService(
         return "200"
     }
 
-    //TODO: Fix empty list
     fun getIntegrations(projectName: String): IntegrationsDao {
         return IntegrationsDao(integrationsRepository.findAllByProject_Name(projectName)
                 .map { IntegrationDao(
