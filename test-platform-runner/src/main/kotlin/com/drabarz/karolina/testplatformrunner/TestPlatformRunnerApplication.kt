@@ -302,8 +302,8 @@ class TestPlatformApi(val studentService: StudentService,
     @PostMapping("/{projectName}/integrations")
     fun addIntegration(
             @PathVariable("projectName") projectName: String,
-            @RequestParam("integrationName") integrationName: String): String {
-        return integrationService.addIntegration(projectName, integrationName)
+            @RequestBody integration: IntegrationDao): String {
+        return integrationService.addIntegration(projectName, integration.name, integration.integrationStages)
     }
 
     @GetMapping("/{projectName}/integrations")
@@ -324,4 +324,5 @@ class Group(val groupName: String, val projectName: String, val students: List<S
 data class GroupsDao(val groups: List<GroupDao> = ArrayList())
 data class GroupDao(val name: String = "", val students: List<String> = ArrayList())
 data class IntegrationsDao(val integrations: List<IntegrationDao> = ArrayList())
-data class IntegrationDao(val name: String)
+data class IntegrationDao(val name: String, val integrationStages: List<IntegrationStageDao>)
+data class IntegrationStageDao(val name: String, val orderNumber: Int, val stageName: String)
