@@ -126,10 +126,10 @@ class TestCasesDetails extends Component {
                             Parametry:
                         </CustomTableCell>
                         <CustomTableCell width="15%">
-                            Plik wejściowy
+                            Plik wejściowy:
                         </CustomTableCell>
                         <CustomTableCell width="15%">
-                            Plik wyjściowy
+                            Plik wyjściowy:
                         </CustomTableCell>
                         <CustomTableCell width="5%"/>
                         <CustomTableCell/>

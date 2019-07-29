@@ -14,6 +14,18 @@ class StudentTestCaseRow extends Component {
         Api.downloadStudentLogsFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName)
     };
 
+    handleDownloadInputFile = () => {
+        this.downloadFile("input");
+    };
+
+    handleDownloadOutputFile = () => {
+        this.downloadFile("output");
+    };
+
+    downloadFile = (fileType) => {
+        Api.downloadTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName, fileType)
+    };
+
     render() {
         return (
             <TableRow key="custom_key">
@@ -25,14 +37,33 @@ class StudentTestCaseRow extends Component {
                         color={this.props.testCase.status === 'SUCCESS' ? "green" : "red"}>{this.props.testCase.status}</font>
                     </p>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row" width="70%">
+                <CustomTableCell >
                     <p>{this.props.testCase.message ? this.props.testCase.message : "Brak"}</p>
                 </CustomTableCell>
-                <CustomTableCell>
+                <CustomTableCell component="th" scope="row" width="5%">
                     {this.props.testCase.logsFile === true ? "Logi" : "Brak"}
                     <IconButton aria-label="Pobierz"
                                 disabled={!this.props.testCase.logsFile === true}
                                 onClick={this.handleDownloadLogsFile}>
+                        <DownloadIcon/>
+                    </IconButton>
+                </CustomTableCell>
+                <CustomTableCell component="th" scope="row" width="15%">
+                    {this.props.testCase.parameters === true ? "Parametry" : "Brak"}
+                </CustomTableCell>
+                <CustomTableCell component="th" scope="row" width="8%">
+                    input
+                    <IconButton aria-label="Pobierz"
+                                disabled={!this.props.testCase.logsFile === true}
+                                onClick={this.handleDownloadInputFile}>
+                        <DownloadIcon/>
+                    </IconButton>
+                </CustomTableCell>
+                <CustomTableCell component="th" scope="row" width="8%">
+                    output
+                    <IconButton aria-label="Pobierz"
+                                disabled={!this.props.testCase.logsFile === true}
+                                onClick={this.handleDownloadOutputFile}>
                         <DownloadIcon/>
                     </IconButton>
                 </CustomTableCell>

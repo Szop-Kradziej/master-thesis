@@ -37,6 +37,15 @@ class StudentTestCasesDetails extends Component {
                     <CustomTableCell>
                         Logi:
                     </CustomTableCell>
+                    <CustomTableCell>
+                        Parametry:
+                    </CustomTableCell>
+                    <CustomTableCell>
+                        Plik wejściowy:
+                    </CustomTableCell>
+                    <CustomTableCell>
+                        Plik wyjściowy:
+                    </CustomTableCell>
                 </TableRow>
             </TableHead>
             <TableBody>

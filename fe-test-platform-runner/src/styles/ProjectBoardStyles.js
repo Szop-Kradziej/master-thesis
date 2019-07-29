@@ -52,8 +52,6 @@ export const styles = (theme) => ({
         width: '100%',
     },
     heading: {
-        fontSize: 20,
-        fontWeight: 700,
         width: 1700,
     },
     headingMainPanel: {
