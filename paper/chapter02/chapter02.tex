@@ -67,9 +67,14 @@ Wewnątrz pierwszego z nich zapisywane są wszystkie dane i pliki związane z ak
 Do zapamiętywanych informacji należą: raporty, linki do kodu, programy, logi z przebiegu aplikacji oraz wyniki przeprowadzonych testów akceptacyjnych.
 Drugi folder zawiera definicje projektów wraz z etapami i integracjami oraz utworzone przez prowadzących przypadki testowe.
 
-\begin{figure}[h]
+Pliki i foldery, które nie występują pojedynczo w ramach katalogu zostały wyróżnione na schemacie.
+W miejscu zbiorczej nazwy nazwa katalogu i należy rozumieć docelową nazwę folderu.
+
+\vfill
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width = 13cm]{chapter02/directories.png}
+    \includegraphics[width = 16cm, angle =90]{chapter02/directories.png}
     \caption{Schemat katalogów plików (źródło własne).}
     \label{fig:platform-directories}
 \end{figure}
@@ -88,7 +93,7 @@ Samo uruchamianie kontenerów, ich integracja oraz konfiguracja nowych środowis
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 13cm]{chapter02/single_test_case.png}
+    \includegraphics[width = 9cm]{chapter02/single_test_case.png}
     \caption{Schemat sprawdzenia poprawności działania programu studenta (źródło własne).}
     \label{fig:single-test-case}
 \end{figure}
@@ -112,6 +117,8 @@ Prowadzący definiuje kolejne etapy wykonywane w ramach procesu integracji.
 Przebieg procesu integracji jest bardzo podobny do wykonania pojedynczego przypadku testowego.
 Różnica polega na tym, że plik wyjściowy utworzony w wyniku uruchomienia poprzedniego etapu jest plikiem wejściowym dla kolejnego, następującego po nim.
 Plik wyjściowy dla ostatniego etapu jest porównywany ze zdefiniowanym oczekiwanym plikiem wyjściowym.
+
+\vfill
 
 \section {Konfiguracja uruchomieniowego środowiska Dockerowego}
 
