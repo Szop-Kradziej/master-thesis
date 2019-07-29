@@ -16,6 +16,11 @@ import AddNewSingleGroupDialog from "./AddNewSingleGroupDialog";
 import AddAndUploadItemComponent from "../../../utils/AddAndUploadItemComponent";
 import AddNewIntegrationDialog from "./AddNewIntegrationDialog";
 import IntegrationComponent from "./integration/IntegrationComponent";
+import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
+import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
+import Typography from '@material-ui/core/Typography';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 class ProjectBoard extends Component {
 
@@ -103,80 +108,86 @@ class ProjectBoard extends Component {
                     projectDescription={this.state.stages.projectDescription}
                     projectEnvironment={this.state.stages.projectEnvironment}
                     projectChangedHandler={this.fetchStages}/>
-                <Table className={this.props.classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell>
-                                <AddNewItemComponent
-                                    header="Etapy"
-                                    info="Dodaj nowy etap"
-                                    addActionHandler={this.handleOpenNewStageDialog}/>
-                            </CustomTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.stages.stages.map(stage => (
-                            <TableRow key={stage.stageName}>
-                                <CustomTableCell component="th" scope="row">
-                                    <StageComponent
-                                        stage={stage}
-                                        projectName={this.props.match.params.projectId}
-                                        stageChangedHandler={this.fetchStages}/>
-                                </CustomTableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                <Table className={this.props.classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell>
-                                <AddAndUploadItemComponent
-                                    header="Grupy"
-                                    addInfo="Dodaj nową grupę"
-                                    addActionHandler={this.handleOpenNewSingleGroupDialog}
-                                    uploadInfo="Dodaj grupy z pliku"
-                                    uploadActionHandler={this.handleOpenNewGroupsDialog}/>
-                            </CustomTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.groups.groups.map(group => (
-                            <TableRow key={group.name}>
-                                <CustomTableCell component="th" scope="row">
-                                    <GroupComponent
-                                        group={group}
-                                        projectName={this.props.match.params.projectId}
-                                        groupChangedHandler={this.fetchGroups}/>
-                                </CustomTableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-                <Table className={this.props.classes.table}>
-                    <TableHead>
-                        <TableRow>
-                            <CustomTableCell>
-                                <AddNewItemComponent
-                                    header="Integracje"
-                                    info="Dodaj nową integrację"
-                                    addActionHandler={this.handleOpenNewIntegrationDialog}/>
-                            </CustomTableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {this.state.integrations.integrations.map(integration => (
-                            <TableRow key={integration.name}>
-                                <CustomTableCell component="th" scope="row">
-                                    <IntegrationComponent
-                                        integration={integration}
-                                        projectName={this.props.match.params.projectId}
-                                        integrationChangedHandler={this.fetchIntegrations}/>
-                                </CustomTableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+                <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography className={this.props.classes.headingMainPanel}>
+                            <AddNewItemComponent
+                                header="Etapy"
+                                info="Dodaj nowy etap"
+                                addActionHandler={this.handleOpenNewStageDialog}/>
+                        </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography className={this.props.classes.heading}>
+                            <div className={this.props.classes.panel}>
+                                {this.state.stages.stages.map(stage => (
+                                    <TableRow key={stage.stageName}>
+                                        <CustomTableCell component="th" scope="row">
+                                            <StageComponent
+                                                stage={stage}
+                                                projectName={this.props.match.params.projectId}
+                                                stageChangedHandler={this.fetchStages}/>
+                                        </CustomTableCell>
+                                    </TableRow>
+                                ))}
+                            </div>
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+                <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography className={this.props.classes.headingMainPanel}>
+                            <AddAndUploadItemComponent
+                                header="Grupy"
+                                addInfo="Dodaj nową grupę"
+                                addActionHandler={this.handleOpenNewSingleGroupDialog}
+                                uploadInfo="Dodaj grupy z pliku"
+                                uploadActionHandler={this.handleOpenNewGroupsDialog}/>
+                        </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography className={this.props.classes.heading}>
+                            <div className={this.props.classes.panel}>
+                                {this.state.groups.groups.map(group => (
+                                    <TableRow key={group.name}>
+                                        <CustomTableCell component="th" scope="row">
+                                            <GroupComponent
+                                                group={group}
+                                                projectName={this.props.match.params.projectId}
+                                                groupChangedHandler={this.fetchGroups}/>
+                                        </CustomTableCell>
+                                    </TableRow>
+                                ))}
+                            </div>
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+                <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography className={this.props.classes.headingMainPanel}>
+                            <AddNewItemComponent
+                                header="Integracje"
+                                info="Dodaj nową integrację"
+                                addActionHandler={this.handleOpenNewIntegrationDialog}/>
+                        </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography className={this.props.classes.heading}>
+                            <div className={this.props.classes.panel}>
+                                {this.state.integrations.integrations.map(integration => (
+                                    <TableRow key={integration.name}>
+                                        <CustomTableCell component="th" scope="row">
+                                            <IntegrationComponent
+                                                integration={integration}
+                                                projectName={this.props.match.params.projectId}
+                                                integrationChangedHandler={this.fetchIntegrations}/>
+                                        </CustomTableCell>
+                                    </TableRow>
+                                ))}
+                            </div>
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
                 <AddNewStageDialog
                     isOpen={this.state.isNewStageDialogVisible}
                     projectName={this.props.match.params.projectId}

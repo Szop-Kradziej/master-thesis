@@ -56,6 +56,10 @@ export const styles = (theme) => ({
         fontWeight: 700,
         width: 1700,
     },
+    headingMainPanel: {
+        fontSize: 20,
+        fontWeight: 700,
+    },
     testsHeading: {
         fontSize: 16,
         fontWeight: 700
