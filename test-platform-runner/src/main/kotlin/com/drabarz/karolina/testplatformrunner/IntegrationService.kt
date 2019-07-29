@@ -15,7 +15,7 @@ class IntegrationService(
     fun addIntegration(projectName: String, integrationName: String, integrationStages: List<IntegrationStageDao>): String {
         val projectDir = pathProvider.getProjectDir(projectName)
 
-        if(!projectDir.exists()) {
+        if (!projectDir.exists()) {
             throw RuntimeException("Error. Can not create test case for project. Project $projectName doesn't exist")
         }
 
@@ -46,9 +46,11 @@ class IntegrationService(
 
     fun getIntegrations(projectName: String): IntegrationsDao {
         return IntegrationsDao(integrationsRepository.findAllByProject_Name(projectName)
-                .map { IntegrationDao(
-                        it.name,
-                        getIntegrationStages(it)) })
+                .map {
+                    IntegrationDao(
+                            it.name,
+                            getIntegrationStages(it))
+                })
     }
 
     private fun getIntegrationStages(it: Integration): List<IntegrationStageDao> {
