@@ -96,6 +96,7 @@ class TestCaseService(
 
         deleteTestCaseFileDirIfExists(pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, INPUT))
         deleteTestCaseFileDirIfExists(pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, OUTPUT))
+        deleteTestCaseFileDirIfExists(pathProvider.getStageTestCaseParametersDir(projectName, stageName, testCaseName))
         pathProvider.getStageTestCaseDir(projectName, stageName, testCaseName).delete()
 
         return "200"
