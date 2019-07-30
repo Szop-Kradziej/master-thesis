@@ -25,8 +25,7 @@ fun main(args: Array<String>) {
 @CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000"], allowCredentials = "true")
 @RestController
 class TestPlatformApi(val studentService: StudentService,
-                      val testCaseService: TestCaseService,
-                      val stagesService: StageService,
+                      val stageService: StageService,
                       val projectService: ProjectService,
                       val groupService: GroupService,
                       val integrationService: IntegrationService,
@@ -135,7 +134,7 @@ class TestPlatformApi(val studentService: StudentService,
     fun downloadStageDescriptionFile(
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        return createFileResponse(stagesService.getStageDescription(projectName, stageName))
+        return createFileResponse(stageService.getStageDescription(projectName, stageName))
     }
 
     @PostMapping("/stage/description")
@@ -143,7 +142,7 @@ class TestPlatformApi(val studentService: StudentService,
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        return stagesService.addStageDescription(uploadedFile, projectName, stageName)
+        return stageService.addStageDescription(uploadedFile, projectName, stageName)
     }
 
     @PostMapping("/stage/startDate")
@@ -151,7 +150,7 @@ class TestPlatformApi(val studentService: StudentService,
             @RequestParam("startDate") startDate: String?,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        return stagesService.editStageDate(projectName, stageName, startDate, "START")
+        return stageService.editStageDate(projectName, stageName, startDate, "START")
     }
 
     @PostMapping("/stage/endDate")
@@ -159,7 +158,7 @@ class TestPlatformApi(val studentService: StudentService,
             @RequestParam("endDate") endDate: String?,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        return stagesService.editStageDate(projectName, stageName, endDate, "END")
+        return stageService.editStageDate(projectName, stageName, endDate, "END")
     }
 
     @PostMapping("/stage/pointsNumber")
@@ -167,16 +166,16 @@ class TestPlatformApi(val studentService: StudentService,
             @RequestParam("pointsNumber") pointsNumber: String?,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        return stagesService.editStagePointsNumber(projectName, stageName, pointsNumber)
+        return stageService.editStagePointsNumber(projectName, stageName, pointsNumber)
     }
 
     @PostMapping("/testCase/parameters")
-    fun editTestCaseParameters(
+    fun editStageTestCaseParameters(
             @RequestParam("parameters") parameters: String?,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String,
             @RequestParam("testCaseName") testCaseName: String): String {
-        return testCaseService.editParameters(projectName, stageName, testCaseName, parameters)
+        return stageService.editTestCaseParameters(projectName, stageName, testCaseName, parameters)
     }
 
     @GetMapping("/{projectName}/stages")
@@ -184,7 +183,7 @@ class TestPlatformApi(val studentService: StudentService,
         return StagesResponse(
                 projectService.getProjectDescriptionName(projectName),
                 projectService.getProjectEnvironmentName(projectName),
-                stagesService.getStages(projectName))
+                stageService.getStages(projectName))
     }
 
     @GetMapping("/student/{projectName}/stages")
@@ -199,51 +198,51 @@ class TestPlatformApi(val studentService: StudentService,
             @RequestParam("startDate") startDate: String?,
             @RequestParam("endDate") endDate: String?,
             @RequestParam("pointsNumber") pointsNumber: String?): String {
-        return stagesService.addStage(projectName, stageName, startDate, endDate, pointsNumber)
+        return stageService.addStage(projectName, stageName, startDate, endDate, pointsNumber)
     }
 
     @DeleteMapping("/{projectName}/{stageName}")
     fun deleteStage(@PathVariable("projectName") projectName: String,
                     @PathVariable("stageName") stageName: String): String {
-        return stagesService.deleteStage(projectName, stageName)
+        return stageService.deleteStage(projectName, stageName)
     }
 
     @PostMapping("/testCase")
-    fun uploadTestCase(
+    fun uploadStageTestCase(
             @RequestParam("input") inputFile: MultipartFile,
             @RequestParam("output") outputFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String,
             @RequestParam("testCaseName") testCaseName: String): String {
-        return testCaseService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
+        return stageService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
     }
 
     @GetMapping("/{projectName}/{stageName}/{testCaseName}/{fileType}")
     @ResponseBody
-    fun downloadTestCaseFile(
+    fun downloadStageTestCaseFile(
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String,
             @PathVariable("fileType") fileType: String): ResponseEntity<*> {
-        return createFileResponse(testCaseService.getTestCaseFile(projectName, stageName, testCaseName, fileType))
+        return createFileResponse(stageService.getTestCaseFile(projectName, stageName, testCaseName, fileType))
     }
 
     @PostMapping("/{projectName}/{stageName}/{testCaseName}/{fileType}")
-    fun uploadTestCaseFile(
+    fun uploadStageTestCaseFile(
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String,
             @PathVariable("fileType") fileType: String,
             @RequestParam("file") file: MultipartFile): String {
-        return testCaseService.uploadTestCaseFile(projectName, stageName, testCaseName, fileType, file)
+        return stageService.uploadTestCaseFile(projectName, stageName, testCaseName, fileType, file)
     }
 
     @DeleteMapping("/{projectName}/{stageName}/{testCaseName}")
-    fun deleteTestCase(
+    fun deleteStageTestCase(
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String): String {
-        return testCaseService.deleteTestCase(projectName, stageName, testCaseName)
+        return stageService.deleteTestCase(projectName, stageName, testCaseName)
     }
 
     fun createFileResponse(file: File): ResponseEntity<*> {

@@ -163,6 +163,26 @@ class StageService(
                     .also { it?.pointsNumber = pointsNumber?.toIntOrNull() }
                     ?.let { stagesRepository.save(it) }
                     .let { "200" }
+
+    fun editTestCaseParameters(projectName: String, stageName: String, testCaseName: String, parameters: String?): String {
+        return testCaseService.editParameters(projectName, stageName, testCaseName, parameters)
+    }
+
+    fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, stageName: String, testCaseName: String): String {
+        return testCaseService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
+    }
+
+    fun getTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileType: String): File {
+        return testCaseService.getTestCaseFile(projectName, stageName, testCaseName, fileType)
+    }
+
+    fun uploadTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileType: String, file: MultipartFile): String {
+        return testCaseService.uploadTestCaseFile(projectName, stageName, testCaseName, fileType, file)
+    }
+
+    fun deleteTestCase(projectName: String, stageName: String, testCaseName: String): String {
+        return testCaseService.deleteTestCase(projectName, stageName, testCaseName)
+    }
 }
 
 private fun Date?.toFormattedString(): String? {
