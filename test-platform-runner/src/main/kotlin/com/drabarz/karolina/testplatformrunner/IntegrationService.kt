@@ -56,5 +56,6 @@ class IntegrationService(
     private fun getIntegrationStages(it: Integration): List<IntegrationStageDao> {
         return integrationStagesRepository.findAllByIntegration(it)
                 .map { IntegrationStageDao(it.name, it.orderNumber, it.stage.name) }
+                .sortedBy { it.orderNumber }
     }
 }

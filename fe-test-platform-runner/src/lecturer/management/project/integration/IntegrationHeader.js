@@ -16,12 +16,31 @@ class GroupHeader extends Component {
         //TODO: do action
     };
 
+    handleEditIntegrationSchema = () => {
+        //TODO: do action
+    };
+
     handleDeleteIntegration = () => {
-        Api.deleteIntegration(this.props.projectName, this.props.integrationName)
+        Api.deleteIntegration(this.props.projectName, this.props.integration.name)
             .then(this.props.integrationChangedHandler)
             .catch(function (error) {
                 console.log(error);
             });
+    };
+
+    createIntegrationSchema = () => {
+        var i = 1;
+        var text = "";
+        this.props.integration.integrationStages.map(integrationStage => {
+            text = text + integrationStage.orderNumber + ". " + integrationStage.stageName;
+
+            if (i < this.props.integration.integrationStages.length) {
+                text = text + " -> ";
+            }
+            i++;
+        });
+
+        return (<div>{text ? text : "Brak"}</div>);
     };
 
     render() {
@@ -35,7 +54,12 @@ class GroupHeader extends Component {
                                 info="Edytuj nazwę integracji"
                                 editActionHandler={this.handleEditIntegrationName}/>
                         </CustomTableCell>
-                        <CustomTableCell width="80%"/>
+                        <CustomTableCell width="80%">
+                            <EditItemComponent
+                                header="Schemat integracji:"
+                                info="Edytuj schemat integracji"
+                                editActionHandler={this.handleEditIntegrationSchema}/>
+                        </CustomTableCell>
                         <CustomTableCell>
                             <IconButton aria-label="Usuń" onClick={this.handleDeleteIntegration}>
                                 <DeleteIcon/>
@@ -45,7 +69,10 @@ class GroupHeader extends Component {
                 </TableHead>
                 <TableBody>
                     <CustomTableCell component="th" scope="row">
-                        {this.props.integrationName}
+                        {this.props.integration.name}
+                    </CustomTableCell>
+                    <CustomTableCell component="th" scope="row">
+                        {this.createIntegrationSchema()}
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row"/>
                 </TableBody>

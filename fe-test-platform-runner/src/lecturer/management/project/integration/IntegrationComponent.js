@@ -17,7 +17,7 @@ class IntegrationComponent extends Component {
                     <Typography className={this.props.classes.heading}>
                         <IntegrationHeader
                             projectName={this.props.projectName}
-                            integrationName={this.props.integration.name}
+                            integration={this.props.integration}
                             integrationChangedHandler={this.props.integrationChangedHandler}/>
                     </Typography>
                 </ExpansionPanelSummary>
