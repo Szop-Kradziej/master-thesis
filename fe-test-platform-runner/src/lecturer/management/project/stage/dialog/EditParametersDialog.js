@@ -32,7 +32,7 @@ class EditParametersDialog extends Component {
         data.append('testCaseName', this.props.testCaseName);
         data.append('parameters', this.state.parameters);
 
-        Api.editTestCaseParameters(data)
+        Api.editStageTestCaseParameters(data)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
             .catch(function (error) {

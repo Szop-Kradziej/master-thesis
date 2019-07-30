@@ -51,7 +51,7 @@ class TestCasesDetails extends Component {
         data.append('input', this.inputFile.files[0]);
         data.append('output', this.outputFile.files[0]);
 
-        axios.post(backendUrl("/testCase"), data)
+        axios.post(backendUrl("/stage/testCase"), data)
             .then(function (response) {
                 console.log("success");
             })

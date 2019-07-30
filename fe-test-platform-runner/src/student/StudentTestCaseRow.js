@@ -23,7 +23,7 @@ class StudentTestCaseRow extends Component {
     };
 
     downloadFile = (fileType) => {
-        Api.downloadTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName, fileType)
+        Api.downloadStageTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName, fileType)
     };
 
     render() {

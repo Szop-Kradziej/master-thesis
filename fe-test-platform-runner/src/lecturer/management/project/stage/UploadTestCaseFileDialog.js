@@ -25,7 +25,7 @@ class UploadStageDescriptionDialog extends Component {
         const data = new FormData();
         data.append('file', this.inputDescriptionFile.files[0]);
 
-        Api.uploadTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCaseName, this.props.fileType, data)
+        Api.uploadStageTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCaseName, this.props.fileType, data)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
             .catch(function (error) {

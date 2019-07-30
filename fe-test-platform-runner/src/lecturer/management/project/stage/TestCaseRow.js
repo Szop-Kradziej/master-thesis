@@ -29,7 +29,7 @@ class TestCaseRow extends Component {
     };
 
     downloadFile = (fileType) => {
-        Api.downloadTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName, fileType)
+        Api.downloadStageTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName, fileType)
     };
 
     handleOpenEditTestCaseParametersDialog = () => {
@@ -63,7 +63,7 @@ class TestCaseRow extends Component {
     handleDeleteTestCase = (event) => {
         event.preventDefault();
 
-        Api.deleteTestCase(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName)
+        Api.deleteStageTestCase(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName)
             .then(this.props.stageChangedHandler)
             .catch(function (error) {
                 console.log(error);

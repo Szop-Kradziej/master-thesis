@@ -88,8 +88,8 @@ export function uploadStageDescription(data) {
     return postData(backendUrl("/stage/description"), data)
 }
 
-export function uploadTestCaseFile(projectName, stageName, testCaseName, fileType, data) {
-    return postData(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType), data)
+export function uploadStageTestCaseFile(projectName, stageName, testCaseName, fileType, data) {
+    return postData(backendUrl('/stage/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType), data)
 }
 
 export function uploadStudentBinary(data) {
@@ -116,8 +116,8 @@ export function editStagePointsNumber(data) {
     return postData(backendUrl("/stage/pointsNumber"), data)
 }
 
-export function editTestCaseParameters(data) {
-    return postData(backendUrl("/testCase/parameters"), data)
+export function editStageTestCaseParameters(data) {
+    return postData(backendUrl("/stage/testCase/parameters"), data)
 }
 
 function postData(url, data) {
@@ -147,8 +147,8 @@ export function downloadReport(projectName, stageName) {
     return downloadFile(backendUrl('/student/' + projectName + '/' + stageName + "/report"))
 }
 
-export function downloadTestCaseFile(projectName, stageName, testCaseName, fileType) {
-    return downloadFile(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType))
+export function downloadStageTestCaseFile(projectName, stageName, testCaseName, fileType) {
+    return downloadFile(backendUrl('/stage/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType))
 }
 
 export function downloadStudentLogsFile(projectName, stageName, testCaseName) {
@@ -177,12 +177,12 @@ export function downloadFile(url) {
         });
 }
 
-export function deleteTestCase(projectName, stageName, testCaseName) {
-    return deleteItem(backendUrl('/' + projectName + '/' + stageName + '/' + testCaseName))
+export function deleteStageTestCase(projectName, stageName, testCaseName) {
+    return deleteItem(backendUrl('/stage/' + projectName + '/' + stageName + '/' + testCaseName))
 }
 
 export function deleteStage(projectName, stageName) {
-    return deleteItem(backendUrl('/' + projectName + '/' + stageName))
+    return deleteItem(backendUrl('/stage/' + projectName + '/' + stageName))
 }
 
 export function deleteProject(projectName) {
