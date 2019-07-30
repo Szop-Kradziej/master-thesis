@@ -12,11 +12,12 @@ import java.util.*
 
 @Component
 class StageService(
-        val pathProvider: PathProvider,
-        val testCaseService: TestCaseService,
+        val pathProvider: StagePathProvider,
         val deleteFileHelper: DeleteFileHelper,
         val stagesRepository: StagesRepository,
         val projectsRepository: ProjectsRepository) {
+
+    private final val testCaseService = TestCaseService(pathProvider, deleteFileHelper)
 
     fun addStage(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: String?): String {
         val projectDir = pathProvider.getProjectDir(projectName)
@@ -24,7 +25,7 @@ class StageService(
             throw RuntimeException("Error. Can not create stage for project. Project $projectName doesn't exist")
         }
 
-        val stageDir = pathProvider.getStageDir(projectName, stageName)
+        val stageDir = pathProvider.getTaskDir(projectName, stageName)
 
         if (stageDir.exists()) {
             throw RuntimeException("Warning. StageDao already exists")
@@ -53,7 +54,7 @@ class StageService(
         if (!projectDir.exists()) {
             throw RuntimeException("Error. Can not get stages for project. Project $projectName doesn't exist")
         }
-        val stagesDir = pathProvider.getStagesDir(projectName)
+        val stagesDir = pathProvider.getTasksDir(projectName)
         if (!stagesDir.exists()) {
             return emptyList()
         }
@@ -72,12 +73,12 @@ class StageService(
     }
 
     fun addStageDescription(uploadedFile: MultipartFile, projectName: String, stageName: String): String {
-        val stageDir = pathProvider.getStageDir(projectName, stageName)
+        val stageDir = pathProvider.getTaskDir(projectName, stageName)
         if (!stageDir.exists()) {
             throw RuntimeException("Error. Stage $stageName for project: $projectName doesn't exist")
         }
 
-        val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
+        val descriptionDir = pathProvider.getTaskDescriptionDir(projectName, stageName)
         descriptionDir.mkdir()
 
         deleteFileHelper.deleteSingleFileFromDir(descriptionDir)
@@ -89,7 +90,7 @@ class StageService(
     }
 
     fun getStageDescriptionName(projectName: String, stageName: String): String? {
-        val stageDescriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
+        val stageDescriptionDir = pathProvider.getTaskDescriptionDir(projectName, stageName)
         if (!stageDescriptionDir.exists() || stageDescriptionDir.list().size != 1) {
             return null
         }
@@ -98,7 +99,7 @@ class StageService(
 
 
     fun getStageDescription(projectName: String, stageName: String): File {
-        val stageDescriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
+        val stageDescriptionDir = pathProvider.getTaskDescriptionDir(projectName, stageName)
         if (stageDescriptionDir.exists() && stageDescriptionDir.list().size == 1) {
             return stageDescriptionDir.listFiles().first()
         }
@@ -107,7 +108,7 @@ class StageService(
     }
 
     fun deleteStage(projectName: String, stageName: String): String {
-        val stageDir = pathProvider.getStageDir(projectName, stageName)
+        val stageDir = pathProvider.getTaskDir(projectName, stageName)
 
         if (stageDir.exists()) {
             if (stageDir.list().isNotEmpty()) {
@@ -124,7 +125,7 @@ class StageService(
     }
 
     private fun deleteTestCases(projectName: String, stageName: String) {
-        val testCasesDir = pathProvider.getStageTestCasesDir(projectName, stageName)
+        val testCasesDir = pathProvider.getTaskTestCasesDir(projectName, stageName)
         if (!testCasesDir.exists()) {
             return
         }
@@ -136,10 +137,10 @@ class StageService(
     }
 
     private fun deleteStageDescriptionDir(projectName: String, stageName: String) {
-        val stageDir = pathProvider.getStageDir(projectName, stageName)
+        val stageDir = pathProvider.getTaskDir(projectName, stageName)
 
         if (stageDir.list().contains(PathProvider.DESCRIPTION)) {
-            val descriptionDir = pathProvider.getStageDescriptionDir(projectName, stageName)
+            val descriptionDir = pathProvider.getTaskDescriptionDir(projectName, stageName)
             deleteFileHelper.deleteSingleFileWithDirectory(descriptionDir)
         }
     }

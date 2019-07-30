@@ -11,7 +11,7 @@ import javax.transaction.Transactional
 
 @Component
 class ProjectService(
-        val pathProvider: PathProvider,
+        val pathProvider: StagePathProvider,
         val stageService: StageService,
         val projectsRepository: ProjectsRepository,
         val groupsRepository: GroupsRepository,
@@ -113,7 +113,7 @@ class ProjectService(
     }
 
     private fun deleteStages(projectName: String) {
-        val stagesDir = pathProvider.getStagesDir(projectName)
+        val stagesDir = pathProvider.getTasksDir(projectName)
         if (!stagesDir.exists()) {
             return
         }

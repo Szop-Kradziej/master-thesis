@@ -19,30 +19,6 @@ class PathProvider : PathProv {
         return File("$projectsPath/$projectName")
     }
 
-    fun getStagesDir(projectName: String): File {
-        return File(getProjectDir(projectName), STAGES)
-    }
-
-    fun getStageDir(projectName: String, stageName: String): File {
-        return File(getStagesDir(projectName), stageName)
-    }
-
-    fun getStageTestCasesDir(projectName: String, stageName: String): File {
-        return File(getStageDir(projectName, stageName), TEST_CASES)
-    }
-
-    fun getStageTestCaseDir(projectName: String, stageName: String, testCaseName: String): File {
-        return File(getStageTestCasesDir(projectName, stageName), testCaseName)
-    }
-
-    fun getStageTestCaseFileDir(projectName: String, stageName: String, testCaseName: String, fileName: String): File {
-        return File(getStageTestCaseDir(projectName, stageName, testCaseName), fileName)
-    }
-
-    fun getStageTestCaseParametersDir(projectName: String, stageName: String, testCaseName: String): File {
-        return File(getStageTestCaseDir(projectName, stageName, testCaseName), PARAMETERS)
-    }
-
     fun getIntegrationsDir(projectName: String): File {
         return File(getProjectDir(projectName), INTEGRATIONS)
     }
@@ -69,10 +45,6 @@ class PathProvider : PathProv {
 
     fun getProjectEnvironmentDir(projectName: String): File {
         return File(getProjectDir(projectName), ENVIRONMENT)
-    }
-
-    fun getStageDescriptionDir(projectName: String, stageName: String): File {
-        return File(getStageDir(projectName, stageName), DESCRIPTION)
     }
 
     fun getStudentStageDir(projectName: String, stageName: String): File {
@@ -119,5 +91,57 @@ class PathProvider : PathProv {
         const val LOGS = "logs"
         const val TEST_CASES = "test_cases"
         const val PARAMETERS = "parameters"
+    }
+}
+
+
+interface TaskPathProvider {
+
+    fun getProjectDir(projectName: String): File
+
+    fun getTasksDir(projectName: String): File
+
+    fun getTaskDir(projectName: String, stageName: String): File
+
+    fun getTaskTestCasesDir(projectName: String, stageName: String): File
+
+    fun getTaskTestCaseDir(projectName: String, stageName: String, testCaseName: String): File
+
+    fun getTaskTestCaseFileDir(projectName: String, stageName: String, testCaseName: String, fileName: String): File
+
+    fun getTaskTestCaseParametersDir(projectName: String, stageName: String, testCaseName: String): File
+
+    fun getTaskDescriptionDir(projectName: String, stageName: String): File
+}
+
+@Component
+class StagePathProvider : PathProvider(), TaskPathProvider {
+
+    override fun getTasksDir(projectName: String): File {
+        return File(getProjectDir(projectName), STAGES)
+    }
+
+    override fun getTaskDir(projectName: String, stageName: String): File {
+        return File(getTasksDir(projectName), stageName)
+    }
+
+    override fun getTaskTestCasesDir(projectName: String, stageName: String): File {
+        return File(getTaskDir(projectName, stageName), TEST_CASES)
+    }
+
+    override fun getTaskTestCaseDir(projectName: String, stageName: String, testCaseName: String): File {
+        return File(getTaskTestCasesDir(projectName, stageName), testCaseName)
+    }
+
+    override fun getTaskTestCaseFileDir(projectName: String, stageName: String, testCaseName: String, fileName: String): File {
+        return File(getTaskTestCaseDir(projectName, stageName, testCaseName), fileName)
+    }
+
+    override fun getTaskTestCaseParametersDir(projectName: String, stageName: String, testCaseName: String): File {
+        return File(getTaskTestCaseDir(projectName, stageName, testCaseName), PARAMETERS)
+    }
+
+    override fun getTaskDescriptionDir(projectName: String, stageName: String): File {
+        return File(getTaskDir(projectName, stageName), DESCRIPTION)
     }
 }

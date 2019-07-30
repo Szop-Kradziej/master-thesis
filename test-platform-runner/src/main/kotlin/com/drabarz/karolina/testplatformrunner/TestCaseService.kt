@@ -6,7 +6,7 @@ import java.io.File
 
 @Component
 class TestCaseService(
-        val pathProvider: PathProvider,
+        val pathProvider: TaskPathProvider,
         val deleteFileHelper: DeleteFileHelper) {
 
     fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, stageName: String, testCaseName: String): String {
@@ -15,12 +15,12 @@ class TestCaseService(
             throw RuntimeException("Error. Can not create test case for project. Project $projectName doesn't exist")
         }
 
-        val stageDir = pathProvider.getStageDir(projectName, stageName)
+        val stageDir = pathProvider.getTaskDir(projectName, stageName)
         if (!stageDir.exists()) {
             throw RuntimeException("Error. Can not create test case for stage. StageDao $stageName doesn't exist")
         }
 
-        val testCaseDir = pathProvider.getStageTestCaseDir(projectName, stageName, testCaseName)
+        val testCaseDir = pathProvider.getTaskTestCaseDir(projectName, stageName, testCaseName)
         testCaseDir.mkdirs()
 
         saveTestCaseFile(inputFile, INPUT, projectName, stageName, testCaseName)
@@ -30,7 +30,7 @@ class TestCaseService(
     }
 
     fun saveTestCaseFile(file: MultipartFile, type: String, projectName: String, stageName: String, testCaseName: String) {
-        val fileDir = pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, type)
+        val fileDir = pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, type)
         fileDir.mkdirs()
 
         val savedInputFile = File(fileDir, file.originalFilename)
@@ -43,12 +43,12 @@ class TestCaseService(
             throw RuntimeException("Error. Project $projectName doesn't exist")
         }
 
-        val stageDir = pathProvider.getStageDir(projectName, stageName)
+        val stageDir = pathProvider.getTaskDir(projectName, stageName)
         if (!stageDir.exists()) {
             throw RuntimeException("Error. StageDao $stageName doesn't exist")
         }
 
-        val testCasesDir = pathProvider.getStageTestCasesDir(projectName, stageName)
+        val testCasesDir = pathProvider.getTaskTestCasesDir(projectName, stageName)
         if (!testCasesDir.exists()) {
             return emptyList()
         }
@@ -64,7 +64,7 @@ class TestCaseService(
     }
 
     private fun getTestCaseParameters(projectName: String, stageName: String, testCaseName: String): String? {
-        val dir = pathProvider.getStageTestCaseParametersDir(projectName, stageName, testCaseName)
+        val dir = pathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName)
 
         val testCaseParametersFile = File(dir.path, PathProvider.PARAMETERS)
 
@@ -76,7 +76,7 @@ class TestCaseService(
     }
 
     private fun getTestCaseFileName(fileType: String, projectName: String, stageName: String, testCaseName: String): String? {
-        val fileDir = pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, fileType)
+        val fileDir = pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, fileType)
         if (!fileDir.exists() || fileDir.list().size != 1) {
             return null
         }
@@ -84,7 +84,7 @@ class TestCaseService(
     }
 
     fun getTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileType: String): File {
-        val fileDir = pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, fileType)
+        val fileDir = pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, fileType)
         if (fileDir.exists() && fileDir.list().size == 1) {
             return fileDir.listFiles().first()
         }
@@ -94,10 +94,10 @@ class TestCaseService(
 
     fun deleteTestCase(projectName: String, stageName: String, testCaseName: String): String {
 
-        deleteTestCaseFileDirIfExists(pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, INPUT))
-        deleteTestCaseFileDirIfExists(pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, OUTPUT))
-        deleteTestCaseFileDirIfExists(pathProvider.getStageTestCaseParametersDir(projectName, stageName, testCaseName))
-        pathProvider.getStageTestCaseDir(projectName, stageName, testCaseName).delete()
+        deleteTestCaseFileDirIfExists(pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, INPUT))
+        deleteTestCaseFileDirIfExists(pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, OUTPUT))
+        deleteTestCaseFileDirIfExists(pathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName))
+        pathProvider.getTaskTestCaseDir(projectName, stageName, testCaseName).delete()
 
         return "200"
     }
@@ -109,7 +109,7 @@ class TestCaseService(
     }
 
     fun uploadTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileType: String, file: MultipartFile): String {
-        val fileDir = pathProvider.getStageTestCaseFileDir(projectName, stageName, testCaseName, fileType)
+        val fileDir = pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, fileType)
 
         if(fileDir.exists()) {
             deleteFileHelper.deleteSingleFileFromDir(fileDir)
@@ -121,7 +121,7 @@ class TestCaseService(
     }
 
     fun editParameters(projectName: String, stageName: String, testCaseName: String, parameters: String?): String {
-        val dir = pathProvider.getStageTestCaseParametersDir(projectName, stageName, testCaseName)
+        val dir = pathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName)
         dir.mkdirs()
 
         val outputFile = File(dir.path, PathProvider.PARAMETERS)
