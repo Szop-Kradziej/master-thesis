@@ -169,15 +169,6 @@ class TestPlatformApi(val studentService: StudentService,
         return stageService.editStagePointsNumber(projectName, stageName, pointsNumber)
     }
 
-    @PostMapping("/stage/testCase/parameters")
-    fun editStageTestCaseParameters(
-            @RequestParam("parameters") parameters: String?,
-            @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String,
-            @RequestParam("testCaseName") testCaseName: String): String {
-        return stageService.editTestCaseParameters(projectName, stageName, testCaseName, parameters)
-    }
-
     @GetMapping("/{projectName}/stages")
     fun getStagesList(@PathVariable("projectName") projectName: String): StagesResponse {
         return StagesResponse(
@@ -217,6 +208,15 @@ class TestPlatformApi(val studentService: StudentService,
         return stageService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
     }
 
+    @PostMapping("/stage/testCase/parameters")
+    fun editStageTestCaseParameters(
+            @RequestParam("parameters") parameters: String?,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String,
+            @RequestParam("testCaseName") testCaseName: String): String {
+        return stageService.editTestCaseParameters(projectName, stageName, testCaseName, parameters)
+    }
+
     @GetMapping("/stage/{projectName}/{stageName}/{testCaseName}/{fileType}")
     @ResponseBody
     fun downloadStageTestCaseFile(
@@ -243,15 +243,6 @@ class TestPlatformApi(val studentService: StudentService,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String): String {
         return stageService.deleteTestCase(projectName, stageName, testCaseName)
-    }
-
-    fun createFileResponse(file: File): ResponseEntity<*> {
-        val headers = HttpHeaders()
-        headers.add("X-Suggested-Filename", file.name);
-        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.name + "\"")
-        headers.add("Access-Control-Expose-Headers", HttpHeaders.CONTENT_DISPOSITION + "," + HttpHeaders.CONTENT_LENGTH)
-
-        return ResponseEntity.ok().headers(headers).body<Any>(file.readBytes())
     }
 
     @PostMapping("/group")
@@ -308,6 +299,62 @@ class TestPlatformApi(val studentService: StudentService,
     @GetMapping("/{projectName}/integrations")
     fun getIntegrations(@PathVariable("projectName") projectName: String): IntegrationsDao {
         return integrationService.getIntegrations(projectName)
+    }
+
+    @PostMapping("/integration/testCase")
+    fun uploadIntegrationTestCase(
+            @RequestParam("input") inputFile: MultipartFile,
+            @RequestParam("output") outputFile: MultipartFile,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("integrationName") integrationName: String,
+            @RequestParam("testCaseName") testCaseName: String): String {
+        return integrationService.saveTestCase(inputFile, outputFile, projectName, integrationName, testCaseName)
+    }
+
+    @PostMapping("/integration/testCase/parameters")
+    fun editIntegrationTestCaseParameters(
+            @RequestParam("parameters") parameters: String?,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("integrationName") integrationName: String,
+            @RequestParam("testCaseName") testCaseName: String): String {
+        return integrationService.editTestCaseParameters(projectName, integrationName, testCaseName, parameters)
+    }
+
+    @GetMapping("/integration/{projectName}/{integrationName}/{testCaseName}/{fileType}")
+    @ResponseBody
+    fun downloadIntegrationTestCaseFile(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("integrationName") integrationName: String,
+            @PathVariable("testCaseName") testCaseName: String,
+            @PathVariable("fileType") fileType: String): ResponseEntity<*> {
+        return createFileResponse(integrationService.getTestCaseFile(projectName, integrationName, testCaseName, fileType))
+    }
+
+    fun createFileResponse(file: File): ResponseEntity<*> {
+        val headers = HttpHeaders()
+        headers.add("X-Suggested-Filename", file.name);
+        headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.name + "\"")
+        headers.add("Access-Control-Expose-Headers", HttpHeaders.CONTENT_DISPOSITION + "," + HttpHeaders.CONTENT_LENGTH)
+
+        return ResponseEntity.ok().headers(headers).body<Any>(file.readBytes())
+    }
+
+    @PostMapping("/integration/{projectName}/{integrationName}/{testCaseName}/{fileType}")
+    fun uploadIntegrationTestCaseFile(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("integrationName") integrationName: String,
+            @PathVariable("testCaseName") testCaseName: String,
+            @PathVariable("fileType") fileType: String,
+            @RequestParam("file") file: MultipartFile): String {
+        return integrationService.uploadTestCaseFile(projectName, integrationName, testCaseName, fileType, file)
+    }
+
+    @DeleteMapping("/integration/{projectName}/{integrationName}/{testCaseName}")
+    fun deleteIntegrationTestCase(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("integrationName") integrationName: String,
+            @PathVariable("testCaseName") testCaseName: String): String {
+        return integrationService.deleteTestCase(projectName, integrationName, testCaseName)
     }
 }
 

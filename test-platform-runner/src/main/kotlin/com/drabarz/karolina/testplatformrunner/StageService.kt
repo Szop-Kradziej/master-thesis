@@ -17,7 +17,7 @@ class StageService(
         val stagesRepository: StagesRepository,
         val projectsRepository: ProjectsRepository) {
 
-    private final val testCaseService = TestCaseService(pathProvider, deleteFileHelper)
+    private final val testCaseService = TestCaseService(pathProvider)
 
     fun addStage(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: String?): String {
         val projectDir = pathProvider.getProjectDir(projectName)

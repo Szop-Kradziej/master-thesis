@@ -1,13 +1,11 @@
 package com.drabarz.karolina.testplatformrunner
 
-import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 
-@Component
-class TestCaseService(
-        val pathProvider: TaskPathProvider,
-        val deleteFileHelper: DeleteFileHelper) {
+class TestCaseService(val pathProvider: TaskPathProvider) {
+
+    private final val deleteFileHelper = DeleteFileHelper()
 
     fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, stageName: String, testCaseName: String): String {
         val projectDir = pathProvider.getProjectDir(projectName)

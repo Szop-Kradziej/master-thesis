@@ -19,26 +19,6 @@ class PathProvider : PathProv {
         return File("$projectsPath/$projectName")
     }
 
-    fun getIntegrationsDir(projectName: String): File {
-        return File(getProjectDir(projectName), INTEGRATIONS)
-    }
-
-    fun getIntegrationDir(projectName: String, integrationName: String): File {
-        return File(getIntegrationsDir(projectName), integrationName)
-    }
-
-    fun getIntegrationTestCasesDir(projectName: String, integrationName: String): File {
-        return File(getIntegrationDir(projectName, integrationName), TEST_CASES)
-    }
-
-    fun getIntegrationTestCaseDir(projectName: String, integrationName: String, testCaseName: String): File {
-        return File(getIntegrationTestCasesDir(projectName, integrationName), testCaseName)
-    }
-
-    fun getIntegrationTestCaseFileDir(projectName: String, integrationName: String, testCaseName: String, fileName: String): File {
-        return File(getIntegrationTestCaseDir(projectName, integrationName, testCaseName), fileName)
-    }
-
     fun getProjectDescriptionDir(projectName: String): File {
         return File(getProjectDir(projectName), DESCRIPTION)
     }
@@ -101,17 +81,29 @@ interface TaskPathProvider {
 
     fun getTasksDir(projectName: String): File
 
-    fun getTaskDir(projectName: String, stageName: String): File
+    fun getTaskDir(projectName: String, taskName: String): File {
+        return File(getTasksDir(projectName), taskName)
+    }
 
-    fun getTaskTestCasesDir(projectName: String, stageName: String): File
+    fun getTaskTestCasesDir(projectName: String, taskName: String): File {
+        return File(getTaskDir(projectName, taskName), PathProvider.TEST_CASES)
+    }
 
-    fun getTaskTestCaseDir(projectName: String, stageName: String, testCaseName: String): File
+    fun getTaskTestCaseDir(projectName: String, taskName: String, testCaseName: String): File {
+        return File(getTaskTestCasesDir(projectName, taskName), testCaseName)
+    }
 
-    fun getTaskTestCaseFileDir(projectName: String, stageName: String, testCaseName: String, fileName: String): File
+    fun getTaskTestCaseFileDir(projectName: String, taskName: String, testCaseName: String, fileName: String): File {
+        return File(getTaskTestCaseDir(projectName, taskName, testCaseName), fileName)
+    }
 
-    fun getTaskTestCaseParametersDir(projectName: String, stageName: String, testCaseName: String): File
+    fun getTaskTestCaseParametersDir(projectName: String, taskName: String, testCaseName: String): File {
+        return File(getTaskTestCaseDir(projectName, taskName, testCaseName), PathProvider.PARAMETERS)
+    }
 
-    fun getTaskDescriptionDir(projectName: String, stageName: String): File
+    fun getTaskDescriptionDir(projectName: String, taskName: String): File {
+        return File(getTaskDir(projectName, taskName), PathProvider.DESCRIPTION)
+    }
 }
 
 @Component
@@ -120,28 +112,12 @@ class StagePathProvider : PathProvider(), TaskPathProvider {
     override fun getTasksDir(projectName: String): File {
         return File(getProjectDir(projectName), STAGES)
     }
+}
 
-    override fun getTaskDir(projectName: String, stageName: String): File {
-        return File(getTasksDir(projectName), stageName)
-    }
+@Component
+class IntegrationPathProvider : PathProvider(), TaskPathProvider {
 
-    override fun getTaskTestCasesDir(projectName: String, stageName: String): File {
-        return File(getTaskDir(projectName, stageName), TEST_CASES)
-    }
-
-    override fun getTaskTestCaseDir(projectName: String, stageName: String, testCaseName: String): File {
-        return File(getTaskTestCasesDir(projectName, stageName), testCaseName)
-    }
-
-    override fun getTaskTestCaseFileDir(projectName: String, stageName: String, testCaseName: String, fileName: String): File {
-        return File(getTaskTestCaseDir(projectName, stageName, testCaseName), fileName)
-    }
-
-    override fun getTaskTestCaseParametersDir(projectName: String, stageName: String, testCaseName: String): File {
-        return File(getTaskTestCaseDir(projectName, stageName, testCaseName), PARAMETERS)
-    }
-
-    override fun getTaskDescriptionDir(projectName: String, stageName: String): File {
-        return File(getTaskDir(projectName, stageName), DESCRIPTION)
+    override fun getTasksDir(projectName: String): File {
+        return File(getProjectDir(projectName), INTEGRATIONS)
     }
 }

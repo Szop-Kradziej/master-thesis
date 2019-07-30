@@ -14,8 +14,10 @@ import java.io.File
 class JarService(
         val pathProvider: StagePathProvider,
         val containerFactory: ContainerFactory,
-        val containerService: ContainerService,
-        val testCaseService: TestCaseService) {
+        val containerService: ContainerService) {
+
+    private final val testCaseService = TestCaseService(pathProvider)
+
 
     fun runJar(projectName: String, stageName: String): List<TestResponse> {
         val testCasesNames = testCaseService.getTestCasesNames(projectName, stageName)
