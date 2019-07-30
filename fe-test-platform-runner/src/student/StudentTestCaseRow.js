@@ -49,7 +49,7 @@ class StudentTestCaseRow extends Component {
                     </IconButton>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="15%">
-                    {this.props.testCase.parameters === true ? "Parametry" : "Brak"}
+                    {this.props.testCase.parameters ? this.props.testCase.parameters : "Brak"}
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="8%">
                     input
