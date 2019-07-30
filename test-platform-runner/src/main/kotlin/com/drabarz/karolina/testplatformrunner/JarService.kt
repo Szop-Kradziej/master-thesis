@@ -20,7 +20,7 @@ class JarService(
 
 
     fun runJar(projectName: String, stageName: String): List<TestResponse> {
-        val testCasesNames = testCaseService.getTestCasesNames(projectName, stageName)
+        val testCasesNames = testCaseService.getTestCases(projectName, stageName)
 
         if (testCasesNames.isEmpty()) {
             throw java.lang.RuntimeException("Error. There are no test cases for stage $stageName")

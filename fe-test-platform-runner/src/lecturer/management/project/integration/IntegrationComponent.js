@@ -7,6 +7,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IntegrationHeader from "./IntegrationHeader";
+import TestCasesDetails from "./TestCasesDetails";
 
 class IntegrationComponent extends Component {
 
@@ -24,7 +25,11 @@ class IntegrationComponent extends Component {
                 <ExpansionPanelDetails>
                     <Typography className={this.props.classes.heading}>
                         <div className={this.props.classes.panel}>
-                            TODO
+                            <TestCasesDetails
+                                testCases={this.props.integration.testCases}
+                                projectName={this.props.projectName}
+                                integrationName={this.props.integration.name}
+                                integrationChangedHandler={this.props.integrationChangedHandler}/>
                         </div>
                     </Typography>
                 </ExpansionPanelDetails>

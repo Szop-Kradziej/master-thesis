@@ -92,6 +92,10 @@ export function uploadStageTestCaseFile(projectName, stageName, testCaseName, fi
     return postData(backendUrl('/stage/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType), data)
 }
 
+export function uploadIntegrationTestCaseFile(projectName, integrationName, testCaseName, fileType, data) {
+    return postData(backendUrl('/integration/' + projectName + '/' + integrationName + '/' + testCaseName + '/' + fileType), data)
+}
+
 export function uploadStudentBinary(data) {
     return postData(backendUrl("/upload/bin"), data)
 }
@@ -118,6 +122,10 @@ export function editStagePointsNumber(data) {
 
 export function editStageTestCaseParameters(data) {
     return postData(backendUrl("/stage/testCase/parameters"), data)
+}
+
+export function editIntegrationTestCaseParameters(data) {
+    return postData(backendUrl("/integration/testCase/parameters"), data)
 }
 
 function postData(url, data) {
@@ -151,6 +159,10 @@ export function downloadStageTestCaseFile(projectName, stageName, testCaseName, 
     return downloadFile(backendUrl('/stage/' + projectName + '/' + stageName + '/' + testCaseName + '/' + fileType))
 }
 
+export function downloadIntegrationTestCaseFile(projectName, integrationName, testCaseName, fileType) {
+    return downloadFile(backendUrl('/integration/' + projectName + '/' + integrationName + '/' + testCaseName + '/' + fileType))
+}
+
 export function downloadStudentLogsFile(projectName, stageName, testCaseName) {
     return downloadFile(backendUrl('/student/' + projectName + '/' + stageName + '/' + testCaseName + '/logs'))
 }
@@ -179,6 +191,10 @@ export function downloadFile(url) {
 
 export function deleteStageTestCase(projectName, stageName, testCaseName) {
     return deleteItem(backendUrl('/stage/' + projectName + '/' + stageName + '/' + testCaseName))
+}
+
+export function deleteIntegrationTestCase(projectName, integrationName, testCaseName) {
+    return deleteItem(backendUrl('/integration/' + projectName + '/' + integrationName + '/' + testCaseName))
 }
 
 export function deleteStage(projectName, stageName) {

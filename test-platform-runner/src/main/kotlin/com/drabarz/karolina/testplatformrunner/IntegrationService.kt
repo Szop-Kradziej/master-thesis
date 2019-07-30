@@ -53,7 +53,8 @@ class IntegrationService(
                 .map {
                     IntegrationDao(
                             it.name,
-                            getIntegrationStages(it))
+                            getIntegrationStages(it),
+                            testCaseService.getTestCases(projectName, it.name))
                 })
     }
 
