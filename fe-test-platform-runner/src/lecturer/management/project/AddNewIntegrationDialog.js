@@ -32,19 +32,17 @@ class AddNewIntegrationDialog extends Component {
 
         var integrationStages = [];
         var i = 0;
-        var j = 0;
 
         this.state.selectedStages.forEach(stage => {
-                if (this.state.selectedStages[j] !== "Brak") {
+                if (stage !== "Brak") {
 
                     var intStage = {};
                     intStage.name = this.state.integrationName + i;
                     intStage.orderNumber = i + 1;
-                    intStage.stageName = this.state.selectedStages[j];
+                    intStage.stageName = stage;
                     integrationStages[i] = intStage;
                     i++;
                 }
-                j++;
             }
         );
 
