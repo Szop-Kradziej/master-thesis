@@ -197,7 +197,8 @@ class ProjectBoard extends Component {
                     isOpen={this.state.isNewIntegrationDialogVisible}
                     projectName={this.props.match.params.projectId}
                     closeActionHandler={this.handleCloseNewIntegrationDialog}
-                    successActionHandler={this.fetchIntegrations}/>
+                    successActionHandler={this.fetchIntegrations}
+                    availableStages={this.state.stages.stages.map(stage => stage.stageName)}/>
                 <AddNewSingleGroupDialog
                     isOpen={this.state.isNewSingleGroupDialogVisible}
                     projectName={this.props.match.params.projectId}

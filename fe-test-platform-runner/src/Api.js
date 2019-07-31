@@ -49,12 +49,12 @@ export function addNewStage(projectName, stageName, startDate, endDate, points) 
     })
 }
 
-export function addNewIntegration(projectName, integrationName) {
+export function addNewIntegration(projectName, data) {
     return fetch(backendUrl(`/${projectName}/integrations`), {
         method: "POST",
         credentials: "include",
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: "integrationName=" + integrationName
+        headers: {'Content-Type': 'application/json'},
+        body: data
     })
 }
 
