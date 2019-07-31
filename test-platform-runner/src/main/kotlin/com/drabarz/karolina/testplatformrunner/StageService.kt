@@ -112,7 +112,7 @@ class StageService(
 
         if (stageDir.exists()) {
             if (stageDir.list().isNotEmpty()) {
-                deleteTestCases(projectName, stageName)
+                testCaseService.deleteTestCases(projectName, stageName)
                 deleteStageDescriptionDir(projectName, stageName)
             }
             stageDir.delete()
@@ -124,17 +124,6 @@ class StageService(
         return "200"
     }
 
-    private fun deleteTestCases(projectName: String, stageName: String) {
-        val testCasesDir = pathProvider.getTaskTestCasesDir(projectName, stageName)
-        if (!testCasesDir.exists()) {
-            return
-        }
-
-        testCasesDir.list()
-                .forEach { testCaseService.deleteTestCase(projectName, stageName, it) }
-
-        testCasesDir.delete()
-    }
 
     private fun deleteStageDescriptionDir(projectName: String, stageName: String) {
         val stageDir = pathProvider.getTaskDir(projectName, stageName)

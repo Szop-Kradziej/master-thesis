@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import DeleteIcon from "@material-ui/icons/DeleteForever";
 import EditItemComponent from "../../../../utils/EditItemComponent";
 import * as Api from "../../../../Api";
+import InputWrapper from "../../../../utils/InputWrapper";
 
 class GroupHeader extends Component {
 
@@ -61,9 +62,11 @@ class GroupHeader extends Component {
                                 editActionHandler={this.handleEditIntegrationSchema}/>
                         </CustomTableCell>
                         <CustomTableCell>
-                            <IconButton aria-label="Usuń" onClick={this.handleDeleteIntegration}>
-                                <DeleteIcon/>
-                            </IconButton>
+                            <InputWrapper>
+                                <IconButton aria-label="Usuń" onClick={this.handleDeleteIntegration}>
+                                    <DeleteIcon/>
+                                </IconButton>
+                            </InputWrapper>
                         </CustomTableCell>
                     </TableRow>
                 </TableHead>

@@ -90,6 +90,18 @@ class TestCaseService(val pathProvider: TaskPathProvider) {
         throw java.lang.RuntimeException("Error file doesn't exist")
     }
 
+    fun deleteTestCases(projectName: String, taskName: String) {
+        val testCasesDir = pathProvider.getTaskTestCasesDir(projectName, taskName)
+        if (!testCasesDir.exists()) {
+            return
+        }
+
+        testCasesDir.list()
+                .forEach { deleteTestCase(projectName, taskName, it) }
+
+        testCasesDir.delete()
+    }
+
     fun deleteTestCase(projectName: String, taskName: String, testCaseName: String): String {
 
         deleteTestCaseFileDirIfExists(pathProvider.getTaskTestCaseFileDir(projectName, taskName, testCaseName, INPUT))

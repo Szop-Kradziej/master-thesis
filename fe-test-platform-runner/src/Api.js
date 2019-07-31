@@ -206,12 +206,7 @@ export function deleteProject(projectName) {
 }
 
 export function deleteIntegration(projectName, integrationName) {
-    return fetch(backendUrl('/integration'), {
-        method: "DELETE",
-            credentials: "include",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: "projectName=" + projectName + "&integrationName=" + integrationName
-    })
+    return deleteItem(backendUrl('/integration/' + projectName + '/' + integrationName))
 }
 
 export function deleteGroup(projectName, groupName) {

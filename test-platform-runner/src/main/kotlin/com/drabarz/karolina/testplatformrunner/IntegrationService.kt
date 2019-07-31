@@ -58,6 +58,26 @@ class IntegrationService(
                 })
     }
 
+    fun deleteIntegration(projectName: String, integrationName: String): String {
+        val integrationDir = pathProvider.getTaskDir(projectName, integrationName)
+
+        if (integrationDir.exists()) {
+            if (integrationDir.list().isNotEmpty()) {
+                testCaseService.deleteTestCases(projectName, integrationName)
+            }
+            integrationDir.delete()
+        }
+
+        val integration = integrationsRepository.findByNameAndProject_Name(integrationName, projectName)
+
+        integrationStagesRepository.findAllByIntegration(integration)
+                .forEach { it -> integrationStagesRepository.delete(it) }
+
+        integrationsRepository.delete(integration)
+
+        return "200"
+    }
+
     private fun getIntegrationStages(it: Integration): List<IntegrationStageDao> {
         return integrationStagesRepository.findAllByIntegration(it)
                 .map { IntegrationStageDao(it.name, it.orderNumber, it.stage.name) }

@@ -20,4 +20,5 @@ data class Integration(
 @Repository
 interface IntegrationsRepository : CrudRepository<Integration, Long> {
     fun findAllByProject_Name(projectName: String): List<Integration>
+    fun findByNameAndProject_Name(name: String, projectName: String): Integration
 }

@@ -301,6 +301,13 @@ class TestPlatformApi(val studentService: StudentService,
         return integrationService.getIntegrations(projectName)
     }
 
+    @DeleteMapping("/integration/{projectName}/{integrationName}")
+    fun deleteIntegration(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("integrationName") integrationName: String): String {
+        return integrationService.deleteIntegration(projectName, integrationName)
+    }
+
     @PostMapping("/integration/testCase")
     fun uploadIntegrationTestCase(
             @RequestParam("input") inputFile: MultipartFile,
