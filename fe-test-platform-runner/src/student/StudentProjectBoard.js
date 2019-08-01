@@ -18,16 +18,18 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import SettingsIcon from "@material-ui/icons/Settings";
 
 import * as Api from "../Api";
+import StudentIntegrationRow from "./StudentIntegrationRow";
 
 class StudentProjectBoard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {stages: {stages: []}};
+        this.state = {stages: {stages: []}, integrations: {integrations: []}};
     }
 
     componentDidMount() {
         this.fetchStages();
+        this.fetchIntegrations();
     }
 
     fetchStages = () => {
@@ -41,8 +43,23 @@ class StudentProjectBoard extends Component {
             }))
     };
 
+    fetchIntegrations = () => {
+        fetch(backendUrl(`/student/${this.props.match.params.projectId}/integrations`), {
+            method: "GET",
+            credentials: "include"
+        })
+            .then(response => response.json())
+            .then(json => this.setState({
+                integrations: json
+            }))
+    };
+
     stageChangedHandler = () => {
         this.fetchStages()
+    };
+
+    integrationChangedHandler = () => {
+        this.fetchIntegrations()
     };
 
     handleDownloadProjectDescription = () => {
@@ -89,7 +106,43 @@ class StudentProjectBoard extends Component {
                                                     <StudentTestCasesDetails
                                                         testCases={stage.testCases}
                                                         projectName={this.props.match.params.projectId}
-                                                        stageName={stage.stageName}/>
+                                                        taskName={stage.stageName}
+                                                        taskType="stage"/>
+                                                </div>
+                                            </Typography>
+                                        </ExpansionPanelDetails>
+                                    </ExpansionPanel>
+                                </CustomTableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <Table className={this.props.classes.table}>
+                    <TableHead>
+                        <TableRow>
+                            <CustomTableCell>Integracje</CustomTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {this.state.integrations.integrations.map(integration => (
+                            <TableRow key={integration.integrationName}>
+                                <CustomTableCell component="th" scope="row">
+                                    <ExpansionPanel disabled={!integration.enable}>
+                                        <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                                            <StudentIntegrationRow
+                                                integration={integration}
+                                                projectName={this.props.match.params.projectId}
+                                                integrationChangedHandler={this.integrationChangedHandler}/>
+                                        </ExpansionPanelSummary>
+                                        <ExpansionPanelDetails>
+                                            <Typography>
+                                                <div className={this.props.classes.panel}>
+                                                    <p className={this.props.classes.testsHeading}> Testy </p>
+                                                    <StudentTestCasesDetails
+                                                        testCases={integration.testCases}
+                                                        projectName={this.props.match.params.projectId}
+                                                        taskName={integration.integrationName}
+                                                        taskType="integration"/>
                                                 </div>
                                             </Typography>
                                         </ExpansionPanelDetails>

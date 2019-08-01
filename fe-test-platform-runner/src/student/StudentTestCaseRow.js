@@ -11,7 +11,11 @@ import * as Api from "../Api";
 class StudentTestCaseRow extends Component {
 
     handleDownloadLogsFile = () => {
-        Api.downloadStudentLogsFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName)
+        if (this.props.taskType === "stage") {
+            Api.downloadStudentStageLogsFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName)
+        } else {
+            Api.downloadStudentIntegrationLogsFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName)
+        }
     };
 
     handleDownloadInputFile = () => {
@@ -23,7 +27,12 @@ class StudentTestCaseRow extends Component {
     };
 
     downloadFile = (fileType) => {
-        Api.downloadStageTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName, fileType)
+        if (this.props.taskType === "stage") {
+            Api.downloadStageTestCaseFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName, fileType)
+        } else {
+            Api.downloadIntegrationTestCaseFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName, fileType)
+
+        }
     };
 
     render() {
@@ -54,7 +63,6 @@ class StudentTestCaseRow extends Component {
                 <CustomTableCell component="th" scope="row" width="8%">
                     input
                     <IconButton aria-label="Pobierz"
-                                disabled={!this.props.testCase.logsFile === true}
                                 onClick={this.handleDownloadInputFile}>
                         <DownloadIcon/>
                     </IconButton>
@@ -62,7 +70,6 @@ class StudentTestCaseRow extends Component {
                 <CustomTableCell component="th" scope="row" width="8%">
                     output
                     <IconButton aria-label="Pobierz"
-                                disabled={!this.props.testCase.logsFile === true}
                                 onClick={this.handleDownloadOutputFile}>
                         <DownloadIcon/>
                     </IconButton>

@@ -12,6 +12,7 @@ import java.util.*
 @Component
 class StudentService(
         val stageService: StageService,
+        val integrationService: IntegrationService,
         val pathProvider: PathProvider,
         val jarService: JarService) {
 
@@ -162,7 +163,7 @@ class StudentService(
         return getSingleFile(pathProvider.getStudentReportDir(projectName, stageName))
     }
 
-    fun getLogsFile(projectName: String, stageName: String, testCaseName: String): File {
+    fun getStageLogsFile(projectName: String, stageName: String, testCaseName: String): File {
         return getExactFile(pathProvider.getStudentLogsFileDir(projectName, stageName, testCaseName))
     }
 
@@ -180,6 +181,26 @@ class StudentService(
         }
 
         return file
+    }
+
+    fun getStudentIntegrations(projectName: String): List<StudentIntegration> {
+        return integrationService
+                .getIntegrations(projectName)
+                .integrations
+                .map { integration ->
+                    StudentIntegration(
+                            integration.name,
+                            integration.integrationStages,
+                            integration.testCases!!.map { TestCaseWithResult(testCaseName = it.testCaseName, parameters = it.parameters, message = "") },
+                            0,
+                            integration.testCases.count(),
+                            true
+                    )
+                }.sortedBy { it.integrationName }
+    }
+
+    fun getIntegrationLogsFile(projectName: String, integrationName: String, testCaseName: String): File {
+        return File("/home/karolina/MGR/groups")
     }
 
     companion object {

@@ -163,8 +163,12 @@ export function downloadIntegrationTestCaseFile(projectName, integrationName, te
     return downloadFile(backendUrl('/integration/' + projectName + '/' + integrationName + '/' + testCaseName + '/' + fileType))
 }
 
-export function downloadStudentLogsFile(projectName, stageName, testCaseName) {
-    return downloadFile(backendUrl('/student/' + projectName + '/' + stageName + '/' + testCaseName + '/logs'))
+export function downloadStudentStageLogsFile(projectName, stageName, testCaseName) {
+    return downloadFile(backendUrl('/student/stage/' + projectName + '/' + stageName + '/' + testCaseName + '/logs'))
+}
+
+export function downloadStudentIntegrationLogsFile(projectName, integrationName, testCaseName) {
+    return downloadFile(backendUrl('/student/integration/' + projectName + '/' + integrationName + '/' + testCaseName + '/logs'))
 }
 
 export function downloadFile(url) {

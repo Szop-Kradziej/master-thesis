@@ -65,12 +65,12 @@ class TestPlatformApi(val studentService: StudentService,
         return createFileResponse(studentService.getReport(projectName, stageName))
     }
 
-    @GetMapping("/student/{projectName}/{stageName}/{testCaseName}/logs")
-    fun downloadStudentLogsFile(
+    @GetMapping("/student/stage/{projectName}/{stageName}/{testCaseName}/logs")
+    fun downloadStudentStageLogsFile(
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
-        return createFileResponse(studentService.getLogsFile(projectName, stageName, testCaseName))
+        return createFileResponse(studentService.getStageLogsFile(projectName, stageName, testCaseName))
     }
 
     @PostMapping("/upload/code")
@@ -301,6 +301,11 @@ class TestPlatformApi(val studentService: StudentService,
         return integrationService.getIntegrations(projectName)
     }
 
+    @GetMapping("/student/{projectName}/integrations")
+    fun getStudentIntegrationsList(@PathVariable("projectName") projectName: String): StudentIntegrationsResponse {
+        return StudentIntegrationsResponse(studentService.getStudentIntegrations(projectName))
+    }
+
     @DeleteMapping("/integration/{projectName}/{integrationName}")
     fun deleteIntegration(
             @PathVariable("projectName") projectName: String,
@@ -363,6 +368,14 @@ class TestPlatformApi(val studentService: StudentService,
             @PathVariable("testCaseName") testCaseName: String): String {
         return integrationService.deleteTestCase(projectName, integrationName, testCaseName)
     }
+
+    @GetMapping("/student/integration/{projectName}/{integrationName}/{testCaseName}/logs")
+    fun downloadStudentIntegrationLogsFile(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("integrationName") integrationName: String,
+            @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
+        return createFileResponse(studentService.getIntegrationLogsFile(projectName, integrationName, testCaseName))
+    }
 }
 
 class ProjectResponse(val projects: List<String>)
@@ -371,6 +384,8 @@ class StageDao(val stageName: String, val stageDescription: String?, val startDa
 class TestCase(val testCaseName: String, val parameters: String?, val inputFileName: String?, val outputFileName: String?)
 class StudentStagesResponse(val stages: List<StudentStage>)
 class StudentStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val startDate: String?, val endDate: String?, val pointsNumber: String?, val totalPointsNumber: String?, val codeLink: String?, val enable: Boolean)
+class StudentIntegrationsResponse(val integrations: List<StudentIntegration>)
+class StudentIntegration(val integrationName: String, val integrationStages: List<IntegrationStageDao>, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val enable: Boolean)
 class TestCaseWithResult(val testCaseName: String, val parameters: String?, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)
 class GroupsResponse(val groups: List<Group>)
 class Group(val groupName: String, val projectName: String, val students: List<String>)

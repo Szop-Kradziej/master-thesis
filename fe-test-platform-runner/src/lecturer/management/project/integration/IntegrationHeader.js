@@ -29,6 +29,7 @@ class GroupHeader extends Component {
             });
     };
 
+    //TODO: Move to separate function - remove duplicates
     createIntegrationSchema = () => {
         var i = 1;
         var text = "";

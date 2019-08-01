@@ -53,7 +53,8 @@ class StudentTestCasesDetails extends Component {
                         <StudentTestCaseRow
                             testCase={testCase}
                             projectName={this.props.projectName}
-                            stageName={this.props.stageName}/>
+                            taskName={this.props.taskName}
+                            taskType={this.props.taskType}/>
                     )
                 )}
             </TableBody>
