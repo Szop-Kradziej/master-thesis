@@ -105,12 +105,10 @@ class JarService(
         }
 
         return testCases.map { testCase ->
-            var inputFile = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "input").listFiles().first()
-            var outputFile: File? = null
-            jarPaths.forEach {
+            val inputFile = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "input").listFiles().first()
+            val outputFile = jarPaths.fold(inputFile) { inputFile, it ->
                 val jarPath = it.absolutePath
-                outputFile = generateOutputFile(projectName, integrationName, inputFile, jarPath, testCase)
-                inputFile = outputFile
+                generateOutputFile(projectName, integrationName, inputFile, jarPath, testCase)
             }
 
             checkCorrectness2(projectName, integrationName, testCase.testCaseName, outputFile!!)
@@ -125,7 +123,6 @@ class JarService(
                 .also { logs -> saveLogsToResultFile(logs, projectName, integrationName, testCase.testCaseName) }
         return outputFile
     }
-
 
     companion object {
         val log = LoggerFactory.logger(JarService::class.java);
