@@ -35,14 +35,12 @@ class JarService(
         val jarName = jarPath.list().first()
 
         return testCases.map {
-            val inputFilePath = pathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "input").listFiles().first().absolutePath
-            val outputFilePath = pathProvider.getStudentOutputDir(projectName, stageName)
-            outputFilePath.mkdir()
-            File(outputFilePath, "output").createNewFile()
-            val container = containerFactory.createContainerWithFilesBinded(inputFilePath, File(outputFilePath, "output").absolutePath, "${jarPath.absolutePath}/$jarName")
+            val inputFile = pathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "input").listFiles().first()
+            val outputFile = File(pathProvider.getStudentOutputDir(projectName, stageName).apply { mkdir() }, "output").apply { createNewFile() }
+            val container = containerFactory.createContainerWithFilesBinded(inputFile.absolutePath, outputFile.absolutePath, "${jarPath.absolutePath}/$jarName")
             containerService.runTestCase(container)
                     .also { logs -> saveLogsToResultFile(logs, projectName, stageName, it.testCaseName) }
-            checkCorrectness(projectName, stageName, it.testCaseName)
+            checkCorrectness(projectName, stageName, it.testCaseName, outputFile)
         }
     }
 
@@ -55,10 +53,10 @@ class JarService(
         file.writeText(logs)
     }
 
-    fun checkCorrectness(projectName: String, stageName: String, testCaseName: String): TestResponse {
+    fun checkCorrectness(projectName: String, stageName: String, testCaseName: String, outputFile: File): TestResponse {
         try {
             val expectedOutput = pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().readText()
-            val testOutput = File(pathProvider.getStudentOutputDir(projectName, stageName), "output").readText()
+            val testOutput = outputFile.readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
                 return TestResponse(testCaseName, "SUCCESS")
