@@ -16,15 +16,21 @@ class StudentService(
         val pathProvider: PathProvider,
         val jarService: JarService) {
 
-    fun runJar(projectName: String, stageName: String): List<TestResponse> {
+    fun runStageTests(projectName: String, stageName: String): List<TestResponse> {
         val testResponses = jarService.runJar(projectName, stageName)
-        saveTestResponses(projectName, stageName, testResponses)
+        saveTestResponses(pathProvider.getStudentResultsDir(projectName, stageName), testResponses)
 
         return testResponses
     }
 
-    private fun saveTestResponses(projectName: String, stageName: String, testResponses: List<TestResponse>) {
-        val resultsDir = pathProvider.getStudentResultsDir(projectName, stageName)
+    fun runIntegrationTests(projectName: String, integrationName: String): List<TestResponse> {
+        val testResponses = jarService.runJars(projectName, integrationName)
+        saveTestResponses(pathProvider.getStudentResultsDir(projectName, integrationName), testResponses)
+
+        return testResponses
+    }
+
+    private fun saveTestResponses(resultsDir: File, testResponses: List<TestResponse>) {
         resultsDir.mkdirs()
 
         val file = File(resultsDir, "result.json");

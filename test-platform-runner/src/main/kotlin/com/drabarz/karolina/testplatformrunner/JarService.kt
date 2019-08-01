@@ -20,9 +20,9 @@ class JarService(
 
 
     fun runJar(projectName: String, stageName: String): List<TestResponse> {
-        val testCasesNames = testCaseService.getTestCases(projectName, stageName)
+        val testCases = testCaseService.getTestCases(projectName, stageName)
 
-        if (testCasesNames.isEmpty()) {
+        if (testCases.isEmpty()) {
             throw java.lang.RuntimeException("Error. There are no test cases for stage $stageName")
         }
 
@@ -34,8 +34,12 @@ class JarService(
 
         val jarName = jarPath.list().first()
 
-        return testCasesNames.map {
-            val container = containerFactory.createContainerWithFilesBinded(projectName, stageName, it.testCaseName, "${jarPath.absolutePath}/$jarName")
+        return testCases.map {
+            val inputFilePath = pathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "input").listFiles().first().absolutePath
+            val outputFilePath = pathProvider.getStudentOutputDir(projectName, stageName)
+            outputFilePath.mkdir()
+            File(outputFilePath, "output").createNewFile()
+            val container = containerFactory.createContainerWithFilesBinded(inputFilePath, File(outputFilePath, "output").absolutePath, "${jarPath.absolutePath}/$jarName")
             containerService.runTestCase(container)
                     .also { logs -> saveLogsToResultFile(logs, projectName, stageName, it.testCaseName) }
             checkCorrectness(projectName, stageName, it.testCaseName)
@@ -53,8 +57,8 @@ class JarService(
 
     fun checkCorrectness(projectName: String, stageName: String, testCaseName: String): TestResponse {
         try {
-            val expectedOutput = pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().reader().readText()
-            val testOutput = JarService::class.java.getResource("/static/output.txt").readText()
+            val expectedOutput = pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().readText()
+            val testOutput = File(pathProvider.getStudentOutputDir(projectName, stageName), "output").readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
                 return TestResponse(testCaseName, "SUCCESS")
@@ -64,6 +68,10 @@ class JarService(
         } catch (e: RuntimeException) {
             return TestResponse(testCaseName, "FAILURE", e.message!!)
         }
+    }
+
+    fun runJars(projectName: String, integrationName: String): List<TestResponse> {
+        return emptyList()
     }
 
     companion object {
@@ -80,17 +88,17 @@ data class TestResponse constructor(val testCaseName: String, val status: String
 //}
 
 @Component
-class ContainerFactory(val pathProvider: StagePathProvider) {
+class ContainerFactory {
 
-    fun createContainerWithFilesBinded(projectName: String, stageName: String, testCaseName: String, jarPath: String?): KGenericContainer {
+    fun createContainerWithFilesBinded(inputFilePath: String, outputFilePath: String, jarPath: String): KGenericContainer {
 
         return KGenericContainer(
                 ImageFromDockerfile()
                         .withFileFromClasspath("Dockerfile", "static/Dockerfile")
         )
-                .withCopyFileToContainer(MountableFile.forHostPath("$jarPath"), "/home/example.jar")
-                .withFileSystemBind(pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, "input").listFiles().first().absolutePath, "/home/input.txt", BindMode.READ_ONLY)
-                .withClasspathResourceMapping("/static/output.txt", "/home/output.txt", BindMode.READ_WRITE)
+                .withCopyFileToContainer(MountableFile.forHostPath(jarPath), "/home/example.jar")
+                .withFileSystemBind(inputFilePath, "/home/input.txt", BindMode.READ_ONLY)
+                .withFileSystemBind(outputFilePath, "/home/output.txt", BindMode.READ_WRITE)
     }
 }
 

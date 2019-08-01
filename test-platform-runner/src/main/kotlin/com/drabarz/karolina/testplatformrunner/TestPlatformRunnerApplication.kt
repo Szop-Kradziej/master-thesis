@@ -81,11 +81,18 @@ class TestPlatformApi(val studentService: StudentService,
         return studentService.saveCodeLink(projectName, stageName, codeLink)
     }
 
-    @PostMapping("/run")
-    fun runJar(
+    @PostMapping("/stage/run")
+    fun runStageJar(
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): List<TestResponse> {
-        return studentService.runJar(projectName, stageName)
+        return studentService.runStageTests(projectName, stageName)
+    }
+
+    @PostMapping("/integration/run")
+    fun runIntegrationJar(
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("integrationName") integrationName: String): List<TestResponse> {
+        return studentService.runIntegrationTests(projectName, integrationName)
     }
 
     @GetMapping("/projects")
