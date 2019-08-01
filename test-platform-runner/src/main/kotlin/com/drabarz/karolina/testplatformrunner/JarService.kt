@@ -12,21 +12,24 @@ import java.io.File
 
 @Component
 class JarService(
-        val pathProvider: StagePathProvider,
+        val stagePathProvider: StagePathProvider,
+        val integrationPathProvider: IntegrationPathProvider,
+        val integrationService: IntegrationService,
         val containerFactory: ContainerFactory,
         val containerService: ContainerService) {
 
-    private final val testCaseService = TestCaseService(pathProvider)
+    private final val stagesTestCaseService = TestCaseService(stagePathProvider)
+    private final val integrationTestCaseService = TestCaseService(integrationPathProvider)
 
 
     fun runJar(projectName: String, stageName: String): List<TestResponse> {
-        val testCases = testCaseService.getTestCases(projectName, stageName)
+        val testCases = stagesTestCaseService.getTestCases(projectName, stageName)
 
         if (testCases.isEmpty()) {
             throw java.lang.RuntimeException("Error. There are no test cases for stage $stageName")
         }
 
-        val jarPath = pathProvider.getStudentBinDir(projectName, stageName)
+        val jarPath = stagePathProvider.getStudentBinDir(projectName, stageName)
 
         if (!jarPath.exists() || jarPath.list().size != 1) {
             throw java.lang.RuntimeException("Invalid number of binaries or no binary")
@@ -35,8 +38,8 @@ class JarService(
         val jarName = jarPath.list().first()
 
         return testCases.map {
-            val inputFile = pathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "input").listFiles().first()
-            val outputFile = File(pathProvider.getStudentOutputDir(projectName, stageName).apply { mkdir() }, "output").apply { createNewFile() }
+            val inputFile = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "input").listFiles().first()
+            val outputFile = File(stagePathProvider.getStudentOutputDir(projectName, stageName).apply { mkdir() }, "output").apply { createNewFile() }
             val container = containerFactory.createContainerWithFilesBinded(inputFile.absolutePath, outputFile.absolutePath, "${jarPath.absolutePath}/$jarName")
             containerService.runTestCase(container)
                     .also { logs -> saveLogsToResultFile(logs, projectName, stageName, it.testCaseName) }
@@ -45,7 +48,7 @@ class JarService(
     }
 
     private fun saveLogsToResultFile(logs: String, projectName: String, stageName: String, testCaseName: String) {
-        val logsDir = pathProvider.getStudentLogsDir(projectName, stageName)
+        val logsDir = stagePathProvider.getStudentLogsDir(projectName, stageName)
         logsDir.mkdirs()
 
         val file = File(logsDir, testCaseName);
@@ -55,7 +58,22 @@ class JarService(
 
     fun checkCorrectness(projectName: String, stageName: String, testCaseName: String, outputFile: File): TestResponse {
         try {
-            val expectedOutput = pathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().readText()
+            val expectedOutput = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().readText()
+            val testOutput = outputFile.readText()
+
+            if (testOutput.trim() == expectedOutput.trim()) {
+                return TestResponse(testCaseName, "SUCCESS")
+            }
+
+            return TestResponse(testCaseName, "FAILURE", "Error: \n Actual: $testOutput \n Expected: $expectedOutput")
+        } catch (e: RuntimeException) {
+            return TestResponse(testCaseName, "FAILURE", e.message!!)
+        }
+    }
+
+    fun checkCorrectness2(projectName: String, stageName: String, testCaseName: String, outputFile: File): TestResponse {
+        try {
+            val expectedOutput = integrationPathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().readText()
             val testOutput = outputFile.readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
@@ -69,8 +87,45 @@ class JarService(
     }
 
     fun runJars(projectName: String, integrationName: String): List<TestResponse> {
-        return emptyList()
+        val testCases = integrationTestCaseService.getTestCases(projectName, integrationName)
+        val integrationStages = integrationService.getIntegrationStages(projectName, integrationName)
+
+        if (testCases.isEmpty()) {
+            throw java.lang.RuntimeException("Error. There are no test cases for integration $integrationName")
+        }
+
+        val jarPaths = integrationStages.map {
+            val jarPath = stagePathProvider.getStudentBinDir(projectName, it.stageName)
+
+            if (!jarPath.exists() || jarPath.list().size != 1) {
+                throw java.lang.RuntimeException("Invalid number of binaries or no binary")
+            }
+
+            File(jarPath, jarPath.list().first())
+        }
+
+        return testCases.map { testCase ->
+            var inputFile = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "input").listFiles().first()
+            var outputFile: File? = null
+            jarPaths.forEach {
+                val jarPath = it.absolutePath
+                outputFile = generateOutputFile(projectName, integrationName, inputFile, jarPath, testCase)
+                inputFile = outputFile
+            }
+
+            checkCorrectness2(projectName, integrationName, testCase.testCaseName, outputFile!!)
+        }
     }
+
+    private fun generateOutputFile(projectName: String, integrationName: String, inputFile: File, jarPath: String, testCase: TestCase): File {
+        val outputFile = File(integrationPathProvider.getStudentOutputDir(projectName, integrationName).apply { mkdirs() }, "output").apply { createNewFile() }
+
+        val container = containerFactory.createContainerWithFilesBinded(inputFile.absolutePath, outputFile.absolutePath, jarPath)
+        containerService.runTestCase(container)
+                .also { logs -> saveLogsToResultFile(logs, projectName, integrationName, testCase.testCaseName) }
+        return outputFile
+    }
+
 
     companion object {
         val log = LoggerFactory.logger(JarService::class.java);

@@ -13,11 +13,11 @@ import TableCell from "@material-ui/core/TableCell/TableCell";
 class StudentIntegrationRow extends Component {
 
     handleRunTests = () => {
-        fetch(backendUrl(`/run`), {
+        fetch(backendUrl(`/integration/run`), {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: "projectName=" + this.props.projectName + "&integrationName=" + this.props.integration.name
+            body: "projectName=" + this.props.projectName + "&integrationName=" + this.props.integration.integrationName
         })
             .then(this.props.integrationChangedHandler)
             .then(function (response) {

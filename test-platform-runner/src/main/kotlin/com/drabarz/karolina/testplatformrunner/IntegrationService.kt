@@ -78,6 +78,12 @@ class IntegrationService(
         return "200"
     }
 
+    fun getIntegrationStages(projectName: String, integrationName: String): List<IntegrationStageDao> {
+        val integration = integrationsRepository.findByNameAndProject_Name(integrationName, projectName)
+
+        return getIntegrationStages(integration)
+    }
+
     private fun getIntegrationStages(it: Integration): List<IntegrationStageDao> {
         return integrationStagesRepository.findAllByIntegration(it)
                 .map { IntegrationStageDao(it.name, it.orderNumber, it.stage.name) }
