@@ -43,7 +43,8 @@ class JarService(
             val container = containerFactory.createContainerWithFilesBinded(inputFile.absolutePath, outputFile.absolutePath, "${jarPath.absolutePath}/$jarName")
             containerService.runTestCase(container)
                     .also { logs -> saveLogsToResultFile(logs, projectName, stageName, it.testCaseName) }
-            checkCorrectness(projectName, stageName, it.testCaseName, outputFile)
+            val expectedOutput = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "output").listFiles().first().readText()
+            checkCorrectness(it.testCaseName, outputFile, expectedOutput)
         }
     }
 
@@ -56,24 +57,8 @@ class JarService(
         file.writeText(logs)
     }
 
-    fun checkCorrectness(projectName: String, stageName: String, testCaseName: String, outputFile: File): TestResponse {
+    fun checkCorrectness(testCaseName: String, outputFile: File, expectedOutput: String): TestResponse {
         try {
-            val expectedOutput = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().readText()
-            val testOutput = outputFile.readText()
-
-            if (testOutput.trim() == expectedOutput.trim()) {
-                return TestResponse(testCaseName, "SUCCESS")
-            }
-
-            return TestResponse(testCaseName, "FAILURE", "Error: \n Actual: $testOutput \n Expected: $expectedOutput")
-        } catch (e: RuntimeException) {
-            return TestResponse(testCaseName, "FAILURE", e.message!!)
-        }
-    }
-
-    fun checkCorrectness2(projectName: String, stageName: String, testCaseName: String, outputFile: File): TestResponse {
-        try {
-            val expectedOutput = integrationPathProvider.getTaskTestCaseFileDir(projectName, stageName, testCaseName, "output").listFiles().first().readText()
             val testOutput = outputFile.readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
@@ -111,7 +96,9 @@ class JarService(
                 generateOutputFile(projectName, integrationName, inputFile, jarPath, testCase)
             }
 
-            checkCorrectness2(projectName, integrationName, testCase.testCaseName, outputFile!!)
+            val expectedOutput = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "output").listFiles().first().readText()
+
+            checkCorrectness(testCase.testCaseName, outputFile, expectedOutput)
         }
     }
 
