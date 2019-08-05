@@ -89,6 +89,8 @@ class JarService(
             File(jarPath, jarPath.list().first())
         }
 
+        integrationPathProvider.getStudentLogsDir(projectName, integrationName).listFiles().forEach { it.delete() }
+
         return testCases.map { testCase ->
             val inputFile = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "input").listFiles().first()
             val outputFile = jarPaths.fold(inputFile) { inputFile, it ->
@@ -107,8 +109,17 @@ class JarService(
 
         val container = containerFactory.createContainerWithFilesBinded(inputFile.absolutePath, outputFile.absolutePath, jarPath)
         containerService.runTestCase(container)
-                .also { logs -> saveLogsToResultFile(logs, projectName, integrationName, testCase.testCaseName) }
+                .also { logs -> saveLogsToResultFileIntegration(logs, projectName, integrationName, testCase.testCaseName) }
         return outputFile
+    }
+
+    private fun saveLogsToResultFileIntegration(logs: String, projectName: String, integrationName: String, testCaseName: String) {
+        val logsDir = integrationPathProvider.getStudentLogsDir(projectName, integrationName)
+        logsDir.mkdirs()
+
+        val file = File(logsDir, testCaseName);
+
+        file.appendText(logs)
     }
 
     companion object {
@@ -152,7 +163,7 @@ class ContainerService {
         val toStringConsumer = ToStringConsumer()
         container.followOutput(toStringConsumer, OutputFrame.OutputType.STDERR)
 
-        val containerLogs = container.containerId + "\n" + toStringConsumer.toUtf8String() + "\n" + container.logs
+        val containerLogs = container.containerId + "\n" + toStringConsumer.toUtf8String() + "\n" + container.logs + "\n"
         log.info(containerLogs)
 
         container.stop()
