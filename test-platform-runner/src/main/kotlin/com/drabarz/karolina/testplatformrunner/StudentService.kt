@@ -13,19 +13,21 @@ import java.util.*
 class StudentService(
         val stageService: StageService,
         val integrationService: IntegrationService,
-        val pathProvider: PathProvider,
         val jarService: JarService) {
+
+    private final val stagePathProvider = StagePathProvider()
+    private final val integrationPathProvider = IntegrationPathProvider()
 
     fun runStageTests(projectName: String, stageName: String): List<TestResponse> {
         val testResponses = jarService.runJar(projectName, stageName)
-        saveTestResponses(pathProvider.getStudentResultsDir(projectName, stageName), testResponses)
+        saveTestResponses(stagePathProvider.getStudentResultsDir(projectName, stageName), testResponses)
 
         return testResponses
     }
 
     fun runIntegrationTests(projectName: String, integrationName: String): List<TestResponse> {
         val testResponses = jarService.runJars(projectName, integrationName)
-        saveTestResponses(pathProvider.getStudentResultsDir(projectName, integrationName), testResponses)
+        saveTestResponses(stagePathProvider.getStudentResultsDir(projectName, integrationName), testResponses)
 
         return testResponses
     }
@@ -44,11 +46,11 @@ class StudentService(
     }
 
     fun saveFile(projectName: String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
-        var dir = pathProvider.getStudentStageDir(projectName, stageName)
+        var dir = stagePathProvider.getStudentTaskDir(projectName, stageName)
         if (fileType == FileType.BINARY) {
-            dir = pathProvider.getStudentBinDir(projectName, stageName)
+            dir = stagePathProvider.getStudentBinDir(projectName, stageName)
         } else {
-            dir = pathProvider.getStudentReportDir(projectName, stageName)
+            dir = stagePathProvider.getStudentReportDir(projectName, stageName)
         }
 
         dir.mkdirs()
@@ -87,7 +89,7 @@ class StudentService(
     }
 
     private fun getCodeLink(projectName: String, stageName: String): String? {
-        val dir = pathProvider.getStudentCodeDir(projectName, stageName)
+        val dir = stagePathProvider.getStudentCodeDir(projectName, stageName)
 
         val codeFile = File(dir.path, PathProvider.CODE)
 
@@ -108,16 +110,16 @@ class StudentService(
 
     private fun getStageFileName(projectName: String, stageName: String, fileType: FileType): String? {
 
-        val stageDir = pathProvider.getStudentStageDir(projectName, stageName)
+        val stageDir = stagePathProvider.getStudentTaskDir(projectName, stageName)
         if (!stageDir.exists()) {
             return null
         }
 
         val fileDir: File
         if (fileType == FileType.BINARY) {
-            fileDir = pathProvider.getStudentBinDir(projectName, stageName)
+            fileDir = stagePathProvider.getStudentBinDir(projectName, stageName)
         } else {
-            fileDir = pathProvider.getStudentReportDir(projectName, stageName)
+            fileDir = stagePathProvider.getStudentReportDir(projectName, stageName)
         }
 
         if (!fileDir.exists() || fileDir.list().size != 1) {
@@ -128,7 +130,7 @@ class StudentService(
     }
 
     private fun getTestCasesWithResults(projectName: String, stageName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
-        val resultFile = File(pathProvider.getStudentResultsDir(projectName, stageName), "result.json")
+        val resultFile = File(stagePathProvider.getStudentResultsDir(projectName, stageName), "result.json")
 
         if (!resultFile.exists()) {
             return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters,"NO RUN", null) }
@@ -148,11 +150,11 @@ class StudentService(
     }
 
     private fun isLogsFileExist(projectName: String, stageName: String, testCase: String): Boolean {
-        return pathProvider.getStudentLogsFileDir(projectName, stageName, testCase).exists()
+        return stagePathProvider.getStudentLogsFileDir(projectName, stageName, testCase).exists()
     }
 
     fun saveCodeLink(projectName: String, stageName: String, codeLink: String): String {
-        val dir = pathProvider.getStudentCodeDir(projectName, stageName)
+        val dir = stagePathProvider.getStudentCodeDir(projectName, stageName)
         dir.mkdirs()
 
         val outputFile = File(dir.path, PathProvider.CODE)
@@ -162,15 +164,15 @@ class StudentService(
     }
 
     fun getJar(projectName: String, stageName: String): File {
-        return getSingleFile(pathProvider.getStudentBinDir(projectName, stageName))
+        return getSingleFile(stagePathProvider.getStudentBinDir(projectName, stageName))
     }
 
     fun getReport(projectName: String, stageName: String): File {
-        return getSingleFile(pathProvider.getStudentReportDir(projectName, stageName))
+        return getSingleFile(stagePathProvider.getStudentReportDir(projectName, stageName))
     }
 
     fun getStageLogsFile(projectName: String, stageName: String, testCaseName: String): File {
-        return getExactFile(pathProvider.getStudentLogsFileDir(projectName, stageName, testCaseName))
+        return getExactFile(stagePathProvider.getStudentLogsFileDir(projectName, stageName, testCaseName))
     }
 
     fun getSingleFile(dir: File): File {
@@ -197,16 +199,40 @@ class StudentService(
                     StudentIntegration(
                             integration.name,
                             integration.integrationStages,
-                            integration.testCases!!.map { TestCaseWithResult(testCaseName = it.testCaseName, parameters = it.parameters, message = "") },
-                            0,
+                            getTestCasesWithResultsIntegration(projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, it.parameters) }),
+                            getTestCasesWithResultsIntegration(projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
                             integration.testCases.count(),
                             true
                     )
                 }.sortedBy { it.integrationName }
     }
 
+    private fun getTestCasesWithResultsIntegration(projectName: String, integrationName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
+        val resultFile = File(integrationPathProvider.getStudentResultsDir(projectName, integrationName), "result.json")
+
+        if (!resultFile.exists()) {
+            return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters, "NO RUN", null) }
+        }
+
+        val jsonData = resultFile.readBytes()
+        val results = jacksonObjectMapper().readerFor(Array<TestResponse>::class.java).readValue<Array<TestResponse>>(jsonData).toList()
+
+        return testCases.map { testCase ->
+            TestCaseWithResult(
+                    testCase.name,
+                    testCase.parameters,
+                    results.find { it.testCaseName == testCase.name }?.status ?: "NO RUN",
+                    results.find { it.testCaseName == testCase.name }?.message,
+                    isLogsFileExistIntegration(projectName, integrationName, testCase.name))
+        }
+    }
+
+    private fun isLogsFileExistIntegration(projectName: String, integrationName: String, testCase: String): Boolean {
+        return integrationPathProvider.getStudentLogsFileDir(projectName, integrationName, testCase).exists()
+    }
+
     fun getIntegrationLogsFile(projectName: String, integrationName: String, testCaseName: String): File {
-        return File("/home/karolina/MGR/groups")
+        return getExactFile(integrationPathProvider.getStudentLogsFileDir(projectName, integrationName, testCaseName))
     }
 
     companion object {

@@ -27,42 +27,6 @@ class PathProvider : PathProv {
         return File(getProjectDir(projectName), ENVIRONMENT)
     }
 
-    fun getStudentStageDir(projectName: String, stageName: String): File {
-        return File("$jarPath/$projectName/$stageName")
-    }
-
-    fun getStudentResultsDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, RESULTS)
-    }
-
-    fun getStudentCodeDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, CODE)
-    }
-
-    fun getStudentReportDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, REPORT)
-    }
-
-    fun getStudentBinDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, BIN)
-    }
-
-    fun getStudentOutputDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, OUTPUT)
-    }
-
-    fun getStudentLogsDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, LOGS)
-    }
-
-    fun getStudentLogsFileDir(projectName: String, stageName: String, testCaseName: String): File {
-        return File(getStudentLogsDir(projectName, stageName), testCaseName)
-    }
-
-    fun getStudentFileDir(projectName: String, stageName: String, file: String): File {
-        return File(getStudentStageDir(projectName, stageName), file)
-    }
-
     companion object {
         const val STAGES = "stages"
         const val INTEGRATIONS = "integrations"
@@ -78,7 +42,6 @@ class PathProvider : PathProv {
         const val PARAMETERS = "parameters"
     }
 }
-
 
 interface TaskPathProvider {
 
@@ -108,6 +71,42 @@ interface TaskPathProvider {
 
     fun getTaskDescriptionDir(projectName: String, taskName: String): File {
         return File(getTaskDir(projectName, taskName), PathProvider.DESCRIPTION)
+    }
+
+    fun getStudentResultsDir(projectName: String, stageName: String): File {
+        return getStudentFileDir(projectName, stageName, PathProvider.RESULTS)
+    }
+
+    fun getStudentFileDir(projectName: String, stageName: String, file: String): File {
+        return File(getStudentTaskDir(projectName, stageName), file)
+    }
+
+    fun getStudentTaskDir(projectName: String, taskName: String): File {
+        return File("/home/karolina/MGR/platform/jars/$projectName/$taskName")
+    }
+
+    fun getStudentCodeDir(projectName: String, stageName: String): File {
+        return getStudentFileDir(projectName, stageName, PathProvider.CODE)
+    }
+
+    fun getStudentReportDir(projectName: String, stageName: String): File {
+        return getStudentFileDir(projectName, stageName, PathProvider.REPORT)
+    }
+
+    fun getStudentBinDir(projectName: String, stageName: String): File {
+        return getStudentFileDir(projectName, stageName, PathProvider.BIN)
+    }
+
+    fun getStudentOutputDir(projectName: String, stageName: String): File {
+        return getStudentFileDir(projectName, stageName, PathProvider.OUTPUT)
+    }
+
+    fun getStudentLogsDir(projectName: String, stageName: String): File {
+        return getStudentFileDir(projectName, stageName, PathProvider.LOGS)
+    }
+
+    fun getStudentLogsFileDir(projectName: String, stageName: String, testCaseName: String): File {
+        return File(getStudentLogsDir(projectName, stageName), testCaseName)
     }
 }
 
