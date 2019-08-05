@@ -27,7 +27,7 @@ class StudentService(
 
     fun runIntegrationTests(projectName: String, integrationName: String): List<TestResponse> {
         val testResponses = jarService.runJars(projectName, integrationName)
-        saveTestResponses(stagePathProvider.getStudentResultsDir(projectName, integrationName), testResponses)
+        saveTestResponses(integrationPathProvider.getStudentResultsDir(projectName, integrationName), testResponses)
 
         return testResponses
     }

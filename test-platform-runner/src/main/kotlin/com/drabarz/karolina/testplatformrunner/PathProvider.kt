@@ -81,9 +81,7 @@ interface TaskPathProvider {
         return File(getStudentTaskDir(projectName, stageName), file)
     }
 
-    fun getStudentTaskDir(projectName: String, taskName: String): File {
-        return File("/home/karolina/MGR/platform/jars/$projectName/$taskName")
-    }
+    fun getStudentTaskDir(projectName: String, taskName: String): File
 
     fun getStudentCodeDir(projectName: String, stageName: String): File {
         return getStudentFileDir(projectName, stageName, PathProvider.CODE)
@@ -116,6 +114,10 @@ class StagePathProvider : PathProvider(), TaskPathProvider {
     override fun getTasksDir(projectName: String): File {
         return File(getProjectDir(projectName), STAGES)
     }
+
+    override fun getStudentTaskDir(projectName: String, taskName: String): File {
+        return File("$jarPath/$projectName/$STAGES/$taskName")
+    }
 }
 
 @Component
@@ -123,5 +125,9 @@ class IntegrationPathProvider : PathProvider(), TaskPathProvider {
 
     override fun getTasksDir(projectName: String): File {
         return File(getProjectDir(projectName), INTEGRATIONS)
+    }
+
+    override fun getStudentTaskDir(projectName: String, taskName: String): File {
+        return File("$jarPath/$projectName/$INTEGRATIONS/$taskName")
     }
 }
