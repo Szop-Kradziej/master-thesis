@@ -43,7 +43,7 @@ class StudentStageRow extends Component {
     };
 
     handleRunTests = () => {
-        fetch(backendUrl(`/stage/run`), {
+        fetch(backendUrl(`/student/stage/run`), {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded'},

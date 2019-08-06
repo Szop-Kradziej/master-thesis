@@ -97,15 +97,15 @@ export function uploadIntegrationTestCaseFile(projectName, integrationName, test
 }
 
 export function uploadStudentBinary(data) {
-    return postData(backendUrl("/upload/bin"), data)
+    return postData(backendUrl("/student/upload/bin"), data)
 }
 
 export function uploadStudentReport(data) {
-    return postData(backendUrl("/upload/report"), data)
+    return postData(backendUrl("/student/upload/report"), data)
 }
 
 export function uploadStudentCodeLink(data) {
-    return postData(backendUrl("/upload/code"), data)
+    return postData(backendUrl("/student/upload/code"), data)
 }
 
 export function editStageStartDate(data) {

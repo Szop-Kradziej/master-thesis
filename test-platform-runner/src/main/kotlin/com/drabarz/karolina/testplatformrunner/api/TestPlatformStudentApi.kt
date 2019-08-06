@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile
 @RestController
 class TestPlatformStudentApi(val studentService: StudentService) {
 
-    @PostMapping("/upload/bin")
+    @PostMapping("/student/upload/bin")
     fun uploadJar(
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
@@ -29,7 +29,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
         return createFileResponse(studentService.getJar(projectName, stageName))
     }
 
-    @PostMapping("/upload/report")
+    @PostMapping("/student/upload/report")
     fun uploadReport(
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
@@ -39,7 +39,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
         return "200"
     }
 
-    @PostMapping("/upload/code")
+    @PostMapping("/student/upload/code")
     fun uploadCode(
             @RequestParam("codeLink") codeLink: String,
             @RequestParam("projectName") projectName: String,
@@ -47,14 +47,14 @@ class TestPlatformStudentApi(val studentService: StudentService) {
         return studentService.saveCodeLink(projectName, stageName, codeLink)
     }
 
-    @PostMapping("/stage/run")
+    @PostMapping("/student/stage/run")
     fun runStageJar(
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): List<TestResponse> {
         return studentService.runStageTests(projectName, stageName)
     }
 
-    @PostMapping("/integration/run")
+    @PostMapping("/student/integration/run")
     fun runIntegrationJar(
             @RequestParam("projectName") projectName: String,
             @RequestParam("integrationName") integrationName: String): List<TestResponse> {
