@@ -9,6 +9,7 @@ import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.fasterxml.jackson.module.kotlin.readValue
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
@@ -30,7 +31,7 @@ class StudentService(
     fun runStageTests(studentName: String?, projectName: String, stageName: String): List<TestResponse> {
         val groupName = getGroupName(studentName, projectName)
         val testResponses = jarService.runJar(groupName, projectName, stageName)
-        saveTestResponses(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), testResponses)
+        saveTestResponses(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), studentName!!, testResponses)
 
         return testResponses
     }
@@ -51,20 +52,31 @@ class StudentService(
     fun runIntegrationTests(studentName: String?, projectName: String, integrationName: String): List<TestResponse> {
         val groupName = getGroupName(studentName, projectName)
         val testResponses = jarService.runJars(groupName, projectName, integrationName)
-        saveTestResponses(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), testResponses)
+        saveTestResponses(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), studentName!!, testResponses)
 
         return testResponses
     }
 
-    private fun saveTestResponses(resultsDir: File, testResponses: List<TestResponse>) {
+    private fun saveTestResponses(resultsDir: File, studentName: String, testResponses: List<TestResponse>) {
         resultsDir.mkdirs()
 
-        val file = File(resultsDir, "result.json");
+        val fullTestResponse = FullTestResponse(Date().time, studentName, testResponses)
+
+        val file = File(resultsDir, "result.json")
 
         val out = ByteArrayOutputStream()
         val mapper = ObjectMapper()
 
-        mapper.writeValue(out, testResponses)
+        var fullTestResponses = mutableListOf<FullTestResponse>()
+
+        if(file.exists()) {
+            val jsonData = file.readBytes()
+            fullTestResponses = jacksonObjectMapper().readerFor(Array<FullTestResponse>::class.java).readValue<Array<FullTestResponse>>(jsonData).toMutableList()
+        }
+
+        fullTestResponses.add(fullTestResponse)
+
+        mapper.writeValue(out, fullTestResponses)
 
         file.writeBytes(out.toByteArray())
     }
@@ -162,7 +174,9 @@ class StudentService(
         }
 
         val jsonData = resultFile.readBytes()
-        val results = jacksonObjectMapper().readerFor(Array<TestResponse>::class.java).readValue<Array<TestResponse>>(jsonData).toList()
+        val fullResults = jacksonObjectMapper().readerFor(Array<FullTestResponse>::class.java).readValue<Array<FullTestResponse>>(jsonData).toList()
+
+        val results = fullResults.sortedBy { it.date }.last().testResponses
 
         return testCases.map { testCase ->
             TestCaseWithResult(
@@ -245,7 +259,9 @@ class StudentService(
         }
 
         val jsonData = resultFile.readBytes()
-        val results = jacksonObjectMapper().readerFor(Array<TestResponse>::class.java).readValue<Array<TestResponse>>(jsonData).toList()
+        val fullResults = jacksonObjectMapper().readerFor(Array<FullTestResponse>::class.java).readValue<Array<FullTestResponse>>(jsonData).toList()
+
+        val results = fullResults.sortedBy { it.date }.last().testResponses
 
         return testCases.map { testCase ->
             TestCaseWithResult(
@@ -278,6 +294,8 @@ class StudentService(
         val log = LoggerFactory.getLogger(StudentService::class.java)
     }
 }
+
+data class FullTestResponse(val date: Long, val userName: String, val testResponses: List<TestResponse>)
 
 enum class FileType {
     BINARY,
