@@ -3,14 +3,42 @@ package com.drabarz.karolina.testplatformrunner.api
 import com.drabarz.karolina.testplatformrunner.service.FileType
 import com.drabarz.karolina.testplatformrunner.service.StudentService
 import com.drabarz.karolina.testplatformrunner.service.TestResponse
+import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
+import java.nio.charset.StandardCharsets
+import java.util.*
+import java.util.Base64.getDecoder
+
+
 
 
 @CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000"], allowCredentials = "true")
 @RestController
 class TestPlatformStudentApi(val studentService: StudentService) {
+
+    @GetMapping("/student/projects")
+    fun getProjectsList(@RequestHeader headers: HttpHeaders): ProjectResponse {
+        val userName = getUserNameFromRequestHeader(headers)
+        return ProjectResponse(studentService.getStudentProjects(userName))
+    }
+
+    private fun getUserNameFromRequestHeader(headers: HttpHeaders): String? {
+        val authorization = headers.get("Authorization")?.get(0)
+        if (authorization != null && authorization!!.toLowerCase().startsWith("basic")) {
+            // Authorization: Basic base64credentials
+            val base64Credentials = authorization!!.substring("Basic".length).trim({ it <= ' ' })
+            val credDecoded = getDecoder().decode(base64Credentials)
+            val credentials = String(credDecoded, StandardCharsets.UTF_8)
+            // credentials = username:password
+            val values = credentials.split(":".toRegex(), 2).toTypedArray()
+
+            return values[0]
+        }
+
+        return null
+    }
 
     @PostMapping("/student/upload/bin")
     fun uploadJar(

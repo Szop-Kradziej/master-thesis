@@ -15,9 +15,18 @@ export function addNewProject(projectName) {
 export function fetchProjects() {
     return fetch(backendUrl(`/projects`), {
         method: "GET",
-        credentials: "include"
+        credentials: "include",
     })
 }
+
+export function fetchStudentProjects() {
+    return fetch(backendUrl(`/student/projects`), {
+        method: "GET",
+        credentials: "include",
+        headers: {'Authorization': getAuthHeader()}
+    })
+}
+
 
 export function fetchStages(projectName) {
     return fetch(backendUrl(`/${projectName}/stages`), {
@@ -236,4 +245,13 @@ export function removeStudentFromGroup(projectName, groupName, studentName) {
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
         body: "projectName=" + projectName + "&groupName=" + groupName + "&studentName=" + studentName
     })
+}
+
+export function getAuthHeader() {
+    var user = 'user';
+    var password = 'password';
+
+    var base64encodedData = new Buffer(user + ':' + password).toString('base64');
+
+    return 'Basic ' + base64encodedData
 }

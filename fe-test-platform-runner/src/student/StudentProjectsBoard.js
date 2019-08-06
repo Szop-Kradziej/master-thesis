@@ -21,7 +21,7 @@ class StudentProjectsBoard extends React.Component {
 
     fetchProjects = () => {
         //TODO: Add request to call for projects for specific user
-        Api.fetchProjects()
+        Api.fetchStudentProjects()
             .then(response => response.json())
             .then(json => this.setState({
                 projects: json

@@ -39,6 +39,7 @@ class JarService(
         }
 
         val jarName = jarPath.list().first()
+        val environmentDir = stagePathProvider.getProjectEnvironmentDir(projectName)
 
         return testCases.map {
             val inputFile = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "input").listFiles().first()

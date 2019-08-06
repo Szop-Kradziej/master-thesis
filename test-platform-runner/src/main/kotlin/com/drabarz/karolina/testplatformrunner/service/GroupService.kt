@@ -46,6 +46,10 @@ class GroupService(
         )
     }
 
+    fun getStudentProjects(userName: String): List<String> {
+        return groupsRepository.findAllByStudents_Name(userName).map { it -> it.project.name }
+    }
+
     @Transactional
     fun addGroups(groups: GroupsDao, projectName: String): String {
         groups.groups.forEach { addGroupWithStudents(it, projectName) }

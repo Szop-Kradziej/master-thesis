@@ -19,6 +19,7 @@ import java.util.*
 class StudentService(
         val stageService: StageService,
         val integrationService: IntegrationService,
+        val projectService: ProjectService,
         val jarService: JarService) {
 
     private final val stagePathProvider = StagePathProvider()
@@ -239,6 +240,14 @@ class StudentService(
 
     fun getIntegrationLogsFile(projectName: String, integrationName: String, testCaseName: String): File {
         return getExactFile(integrationPathProvider.getStudentLogsFileDir(projectName, integrationName, testCaseName))
+    }
+
+    fun getStudentProjects(userName: String?): List<String> {
+        if (userName == null) {
+            throw IllegalAccessError()
+        }
+
+        return projectService.getStudentsProjects(userName)
     }
 
     companion object {

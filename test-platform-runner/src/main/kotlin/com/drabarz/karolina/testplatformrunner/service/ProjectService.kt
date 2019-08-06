@@ -136,6 +136,10 @@ class ProjectService(
         }
     }
 
+    fun getStudentsProjects(studentName: String): List<String> {
+        return groupService.getStudentProjects(studentName)
+    }
+
     companion object {
         val log = LoggerFactory.getLogger(ProjectService::class.java);
     }
