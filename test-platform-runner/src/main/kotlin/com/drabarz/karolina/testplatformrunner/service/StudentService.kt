@@ -3,6 +3,7 @@ package com.drabarz.karolina.testplatformrunner.service
 import com.drabarz.karolina.testplatformrunner.api.StudentIntegration
 import com.drabarz.karolina.testplatformrunner.api.StudentStage
 import com.drabarz.karolina.testplatformrunner.api.TestCaseWithResult
+import com.drabarz.karolina.testplatformrunner.model.GroupsRepository
 import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
@@ -20,21 +21,37 @@ class StudentService(
         val stageService: StageService,
         val integrationService: IntegrationService,
         val projectService: ProjectService,
+        val groupsRepository: GroupsRepository,
         val jarService: JarService) {
 
     private final val stagePathProvider = StagePathProvider()
     private final val integrationPathProvider = IntegrationPathProvider()
 
-    fun runStageTests(projectName: String, stageName: String): List<TestResponse> {
-        val testResponses = jarService.runJar(projectName, stageName)
-        saveTestResponses(stagePathProvider.getStudentResultsDir(projectName, stageName), testResponses)
+    fun runStageTests(studentName: String?, projectName: String, stageName: String): List<TestResponse> {
+        val groupName = getGroupName(studentName, projectName)
+        val testResponses = jarService.runJar(groupName, projectName, stageName)
+        saveTestResponses(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), testResponses)
 
         return testResponses
     }
 
-    fun runIntegrationTests(projectName: String, integrationName: String): List<TestResponse> {
-        val testResponses = jarService.runJars(projectName, integrationName)
-        saveTestResponses(integrationPathProvider.getStudentResultsDir(projectName, integrationName), testResponses)
+    private fun getGroupName(studentName: String?, projectName: String): String {
+        if (studentName == null) {
+            throw IllegalAccessError()
+        }
+
+        println("student name: " + studentName + " projectName: " + projectName)
+
+        val group = groupsRepository.findAllByStudents_Name(studentName)
+                .filter { it.project.name == projectName }
+
+        return group.first().name
+    }
+
+    fun runIntegrationTests(studentName: String?, projectName: String, integrationName: String): List<TestResponse> {
+        val groupName = getGroupName(studentName, projectName)
+        val testResponses = jarService.runJars(groupName, projectName, integrationName)
+        saveTestResponses(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), testResponses)
 
         return testResponses
     }
@@ -52,12 +69,13 @@ class StudentService(
         file.writeBytes(out.toByteArray())
     }
 
-    fun saveFile(projectName: String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
-        var dir = stagePathProvider.getStudentTaskDir(projectName, stageName)
+    fun saveFile(studentName: String?, projectName: String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
+        val groupName = getGroupName(studentName, projectName)
+        var dir = stagePathProvider.getStudentTaskDir(groupName, projectName, stageName)
         if (fileType == FileType.BINARY) {
-            dir = stagePathProvider.getStudentBinDir(projectName, stageName)
+            dir = stagePathProvider.getStudentBinDir(groupName, projectName, stageName)
         } else {
-            dir = stagePathProvider.getStudentReportDir(projectName, stageName)
+            dir = stagePathProvider.getStudentReportDir(groupName, projectName, stageName)
         }
 
         dir.mkdirs()
@@ -70,23 +88,24 @@ class StudentService(
         uploadedFile.transferTo(outputFile)
     }
 
-    fun getStudentStages(projectName: String): List<StudentStage> {
+    fun getStudentStages(studentName: String?, projectName: String): List<StudentStage> {
+        val groupName = getGroupName(studentName, projectName)
         return stageService
                 .getStages(projectName)
                 .filter { !it.startDate.isNullOrBlank() }
                 .map { stage ->
                     StudentStage(
                             stage.stageName,
-                            getBinaryName(projectName, stage.stageName),
-                            getReportName(projectName, stage.stageName),
-                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).sortedBy { it.testCaseName },
-                            getTestCasesWithResults(projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
+                            getBinaryName(groupName, projectName, stage.stageName),
+                            getReportName(groupName, projectName, stage.stageName),
+                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).sortedBy { it.testCaseName },
+                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
                             stage.testCases.size,
                             stage.startDate,
                             stage.endDate,
                             "0",
                             stage.pointsNumber,
-                            getCodeLink(projectName, stage.stageName),
+                            getCodeLink(groupName, projectName, stage.stageName),
                             isEnable(stage.endDate))
                 }.sortedBy { it.endDate }
     }
@@ -95,8 +114,8 @@ class StudentService(
         return endDate.isNullOrBlank() || endDate.toDate()!!.after(Date())
     }
 
-    private fun getCodeLink(projectName: String, stageName: String): String? {
-        val dir = stagePathProvider.getStudentCodeDir(projectName, stageName)
+    private fun getCodeLink(groupName: String, projectName: String, stageName: String): String? {
+        val dir = stagePathProvider.getStudentCodeDir(groupName, projectName, stageName)
 
         val codeFile = File(dir.path, PathProvider.CODE)
 
@@ -107,26 +126,25 @@ class StudentService(
         return codeFile.readText()
     }
 
-    private fun getBinaryName(projectName: String, stageName: String): String? {
-        return getStageFileName(projectName, stageName, FileType.BINARY)
+    private fun getBinaryName(groupName: String, projectName: String, stageName: String): String? {
+        return getStageFileName(groupName, projectName, stageName, FileType.BINARY)
     }
 
-    private fun getReportName(projectName: String, stageName: String): String? {
-        return getStageFileName(projectName, stageName, FileType.REPORT)
+    private fun getReportName(groupName: String, projectName: String, stageName: String): String? {
+        return getStageFileName(groupName, projectName, stageName, FileType.REPORT)
     }
 
-    private fun getStageFileName(projectName: String, stageName: String, fileType: FileType): String? {
-
-        val stageDir = stagePathProvider.getStudentTaskDir(projectName, stageName)
+    private fun getStageFileName(groupName: String, projectName: String, stageName: String, fileType: FileType): String? {
+        val stageDir = stagePathProvider.getStudentTaskDir(groupName, projectName, stageName)
         if (!stageDir.exists()) {
             return null
         }
 
         val fileDir: File
         if (fileType == FileType.BINARY) {
-            fileDir = stagePathProvider.getStudentBinDir(projectName, stageName)
+            fileDir = stagePathProvider.getStudentBinDir(groupName, projectName, stageName)
         } else {
-            fileDir = stagePathProvider.getStudentReportDir(projectName, stageName)
+            fileDir = stagePathProvider.getStudentReportDir(groupName, projectName, stageName)
         }
 
         if (!fileDir.exists() || fileDir.list().size != 1) {
@@ -136,8 +154,8 @@ class StudentService(
         return fileDir.list().first()
     }
 
-    private fun getTestCasesWithResults(projectName: String, stageName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
-        val resultFile = File(stagePathProvider.getStudentResultsDir(projectName, stageName), "result.json")
+    private fun getTestCasesWithResults(groupName: String, projectName: String, stageName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
+        val resultFile = File(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), "result.json")
 
         if (!resultFile.exists()) {
             return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters, "NO RUN", null) }
@@ -152,16 +170,17 @@ class StudentService(
                     testCase.parameters,
                     results.find { it.testCaseName == testCase.name }?.status ?: "NO RUN",
                     results.find { it.testCaseName == testCase.name }?.message,
-                    isLogsFileExist(projectName, stageName, testCase.name))
+                    isLogsFileExist(groupName, projectName, stageName, testCase.name))
         }
     }
 
-    private fun isLogsFileExist(projectName: String, stageName: String, testCase: String): Boolean {
-        return stagePathProvider.getStudentLogsFileDir(projectName, stageName, testCase).exists()
+    private fun isLogsFileExist(groupName: String, projectName: String, stageName: String, testCase: String): Boolean {
+        return stagePathProvider.getStudentLogsFileDir(groupName, projectName, stageName, testCase).exists()
     }
 
-    fun saveCodeLink(projectName: String, stageName: String, codeLink: String): String {
-        val dir = stagePathProvider.getStudentCodeDir(projectName, stageName)
+    fun saveCodeLink(studentName: String?, projectName: String, stageName: String, codeLink: String): String {
+        val groupName = getGroupName(studentName, projectName)
+        val dir = stagePathProvider.getStudentCodeDir(groupName, projectName, stageName)
         dir.mkdirs()
 
         val outputFile = File(dir.path, PathProvider.CODE)
@@ -170,16 +189,19 @@ class StudentService(
         return "200"
     }
 
-    fun getJar(projectName: String, stageName: String): File {
-        return getSingleFile(stagePathProvider.getStudentBinDir(projectName, stageName))
+    fun getJar(studentName: String?, projectName: String, stageName: String): File {
+        val groupName = getGroupName(studentName, projectName)
+        return getSingleFile(stagePathProvider.getStudentBinDir(groupName, projectName, stageName))
     }
 
-    fun getReport(projectName: String, stageName: String): File {
-        return getSingleFile(stagePathProvider.getStudentReportDir(projectName, stageName))
+    fun getReport(studentName: String?, projectName: String, stageName: String): File {
+        val groupName = getGroupName(studentName, projectName)
+        return getSingleFile(stagePathProvider.getStudentReportDir(groupName, projectName, stageName))
     }
 
-    fun getStageLogsFile(projectName: String, stageName: String, testCaseName: String): File {
-        return getExactFile(stagePathProvider.getStudentLogsFileDir(projectName, stageName, testCaseName))
+    fun getStageLogsFile(studentName: String?, projectName: String, stageName: String, testCaseName: String): File {
+        val groupName = getGroupName(studentName, projectName)
+        return getExactFile(stagePathProvider.getStudentLogsFileDir(groupName, projectName, stageName, testCaseName))
     }
 
     fun getSingleFile(dir: File): File {
@@ -198,7 +220,8 @@ class StudentService(
         return file
     }
 
-    fun getStudentIntegrations(projectName: String): List<StudentIntegration> {
+    fun getStudentIntegrations(studentName: String?, projectName: String): List<StudentIntegration> {
+        val groupName = getGroupName(studentName, projectName)
         return integrationService
                 .getIntegrations(projectName)
                 .integrations
@@ -206,16 +229,16 @@ class StudentService(
                     StudentIntegration(
                             integration.name,
                             integration.integrationStages,
-                            getTestCasesWithResultsIntegration(projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, it.parameters) }),
-                            getTestCasesWithResultsIntegration(projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
+                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, it.parameters) }),
+                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
                             integration.testCases.count(),
                             true
                     )
                 }.sortedBy { it.integrationName }
     }
 
-    private fun getTestCasesWithResultsIntegration(projectName: String, integrationName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
-        val resultFile = File(integrationPathProvider.getStudentResultsDir(projectName, integrationName), "result.json")
+    private fun getTestCasesWithResultsIntegration(groupName: String, projectName: String, integrationName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
+        val resultFile = File(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), "result.json")
 
         if (!resultFile.exists()) {
             return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters, "NO RUN", null) }
@@ -230,24 +253,25 @@ class StudentService(
                     testCase.parameters,
                     results.find { it.testCaseName == testCase.name }?.status ?: "NO RUN",
                     results.find { it.testCaseName == testCase.name }?.message,
-                    isLogsFileExistIntegration(projectName, integrationName, testCase.name))
+                    isLogsFileExistIntegration(groupName, projectName, integrationName, testCase.name))
         }
     }
 
-    private fun isLogsFileExistIntegration(projectName: String, integrationName: String, testCase: String): Boolean {
-        return integrationPathProvider.getStudentLogsFileDir(projectName, integrationName, testCase).exists()
+    private fun isLogsFileExistIntegration(groupName: String, projectName: String, integrationName: String, testCase: String): Boolean {
+        return integrationPathProvider.getStudentLogsFileDir(groupName, projectName, integrationName, testCase).exists()
     }
 
-    fun getIntegrationLogsFile(projectName: String, integrationName: String, testCaseName: String): File {
-        return getExactFile(integrationPathProvider.getStudentLogsFileDir(projectName, integrationName, testCaseName))
+    fun getIntegrationLogsFile(studentName: String?, projectName: String, integrationName: String, testCaseName: String): File {
+        val groupName = getGroupName(studentName, projectName)
+        return getExactFile(integrationPathProvider.getStudentLogsFileDir(groupName, projectName, integrationName, testCaseName))
     }
 
-    fun getStudentProjects(userName: String?): List<String> {
-        if (userName == null) {
+    fun getStudentProjects(studentName: String?): List<String> {
+        if (studentName == null) {
             throw IllegalAccessError()
         }
 
-        return projectService.getStudentsProjects(userName)
+        return projectService.getStudentsProjects(studentName)
     }
 
     companion object {

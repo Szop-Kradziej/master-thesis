@@ -19,6 +19,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 
 import * as Api from "../Api";
 import StudentIntegrationRow from "./StudentIntegrationRow";
+import {getAuthHeader} from "../Api";
 
 class StudentProjectBoard extends Component {
 
@@ -35,7 +36,8 @@ class StudentProjectBoard extends Component {
     fetchStages = () => {
         fetch(backendUrl(`/student/${this.props.match.params.projectId}/stages`), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            headers: {'Authorization': getAuthHeader()}
         })
             .then(response => response.json())
             .then(json => this.setState({
@@ -46,7 +48,8 @@ class StudentProjectBoard extends Component {
     fetchIntegrations = () => {
         fetch(backendUrl(`/student/${this.props.match.params.projectId}/integrations`), {
             method: "GET",
-            credentials: "include"
+            credentials: "include",
+            headers: {'Authorization': getAuthHeader()}
         })
             .then(response => response.json())
             .then(json => this.setState({

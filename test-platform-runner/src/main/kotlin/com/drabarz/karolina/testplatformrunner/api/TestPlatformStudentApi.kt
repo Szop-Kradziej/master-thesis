@@ -24,8 +24,115 @@ class TestPlatformStudentApi(val studentService: StudentService) {
         return ProjectResponse(studentService.getStudentProjects(userName))
     }
 
+    @PostMapping("/student/upload/bin")
+    fun uploadJar(
+            @RequestHeader headers: HttpHeaders,
+            @RequestParam("file") uploadedFile: MultipartFile,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
+        val userName = getUserNameFromRequestHeader(headers)
+        studentService.saveFile(userName, projectName, stageName, uploadedFile, FileType.BINARY)
+
+        return "200"
+    }
+
+    @GetMapping("/student/{projectName}/{stageName}/bin")
+    fun downloadJar(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String): ResponseEntity<*> {
+        val userName = getUserNameFromRequestHeader(headers)
+        return createFileResponse(studentService.getJar(userName, projectName, stageName))
+    }
+
+    @PostMapping("/student/upload/report")
+    fun uploadReport(
+            @RequestHeader headers: HttpHeaders,
+            @RequestParam("file") uploadedFile: MultipartFile,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
+        val userName = getUserNameFromRequestHeader(headers)
+        studentService.saveFile(userName, projectName, stageName, uploadedFile, FileType.REPORT)
+
+        return "200"
+    }
+
+    @PostMapping("/student/upload/code")
+    fun uploadCode(
+            @RequestHeader headers: HttpHeaders,
+            @RequestParam("codeLink") codeLink: String,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
+        val userName = getUserNameFromRequestHeader(headers)
+        return studentService.saveCodeLink(userName, projectName, stageName, codeLink)
+    }
+
+    @PostMapping("/student/stage/run")
+    fun runStageJar(
+            @RequestHeader headers: HttpHeaders,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): List<TestResponse> {
+        val userName = getUserNameFromRequestHeader(headers)
+        return studentService.runStageTests(userName, projectName, stageName)
+    }
+
+    @PostMapping("/student/integration/run")
+    fun runIntegrationJar(
+            @RequestHeader headers: HttpHeaders,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("integrationName") integrationName: String): List<TestResponse> {
+        val userName = getUserNameFromRequestHeader(headers)
+        return studentService.runIntegrationTests(userName, projectName, integrationName)
+    }
+
+    @GetMapping("/student/{projectName}/{stageName}/report")
+    fun downloadReport(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String): ResponseEntity<*> {
+        val userName = getUserNameFromRequestHeader(headers)
+        return createFileResponse(studentService.getReport(userName, projectName, stageName))
+    }
+
+    @GetMapping("/student/stage/{projectName}/{stageName}/{testCaseName}/logs")
+    fun downloadStudentStageLogsFile(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String,
+            @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
+        val userName = getUserNameFromRequestHeader(headers)
+        return createFileResponse(studentService.getStageLogsFile(userName, projectName, stageName, testCaseName))
+    }
+
+    @GetMapping("/student/{projectName}/stages")
+    fun getStudentStagesList(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("projectName") projectName: String): StudentStagesResponse {
+        val userName = getUserNameFromRequestHeader(headers)
+        return StudentStagesResponse(studentService.getStudentStages(userName, projectName))
+    }
+
+    @GetMapping("/student/{projectName}/integrations")
+    fun getStudentIntegrationsList(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("projectName") projectName: String): StudentIntegrationsResponse {
+        val userName = getUserNameFromRequestHeader(headers)
+        return StudentIntegrationsResponse(studentService.getStudentIntegrations(userName, projectName))
+    }
+
+    @GetMapping("/student/integration/{projectName}/{integrationName}/{testCaseName}/logs")
+    fun downloadStudentIntegrationLogsFile(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("integrationName") integrationName: String,
+            @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
+        val userName = getUserNameFromRequestHeader(headers)
+        return createFileResponse(studentService.getIntegrationLogsFile(userName, projectName, integrationName, testCaseName))
+    }
+
     private fun getUserNameFromRequestHeader(headers: HttpHeaders): String? {
         val authorization = headers.get("Authorization")?.get(0)
+        println("BASIC_AUTH: " + authorization)
         if (authorization != null && authorization!!.toLowerCase().startsWith("basic")) {
             // Authorization: Basic base64credentials
             val base64Credentials = authorization!!.substring("Basic".length).trim({ it <= ' ' })
@@ -33,93 +140,12 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             val credentials = String(credDecoded, StandardCharsets.UTF_8)
             // credentials = username:password
             val values = credentials.split(":".toRegex(), 2).toTypedArray()
+            println("USER_NAME: " + values[0])
 
             return values[0]
         }
 
         return null
-    }
-
-    @PostMapping("/student/upload/bin")
-    fun uploadJar(
-            @RequestParam("file") uploadedFile: MultipartFile,
-            @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String): String {
-        studentService.saveFile(projectName, stageName, uploadedFile, FileType.BINARY)
-
-        return "200"
-    }
-
-    @GetMapping("/student/{projectName}/{stageName}/bin")
-    fun downloadJar(
-            @PathVariable("projectName") projectName: String,
-            @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        return createFileResponse(studentService.getJar(projectName, stageName))
-    }
-
-    @PostMapping("/student/upload/report")
-    fun uploadReport(
-            @RequestParam("file") uploadedFile: MultipartFile,
-            @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String): String {
-        studentService.saveFile(projectName, stageName, uploadedFile, FileType.REPORT)
-
-        return "200"
-    }
-
-    @PostMapping("/student/upload/code")
-    fun uploadCode(
-            @RequestParam("codeLink") codeLink: String,
-            @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String): String {
-        return studentService.saveCodeLink(projectName, stageName, codeLink)
-    }
-
-    @PostMapping("/student/stage/run")
-    fun runStageJar(
-            @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String): List<TestResponse> {
-        return studentService.runStageTests(projectName, stageName)
-    }
-
-    @PostMapping("/student/integration/run")
-    fun runIntegrationJar(
-            @RequestParam("projectName") projectName: String,
-            @RequestParam("integrationName") integrationName: String): List<TestResponse> {
-        return studentService.runIntegrationTests(projectName, integrationName)
-    }
-
-    @GetMapping("/student/{projectName}/{stageName}/report")
-    fun downloadReport(
-            @PathVariable("projectName") projectName: String,
-            @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        return createFileResponse(studentService.getReport(projectName, stageName))
-    }
-
-    @GetMapping("/student/stage/{projectName}/{stageName}/{testCaseName}/logs")
-    fun downloadStudentStageLogsFile(
-            @PathVariable("projectName") projectName: String,
-            @PathVariable("stageName") stageName: String,
-            @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
-        return createFileResponse(studentService.getStageLogsFile(projectName, stageName, testCaseName))
-    }
-
-    @GetMapping("/student/{projectName}/stages")
-    fun getStudentStagesList(@PathVariable("projectName") projectName: String): StudentStagesResponse {
-        return StudentStagesResponse(studentService.getStudentStages(projectName))
-    }
-
-    @GetMapping("/student/{projectName}/integrations")
-    fun getStudentIntegrationsList(@PathVariable("projectName") projectName: String): StudentIntegrationsResponse {
-        return StudentIntegrationsResponse(studentService.getStudentIntegrations(projectName))
-    }
-
-    @GetMapping("/student/integration/{projectName}/{integrationName}/{testCaseName}/logs")
-    fun downloadStudentIntegrationLogsFile(
-            @PathVariable("projectName") projectName: String,
-            @PathVariable("integrationName") integrationName: String,
-            @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
-        return createFileResponse(studentService.getIntegrationLogsFile(projectName, integrationName, testCaseName))
     }
 }
 

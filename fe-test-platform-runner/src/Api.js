@@ -106,15 +106,18 @@ export function uploadIntegrationTestCaseFile(projectName, integrationName, test
 }
 
 export function uploadStudentBinary(data) {
-    return postData(backendUrl("/student/upload/bin"), data)
+    let headers = {'Authorization': getAuthHeader()};
+    return postData(backendUrl("/student/upload/bin"), data, headers)
 }
 
 export function uploadStudentReport(data) {
-    return postData(backendUrl("/student/upload/report"), data)
+    let headers = {'Authorization': getAuthHeader()};
+    return postData(backendUrl("/student/upload/report"), data, headers)
 }
 
 export function uploadStudentCodeLink(data) {
-    return postData(backendUrl("/student/upload/code"), data)
+    let headers = {'Authorization': getAuthHeader()};
+    return postData(backendUrl("/student/upload/code"), data, headers)
 }
 
 export function editStageStartDate(data) {
@@ -137,8 +140,8 @@ export function editIntegrationTestCaseParameters(data) {
     return postData(backendUrl("/integration/testCase/parameters"), data)
 }
 
-function postData(url, data) {
-    return axios.post(url, data)
+function postData(url, data, headers) {
+    return axios.post(url, data, { headers: headers})
         .then(function (response) {
             console.log("success");
         })
@@ -153,15 +156,18 @@ export function downloadProjectEnvironment(projectName) {
 }
 
 export function downloadStageDescription(projectName, stageName) {
-    return downloadFile(backendUrl('/' + projectName + '/' + stageName + "/description"))
+    let headers = {'Authorization': getAuthHeader()};
+    return downloadFile(backendUrl('/' + projectName + '/' + stageName + "/description"), headers)
 }
 
 export function downloadBin(projectName, stageName) {
-    return downloadFile(backendUrl('/student/' + projectName + '/' + stageName + "/bin"))
+    let headers = {'Authorization': getAuthHeader()};
+    return downloadFile(backendUrl('/student/' + projectName + '/' + stageName + "/bin"), headers)
 }
 
 export function downloadReport(projectName, stageName) {
-    return downloadFile(backendUrl('/student/' + projectName + '/' + stageName + "/report"))
+    let headers = {'Authorization': getAuthHeader()};
+    return downloadFile(backendUrl('/student/' + projectName + '/' + stageName + "/report"), headers)
 }
 
 export function downloadStageTestCaseFile(projectName, stageName, testCaseName, fileType) {
@@ -173,15 +179,17 @@ export function downloadIntegrationTestCaseFile(projectName, integrationName, te
 }
 
 export function downloadStudentStageLogsFile(projectName, stageName, testCaseName) {
-    return downloadFile(backendUrl('/student/stage/' + projectName + '/' + stageName + '/' + testCaseName + '/logs'))
+    let headers = {'Authorization': getAuthHeader()};
+    return downloadFile(backendUrl('/student/stage/' + projectName + '/' + stageName + '/' + testCaseName + '/logs'), headers)
 }
 
 export function downloadStudentIntegrationLogsFile(projectName, integrationName, testCaseName) {
-    return downloadFile(backendUrl('/student/integration/' + projectName + '/' + integrationName + '/' + testCaseName + '/logs'))
+    let headers = {'Authorization': getAuthHeader()};
+    return downloadFile(backendUrl('/student/integration/' + projectName + '/' + integrationName + '/' + testCaseName + '/logs'), headers)
 }
 
-export function downloadFile(url) {
-    return axios.get(url, {responseType: "blob"})
+export function downloadFile(url, headers) {
+    return axios.get(url, {responseType: "blob", headers: headers})
         .then((response) => {
             console.log("Response", response);
             let fileName = 'download';

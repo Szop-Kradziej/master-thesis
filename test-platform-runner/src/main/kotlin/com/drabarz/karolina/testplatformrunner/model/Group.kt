@@ -25,4 +25,5 @@ interface GroupsRepository : CrudRepository<Group, Long> {
     fun findByName(name: String): Group
     fun findAllByProject_Name(projectName: String): List<Group>
     fun findAllByStudents_Name(userName: String): List<Group>
+    fun findByProject_NameAndStudents_Name(projectName: String, userName: String): Group?
 }

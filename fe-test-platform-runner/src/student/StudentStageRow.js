@@ -18,6 +18,7 @@ import * as Api from "../Api";
 import StudentUploadBinaryDialog from "./StudentUploadBinaryDialog";
 import StudentUploadReportDialog from "./StudentUploadReportDialog";
 import StudentUploadCodeLinkDialog from "./StudentUploadCodeLinkDialog";
+import {getAuthHeader} from "../Api";
 
 class StudentStageRow extends Component {
 
@@ -46,7 +47,7 @@ class StudentStageRow extends Component {
         fetch(backendUrl(`/student/stage/run`), {
             method: "POST",
             credentials: "include",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
             body: "projectName=" + this.props.projectName + "&stageName=" + this.props.stage.stageName
         })
             .then(this.props.stageChangedHandler)

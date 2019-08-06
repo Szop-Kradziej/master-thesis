@@ -9,6 +9,7 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
+import {getAuthHeader} from "../Api";
 
 class StudentIntegrationRow extends Component {
 
@@ -16,7 +17,7 @@ class StudentIntegrationRow extends Component {
         fetch(backendUrl(`/student/integration/run`), {
             method: "POST",
             credentials: "include",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
             body: "projectName=" + this.props.projectName + "&integrationName=" + this.props.integration.integrationName
         })
             .then(this.props.integrationChangedHandler)

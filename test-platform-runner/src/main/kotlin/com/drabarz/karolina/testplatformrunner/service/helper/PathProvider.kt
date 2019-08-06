@@ -73,38 +73,38 @@ interface TaskPathProvider {
         return File(getTaskDir(projectName, taskName), PathProvider.DESCRIPTION)
     }
 
-    fun getStudentResultsDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, PathProvider.RESULTS)
+    fun getStudentResultsDir(groupName: String, projectName: String, stageName: String): File {
+        return getStudentFileDir(groupName, projectName, stageName, PathProvider.RESULTS)
     }
 
-    fun getStudentFileDir(projectName: String, stageName: String, file: String): File {
-        return File(getStudentTaskDir(projectName, stageName), file)
+    fun getStudentFileDir(groupName: String, projectName: String, stageName: String, file: String): File {
+        return File(getStudentTaskDir(groupName, projectName, stageName), file)
     }
 
-    fun getStudentTaskDir(projectName: String, taskName: String): File
+    fun getStudentTaskDir(groupName: String, projectName: String, taskName: String): File
 
-    fun getStudentCodeDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, PathProvider.CODE)
+    fun getStudentCodeDir(groupName: String, projectName: String, stageName: String): File {
+        return getStudentFileDir(groupName, projectName, stageName, PathProvider.CODE)
     }
 
-    fun getStudentReportDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, PathProvider.REPORT)
+    fun getStudentReportDir(groupName: String, projectName: String, stageName: String): File {
+        return getStudentFileDir(groupName, projectName, stageName, PathProvider.REPORT)
     }
 
-    fun getStudentBinDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, PathProvider.BIN)
+    fun getStudentBinDir(groupName: String, projectName: String, stageName: String): File {
+        return getStudentFileDir(groupName, projectName, stageName, PathProvider.BIN)
     }
 
-    fun getStudentOutputDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, PathProvider.OUTPUT)
+    fun getStudentOutputDir(groupName: String, projectName: String, stageName: String): File {
+        return getStudentFileDir(groupName, projectName, stageName, PathProvider.OUTPUT)
     }
 
-    fun getStudentLogsDir(projectName: String, stageName: String): File {
-        return getStudentFileDir(projectName, stageName, PathProvider.LOGS)
+    fun getStudentLogsDir(groupName: String, projectName: String, stageName: String): File {
+        return getStudentFileDir(groupName, projectName, stageName, PathProvider.LOGS)
     }
 
-    fun getStudentLogsFileDir(projectName: String, stageName: String, testCaseName: String): File {
-        return File(getStudentLogsDir(projectName, stageName), testCaseName)
+    fun getStudentLogsFileDir(groupName: String, projectName: String, stageName: String, testCaseName: String): File {
+        return File(getStudentLogsDir(groupName, projectName, stageName), testCaseName)
     }
 }
 
@@ -115,8 +115,8 @@ class StagePathProvider : PathProvider(), TaskPathProvider {
         return File(getProjectDir(projectName), STAGES)
     }
 
-    override fun getStudentTaskDir(projectName: String, taskName: String): File {
-        return File("$jarPath/$projectName/$STAGES/$taskName")
+    override fun getStudentTaskDir(groupName: String, projectName: String, taskName: String): File {
+        return File("$jarPath/$projectName/$groupName/$STAGES/$taskName")
     }
 }
 
@@ -127,7 +127,7 @@ class IntegrationPathProvider : PathProvider(), TaskPathProvider {
         return File(getProjectDir(projectName), INTEGRATIONS)
     }
 
-    override fun getStudentTaskDir(projectName: String, taskName: String): File {
-        return File("$jarPath/$projectName/$INTEGRATIONS/$taskName")
+    override fun getStudentTaskDir(groupName: String, projectName: String, taskName: String): File {
+        return File("$jarPath/$projectName/$groupName/$INTEGRATIONS/$taskName")
     }
 }
