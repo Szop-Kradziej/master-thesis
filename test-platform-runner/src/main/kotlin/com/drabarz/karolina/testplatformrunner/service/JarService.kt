@@ -1,5 +1,8 @@
-package com.drabarz.karolina.testplatformrunner
+package com.drabarz.karolina.testplatformrunner.service
 
+import com.drabarz.karolina.testplatformrunner.api.TestCase
+import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
+import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
 import org.hibernate.annotations.common.util.impl.LoggerFactory
 import org.springframework.stereotype.Component
 import org.testcontainers.containers.BindMode

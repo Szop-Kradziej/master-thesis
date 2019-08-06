@@ -1,5 +1,11 @@
-package com.drabarz.karolina.testplatformrunner
+package com.drabarz.karolina.testplatformrunner.service
 
+import com.drabarz.karolina.testplatformrunner.api.StudentIntegration
+import com.drabarz.karolina.testplatformrunner.api.StudentStage
+import com.drabarz.karolina.testplatformrunner.api.TestCaseWithResult
+import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
+import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
+import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import org.slf4j.LoggerFactory
@@ -133,7 +139,7 @@ class StudentService(
         val resultFile = File(stagePathProvider.getStudentResultsDir(projectName, stageName), "result.json")
 
         if (!resultFile.exists()) {
-            return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters,"NO RUN", null) }
+            return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters, "NO RUN", null) }
         }
 
         val jsonData = resultFile.readBytes()

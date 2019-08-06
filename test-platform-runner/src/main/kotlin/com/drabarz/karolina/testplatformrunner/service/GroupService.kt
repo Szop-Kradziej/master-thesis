@@ -1,5 +1,8 @@
-package com.drabarz.karolina.testplatformrunner
+package com.drabarz.karolina.testplatformrunner.service
 
+import com.drabarz.karolina.testplatformrunner.api.GroupDao
+import com.drabarz.karolina.testplatformrunner.api.GroupsDao
+import com.drabarz.karolina.testplatformrunner.api.GroupsResponse
 import com.drabarz.karolina.testplatformrunner.model.*
 import com.drabarz.karolina.testplatformrunner.model.Group
 import org.slf4j.LoggerFactory
@@ -35,7 +38,7 @@ class GroupService(
 
         return GroupsResponse(groups
                 .map {
-                    com.drabarz.karolina.testplatformrunner.Group(
+                    com.drabarz.karolina.testplatformrunner.api.Group(
                             it.name,
                             it.project.name,
                             it.students.map { it.name })

@@ -1,4 +1,4 @@
-package com.drabarz.karolina.testplatformrunner
+package com.drabarz.karolina.testplatformrunner.service.helper
 
 import org.springframework.stereotype.Component
 import java.io.File

@@ -1,9 +1,13 @@
-package com.drabarz.karolina.testplatformrunner
+package com.drabarz.karolina.testplatformrunner.service
 
+import com.drabarz.karolina.testplatformrunner.api.StageDao
 import com.drabarz.karolina.testplatformrunner.model.Project
 import com.drabarz.karolina.testplatformrunner.model.ProjectsRepository
 import com.drabarz.karolina.testplatformrunner.model.Stage
 import com.drabarz.karolina.testplatformrunner.model.StagesRepository
+import com.drabarz.karolina.testplatformrunner.service.helper.DeleteFileHelper
+import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
+import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File

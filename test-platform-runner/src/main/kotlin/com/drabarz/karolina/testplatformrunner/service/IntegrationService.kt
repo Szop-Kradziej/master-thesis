@@ -1,6 +1,10 @@
-package com.drabarz.karolina.testplatformrunner
+package com.drabarz.karolina.testplatformrunner.service
 
+import com.drabarz.karolina.testplatformrunner.api.IntegrationDao
+import com.drabarz.karolina.testplatformrunner.api.IntegrationStageDao
+import com.drabarz.karolina.testplatformrunner.api.IntegrationsDao
 import com.drabarz.karolina.testplatformrunner.model.*
+import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File

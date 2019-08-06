@@ -1,5 +1,6 @@
-package com.drabarz.karolina.testplatformrunner
+package com.drabarz.karolina.testplatformrunner.service.helper
 
+import com.drabarz.karolina.testplatformrunner.service.TestCaseService
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import java.io.File

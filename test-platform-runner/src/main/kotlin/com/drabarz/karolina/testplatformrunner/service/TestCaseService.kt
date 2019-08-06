@@ -1,5 +1,9 @@
-package com.drabarz.karolina.testplatformrunner
+package com.drabarz.karolina.testplatformrunner.service
 
+import com.drabarz.karolina.testplatformrunner.api.TestCase
+import com.drabarz.karolina.testplatformrunner.service.helper.DeleteFileHelper
+import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
+import com.drabarz.karolina.testplatformrunner.service.helper.TaskPathProvider
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 

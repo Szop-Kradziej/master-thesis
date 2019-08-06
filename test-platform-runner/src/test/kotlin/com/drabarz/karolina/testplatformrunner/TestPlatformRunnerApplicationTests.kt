@@ -1,5 +1,6 @@
 package com.drabarz.karolina.testplatformrunner
 
+import com.drabarz.karolina.testplatformrunner.service.helper.PathProv
 import org.junit.After
 import org.junit.Test
 import org.junit.runner.RunWith
