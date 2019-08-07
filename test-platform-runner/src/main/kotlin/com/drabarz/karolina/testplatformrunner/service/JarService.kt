@@ -45,7 +45,7 @@ class JarService(
         return testCases.map {
             val inputFile = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "input").listFiles().first()
             val outputFile = File(stagePathProvider.getStudentOutputDir(groupName, projectName, stageName).apply { mkdir() }, "output").apply { createNewFile() }
-            val container = containerFactory.createContainerWithFilesBinded(inputFile.absolutePath, outputFile.absolutePath, "${jarPath.absolutePath}/$jarName")
+            val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, outputFile.absolutePath, "${jarPath.absolutePath}/$jarName")
             containerService.runTestCase(container)
                     .also { logs -> saveLogsToResultFile(groupName, logs, projectName, stageName, it.testCaseName) }
             val expectedOutput = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "output").listFiles().first().readText()
@@ -94,13 +94,15 @@ class JarService(
             File(jarPath, jarPath.list().first())
         }
 
+        val environmentDir = stagePathProvider.getProjectEnvironmentDir(projectName)
+
         integrationPathProvider.getStudentLogsDir(groupName, projectName, integrationName).listFiles()?.forEach { it.delete() }
 
         return testCases.map { testCase ->
             val inputFile = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "input").listFiles().first()
             val outputFile = jarPaths.fold(inputFile) { inputFile, it ->
                 val jarPath = it.absolutePath
-                generateOutputFile(groupName, projectName, integrationName, inputFile, jarPath, testCase)
+                generateOutputFile(environmentDir, groupName, projectName, integrationName, inputFile, jarPath, testCase)
             }
 
             val expectedOutput = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "output").listFiles().first().readText()
@@ -109,10 +111,10 @@ class JarService(
         }
     }
 
-    private fun generateOutputFile(groupName: String, projectName: String, integrationName: String, inputFile: File, jarPath: String, testCase: TestCase): File {
+    private fun generateOutputFile(environmentDir: File, groupName: String, projectName: String, integrationName: String, inputFile: File, jarPath: String, testCase: TestCase): File {
         val outputFile = File(integrationPathProvider.getStudentOutputDir(groupName, projectName, integrationName).apply { mkdirs() }, "output").apply { createNewFile() }
 
-        val container = containerFactory.createContainerWithFilesBinded(inputFile.absolutePath, outputFile.absolutePath, jarPath)
+        val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, outputFile.absolutePath, jarPath)
         containerService.runTestCase(container)
                 .also { logs -> saveLogsToResultFileIntegration(groupName, logs, projectName, integrationName, testCase.testCaseName) }
         return outputFile
@@ -143,11 +145,11 @@ data class TestResponse constructor(val testCaseName: String, val status: String
 @Component
 class ContainerFactory {
 
-    fun createContainerWithFilesBinded(inputFilePath: String, outputFilePath: String, jarPath: String): KGenericContainer {
+    fun createContainerWithFilesBinded(environmentDir: File, inputFilePath: String, outputFilePath: String, jarPath: String): KGenericContainer {
 
         return KGenericContainer(
                 ImageFromDockerfile()
-                        .withFileFromClasspath("Dockerfile", "static/Dockerfile")
+                        .withFileFromFile("Dockerfile", environmentDir.listFiles().first())
         )
                 .withCopyFileToContainer(MountableFile.forHostPath(jarPath), "/home/example.jar")
                 .withFileSystemBind(inputFilePath, "/home/input.txt", BindMode.READ_ONLY)
