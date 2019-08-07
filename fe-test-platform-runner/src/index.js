@@ -9,12 +9,18 @@ import ProjectsBoard from "./lecturer/management/ProjectsBoard";
 import ProjectBoard from "./lecturer/management/project/ProjectBoard";
 import StudentProjectsBoard from "./student/StudentProjectsBoard";
 import StudentProjectBoard from "./student/StudentProjectBoard";
+import PreviewBoard from "./lecturer/management/preview/PreviewBoard";
+import PreviewProjectsBoard from "./lecturer/management/preview/PreviewProjectsBoard";
+import PreviewStudentProjectBoard from "./lecturer/management/preview/PreviewStudentProjectBoard";
 
 const TopRoute = () => (
     <Switch>
         <Route exact path='/' component={App}/>
         <Route exact path='/projects' component={ProjectsBoard}/>
         <Route path="/projects/:projectId" component={ProjectBoard}/>
+        <Route exact path="/preview" component={PreviewProjectsBoard}/>
+        <Route exact path="/preview/student/:projectId/:groupId" component={PreviewStudentProjectBoard}/>
+        <Route path="/preview/:projectId" component={PreviewBoard}/>
         <Route exact path='/student/projects/' component={StudentProjectsBoard}/>
         <Route path="/student/projects/:projectId" component={StudentProjectBoard}/>
     </Switch>

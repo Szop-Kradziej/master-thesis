@@ -21,7 +21,7 @@ class App extends Component {
                         Zarządzaj projektami
                     </Button>
                 </Link>
-                <Link to={"/"} className={this.props.classes.link}>
+                <Link to={"/preview"} className={this.props.classes.link}>
                     <Button size="large"
                             className={classNames(this.props.classes.button, this.props.classes.marginRight)}
                             variant="contained">
