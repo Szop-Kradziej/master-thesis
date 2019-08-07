@@ -16,6 +16,9 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import SettingsIcon from "@material-ui/icons/Settings";
 import * as Api from "../../../Api";
 import {getAuthHeader} from "../../../Api";
+import PreviewStudentStageRow from "./PreviewStudentStageRow";
+import PreviewStudentTestCasesDetails from "./PreviewStudentTestCasesDetails";
+import PreviewStudentIntegrationRow from "./PreviewStudentIntegrationRow";
 
 class PreviewStudentProjectBoard extends Component {
 
@@ -93,20 +96,20 @@ class PreviewStudentProjectBoard extends Component {
                                 <CustomTableCell component="th" scope="row">
                                     <ExpansionPanel disabled={!stage.enable}>
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                            {/*<StudentStageRow*/}
-                                                {/*stage={stage}*/}
-                                                {/*projectName={this.props.match.params.projectId}*/}
-                                                {/*stageChangedHandler={this.stageChangedHandler}/>*/}
+                                            <PreviewStudentStageRow
+                                                stage={stage}
+                                                projectName={this.props.match.params.projectId}
+                                                stageChangedHandler={this.stageChangedHandler}/>
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
                                                     <p className={this.props.classes.testsHeading}> Testy </p>
-                                                    {/*<StudentTestCasesDetails*/}
-                                                        {/*testCases={stage.testCases}*/}
-                                                        {/*projectName={this.props.match.params.projectId}*/}
-                                                        {/*taskName={stage.stageName}*/}
-                                                        {/*taskType="stage"/>*/}
+                                                    <PreviewStudentTestCasesDetails
+                                                        testCases={stage.testCases}
+                                                        projectName={this.props.match.params.projectId}
+                                                        taskName={stage.stageName}
+                                                        taskType="stage"/>
                                                 </div>
                                             </Typography>
                                         </ExpansionPanelDetails>
@@ -128,20 +131,20 @@ class PreviewStudentProjectBoard extends Component {
                                 <CustomTableCell component="th" scope="row">
                                     <ExpansionPanel disabled={!integration.enable}>
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                                            {/*<StudentIntegrationRow*/}
-                                                {/*integration={integration}*/}
-                                                {/*projectName={this.props.match.params.projectId}*/}
-                                                {/*integrationChangedHandler={this.integrationChangedHandler}/>*/}
+                                            <PreviewStudentIntegrationRow
+                                                integration={integration}
+                                                projectName={this.props.match.params.projectId}
+                                                integrationChangedHandler={this.integrationChangedHandler}/>
                                         </ExpansionPanelSummary>
                                         <ExpansionPanelDetails>
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
                                                     <p className={this.props.classes.testsHeading}> Testy </p>
-                                                    {/*<StudentTestCasesDetails*/}
-                                                        {/*testCases={integration.testCases}*/}
-                                                        {/*projectName={this.props.match.params.projectId}*/}
-                                                        {/*taskName={integration.integrationName}*/}
-                                                        {/*taskType="integration"/>*/}
+                                                    <PreviewStudentTestCasesDetails
+                                                        testCases={integration.testCases}
+                                                        projectName={this.props.match.params.projectId}
+                                                        taskName={integration.integrationName}
+                                                        taskType="integration"/>
                                                 </div>
                                             </Typography>
                                         </ExpansionPanelDetails>
