@@ -10,6 +10,8 @@ import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
 import {getAuthHeader} from "../../Api";
+import AssessmentIcon from "@material-ui/icons/Assessment";
+import * as Api from "../../Api";
 
 class PreviewStudentIntegrationRow extends Component {
 
@@ -23,6 +25,10 @@ class PreviewStudentIntegrationRow extends Component {
             .then(this.props.integrationChangedHandler)
             .then(function (response) {
             })
+    };
+
+    handleDownloadIntegrationStatistics = () => {
+        Api.downloadIntegrationStatistics(this.props.groupName, this.props.projectName, this.props.integration.integrationName)
     };
 
     //TODO: Move to separate function - remove duplicates
@@ -47,6 +53,10 @@ class PreviewStudentIntegrationRow extends Component {
                 <Typography className={this.props.classes.heading}>
                     <InputWrapper>
                         {this.props.integration.integrationName}
+                        <IconButton aria-label="Pobierz statystyki dla integracji"
+                                    onClick={this.handleDownloadIntegrationStatistics}>
+                            <AssessmentIcon/>
+                        </IconButton>
                     </InputWrapper>
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>

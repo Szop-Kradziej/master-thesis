@@ -102,6 +102,16 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
         return createFileResponse(groupResultService.getStageLogsFile(groupName, projectName, stageName, testCaseName))
     }
 
+    @GetMapping("/preview/{groupName}/stage/{projectName}/{stageName}/statistics")
+    fun downloadStudentStageStatisticsFile(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("groupName") groupName: String,
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("stageName") stageName: String): ResponseEntity<*> {
+        val userName = getUserNameFromRequestHeader(headers)
+        return createFileResponse(groupResultService.getStageStatisticsFile(groupName, projectName, stageName))
+    }
+
     @GetMapping("/preview/{groupName}/{projectName}/stages")
     fun getStudentStagesList(
             @RequestHeader headers: HttpHeaders,
@@ -118,6 +128,16 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @PathVariable("projectName") projectName: String): StudentIntegrationsResponse {
         val userName = getUserNameFromRequestHeader(headers)
         return StudentIntegrationsResponse(groupResultService.getStudentIntegrations(groupName, projectName))
+    }
+
+    @GetMapping("/preview/{groupName}/integration/{projectName}/{integrationName}/statistics")
+    fun downloadStudentIntegrationStatisticsFile(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("groupName") groupName: String,
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("integrationName") integrationName: String): ResponseEntity<*> {
+        val userName = getUserNameFromRequestHeader(headers)
+        return createFileResponse(groupResultService.getIntegrationStatisticsFile(groupName, projectName, integrationName))
     }
 
     @GetMapping("/preview/{groupName}/integration/{projectName}/{integrationName}/{testCaseName}/logs")

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.lang.RuntimeException
 import java.util.*
 
 @Component
@@ -297,6 +298,22 @@ class GroupResultService(
 
     fun getIntegrationLogsFile(groupName: String, projectName: String, integrationName: String, testCaseName: String): File {
         return getExactFile(integrationPathProvider.getStudentLogsFileDir(groupName, projectName, integrationName, testCaseName))
+    }
+
+    fun getStageStatisticsFile(groupName: String, projectName: String, stageName: String): File {
+        return getResultsFile(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName))
+    }
+
+    fun getIntegrationStatisticsFile(groupName: String, projectName: String, integrationName: String): File {
+        return getResultsFile(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName))
+    }
+
+    fun getResultsFile(resultsDir: File): File {
+        if (resultsDir.exists() && resultsDir.list().size == 1) {
+            return resultsDir.listFiles().first()
+        }
+
+        throw NoSuchFileException(resultsDir)
     }
 }
 

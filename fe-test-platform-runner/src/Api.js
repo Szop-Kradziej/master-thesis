@@ -167,8 +167,17 @@ export function downloadProjectEnvironment(projectName) {
 }
 
 export function downloadStageDescription(projectName, stageName) {
-    let headers = {'Authorization': getAuthHeader()};
-    return downloadFile(backendUrl('/' + projectName + '/' + stageName + "/description"), headers)
+    return downloadFile(backendUrl('/' + projectName + '/' + stageName + "/description"))
+}
+
+export function downloadStageStatistics(groupName, projectName, stageName) {
+    let headers = {'Authorization': getAdminAuthHeader()};
+    return downloadFile(backendUrl('/preview/' + groupName + '/stage/' + projectName + '/' + stageName + "/statistics"), headers)
+}
+
+export function downloadIntegrationStatistics(groupName, projectName, integrationName) {
+    let headers = {'Authorization': getAdminAuthHeader()};
+    return downloadFile(backendUrl('/preview/' + groupName + '/integration/' + projectName + '/' + integrationName + "/statistics"), headers)
 }
 
 export function downloadBin(projectName, stageName) {

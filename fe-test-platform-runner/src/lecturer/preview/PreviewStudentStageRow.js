@@ -7,6 +7,7 @@ import DownloadIcon from '@material-ui/icons/CloudDownload';
 import UploadIcon from '@material-ui/icons/CloudUpload';
 import RunIcon from '@material-ui/icons/PlayArrow';
 import DescriptionIcon from '@material-ui/icons/Description';
+import AssessmentIcon from '@material-ui/icons/Assessment';
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
@@ -93,6 +94,10 @@ class PreviewStudentStageRow extends Component {
         Api.downloadStageDescription(this.props.projectName, this.props.stage.stageName)
     };
 
+    handleDownloadStageStatistics = () => {
+        Api.downloadStageStatistics(this.props.groupName, this.props.projectName, this.props.stage.stageName)
+    };
+
     render() {
         return (
             <div className={this.props.classes.stageRow}>
@@ -102,6 +107,10 @@ class PreviewStudentStageRow extends Component {
                         <IconButton aria-label="Pobierz opis etapu"
                                     onClick={this.handleDownloadStageDescription}>
                             <DescriptionIcon/>
+                        </IconButton>
+                        <IconButton aria-label="Pobierz statystyki dla etapu"
+                                    onClick={this.handleDownloadStageStatistics}>
+                            <AssessmentIcon/>
                         </IconButton>
                     </InputWrapper>
                 </Typography>
