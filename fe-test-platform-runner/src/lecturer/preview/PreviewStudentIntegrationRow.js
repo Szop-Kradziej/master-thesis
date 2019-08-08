@@ -54,6 +54,7 @@ class PreviewStudentIntegrationRow extends Component {
                     <InputWrapper>
                         {this.props.integration.integrationName}
                         <IconButton aria-label="Pobierz statystyki dla integracji"
+                                    disabled={this.props.integration.statistics === false}
                                     onClick={this.handleDownloadIntegrationStatistics}>
                             <AssessmentIcon/>
                         </IconButton>
@@ -68,7 +69,8 @@ class PreviewStudentIntegrationRow extends Component {
                                     <InputWrapper>
                                         Uruchom integrację
                                         <IconButton aria-label="Uruchom"
-                                                    disabled={this.props.integration.enable === false}
+                                                    //TODO: FIX
+                                                    // disabled={this.props.integration.enable === false}
                                                     onClick={this.handleRunTests}>
                                             <RunIcon/>
                                         </IconButton>

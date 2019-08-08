@@ -116,18 +116,18 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
     fun getStudentStagesList(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("groupName") groupName: String,
-            @PathVariable("projectName") projectName: String): StudentStagesResponse {
+            @PathVariable("projectName") projectName: String): StudentPreviewStagesResponse {
         val userName = getUserNameFromRequestHeader(headers)
-        return StudentStagesResponse(groupResultService.getStudentStages(groupName, projectName))
+        return StudentPreviewStagesResponse(groupResultService.getStudentPreviewStages(groupName, projectName))
     }
 
     @GetMapping("/preview/{groupName}/{projectName}/integrations")
     fun getStudentIntegrationsList(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("groupName") groupName: String,
-            @PathVariable("projectName") projectName: String): StudentIntegrationsResponse {
+            @PathVariable("projectName") projectName: String): StudentPreviewIntegrationsResponse {
         val userName = getUserNameFromRequestHeader(headers)
-        return StudentIntegrationsResponse(groupResultService.getStudentIntegrations(groupName, projectName))
+        return StudentPreviewIntegrationsResponse(groupResultService.getStudentPreviewIntegrations(groupName, projectName))
     }
 
     @GetMapping("/preview/{groupName}/integration/{projectName}/{integrationName}/statistics")
@@ -151,4 +151,8 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
         return createFileResponse(groupResultService.getIntegrationLogsFile(groupName, projectName, integrationName, testCaseName))
     }
 }
+class StudentPreviewStagesResponse(val stages: List<StudentPreviewStage>)
+class StudentPreviewStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val startDate: String?, val endDate: String?, val successfulGroups: Int, val totalGroupsNumber: Int, val codeLink: String?, val statistics: Boolean)
+class StudentPreviewIntegrationsResponse(val integrations: List<StudentPreviewIntegration>)
+class StudentPreviewIntegration(val integrationName: String, val integrationStages: List<IntegrationStageDao>, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val successfulGroups: Int, val totalGroupsNumber: Int, val statistics: Boolean)
 

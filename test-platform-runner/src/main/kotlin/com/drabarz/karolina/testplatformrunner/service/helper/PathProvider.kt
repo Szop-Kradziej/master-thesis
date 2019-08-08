@@ -73,8 +73,8 @@ interface TaskPathProvider {
         return File(getTaskDir(projectName, taskName), PathProvider.DESCRIPTION)
     }
 
-    fun getStudentResultsDir(groupName: String, projectName: String, stageName: String): File {
-        return getStudentFileDir(groupName, projectName, stageName, PathProvider.RESULTS)
+    fun getStudentResultsDir(groupName: String, projectName: String, taskName: String): File {
+        return getStudentFileDir(groupName, projectName, taskName, PathProvider.RESULTS)
     }
 
     fun getStudentFileDir(groupName: String, projectName: String, stageName: String, file: String): File {

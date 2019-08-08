@@ -1,8 +1,6 @@
 package com.drabarz.karolina.testplatformrunner.service
 
-import com.drabarz.karolina.testplatformrunner.api.StudentIntegration
-import com.drabarz.karolina.testplatformrunner.api.StudentStage
-import com.drabarz.karolina.testplatformrunner.api.TestCaseWithResult
+import com.drabarz.karolina.testplatformrunner.api.*
 import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
@@ -12,7 +10,6 @@ import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayOutputStream
 import java.io.File
-import java.lang.RuntimeException
 import java.util.*
 
 @Component
@@ -119,6 +116,27 @@ class GroupResultService(
         }
 
         return counter
+    }
+
+    fun getStudentPreviewStages(groupName: String, projectName: String): List<StudentPreviewStage> {
+        return stageService
+                .getStages(projectName)
+                .filter { !it.startDate.isNullOrBlank() }
+                .map { stage ->
+                    StudentPreviewStage(
+                            stage.stageName,
+                            getBinaryName(groupName, projectName, stage.stageName),
+                            getReportName(groupName, projectName, stage.stageName),
+                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).sortedBy { it.testCaseName },
+                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
+                            stage.testCases.size,
+                            stage.startDate,
+                            stage.endDate,
+                            countSuccessfulStageGroups(projectName, stage.stageName),
+                            countTotalGroups(projectName),
+                            getCodeLink(groupName, projectName, stage.stageName),
+                            hasStageStatistics(groupName, projectName, stage.stageName))
+                }.sortedBy { it.endDate }
     }
 
     private fun countTotalGroups(projectName: String): Int {
@@ -270,6 +288,24 @@ class GroupResultService(
         return counter
     }
 
+    fun getStudentPreviewIntegrations(groupName: String, projectName: String): List<StudentPreviewIntegration> {
+        return integrationService
+                .getIntegrations(projectName)
+                .integrations
+                .map { integration ->
+                    StudentPreviewIntegration(
+                            integration.name,
+                            integration.integrationStages,
+                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, it.parameters) }),
+                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
+                            integration.testCases.count(),
+                            countSuccessfulIntegrationGroups(projectName, integration.name),
+                            countTotalGroups(projectName),
+                            hasStatistics(integrationPathProvider.getStudentResultsDir(groupName, projectName, integration.name))
+                    )
+                }.sortedBy { it.integrationName }
+    }
+
     private fun getTestCasesWithResultsIntegration(groupName: String, projectName: String, integrationName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
         val resultFile = File(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), "result.json")
 
@@ -309,11 +345,23 @@ class GroupResultService(
     }
 
     fun getResultsFile(resultsDir: File): File {
-        if (resultsDir.exists() && resultsDir.list().size == 1) {
+        if (hasStatistics(resultsDir)) {
             return resultsDir.listFiles().first()
         }
 
         throw NoSuchFileException(resultsDir)
+    }
+
+    private fun hasStageStatistics(groupName: String, projectName: String, stageName: String): Boolean {
+        return hasStatistics(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName))
+    }
+
+    private fun hasIntegrationStatistics(groupName: String, projectName: String, stageName: String): Boolean {
+        return hasStatistics(integrationPathProvider.getStudentResultsDir(groupName, projectName, stageName))
+    }
+
+    private fun hasStatistics(resultsDir: File): Boolean {
+        return resultsDir.exists() && resultsDir.list().size == 1
     }
 }
 

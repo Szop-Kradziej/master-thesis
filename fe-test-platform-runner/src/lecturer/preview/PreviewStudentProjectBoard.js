@@ -94,7 +94,7 @@ class PreviewStudentProjectBoard extends Component {
                         {this.state.stages.stages.map(stage => (
                             <TableRow key={stage.stageName}>
                                 <CustomTableCell component="th" scope="row">
-                                    <ExpansionPanel disabled={!stage.enable}>
+                                    <ExpansionPanel>
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                             <PreviewStudentStageRow
                                                 stage={stage}
@@ -131,7 +131,7 @@ class PreviewStudentProjectBoard extends Component {
                         {this.state.integrations.integrations.map(integration => (
                             <TableRow key={integration.integrationName}>
                                 <CustomTableCell component="th" scope="row">
-                                    <ExpansionPanel disabled={!integration.enable}>
+                                    <ExpansionPanel>
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                             <PreviewStudentIntegrationRow
                                                 integration={integration}

@@ -109,6 +109,7 @@ class PreviewStudentStageRow extends Component {
                             <DescriptionIcon/>
                         </IconButton>
                         <IconButton aria-label="Pobierz statystyki dla etapu"
+                                    disabled={this.props.stage.statistics === false}
                                     onClick={this.handleDownloadStageStatistics}>
                             <AssessmentIcon/>
                         </IconButton>
