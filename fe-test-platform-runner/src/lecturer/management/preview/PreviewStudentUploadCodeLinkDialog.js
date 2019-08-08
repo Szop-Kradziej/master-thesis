@@ -27,7 +27,7 @@ class PreviewStudentUploadCodeLinkDialog extends Component {
         data.append('projectName', this.props.projectName);
         data.append('stageName', this.props.stageName);
 
-        Api.uploadStudentCodeLink(data)
+        Api.uploadPreviewStudentCodeLink(this.props.groupName, data)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
             .catch(function (error) {

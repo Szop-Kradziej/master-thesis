@@ -40,7 +40,7 @@ class StudentService(
 
     fun getStudentStages(studentName: String?, projectName: String): List<StudentStage> {
         val groupName = getGroupName(studentName, projectName)
-        return groupResultService.getStudentStages(studentName!!, groupName, projectName)
+        return groupResultService.getStudentStages(groupName, projectName)
     }
 
     fun saveCodeLink(studentName: String?, projectName: String, stageName: String, codeLink: String): String {

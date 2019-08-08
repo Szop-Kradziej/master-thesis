@@ -52,6 +52,7 @@ class PreviewStudentTestCasesDetails extends Component {
                 {this.props.testCases.map(testCase => (
                         <StudentTestCaseRow
                             testCase={testCase}
+                            groupName={this.props.groupName}
                             projectName={this.props.projectName}
                             taskName={this.props.taskName}
                             taskType={this.props.taskType}/>

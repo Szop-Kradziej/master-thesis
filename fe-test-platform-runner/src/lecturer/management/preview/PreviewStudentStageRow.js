@@ -44,7 +44,7 @@ class PreviewStudentStageRow extends Component {
     };
 
     handleRunTests = () => {
-        fetch(backendUrl(`/student/stage/run`), {
+        fetch(backendUrl(`/preview/${this.props.groupName}/stage/run`), {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
@@ -82,11 +82,11 @@ class PreviewStudentStageRow extends Component {
     };
 
     handleDownloadReport = () => {
-        Api.downloadReport(this.props.projectName, this.props.stage.stageName)
+        Api.downloadPreviewReport(this.props.groupName, this.props.projectName, this.props.stage.stageName)
     };
 
     handleDownloadBin = () => {
-        Api.downloadBin(this.props.projectName, this.props.stage.stageName)
+        Api.downloadPreviewBin(this.props.groupName, this.props.projectName, this.props.stage.stageName)
     };
 
     handleDownloadStageDescription = () => {
@@ -185,18 +185,21 @@ class PreviewStudentStageRow extends Component {
                     <StudentUploadBinaryDialog isOpen={this.state.isAddBinaryDialogVisible}
                                                closeActionHandler={this.handleCloseAddBinaryDialog}
                                                successActionHandler={this.props.stageChangedHandler}
+                                               groupName={this.props.groupName}
                                                projectName={this.props.projectName}
                                                stageName={this.props.stage.stageName}
                                                headerText="Dodaj binarkę"/>
                     <StudentUploadReportDialog isOpen={this.state.isAddReportDialogVisible}
                                                closeActionHandler={this.handleCloseAddReportDialog}
                                                successActionHandler={this.props.stageChangedHandler}
+                                               groupName={this.props.groupName}
                                                projectName={this.props.projectName}
                                                stageName={this.props.stage.stageName}
                                                headerText="Dodaj raport"/>
                     <StudentUploadCodeLinkDialog isOpen={this.state.isAddCodeLinkDialogVisible}
                                                  closeActionHandler={this.handleCloseAddCodeLinkDialog}
                                                  successActionHandler={this.props.stageChangedHandler}
+                                                 groupName={this.props.groupName}
                                                  projectName={this.props.projectName}
                                                  stageName={this.props.stage.stageName}
                                                  headerText="Podaj adres kodu"/>

@@ -26,7 +26,7 @@ class PreviewStudentUploadReportDialog extends Component {
         data.append('projectName', this.props.projectName);
         data.append('stageName', this.props.stageName);
 
-        Api.uploadStudentReport(data)
+        Api.uploadPreviewStudentReport(this.props.groupName, data)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
             .catch(function (error) {

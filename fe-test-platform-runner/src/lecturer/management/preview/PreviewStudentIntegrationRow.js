@@ -14,7 +14,7 @@ import {getAuthHeader} from "../../../Api";
 class PreviewStudentIntegrationRow extends Component {
 
     handleRunTests = () => {
-        fetch(backendUrl(`/student/integration/run`), {
+        fetch(backendUrl(`/preview/${this.props.groupName}/integration/run`), {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},

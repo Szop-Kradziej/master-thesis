@@ -79,7 +79,7 @@ class GroupResultService(
         uploadedFile.transferTo(outputFile)
     }
 
-    fun getStudentStages(userName: String, groupName: String, projectName: String): List<StudentStage> {
+    fun getStudentStages(groupName: String, projectName: String): List<StudentStage> {
         return stageService
                 .getStages(projectName)
                 .filter { !it.startDate.isNullOrBlank() }

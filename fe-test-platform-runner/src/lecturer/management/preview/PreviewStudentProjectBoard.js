@@ -15,10 +15,10 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import DescriptionIcon from "@material-ui/icons/Description";
 import SettingsIcon from "@material-ui/icons/Settings";
 import * as Api from "../../../Api";
-import {getAuthHeader} from "../../../Api";
 import PreviewStudentStageRow from "./PreviewStudentStageRow";
 import PreviewStudentTestCasesDetails from "./PreviewStudentTestCasesDetails";
 import PreviewStudentIntegrationRow from "./PreviewStudentIntegrationRow";
+import {getAdminAuthHeader} from "../../../Api";
 
 class PreviewStudentProjectBoard extends Component {
 
@@ -33,10 +33,10 @@ class PreviewStudentProjectBoard extends Component {
     }
 
     fetchStages = () => {
-        fetch(backendUrl(`/student/${this.props.match.params.projectId}/stages`), {
+        fetch(backendUrl(`/preview/${this.props.match.params.groupId}/${this.props.match.params.projectId}/stages`), {
             method: "GET",
             credentials: "include",
-            headers: {'Authorization': getAuthHeader()}
+            headers: {'Authorization': getAdminAuthHeader()}
         })
             .then(response => response.json())
             .then(json => this.setState({
@@ -45,10 +45,10 @@ class PreviewStudentProjectBoard extends Component {
     };
 
     fetchIntegrations = () => {
-        fetch(backendUrl(`/student/${this.props.match.params.projectId}/integrations`), {
+        fetch(backendUrl(`/preview/${this.props.match.params.groupId}/${this.props.match.params.projectId}/integrations`), {
             method: "GET",
             credentials: "include",
-            headers: {'Authorization': getAuthHeader()}
+            headers: {'Authorization': getAdminAuthHeader()}
         })
             .then(response => response.json())
             .then(json => this.setState({
@@ -98,6 +98,7 @@ class PreviewStudentProjectBoard extends Component {
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                             <PreviewStudentStageRow
                                                 stage={stage}
+                                                groupName={this.props.match.params.groupId}
                                                 projectName={this.props.match.params.projectId}
                                                 stageChangedHandler={this.stageChangedHandler}/>
                                         </ExpansionPanelSummary>
@@ -107,6 +108,7 @@ class PreviewStudentProjectBoard extends Component {
                                                     <p className={this.props.classes.testsHeading}> Testy </p>
                                                     <PreviewStudentTestCasesDetails
                                                         testCases={stage.testCases}
+                                                        groupName={this.props.match.params.groupId}
                                                         projectName={this.props.match.params.projectId}
                                                         taskName={stage.stageName}
                                                         taskType="stage"/>
@@ -133,6 +135,7 @@ class PreviewStudentProjectBoard extends Component {
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                             <PreviewStudentIntegrationRow
                                                 integration={integration}
+                                                groupName={this.props.match.params.groupId}
                                                 projectName={this.props.match.params.projectId}
                                                 integrationChangedHandler={this.integrationChangedHandler}/>
                                         </ExpansionPanelSummary>
@@ -142,6 +145,7 @@ class PreviewStudentProjectBoard extends Component {
                                                     <p className={this.props.classes.testsHeading}> Testy </p>
                                                     <PreviewStudentTestCasesDetails
                                                         testCases={integration.testCases}
+                                                        groupName={this.props.match.params.groupId}
                                                         projectName={this.props.match.params.projectId}
                                                         taskName={integration.integrationName}
                                                         taskType="integration"/>

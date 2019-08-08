@@ -12,21 +12,21 @@ class PreviewStudentTestCaseRow extends Component {
 
     handleDownloadLogsFile = () => {
         if (this.props.taskType === "stage") {
-            Api.downloadStudentStageLogsFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName)
+            Api.downloadPreviewStudentStageLogsFile(this.props.groupName, this.props.projectName, this.props.taskName, this.props.testCase.testCaseName)
         } else {
-            Api.downloadStudentIntegrationLogsFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName)
+            Api.downloadPreviewStudentIntegrationLogsFile(this.props.groupName, this.props.projectName, this.props.taskName, this.props.testCase.testCaseName)
         }
     };
 
     handleDownloadInputFile = () => {
-        this.downloadFile("input");
+        this.downloadTestCaseFile("input");
     };
 
     handleDownloadOutputFile = () => {
-        this.downloadFile("output");
+        this.downloadTestCaseFile("output");
     };
 
-    downloadFile = (fileType) => {
+    downloadTestCaseFile = (fileType) => {
         if (this.props.taskType === "stage") {
             Api.downloadStageTestCaseFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName, fileType)
         } else {

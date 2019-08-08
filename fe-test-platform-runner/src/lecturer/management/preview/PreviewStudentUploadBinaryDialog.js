@@ -26,7 +26,7 @@ class PreviewStudentUploadBinaryDialog extends Component {
         data.append('projectName', this.props.projectName);
         data.append('stageName', this.props.stageName);
 
-        Api.uploadStudentBinary(data)
+        Api.uploadPreviewStudentBinary(this.props.groupName, data)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
             .catch(function (error) {
