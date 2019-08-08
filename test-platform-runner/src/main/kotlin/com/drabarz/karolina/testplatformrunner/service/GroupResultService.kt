@@ -301,7 +301,7 @@ class GroupResultService(
                             integration.testCases.count(),
                             countSuccessfulIntegrationGroups(projectName, integration.name),
                             countTotalGroups(projectName),
-                            hasStatistics(integrationPathProvider.getStudentResultsDir(groupName, projectName, integration.name))
+                            hasIntegrationStatistics(groupName, projectName, integration.name)
                     )
                 }.sortedBy { it.integrationName }
     }
