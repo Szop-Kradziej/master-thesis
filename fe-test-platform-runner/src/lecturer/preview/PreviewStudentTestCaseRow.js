@@ -6,7 +6,7 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableCell from "@material-ui/core/TableCell/TableCell";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import DownloadIcon from "@material-ui/icons/CloudDownload";
-import * as Api from "../../../Api";
+import * as Api from "../../Api";
 
 class PreviewStudentTestCaseRow extends Component {
 

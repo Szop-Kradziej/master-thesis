@@ -2,7 +2,7 @@ import React from "react";
 import {withStyles} from "@material-ui/core";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import {Link} from "react-router-dom";
-import {CustomTableCell, styles} from "../../../styles/ProjectssBoardStyles";
+import {CustomTableCell, styles} from "../../styles/ProjectssBoardStyles";
 
 class PreviewGroupRow extends React.Component {
 

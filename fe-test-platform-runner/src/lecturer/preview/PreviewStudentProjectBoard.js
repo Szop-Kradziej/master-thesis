@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
-import backendUrl from "../../../backendUrl";
+import backendUrl from "../../backendUrl";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
-import {CustomTableCell, styles} from "../../../styles/ProjectBoardStyles";
+import {CustomTableCell, styles} from "../../styles/ProjectBoardStyles";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -14,11 +14,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import DescriptionIcon from "@material-ui/icons/Description";
 import SettingsIcon from "@material-ui/icons/Settings";
-import * as Api from "../../../Api";
+import * as Api from "../../Api";
 import PreviewStudentStageRow from "./PreviewStudentStageRow";
 import PreviewStudentTestCasesDetails from "./PreviewStudentTestCasesDetails";
 import PreviewStudentIntegrationRow from "./PreviewStudentIntegrationRow";
-import {getAdminAuthHeader} from "../../../Api";
+import {getAdminAuthHeader} from "../../Api";
 
 class PreviewStudentProjectBoard extends Component {
 

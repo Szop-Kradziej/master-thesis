@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
-import backendUrl from "../../../backendUrl";
+import backendUrl from "../../backendUrl";
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import RunIcon from '@material-ui/icons/PlayArrow';
@@ -9,7 +9,7 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
-import {getAuthHeader} from "../../../Api";
+import {getAuthHeader} from "../../Api";
 
 class PreviewStudentIntegrationRow extends Component {
 

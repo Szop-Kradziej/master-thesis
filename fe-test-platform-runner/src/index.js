@@ -9,9 +9,9 @@ import ProjectsBoard from "./lecturer/management/ProjectsBoard";
 import ProjectBoard from "./lecturer/management/project/ProjectBoard";
 import StudentProjectsBoard from "./student/StudentProjectsBoard";
 import StudentProjectBoard from "./student/StudentProjectBoard";
-import PreviewBoard from "./lecturer/management/preview/PreviewBoard";
-import PreviewProjectsBoard from "./lecturer/management/preview/PreviewProjectsBoard";
-import PreviewStudentProjectBoard from "./lecturer/management/preview/PreviewStudentProjectBoard";
+import PreviewBoard from "./lecturer/preview/PreviewBoard";
+import PreviewProjectsBoard from "./lecturer/preview/PreviewProjectsBoard";
+import PreviewStudentProjectBoard from "./lecturer/preview/PreviewStudentProjectBoard";
 
 const TopRoute = () => (
     <Switch>

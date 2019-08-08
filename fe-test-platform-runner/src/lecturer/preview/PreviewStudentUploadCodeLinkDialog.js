@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
-import {styles} from "../../../styles/ProjectBoardStyles";
-import * as Api from "../../../Api";
+import {styles} from "../../styles/ProjectBoardStyles";
+import * as Api from "../../Api";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
-import backendUrl from "../../../backendUrl";
+import backendUrl from "../../backendUrl";
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import DownloadIcon from '@material-ui/icons/CloudDownload';
@@ -12,13 +12,13 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
-import EditItemComponent from "../../../utils/EditItemComponent";
-import UploadAndDownloadItemComponent from "../../../utils/UploadAndDownloadItemComponent";
-import * as Api from "../../../Api";
+import EditItemComponent from "../../utils/EditItemComponent";
+import UploadAndDownloadItemComponent from "../../utils/UploadAndDownloadItemComponent";
+import * as Api from "../../Api";
 import StudentUploadBinaryDialog from "./PreviewStudentUploadBinaryDialog";
 import StudentUploadReportDialog from "./PreviewStudentUploadReportDialog";
 import StudentUploadCodeLinkDialog from "./PreviewStudentUploadCodeLinkDialog";
-import {getAuthHeader} from "../../../Api";
+import {getAuthHeader} from "../../Api";
 
 class PreviewStudentStageRow extends Component {
 
