@@ -145,7 +145,7 @@ class PreviewStudentStageRow extends Component {
                                 </CustomTableCell>
                                 <CustomTableCell/>
                                 <CustomTableCell>Zaliczone:</CustomTableCell>
-                                <CustomTableCell>Punkty:</CustomTableCell>
+                                <CustomTableCell>Grupy:</CustomTableCell>
                                 <CustomTableCell>Rozpoczęcie:</CustomTableCell>
                                 <CustomTableCell>Zakończenie:</CustomTableCell>
                             </TableRow>
@@ -169,7 +169,7 @@ class PreviewStudentStageRow extends Component {
                                     <p> {this.props.stage.passedTestCasesCount}/{this.props.stage.allTestCasesCount}</p>
                                 </CustomTableCell>
                                 <CustomTableCell component="th" scope="row" width="5%">
-                                    <p> {this.props.stage.pointsNumber}/{this.props.stage.totalPointsNumber}</p>
+                                    <p> {this.props.stage.successfulGroups}/{this.props.stage.totalGroupsNumber}</p>
                                 </CustomTableCell>
                                 <CustomTableCell component="th" scope="row" width="5%">
                                     <p>{this.props.stage.startDate ? this.props.stage.startDate : 'Brak'}</p>

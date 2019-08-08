@@ -18,6 +18,7 @@ import java.util.*
 class GroupResultService(
         val stageService: StageService,
         val integrationService: IntegrationService,
+        val groupService: GroupService,
         val jarService: JarService) {
 
     private final val stagePathProvider = StagePathProvider()
@@ -93,11 +94,34 @@ class GroupResultService(
                             stage.testCases.size,
                             stage.startDate,
                             stage.endDate,
-                            "0",
-                            stage.pointsNumber,
+                            countSuccessfulStageGroups(projectName, stage.stageName),
+                            countTotalGroups(projectName),
                             getCodeLink(groupName, projectName, stage.stageName),
                             isEnable(stage.endDate))
                 }.sortedBy { it.endDate }
+    }
+
+    private fun countSuccessfulStageGroups(projectName: String, stageName: String): Int {
+        var counter = 0
+        groupService.getGroups(projectName).groups.forEach {
+            val resultDir = stagePathProvider.getStudentResultsDir(it.groupName, projectName, stageName)
+            if (resultDir.exists() && resultDir.list().size == 1) {
+                val jsonData = resultDir.listFiles().first().readBytes()
+                val fullResults = jacksonObjectMapper().readerFor(Array<FullTestResponse>::class.java).readValue<Array<FullTestResponse>>(jsonData).toList()
+
+                val results = fullResults.sortedBy { it.date }.last().testResponses
+
+                if (results.all { it.status == "SUCCESS" }) {
+                    counter++
+                }
+            }
+        }
+
+        return counter
+    }
+
+    private fun countTotalGroups(projectName: String): Int {
+        return groupService.getGroups(projectName).groups.count()
     }
 
     private fun isEnable(endDate: String?): Boolean {
@@ -219,9 +243,30 @@ class GroupResultService(
                             getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, it.parameters) }),
                             getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
                             integration.testCases.count(),
+                            countSuccessfulIntegrationGroups(projectName, integration.name),
+                            countTotalGroups(projectName),
                             true
                     )
                 }.sortedBy { it.integrationName }
+    }
+
+    private fun countSuccessfulIntegrationGroups(projectName: String, integrationName: String): Int {
+        var counter = 0
+        groupService.getGroups(projectName).groups.forEach {
+            val resultDir = integrationPathProvider.getStudentResultsDir(it.groupName, projectName, integrationName)
+            if (resultDir.exists() && resultDir.list().size == 1) {
+                val jsonData = resultDir.listFiles().first().readBytes()
+                val fullResults = jacksonObjectMapper().readerFor(Array<FullTestResponse>::class.java).readValue<Array<FullTestResponse>>(jsonData).toList()
+
+                val results = fullResults.sortedBy { it.date }.last().testResponses
+
+                if (results.all { it.status == "SUCCESS" }) {
+                    counter++
+                }
+            }
+        }
+
+        return counter
     }
 
     private fun getTestCasesWithResultsIntegration(groupName: String, projectName: String, integrationName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {

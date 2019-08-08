@@ -66,6 +66,7 @@ class StudentIntegrationRow extends Component {
                                 </CustomTableCell>
                                 <CustomTableCell>Schemat integracji:</CustomTableCell>
                                 <CustomTableCell>Zaliczone:</CustomTableCell>
+                                <CustomTableCell>Grupy:</CustomTableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -77,6 +78,9 @@ class StudentIntegrationRow extends Component {
                                 </CustomTableCell>
                                 <CustomTableCell component="th" scope="row" width="5%">
                                     <p> {this.props.integration.passedTestCasesCount}/{this.props.integration.allTestCasesCount}</p>
+                                </CustomTableCell>
+                                <CustomTableCell component="th" scope="row" width="5%">
+                                    <p> {this.props.integration.successfulGroups}/{this.props.integration.totalGroupsNumber}</p>
                                 </CustomTableCell>
                             </TableRow>
                         </TableBody>
