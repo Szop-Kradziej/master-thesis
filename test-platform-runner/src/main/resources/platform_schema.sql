@@ -58,7 +58,6 @@ CREATE TABLE stages
     name          VARCHAR(128) NOT NULL,
     start_date    TIMESTAMP,
     end_date      TIMESTAMP,
-    points_number INT,
     project_id    BIGINT       NOT NULL,
 
     CONSTRAINT stages_pk PRIMARY KEY (id),

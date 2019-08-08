@@ -17,8 +17,7 @@ data class Stage(
         @JoinColumn(name = "project_id")
         val project: Project,
         var startDate: Date? = null,
-        var endDate: Date? = null,
-        var pointsNumber: Int? = null
+        var endDate: Date? = null
 )
 
 @Repository

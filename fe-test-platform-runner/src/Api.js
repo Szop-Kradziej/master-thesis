@@ -49,12 +49,12 @@ export function fetchIntegrations(projectName) {
     })
 }
 
-export function addNewStage(projectName, stageName, startDate, endDate, points) {
+export function addNewStage(projectName, stageName, startDate, endDate) {
     return fetch(backendUrl(`/stage`), {
         method: "POST",
         credentials: "include",
         headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-        body: "projectName=" + projectName + "&stageName=" + stageName + "&startDate=" + startDate + "&endDate=" + endDate + "&pointsNumber=" + points
+        body: "projectName=" + projectName + "&stageName=" + stageName + "&startDate=" + startDate + "&endDate=" + endDate
     })
 }
 
@@ -141,10 +141,6 @@ export function editStageStartDate(data) {
 
 export function editStageEndDate(data) {
     return postData(backendUrl("/stage/endDate"), data)
-}
-
-export function editStagePointsNumber(data) {
-    return postData(backendUrl("/stage/pointsNumber"), data)
 }
 
 export function editStageTestCaseParameters(data) {

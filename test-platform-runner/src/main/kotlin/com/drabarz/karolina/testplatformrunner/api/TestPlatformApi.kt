@@ -91,14 +91,6 @@ class TestPlatformApi(val stageService: StageService,
         return stageService.editStageDate(projectName, stageName, endDate, "END")
     }
 
-    @PostMapping("/stage/pointsNumber")
-    fun editStagePointsNumber(
-            @RequestParam("pointsNumber") pointsNumber: String?,
-            @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String): String {
-        return stageService.editStagePointsNumber(projectName, stageName, pointsNumber)
-    }
-
     @GetMapping("/{projectName}/stages")
     fun getStagesList(@PathVariable("projectName") projectName: String): StagesResponse {
         return StagesResponse(
@@ -112,9 +104,8 @@ class TestPlatformApi(val stageService: StageService,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String,
             @RequestParam("startDate") startDate: String?,
-            @RequestParam("endDate") endDate: String?,
-            @RequestParam("pointsNumber") pointsNumber: String?): String {
-        return stageService.addStage(projectName, stageName, startDate, endDate, pointsNumber)
+            @RequestParam("endDate") endDate: String?): String {
+        return stageService.addStage(projectName, stageName, startDate, endDate)
     }
 
     @DeleteMapping("/stage/{projectName}/{stageName}")
@@ -283,7 +274,7 @@ class TestPlatformApi(val stageService: StageService,
 
 class ProjectResponse(val projects: List<String>)
 class StagesResponse(val projectDescription: String?, val projectEnvironment: String?, val stages: List<StageDao>)
-class StageDao(val stageName: String, val stageDescription: String?, val startDate: String?, val endDate: String?, val pointsNumber: String?, val testCases: List<TestCase>)
+class StageDao(val stageName: String, val stageDescription: String?, val startDate: String?, val endDate: String?, val testCases: List<TestCase>)
 class TestCase(val testCaseName: String, val parameters: String?, val inputFileName: String?, val outputFileName: String?)
 class GroupsResponse(val groups: List<Group>)
 class Group(val groupName: String, val projectName: String, val students: List<String>)

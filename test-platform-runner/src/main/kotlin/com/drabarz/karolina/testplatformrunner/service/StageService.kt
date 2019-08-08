@@ -23,7 +23,7 @@ class StageService(
 
     private final val testCaseService = TestCaseService(pathProvider)
 
-    fun addStage(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: String?): String {
+    fun addStage(projectName: String, stageName: String, startDate: String?, endDate: String?): String {
         val projectDir = pathProvider.getProjectDir(projectName)
         if (!projectDir.exists()) {
             throw RuntimeException("Error. Can not create stage for project. Project $projectName doesn't exist")
@@ -37,19 +37,18 @@ class StageService(
 
         stageDir.mkdirs()
 
-        saveStageMetadata(projectName, stageName, startDate, endDate, pointsNumber)
+        saveStageMetadata(projectName, stageName, startDate, endDate)
 
         return "200"
     }
 
-    private fun saveStageMetadata(projectName: String, stageName: String, startDate: String?, endDate: String?, pointsNumber: String?) {
+    private fun saveStageMetadata(projectName: String, stageName: String, startDate: String?, endDate: String?) {
         stagesRepository.save(
                 Stage(
                         name = stageName,
                         project = projectsRepository.findByName(projectName),
                         startDate = startDate.toDate(),
-                        endDate = endDate.toDate(),
-                        pointsNumber = pointsNumber?.toIntOrNull()
+                        endDate = endDate.toDate()
                 ))
     }
 
@@ -71,7 +70,6 @@ class StageService(
                             getStageDescriptionName(projectName, it),
                             stageMetadata?.startDate.toFormattedString(),
                             stageMetadata?.endDate.toFormattedString(),
-                            stageMetadata?.pointsNumber?.toString(),
                             testCaseService.getTestCases(projectName, it).sortedBy { it.testCaseName })
                 }.sortedBy { it.endDate }
     }
@@ -154,7 +152,6 @@ class StageService(
 
     fun editStagePointsNumber(projectName: String, stageName: String, pointsNumber: String?) =
             stagesRepository.findByNameAndProject_Name(stageName, projectName)
-                    .also { it?.pointsNumber = pointsNumber?.toIntOrNull() }
                     ?.let { stagesRepository.save(it) }
                     .let { "200" }
 

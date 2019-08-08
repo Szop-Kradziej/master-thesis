@@ -14,7 +14,7 @@ class AddNewStageDialog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {stageName: null, startDate: "2019-06-19", endDate: "2019-09-15", pointsNumber: null};
+        this.state = {stageName: null, startDate: "2019-06-19", endDate: "2019-09-15"};
     }
 
     handleStageNameAdded = () => event => {
@@ -29,12 +29,8 @@ class AddNewStageDialog extends Component {
         this.setState({endDate: event.target.value})
     };
 
-    handlePointsNumberAdded = () => event => {
-        this.setState({pointsNumber: event.target.value})
-    };
-
     handleAddNewStage = () => {
-        Api.addNewStage(this.props.projectName, this.state.stageName, this.state.startDate, this.state.endDate, this.state.pointsNumber)
+        Api.addNewStage(this.props.projectName, this.state.stageName, this.state.startDate, this.state.endDate)
             .then(this.props.closeActionHandler)
             .then(this.props.successActionHandler)
     };
@@ -81,13 +77,6 @@ class AddNewStageDialog extends Component {
                                 shrink: true,
                             }}/>
                     </div>
-                    <TextField
-                        id="standard-points"
-                        label="Liczba punktów"
-                        className={this.props.classes.textField}
-                        value={this.state.pointsNumber}
-                        onChange={this.handlePointsNumberAdded()}
-                        margin="normal"/>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={this.props.closeActionHandler} color="primary">

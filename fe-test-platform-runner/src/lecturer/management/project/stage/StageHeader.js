@@ -13,7 +13,6 @@ import * as Api from "../../../../Api";
 import UploadStageDescriptionDialog from "./dialog/UploadStageDescriptionDialog";
 import EditStageStartDateDialog from "./dialog/EditStageStartDateDialog";
 import EditStageEndDateDialog from "./dialog/EditStageEndDateDialog";
-import EditStagePointsNumberDialog from "./dialog/EditStagePointsNumberDialog";
 
 class StageHeader extends Component {
 
@@ -23,7 +22,6 @@ class StageHeader extends Component {
             isAddDescriptionDialogVisible: false,
             isEditStartDateDialogVisible: false,
             isEditEndDateDialogVisible: false,
-            isEditPointsNumberDialogVisible: false,
         };
     }
 
@@ -53,14 +51,6 @@ class StageHeader extends Component {
 
     handleCloseEditEndDateDialog = () => {
         this.setState({isEditEndDateDialogVisible: false});
-    };
-
-    handleOpenEditPointsNumberDialog = () => {
-        this.setState({isEditPointsNumberDialogVisible: true});
-    };
-
-    handleCloseEditPointsNumberDialog = () => {
-        this.setState({isEditPointsNumberDialogVisible: false});
     };
 
     handleDownloadStageDescription = () => {
@@ -96,7 +86,7 @@ class StageHeader extends Component {
                                     downloadDisabled={this.props.stage.stageDescription === null}
                                     downloadActionHandler={this.handleDownloadStageDescription}/>
                             </CustomTableCell>
-                            <CustomTableCell width="20%"/>
+                            <CustomTableCell width="35%"/>
                             <CustomTableCell width="15%">
                                 <EditItemComponent
                                     header="Rozpoczęcie:"
@@ -108,12 +98,6 @@ class StageHeader extends Component {
                                     header="Zakończenie:"
                                     info="Edytuj datę zakończenia etapu"
                                     editActionHandler={this.handleOpenEditEndDateDialog}/>
-                            </CustomTableCell>
-                            <CustomTableCell width="15%">
-                                <EditItemComponent
-                                    header="Punkty:"
-                                    info="Edytuj liczbę punktów"
-                                    editActionHandler={this.handleOpenEditPointsNumberDialog}/>
                             </CustomTableCell>
                             <CustomTableCell>
                                 <IconButton aria-label="Usuń" onClick={this.handleDeleteStage}>
@@ -136,9 +120,6 @@ class StageHeader extends Component {
                         <CustomTableCell component="th" scope="row">
                             {this.props.stage.endDate ? this.props.stage.endDate : 'Brak'}
                         </CustomTableCell>
-                        <CustomTableCell component="th" scope="row">
-                            {this.props.stage.pointsNumber ? this.props.stage.pointsNumber : 'Brak'}
-                        </CustomTableCell>
                         <CustomTableCell component="th" scope="row"/>
                     </TableBody>
                 </Table>
@@ -160,12 +141,6 @@ class StageHeader extends Component {
                                         projectName={this.props.projectName}
                                         stageName={this.props.stage.stageName}
                                         headerText="Edytuj datę zakończenia etapu"/>
-                <EditStagePointsNumberDialog isOpen={this.state.isEditPointsNumberDialogVisible}
-                                             closeActionHandler={this.handleCloseEditPointsNumberDialog}
-                                             successActionHandler={this.props.stageChangedHandler}
-                                             projectName={this.props.projectName}
-                                             stageName={this.props.stage.stageName}
-                                             headerText="Edytuj liczbę punktów"/>
             </div>
         );
     }
