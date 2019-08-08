@@ -4,12 +4,15 @@ import com.drabarz.karolina.testplatformrunner.api.*
 import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
+import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
+import com.opencsv.CSVWriter
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayOutputStream
 import java.io.File
+import java.nio.file.Files
 import java.util.*
 
 @Component
@@ -346,10 +349,32 @@ class GroupResultService(
 
     fun getResultsFile(resultsDir: File): File {
         if (hasStatistics(resultsDir)) {
-            return resultsDir.listFiles().first()
+            return convertResultFileToCsv(resultsDir)
         }
 
         throw NoSuchFileException(resultsDir)
+    }
+
+    private fun convertResultFileToCsv(resultDir: File): File {
+
+        val jsonData = resultDir.listFiles().find { it.name == "result.json" }!!.readBytes()
+        val fullTestResponses = jacksonObjectMapper().readerFor(Array<FullTestResponse>::class.java).readValue<Array<FullTestResponse>>(jsonData).toMutableList()
+
+        Files.newBufferedWriter(File(resultDir, "statistics.csv").toPath()).use { writer ->
+            CSVWriter(writer).use { csvWriter ->
+                val headerRecord = arrayOf("Data", "Użytkownik", "Nazwa testu", "Status", "Komunikat")
+                csvWriter.writeNext(headerRecord)
+
+                fullTestResponses.forEach { fullTestResponse ->
+                    csvWriter.writeNext(arrayOf(Date(fullTestResponse.date).toString(), fullTestResponse.userName))
+                    fullTestResponse.testResponses.forEach {
+                        csvWriter.writeNext(arrayOf("", "", it.testCaseName, it.status, it.message))
+                    }
+                }
+            }
+        }
+
+        return File(resultDir, "statistics.csv")
     }
 
     private fun hasStageStatistics(groupName: String, projectName: String, stageName: String): Boolean {
@@ -361,7 +386,7 @@ class GroupResultService(
     }
 
     private fun hasStatistics(resultsDir: File): Boolean {
-        return resultsDir.exists() && resultsDir.list().size == 1
+        return resultsDir.exists() && resultsDir.list().any { it == "result.json" }
     }
 }
 
