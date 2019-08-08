@@ -25,13 +25,26 @@ class StudentProjectBoard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {stages: {stages: []}, integrations: {integrations: []}};
+        this.state = {stages: {stages: []}, integrations: {integrations: []}, group: {students: []}};
     }
 
     componentDidMount() {
+        this.fetchGroup();
         this.fetchStages();
         this.fetchIntegrations();
     }
+
+    fetchGroup = () => {
+        fetch(backendUrl(`/student/${this.props.match.params.projectId}/group`), {
+            method: "GET",
+            credentials: "include",
+            headers: {'Authorization': getAuthHeader()}
+        })
+            .then(response => response.json())
+            .then(json => this.setState({
+                group: json
+            }))
+    };
 
     fetchStages = () => {
         fetch(backendUrl(`/student/${this.props.match.params.projectId}/stages`), {
@@ -73,17 +86,35 @@ class StudentProjectBoard extends Component {
         Api.downloadProjectEnvironment(this.props.match.params.projectId)
     };
 
+    getStudentsNames = () => {
+        var studentsNames = "";
+        var i = 0;
+        this.state.group.students.map(student => {
+                studentsNames = studentsNames + student
+                if (i < this.state.group.students.length - 1) {
+                    studentsNames = studentsNames + ", "
+                }
+                i++;
+            }
+        );
+
+        return studentsNames
+    };
+
     render() {
         return (
             <div className={this.props.classes.app}>
                 <div>
-                    {this.props.match.params.projectId}
+                    Projekt: {this.props.match.params.projectId}
                     <IconButton aria-label="Pobierz opis projektu" onClick={this.handleDownloadProjectDescription}>
                         <DescriptionIcon/>
                     </IconButton>
                     <IconButton aria-label="Pobierz konfigurację środowiska" onClick={this.handleDownloadProjectEnvironment}>
                         <SettingsIcon/>
                     </IconButton>
+                </div>
+                <div>
+                    Grupa: {this.state.group.name} ({this.getStudentsNames()})
                 </div>
                 <Table className={this.props.classes.table}>
                     <TableHead>

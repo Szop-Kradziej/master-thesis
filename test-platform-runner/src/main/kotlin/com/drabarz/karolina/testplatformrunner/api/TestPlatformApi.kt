@@ -196,6 +196,13 @@ class TestPlatformApi(val stageService: StageService,
         return groupService.getGroups(projectName)
     }
 
+    @GetMapping("/{projectName}/group/{groupName}")
+    fun getStudentsAssignedToGroup(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("groupName") groupName: String): List<String> {
+        return groupService.getStudentsAssignedToGroup(projectName, groupName)
+    }
+
     @PostMapping("/{projectName}/groups")
     fun addGroups(
             @RequestParam("file") uploadedFile: MultipartFile,

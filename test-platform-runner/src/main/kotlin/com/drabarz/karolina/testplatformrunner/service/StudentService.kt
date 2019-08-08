@@ -1,5 +1,6 @@
 package com.drabarz.karolina.testplatformrunner.service
 
+import com.drabarz.karolina.testplatformrunner.api.StudentGroup
 import com.drabarz.karolina.testplatformrunner.api.StudentIntegration
 import com.drabarz.karolina.testplatformrunner.api.StudentStage
 import com.drabarz.karolina.testplatformrunner.model.GroupsRepository
@@ -87,6 +88,13 @@ class StudentService(
         log.info("Found ${group.size} groups")
 
         return group.first().name
+    }
+
+    fun getStudentGroup(studentName: String, projectName: String): StudentGroup {
+        val groupName = getGroupName(studentName, projectName)
+        val students = groupsRepository.findByNameAndProject_Name(groupName, projectName).students.map { it.name }
+
+        return StudentGroup(groupName, students)
     }
 
     companion object {

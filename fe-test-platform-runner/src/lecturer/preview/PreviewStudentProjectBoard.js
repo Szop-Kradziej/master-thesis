@@ -24,13 +24,25 @@ class PreviewStudentProjectBoard extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {stages: {stages: []}, integrations: {integrations: []}};
+        this.state = {stages: {stages: []}, integrations: {integrations: []}, students: []};
     }
 
     componentDidMount() {
+        this.fetchStudents();
         this.fetchStages();
         this.fetchIntegrations();
     }
+
+    fetchStudents = () => {
+        fetch(backendUrl(`/${this.props.match.params.projectId}/group/${this.props.match.params.groupId}`), {
+            method: "GET",
+            credentials: "include",
+        })
+            .then(response => response.json())
+            .then(json => this.setState({
+                students: json
+            }))
+    };
 
     fetchStages = () => {
         fetch(backendUrl(`/preview/${this.props.match.params.groupId}/${this.props.match.params.projectId}/stages`), {
@@ -72,17 +84,36 @@ class PreviewStudentProjectBoard extends Component {
         Api.downloadProjectEnvironment(this.props.match.params.projectId)
     };
 
+    getStudentsNames = () => {
+        var studentsNames = "";
+        var i = 0;
+        this.state.students.map(student => {
+                studentsNames = studentsNames + student
+                if (i < this.state.students.length - 1) {
+                    studentsNames = studentsNames + ", "
+                }
+                i++;
+            }
+        );
+
+        return studentsNames
+    };
+
     render() {
         return (
             <div className={this.props.classes.app}>
                 <div>
-                    {this.props.match.params.projectId}
+                    Projekt: {this.props.match.params.projectId}
                     <IconButton aria-label="Pobierz opis projektu" onClick={this.handleDownloadProjectDescription}>
                         <DescriptionIcon/>
                     </IconButton>
-                    <IconButton aria-label="Pobierz konfigurację środowiska" onClick={this.handleDownloadProjectEnvironment}>
+                    <IconButton aria-label="Pobierz konfigurację środowiska"
+                                onClick={this.handleDownloadProjectEnvironment}>
                         <SettingsIcon/>
                     </IconButton>
+                </div>
+                <div>
+                    Grupa: {this.props.match.params.groupId} ({this.getStudentsNames()})
                 </div>
                 <Table className={this.props.classes.table}>
                     <TableHead>

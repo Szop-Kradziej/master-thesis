@@ -151,6 +151,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
         return createFileResponse(groupResultService.getIntegrationLogsFile(groupName, projectName, integrationName, testCaseName))
     }
 }
+
 class StudentPreviewStagesResponse(val stages: List<StudentPreviewStage>)
 class StudentPreviewStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val startDate: String?, val endDate: String?, val successfulGroups: Int, val totalGroupsNumber: Int, val codeLink: String?, val statistics: Boolean)
 class StudentPreviewIntegrationsResponse(val integrations: List<StudentPreviewIntegration>)

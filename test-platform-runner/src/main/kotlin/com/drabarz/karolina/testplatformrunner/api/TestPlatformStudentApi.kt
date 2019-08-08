@@ -101,6 +101,14 @@ class TestPlatformStudentApi(val studentService: StudentService) {
         return createFileResponse(studentService.getStageLogsFile(userName, projectName, stageName, testCaseName))
     }
 
+    @GetMapping("/student/{projectName}/group")
+    fun getGroup(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("projectName") projectName: String): StudentGroup {
+        val userName = getUserNameFromRequestHeader(headers)
+        return studentService.getStudentGroup(userName, projectName)
+    }
+
     @GetMapping("/student/{projectName}/stages")
     fun getStudentStagesList(
             @RequestHeader headers: HttpHeaders,
@@ -133,6 +141,7 @@ class StudentStage(val stageName: String, val binaryName: String?, val reportNam
 class StudentIntegrationsResponse(val integrations: List<StudentIntegration>)
 class StudentIntegration(val integrationName: String, val integrationStages: List<IntegrationStageDao>, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val successfulGroups: Int, val totalGroupsNumber: Int, val enable: Boolean)
 class TestCaseWithResult(val testCaseName: String, val parameters: String?, val status: String = "NO RUN", val message: String?, val isLogsFile: Boolean = false)
+class StudentGroup(val name: String, val students: List<String>)
 
 
 

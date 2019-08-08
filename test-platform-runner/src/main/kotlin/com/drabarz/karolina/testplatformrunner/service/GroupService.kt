@@ -106,6 +106,10 @@ class GroupService(
         return "200"
     }
 
+    fun getStudentsAssignedToGroup(projectName: String, groupName: String): List<String> {
+        return groupsRepository.findByNameAndProject_Name(groupName, projectName).students.map { it.name }
+    }
+
     companion object {
         val log = LoggerFactory.getLogger(GroupService::class.java)
     }
