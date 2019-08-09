@@ -36,7 +36,6 @@ class StudentService(
         return groupResultService.runIntegrationTests(studentName!!, groupName, projectName, integrationName)
     }
 
-
     fun saveFile(studentName: String?, projectName: String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
         val groupName = getGroupName(studentName, projectName)
         groupResultService.saveFile(studentName!!, groupName, projectName, stageName, uploadedFile, fileType)
