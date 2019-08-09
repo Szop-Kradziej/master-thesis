@@ -8,19 +8,22 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
+import java.lang.RuntimeException
 
 @Component
 class StudentService(
         val groupResultService: GroupResultService,
-        val projectService: ProjectService,
         val groupsRepository: GroupsRepository) {
 
     fun getStudentProjects(studentName: String?): List<String> {
+        log.info("Getting all projects for student: $studentName")
+
         if (studentName == null) {
-            throw IllegalAccessError()
+            log.error("Invalid student name: $studentName")
+            throw RuntimeException("Invalid student name: $studentName")
         }
 
-        return projectService.getStudentProjects(studentName)
+        return groupsRepository.findAllByStudents_Name(studentName).map { it -> it.project.name }
     }
 
     fun runStageTests(studentName: String?, projectName: String, stageName: String): List<TestResponse> {
@@ -75,22 +78,24 @@ class StudentService(
     }
 
     private fun getGroupName(studentName: String?, projectName: String): String {
-        if (studentName == null) {
-            log.error("Invalid student name: null")
-            throw IllegalAccessError()
-        }
+        log.info("Getting group name for student: $studentName in project: $projectName")
 
-        log.info("Geting groups for: student name: " + studentName + " projectName: " + projectName)
+        if (studentName == null) {
+            log.error("Invalid student name: $studentName")
+            throw RuntimeException("Invalid student name: $studentName")
+        }
 
         val group = groupsRepository.findAllByStudents_Name(studentName)
                 .filter { it.project.name == projectName }
 
-        log.info("Found ${group.size} groups")
+        log.info("Found ${group.size} groups for student: $studentName")
 
         return group.first().name
     }
 
     fun getStudentGroup(studentName: String, projectName: String): StudentGroup {
+        log.info("Getting group for student: $studentName in project: $projectName")
+
         val groupName = getGroupName(studentName, projectName)
         val students = groupsRepository.findByNameAndProject_Name(groupName, projectName).students.map { it.name }
 
@@ -98,6 +103,6 @@ class StudentService(
     }
 
     companion object {
-        val log = LoggerFactory.getLogger(GroupResultService::class.java)
+        val log = LoggerFactory.getLogger(StudentService::class.java)
     }
 }

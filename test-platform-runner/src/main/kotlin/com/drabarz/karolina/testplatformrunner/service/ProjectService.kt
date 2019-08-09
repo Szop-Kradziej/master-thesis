@@ -27,12 +27,6 @@ class ProjectService(
         return File(pathProvider.projectsPath).list().asList().sortedBy { it }
     }
 
-    fun getStudentProjects(studentName: String): List<String> {
-        log.info("Getting all projects for student: $studentName")
-
-        return groupService.getStudentProjects(studentName)
-    }
-
     fun addProject(projectName: String): String {
         log.info("Adding project: $projectName")
 
