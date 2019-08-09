@@ -24,39 +24,6 @@ class StageService(
 
     private final val testCaseService = TestCaseService(stagePathProvider)
 
-    fun addStage(projectName: String, stageName: String, startDate: String?, endDate: String?): String {
-        log.info("Adding stage: $stageName for project: $projectName")
-
-        val projectDir = stagePathProvider.getProjectDir(projectName)
-        if (!projectDir.exists()) {
-            log.error("Can not create stage with name $stageName for project $projectName, project doesn't exist")
-            throw RuntimeException("Error. Can not create stage for project. Project $projectName doesn't exist")
-        }
-
-        val stageDir = stagePathProvider.getTaskDir(projectName, stageName)
-
-        if (stageDir.exists()) {
-            log.warn("Can not create stage with name $stageName for project $projectName, stage already exist")
-            throw RuntimeException("Warning. Stage already exists")
-        }
-
-        stageDir.mkdirs()
-
-        saveStageMetadata(projectName, stageName, startDate, endDate)
-        log.info("Stage with name: $stageName for project $projectName created")
-
-        return SUCCESS_RESPONSE
-    }
-
-    private fun saveStageMetadata(projectName: String, stageName: String, startDate: String?, endDate: String?) =
-        stagesRepository.save(
-                Stage(
-                        name = stageName,
-                        project = projectsRepository.findByName(projectName),
-                        startDate = startDate.toDate(),
-                        endDate = endDate.toDate()
-                ))
-
     fun getStages(projectName: String): List<StageDao> {
         log.info("Getting stages for project $projectName")
 
@@ -74,7 +41,8 @@ class StageService(
 
         return stagesDir.list().asList()
                 .map {
-                    val stageMetadata: Stage? = stagesRepository.findByNameAndProject_Name(it, projectName) ?: Stage(project = Project())
+                    val stageMetadata: Stage? = stagesRepository.findByNameAndProject_Name(it, projectName)
+                            ?: Stage(project = Project())
                     StageDao(
                             it,
                             getStageDescriptionName(projectName, it),
@@ -91,6 +59,50 @@ class StageService(
             return null
         }
         return stageDescriptionDir.list().first()
+    }
+
+    fun addStage(projectName: String, stageName: String, startDate: String?, endDate: String?): String {
+        log.info("Adding stage: $stageName for project: $projectName")
+
+        val projectDir = stagePathProvider.getProjectDir(projectName)
+        if (!projectDir.exists()) {
+            log.error("Can not create stage: $stageName for project $projectName, project doesn't exist")
+            throw RuntimeException("Error. Can not create stage for project. Project $projectName doesn't exist")
+        }
+
+        val stageDir = stagePathProvider.getTaskDir(projectName, stageName)
+
+        if (stageDir.exists()) {
+            log.warn("Can not create stage: $stageName for project $projectName, stage already exist")
+            throw RuntimeException("Warning. Stage already exists")
+        }
+
+        stageDir.mkdirs()
+
+        saveStageMetadata(projectName, stageName, startDate, endDate)
+        log.info("Stage: $stageName for project $projectName created")
+
+        return SUCCESS_RESPONSE
+    }
+
+    private fun saveStageMetadata(projectName: String, stageName: String, startDate: String?, endDate: String?) =
+        stagesRepository.save(
+                Stage(
+                        name = stageName,
+                        project = projectsRepository.findByName(projectName),
+                        startDate = startDate.toDate(),
+                        endDate = endDate.toDate()
+                ))
+
+    fun getStageDescription(projectName: String, stageName: String): File {
+        log.info("Getting description for stage: $stageName in project: $projectName")
+
+        val stageDescriptionDir = stagePathProvider.getTaskDescriptionDir(projectName, stageName)
+        if (stageDescriptionDir.exists() && stageDescriptionDir.list().size == 1) {
+            return stageDescriptionDir.listFiles().first()
+        }
+        log.warn("Can not get description file for stage: $stageName and project: $projectName. File doesn't exist")
+        throw java.lang.RuntimeException("Error file doesn't exist")
     }
 
     fun addStageDescription(uploadedFile: MultipartFile, projectName: String, stageName: String): String {
@@ -113,17 +125,6 @@ class StageService(
         log.info("Description file for stage: $stageName in project $projectName saved")
 
         return SUCCESS_RESPONSE
-    }
-
-    fun getStageDescription(projectName: String, stageName: String): File {
-        log.info("Getting description for stage: $stageName in project: $projectName")
-
-        val stageDescriptionDir = stagePathProvider.getTaskDescriptionDir(projectName, stageName)
-        if (stageDescriptionDir.exists() && stageDescriptionDir.list().size == 1) {
-            return stageDescriptionDir.listFiles().first()
-        }
-        log.warn("Can not get description file for stage: $stageName and project: $projectName. File doesn't exist")
-        throw java.lang.RuntimeException("Error file doesn't exist")
     }
 
     fun editStageDate(projectName: String, stageName: String, date: String?, type: String): String {
