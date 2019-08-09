@@ -117,6 +117,7 @@ class StageService(
 
     fun getStageDescription(projectName: String, stageName: String): File {
         log.info("Getting description for stage: $stageName in project: $projectName")
+
         val stageDescriptionDir = stagePathProvider.getTaskDescriptionDir(projectName, stageName)
         if (stageDescriptionDir.exists() && stageDescriptionDir.list().size == 1) {
             return stageDescriptionDir.listFiles().first()
