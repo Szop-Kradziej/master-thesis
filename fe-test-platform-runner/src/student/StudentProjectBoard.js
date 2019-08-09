@@ -5,7 +5,7 @@ import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
-import {CustomTableCell, styles} from "../styles/ProjectBoardStyles";
+import {CustomHeaderCell, CustomTableCell, styles} from "../styles/ProjectBoardStyles";
 import ExpansionPanel from '@material-ui/core/ExpansionPanel';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
@@ -116,7 +116,7 @@ class StudentProjectBoard extends Component {
                 <Table className={this.props.classes.table}>
                     <TableHead>
                         <TableRow>
-                            <CustomTableCell>Etapy</CustomTableCell>
+                            <CustomHeaderCell>Etapy</CustomHeaderCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -151,14 +151,14 @@ class StudentProjectBoard extends Component {
                 <Table className={this.props.classes.table}>
                     <TableHead>
                         <TableRow>
-                            <CustomTableCell>Integracje</CustomTableCell>
+                            <CustomHeaderCell className={this.props.classes.headingMainPanel}>Integracje</CustomHeaderCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {this.state.integrations.integrations.map(integration => (
                             <TableRow key={integration.integrationName}>
                                 <CustomTableCell component="th" scope="row">
-                                    <ExpansionPanel disabled={!integration.enable}>
+                                    <ExpansionPanel>
                                         <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                                             <StudentIntegrationRow
                                                 integration={integration}

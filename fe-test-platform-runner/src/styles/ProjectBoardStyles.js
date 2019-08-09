@@ -15,6 +15,20 @@ export const CustomTableCell = withStyles(() => ({
     }
 }))(TableCell);
 
+export const CustomHeaderCell = withStyles(() => ({
+    head: {
+        color: "black",
+        fontWeight: 700,
+        fontSize: 20,
+        border: 0
+    },
+    body: {
+        color: "black",
+        fontSize: 12,
+        border: 0
+    }
+}))(TableCell);
+
 export const styles = (theme) => ({
     app: {
         textAlign: "center",
