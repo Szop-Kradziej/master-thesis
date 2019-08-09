@@ -24,7 +24,6 @@ class BinService(
     private final val stagesTestCaseService = TestCaseService(stagePathProvider)
     private final val integrationTestCaseService = TestCaseService(integrationPathProvider)
 
-
     fun runBin(groupName: String, projectName: String, stageName: String): List<TestResponse> {
         log.info("Running program of group: $groupName for stage: $stageName in project: $projectName")
         val testCases = stagesTestCaseService.getTestCases(projectName, stageName)
@@ -146,17 +145,11 @@ class BinService(
     }
 
     companion object {
-        val log = LoggerFactory.logger(BinService::class.java);
+        val log = LoggerFactory.logger(BinService::class.java)
     }
 }
 
 data class TestResponse constructor(val testCaseName: String, val status: String = "NO RUN", val message: String? = null)
-//class Success(val testCaseName: String) : TestResponse() {
-//    val status = "SUCCESS"
-//}
-//class Error(val testCaseName: String, val message: String) : TestResponse() {
-//    val status = "FAILURE"
-//}
 
 @Component
 class ContainerFactory {
