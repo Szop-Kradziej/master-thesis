@@ -118,7 +118,7 @@ class IntegrationService(
     }
 
     fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, integrationName: String, testCaseName: String): String {
-        return testCaseService.saveTestCase(inputFile, outputFile, projectName, integrationName, testCaseName)
+        return testCaseService.addTestCase(inputFile, outputFile, projectName, integrationName, testCaseName)
     }
 
     fun getTestCaseFile(projectName: String, integrationName: String, testCaseName: String, fileType: String): File {

@@ -29,7 +29,7 @@ class StageService(
 
         val projectDir = stagePathProvider.getProjectDir(projectName)
         if (!projectDir.exists()) {
-            log.error("Can not fetch stages for project $projectName, project doesn't exist")
+            log.error("Can not get stages for project $projectName, project doesn't exist")
             throw RuntimeException("Error. Can not fetch stages for project. Project $projectName doesn't exist")
         }
 
@@ -187,7 +187,7 @@ class StageService(
     }
 
     fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, stageName: String, testCaseName: String): String {
-        return testCaseService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
+        return testCaseService.addTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
     }
 
     fun getTestCaseFile(projectName: String, stageName: String, testCaseName: String, fileType: String): File {
