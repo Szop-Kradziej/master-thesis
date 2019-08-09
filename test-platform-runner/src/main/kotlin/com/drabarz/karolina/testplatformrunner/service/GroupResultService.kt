@@ -1,11 +1,9 @@
 package com.drabarz.karolina.testplatformrunner.service
 
 import com.drabarz.karolina.testplatformrunner.api.*
-import com.drabarz.karolina.testplatformrunner.model.Integration
 import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
-import com.fasterxml.jackson.databind.JsonDeserializer
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.opencsv.CSVWriter
@@ -351,27 +349,32 @@ class GroupResultService(
     }
 
     fun getStageStatisticsFile(groupName: String, projectName: String, stageName: String): File {
-        return getResultsFile(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName))
+        val statisticsFileName = getStatisticsFileName(projectName, stageName, groupName)
+        return getResultsFile(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), statisticsFileName)
     }
+
+    private fun getStatisticsFileName(projectName: String, taskName: String, groupName: String) =
+            projectName + "_" + taskName + "_" + groupName + "_" + "statistics.csv"
 
     fun getIntegrationStatisticsFile(groupName: String, projectName: String, integrationName: String): File {
-        return getResultsFile(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName))
+        val statisticsFileName = getStatisticsFileName(projectName, integrationName, groupName)
+        return getResultsFile(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), statisticsFileName)
     }
 
-    fun getResultsFile(resultsDir: File): File {
+    fun getResultsFile(resultsDir: File, statisticsFileName: String): File {
         if (hasStatistics(resultsDir)) {
-            return convertResultFileToCsv(resultsDir)
+            return convertResultFileToCsv(resultsDir, statisticsFileName)
         }
 
         throw NoSuchFileException(resultsDir)
     }
 
-    private fun convertResultFileToCsv(resultDir: File): File {
+    private fun convertResultFileToCsv(resultDir: File, statisticsFileName: String): File {
 
         val jsonData = resultDir.listFiles().find { it.name == "result.json" }!!.readBytes()
         val fullTestResponses = jacksonObjectMapper().readerFor(Array<FullTestResponse>::class.java).readValue<Array<FullTestResponse>>(jsonData).toMutableList()
 
-        Files.newBufferedWriter(File(resultDir, "statistics.csv").toPath()).use { writer ->
+        Files.newBufferedWriter(File(resultDir, statisticsFileName).toPath()).use { writer ->
             CSVWriter(writer).use { csvWriter ->
                 val headerRecord = arrayOf("Data", "Użytkownik", "Nazwa testu", "Status", "Komunikat")
                 csvWriter.writeNext(headerRecord)
@@ -385,7 +388,7 @@ class GroupResultService(
             }
         }
 
-        return File(resultDir, "statistics.csv")
+        return File(resultDir, statisticsFileName)
     }
 
     private fun hasStageStatistics(groupName: String, projectName: String, stageName: String): Boolean {
