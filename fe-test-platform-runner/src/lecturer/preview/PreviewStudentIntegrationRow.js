@@ -69,8 +69,7 @@ class PreviewStudentIntegrationRow extends Component {
                                     <InputWrapper>
                                         Uruchom integrację
                                         <IconButton aria-label="Uruchom"
-                                                    //TODO: FIX
-                                                    // disabled={this.props.integration.enable === false}
+                                                    disabled={this.props.integration.enable === false}
                                                     onClick={this.handleRunTests}>
                                             <RunIcon/>
                                         </IconButton>

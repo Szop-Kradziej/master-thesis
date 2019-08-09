@@ -1,6 +1,7 @@
 package com.drabarz.karolina.testplatformrunner.service
 
 import com.drabarz.karolina.testplatformrunner.api.*
+import com.drabarz.karolina.testplatformrunner.model.Integration
 import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
@@ -267,7 +268,7 @@ class GroupResultService(
                             integration.testCases.count(),
                             countSuccessfulIntegrationGroups(projectName, integration.name),
                             countTotalGroups(projectName),
-                            true
+                            isIntegrationEnable(groupName, projectName, integration)
                     )
                 }.sortedBy { it.integrationName }
     }
@@ -304,9 +305,19 @@ class GroupResultService(
                             integration.testCases.count(),
                             countSuccessfulIntegrationGroups(projectName, integration.name),
                             countTotalGroups(projectName),
-                            hasIntegrationStatistics(groupName, projectName, integration.name)
+                            hasIntegrationStatistics(groupName, projectName, integration.name),
+                            isIntegrationEnable(groupName, projectName, integration)
                     )
                 }.sortedBy { it.integrationName }
+    }
+
+    private fun isIntegrationEnable(groupName: String, projectName: String, integration: IntegrationDao): Boolean {
+        return integration.integrationStages.all {hasBinForStage(groupName, projectName, it.stageName)}
+    }
+
+    private fun hasBinForStage(groupName: String, projectName: String, stageName: String): Boolean {
+        val binDir = stagePathProvider.getStudentBinDir(groupName, projectName, stageName)
+        return binDir.exists() && binDir.list().size == 1
     }
 
     private fun getTestCasesWithResultsIntegration(groupName: String, projectName: String, integrationName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {

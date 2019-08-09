@@ -155,5 +155,5 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
 class StudentPreviewStagesResponse(val stages: List<StudentPreviewStage>)
 class StudentPreviewStage(val stageName: String, val binaryName: String?, val reportName: String?, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val startDate: String?, val endDate: String?, val successfulGroups: Int, val totalGroupsNumber: Int, val codeLink: String?, val statistics: Boolean)
 class StudentPreviewIntegrationsResponse(val integrations: List<StudentPreviewIntegration>)
-class StudentPreviewIntegration(val integrationName: String, val integrationStages: List<IntegrationStageDao>, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val successfulGroups: Int, val totalGroupsNumber: Int, val statistics: Boolean)
+class StudentPreviewIntegration(val integrationName: String, val integrationStages: List<IntegrationStageDao>, val testCases: List<TestCaseWithResult>, val passedTestCasesCount: Int, val allTestCasesCount: Int, val successfulGroups: Int, val totalGroupsNumber: Int, val statistics: Boolean, val enable: Boolean)
 

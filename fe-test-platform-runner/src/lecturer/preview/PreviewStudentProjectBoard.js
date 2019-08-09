@@ -69,7 +69,8 @@ class PreviewStudentProjectBoard extends Component {
     };
 
     stageChangedHandler = () => {
-        this.fetchStages()
+        this.fetchStages();
+        this.fetchIntegrations();
     };
 
     integrationChangedHandler = () => {
@@ -88,7 +89,7 @@ class PreviewStudentProjectBoard extends Component {
         var studentsNames = "";
         var i = 0;
         this.state.students.map(student => {
-                studentsNames = studentsNames + student
+                studentsNames = studentsNames + student;
                 if (i < this.state.students.length - 1) {
                     studentsNames = studentsNames + ", "
                 }
