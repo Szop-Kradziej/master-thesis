@@ -29,6 +29,7 @@ class ProjectService(
 
     fun getStudentProjects(studentName: String): List<String> {
         log.info("Getting all projects for student: $studentName")
+
         return groupService.getStudentProjects(studentName)
     }
 
@@ -87,11 +88,13 @@ class ProjectService(
 
     fun getProjectDescriptionName(projectName: String): String? {
         log.info("Getting description name for project: $projectName")
+
         return getProjectFileName(pathProvider.getProjectDescriptionDir(projectName))
     }
 
     fun getProjectEnvironmentName(projectName: String): String? {
         log.info("Getting environment name for project: $projectName")
+
         return getProjectFileName(pathProvider.getProjectEnvironmentDir(projectName))
     }
 
@@ -104,11 +107,13 @@ class ProjectService(
 
     fun getProjectDescription(projectName: String): File {
         log.info("Getting description for project: $projectName")
+
         return getProjectFile(pathProvider.getProjectDescriptionDir(projectName))
     }
 
     fun getProjectEnvironment(projectName: String): File {
         log.info("Getting environment for project: $projectName")
+
         return getProjectFile(pathProvider.getProjectEnvironmentDir(projectName))
     }
 
