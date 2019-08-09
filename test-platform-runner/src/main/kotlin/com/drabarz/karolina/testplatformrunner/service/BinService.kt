@@ -159,8 +159,8 @@ class ContainerFactory {
         return KGenericContainer(
                 ImageFromDockerfile()
                         .withFileFromFile("Dockerfile", environmentDir.listFiles().first())
-        )//TODO: Fix example.jar - provide bin name
-                .withCopyFileToContainer(MountableFile.forHostPath(binPath), "/home/example.jar")
+        )
+                .withCopyFileToContainer(MountableFile.forHostPath(binPath), "/home/app")
                 .withFileSystemBind(inputFilePath, "/home/input.txt", BindMode.READ_ONLY)
                 .withFileSystemBind(outputFilePath, "/home/output.txt", BindMode.READ_WRITE)
     }
