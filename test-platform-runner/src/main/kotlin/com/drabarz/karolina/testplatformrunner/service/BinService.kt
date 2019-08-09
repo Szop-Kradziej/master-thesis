@@ -54,13 +54,13 @@ class BinService(
             val outputFile = File(stagePathProvider.getStudentOutputDir(groupName, projectName, stageName).apply { mkdir() }, "output").apply { createNewFile() }
             val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, outputFile.absolutePath, "${binDir.absolutePath}/$binName")
             containerService.runTestCase(container)
-                    .also { logs -> saveLogsToResultFile(groupName, logs, projectName, stageName, it.testCaseName) }
+                    .also { logs -> saveLogsToStageResultFile(groupName, logs, projectName, stageName, it.testCaseName) }
             val expectedOutput = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "output").listFiles().first().readText()
             checkCorrectness(it.testCaseName, outputFile, expectedOutput)
         }
     }
 
-    private fun saveLogsToResultFile(groupName: String, logs: String, projectName: String, stageName: String, testCaseName: String) {
+    private fun saveLogsToStageResultFile(groupName: String, logs: String, projectName: String, stageName: String, testCaseName: String) {
         val logsDir = stagePathProvider.getStudentLogsDir(groupName, projectName, stageName)
         logsDir.mkdirs()
 
@@ -132,11 +132,11 @@ class BinService(
 
         val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, outputFile.absolutePath, binPath)
         containerService.runTestCase(container)
-                .also { logs -> saveLogsToResultFileIntegration(groupName, logs, projectName, integrationName, testCase.testCaseName) }
+                .also { logs -> saveLogsToIntegrationResultFile(groupName, logs, projectName, integrationName, testCase.testCaseName) }
         return outputFile
     }
 
-    private fun saveLogsToResultFileIntegration(groupName: String, logs: String, projectName: String, integrationName: String, testCaseName: String) {
+    private fun saveLogsToIntegrationResultFile(groupName: String, logs: String, projectName: String, integrationName: String, testCaseName: String) {
         val logsDir = integrationPathProvider.getStudentLogsDir(groupName, projectName, integrationName)
         logsDir.mkdirs()
 
