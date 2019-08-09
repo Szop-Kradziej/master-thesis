@@ -7,8 +7,6 @@ import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
-import java.nio.charset.StandardCharsets
-import java.util.Base64.getDecoder
 
 @CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000"], allowCredentials = "true")
 @RestController
@@ -22,7 +20,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
     }
 
     @PostMapping("/student/upload/bin")
-    fun uploadJar(
+    fun uploadBin(
             @RequestHeader headers: HttpHeaders,
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
@@ -34,12 +32,12 @@ class TestPlatformStudentApi(val studentService: StudentService) {
     }
 
     @GetMapping("/student/{projectName}/{stageName}/bin")
-    fun downloadJar(
+    fun downloadBin(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
         val userName = getUserNameFromRequestHeader(headers)
-        return createFileResponse(studentService.getJar(userName, projectName, stageName))
+        return createFileResponse(studentService.getBin(userName, projectName, stageName))
     }
 
     @PostMapping("/student/upload/report")
@@ -65,7 +63,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
     }
 
     @PostMapping("/student/stage/run")
-    fun runStageJar(
+    fun runStageBin(
             @RequestHeader headers: HttpHeaders,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): List<TestResponse> {
@@ -74,7 +72,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
     }
 
     @PostMapping("/student/integration/run")
-    fun runIntegrationJar(
+    fun runIntegrationBin(
             @RequestHeader headers: HttpHeaders,
             @RequestParam("projectName") projectName: String,
             @RequestParam("integrationName") integrationName: String): List<TestResponse> {

@@ -68,6 +68,6 @@ class TestPlatformRunnerApplicationTests {
 @TestComponent
 class TestPathProvider: PathProv {
 	private final val pathPrefix = "/home/karolina/MGR/test/platform"
-	final override val jarPath = "$pathPrefix/jars"
+	final override val binPath = "$pathPrefix/bins"
 	final override val projectsPath = "$pathPrefix/projects"
 }

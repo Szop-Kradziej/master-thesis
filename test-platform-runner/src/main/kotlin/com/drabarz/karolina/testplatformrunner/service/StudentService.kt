@@ -52,9 +52,9 @@ class StudentService(
         return groupResultService.saveCodeLink(studentName!!, groupName, projectName, stageName, codeLink)
     }
 
-    fun getJar(studentName: String?, projectName: String, stageName: String): File {
+    fun getBin(studentName: String?, projectName: String, stageName: String): File {
         val groupName = getGroupName(studentName, projectName)
-        return groupResultService.getJar(groupName, projectName, stageName)
+        return groupResultService.getBin(groupName, projectName, stageName)
     }
 
     fun getReport(studentName: String?, projectName: String, stageName: String): File {

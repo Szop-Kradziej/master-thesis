@@ -19,20 +19,20 @@ class GroupResultService(
         val stageService: StageService,
         val integrationService: IntegrationService,
         val groupService: GroupService,
-        val jarService: JarService) {
+        val binService: BinService) {
 
     private final val stagePathProvider = StagePathProvider()
     private final val integrationPathProvider = IntegrationPathProvider()
 
     fun runStageTests(userName: String, groupName: String, projectName: String, stageName: String): List<TestResponse> {
-        val testResponses = jarService.runJar(groupName, projectName, stageName)
+        val testResponses = binService.runBin(groupName, projectName, stageName)
         saveTestResponses(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), userName, testResponses)
 
         return testResponses
     }
 
     fun runIntegrationTests(userName: String, groupName: String, projectName: String, integrationName: String): List<TestResponse> {
-        val testResponses = jarService.runJars(groupName, projectName, integrationName)
+        val testResponses = binService.runBins(groupName, projectName, integrationName)
         saveTestResponses(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), userName, testResponses)
 
         return testResponses
@@ -225,7 +225,7 @@ class GroupResultService(
         return "200"
     }
 
-    fun getJar(groupName: String, projectName: String, stageName: String): File {
+    fun getBin(groupName: String, projectName: String, stageName: String): File {
         return getSingleFile(stagePathProvider.getStudentBinDir(groupName, projectName, stageName))
     }
 

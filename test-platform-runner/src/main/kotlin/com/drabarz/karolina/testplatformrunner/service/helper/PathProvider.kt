@@ -5,14 +5,14 @@ import java.io.File
 
 
 interface PathProv {
-    val jarPath: String
+    val binPath: String
     val projectsPath: String
 }
 
 @Component
 class PathProvider : PathProv {
     private final val pathPrefix = "/home/karolina/MGR/platform"
-    final override val jarPath = "$pathPrefix/jars"
+    final override val binPath = "$pathPrefix/bins"
     final override val projectsPath = "$pathPrefix/projects"
 
     fun getProjectDir(projectName: String): File {
@@ -116,7 +116,7 @@ class StagePathProvider : PathProvider(), TaskPathProvider {
     }
 
     override fun getStudentTaskDir(groupName: String, projectName: String, taskName: String): File {
-        return File("$jarPath/$projectName/$groupName/$STAGES/$taskName")
+        return File("$binPath/$projectName/$groupName/$STAGES/$taskName")
     }
 }
 
@@ -128,6 +128,6 @@ class IntegrationPathProvider : PathProvider(), TaskPathProvider {
     }
 
     override fun getStudentTaskDir(groupName: String, projectName: String, taskName: String): File {
-        return File("$jarPath/$projectName/$groupName/$INTEGRATIONS/$taskName")
+        return File("$binPath/$projectName/$groupName/$INTEGRATIONS/$taskName")
     }
 }

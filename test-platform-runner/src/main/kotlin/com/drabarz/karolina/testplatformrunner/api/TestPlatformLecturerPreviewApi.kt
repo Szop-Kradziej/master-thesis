@@ -2,7 +2,6 @@ package com.drabarz.karolina.testplatformrunner.api
 
 import com.drabarz.karolina.testplatformrunner.service.FileType
 import com.drabarz.karolina.testplatformrunner.service.GroupResultService
-import com.drabarz.karolina.testplatformrunner.service.StudentService
 import com.drabarz.karolina.testplatformrunner.service.TestResponse
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
@@ -15,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile
 class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService) {
 
     @PostMapping("/preview/{groupName}/upload/bin")
-    fun uploadJar(
+    fun uploadBin(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("groupName") groupName: String,
             @RequestParam("file") uploadedFile: MultipartFile,
@@ -28,13 +27,13 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
     }
 
     @GetMapping("/preview/{groupName}/{projectName}/{stageName}/bin")
-    fun downloadJar(
+    fun downloadBin(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("groupName") groupName: String,
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
         val userName = getUserNameFromRequestHeader(headers)
-        return createFileResponse(groupResultService.getJar(groupName, projectName, stageName))
+        return createFileResponse(groupResultService.getBin(groupName, projectName, stageName))
     }
 
     @PostMapping("/preview/{groupName}/upload/report")
@@ -62,7 +61,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
     }
 
     @PostMapping("/preview/{groupName}/stage/run")
-    fun runStageJar(
+    fun runStageBin(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("groupName") groupName: String,
             @RequestParam("projectName") projectName: String,
@@ -72,7 +71,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
     }
 
     @PostMapping("/preview/{groupName}/integration/run")
-    fun runIntegrationJar(
+    fun runIntegrationBin(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("groupName") groupName: String,
             @RequestParam("projectName") projectName: String,
