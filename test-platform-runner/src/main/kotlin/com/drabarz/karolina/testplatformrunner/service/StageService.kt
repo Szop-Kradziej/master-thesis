@@ -120,8 +120,12 @@ class StageService(
             stageDir.delete()
         }
 
-        stagesRepository.findByNameAndProject_Name(stageName, projectName)
-                ?.let { stagesRepository.delete(it) }
+        try {
+            stagesRepository.findByNameAndProject_Name(stageName, projectName)
+                    ?.let { stagesRepository.delete(it) }
+        } catch (e: Exception) {
+            throw java.lang.RuntimeException("Error. Can not remove stage ${stageName}, stage is already assigned to an integration")
+        }
 
         return "200"
     }
