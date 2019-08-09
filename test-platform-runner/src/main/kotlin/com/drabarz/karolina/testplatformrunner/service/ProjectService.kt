@@ -21,38 +21,59 @@ class ProjectService(
         val groupService: GroupService,
         val deleteFileHelper: DeleteFileHelper) {
 
+    fun getProjects(): List<String> {
+        log.info("Getting all projects")
+
+        return File(pathProvider.projectsPath).list().asList().sortedBy { it }
+    }
+
+    fun getStudentProjects(studentName: String): List<String> {
+        log.info("Getting all projects for student: $studentName")
+        return groupService.getStudentProjects(studentName)
+    }
+
     fun addProject(projectName: String): String {
+        log.info("Adding project: $projectName")
+
         val projectDir = pathProvider.getProjectDir(projectName)
 
         if (projectDir.exists()) {
+            log.warn("Can not add project: $projectName, project already exist")
             throw RuntimeException("Warning. Project already exists")
         }
 
         projectDir.mkdir()
         projectsRepository.save(Project(name = projectName))
 
-        return "200"
-    }
+        log.info("Project: $projectName added")
 
-    fun getProjects(): List<String> {
-        return File(pathProvider.projectsPath).list().asList().sortedBy { it }
+        return SUCCESS_RESPONSE
     }
 
     fun addProjectDescription(uploadedFile: MultipartFile, projectName: String): String {
+        log.info("Adding description for project: $projectName")
+
         addProjectFile(uploadedFile, projectName, pathProvider.getProjectDescriptionDir(projectName))
 
-        return "200"
+        log.info("Description for project: $projectName added")
+
+        return SUCCESS_RESPONSE
     }
 
     fun addProjectEnvironment(uploadedFile: MultipartFile, projectName: String): String {
+        log.info("Adding environment for project: $projectName")
+
         addProjectFile(uploadedFile, projectName, pathProvider.getProjectEnvironmentDir(projectName))
 
-        return "200"
+        log.info("Environment for project: $projectName added")
+
+        return SUCCESS_RESPONSE
     }
 
-    fun addProjectFile(uploadedFile: MultipartFile, projectName: String, fileDir: File) {
+    private fun addProjectFile(uploadedFile: MultipartFile, projectName: String, fileDir: File) {
         val projectDir = pathProvider.getProjectDir(projectName)
         if (!projectDir.exists()) {
+            log.error("Can not add file for project $projectName, project doesn't exist")
             throw RuntimeException("Error. Project $projectName doesn't exist")
         }
 
@@ -65,14 +86,16 @@ class ProjectService(
     }
 
     fun getProjectDescriptionName(projectName: String): String? {
+        log.info("Getting description name for project: $projectName")
         return getProjectFileName(pathProvider.getProjectDescriptionDir(projectName))
     }
 
     fun getProjectEnvironmentName(projectName: String): String? {
+        log.info("Getting environment name for project: $projectName")
         return getProjectFileName(pathProvider.getProjectEnvironmentDir(projectName))
     }
 
-    fun getProjectFileName(fileDir: File): String? {
+    private fun getProjectFileName(fileDir: File): String? {
         if (!fileDir.exists() || fileDir.list().size != 1) {
             return null
         }
@@ -80,14 +103,16 @@ class ProjectService(
     }
 
     fun getProjectDescription(projectName: String): File {
+        log.info("Getting description for project: $projectName")
         return getProjectFile(pathProvider.getProjectDescriptionDir(projectName))
     }
 
     fun getProjectEnvironment(projectName: String): File {
-       return getProjectFile(pathProvider.getProjectEnvironmentDir(projectName))
+        log.info("Getting environment for project: $projectName")
+        return getProjectFile(pathProvider.getProjectEnvironmentDir(projectName))
     }
 
-    fun getProjectFile(fileDir: File): File {
+    private fun getProjectFile(fileDir: File): File {
         if (fileDir.exists() && fileDir.list().size == 1) {
             return fileDir.listFiles().first()
         }
@@ -97,6 +122,8 @@ class ProjectService(
 
     @Transactional
     fun deleteProject(projectName: String): String {
+        log.info("Deleting project: $projectName")
+
         val projectDir = pathProvider.getProjectDir(projectName)
 
         if (projectDir.exists()) {
@@ -112,7 +139,9 @@ class ProjectService(
 
         projectsRepository.deleteByName(projectName)
 
-        return "200"
+        log.info("Project: $projectName deleted")
+
+        return SUCCESS_RESPONSE
     }
 
     private fun deleteStages(projectName: String) {
@@ -136,11 +165,8 @@ class ProjectService(
         }
     }
 
-    fun getStudentsProjects(studentName: String): List<String> {
-        return groupService.getStudentProjects(studentName)
-    }
-
     companion object {
         val log = LoggerFactory.getLogger(ProjectService::class.java);
+        const val SUCCESS_RESPONSE = "200"
     }
 }

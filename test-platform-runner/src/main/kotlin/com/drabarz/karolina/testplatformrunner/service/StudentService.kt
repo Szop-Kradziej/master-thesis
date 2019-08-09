@@ -20,7 +20,7 @@ class StudentService(
             throw IllegalAccessError()
         }
 
-        return projectService.getStudentsProjects(studentName)
+        return projectService.getStudentProjects(studentName)
     }
 
     fun runStageTests(studentName: String?, projectName: String, stageName: String): List<TestResponse> {
