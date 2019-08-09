@@ -20,6 +20,7 @@ import SettingsIcon from "@material-ui/icons/Settings";
 import * as Api from "../Api";
 import StudentIntegrationRow from "./StudentIntegrationRow";
 import {getAuthHeader} from "../Api";
+import DescriptionAndSettingsItemComponent from "../utils/DescriptionAndSettingsItemComponent";
 
 class StudentProjectBoard extends Component {
 
@@ -104,15 +105,11 @@ class StudentProjectBoard extends Component {
     render() {
         return (
             <div className={this.props.classes.app}>
-                <div>
-                    Projekt: {this.props.match.params.projectId}
-                    <IconButton aria-label="Pobierz opis projektu" onClick={this.handleDownloadProjectDescription}>
-                        <DescriptionIcon/>
-                    </IconButton>
-                    <IconButton aria-label="Pobierz konfigurację środowiska" onClick={this.handleDownloadProjectEnvironment}>
-                        <SettingsIcon/>
-                    </IconButton>
-                </div>
+                <DescriptionAndSettingsItemComponent header={"Projekt: " + this.props.match.params.projectId}
+                                                     descriptionInfo="Pobierz opis projektu"
+                                                     getDescriptionActionHandler={this.handleDownloadProjectDescription}
+                                                     settingsInfo="Pobierz konfigurację środowiska"
+                                                     getSettingsActionHandler={this.handleDownloadProjectEnvironment}/>
                 <div>
                     Grupa: {this.state.group.name} ({this.getStudentsNames()})
                 </div>

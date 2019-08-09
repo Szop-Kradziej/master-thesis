@@ -12,6 +12,8 @@ import TableCell from "@material-ui/core/TableCell/TableCell";
 import {getAdminAuthHeader} from "../../Api";
 import AssessmentIcon from "@material-ui/icons/Assessment";
 import * as Api from "../../Api";
+import RunItemComponent from "../../utils/RunItemComponent";
+import StatisticsItemComponent from "../../utils/StatisticsItemComponent";
 
 class PreviewStudentIntegrationRow extends Component {
 
@@ -51,29 +53,20 @@ class PreviewStudentIntegrationRow extends Component {
         return (
             <div className={this.props.classes.stageRow}>
                 <Typography className={this.props.classes.heading}>
-                    <InputWrapper>
-                        {this.props.integration.integrationName}
-                        <IconButton aria-label="Pobierz statystyki dla integracji"
-                                    disabled={this.props.integration.statistics === false}
-                                    onClick={this.handleDownloadIntegrationStatistics}>
-                            <AssessmentIcon/>
-                        </IconButton>
-                    </InputWrapper>
+                    <StatisticsItemComponent header={this.props.integration.integrationName}
+                                             info="Pobierz statystyki dla procesu integracji"
+                                             disabled={this.props.integration.statistics === false}
+                                             getStatisticsActionHandler={this.handleDownloadIntegrationStatistics}/>
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
                     <Table width="1700">
                         <TableHead>
                             <TableRow>
                                 <CustomTableCell>
-                                    {/*TODO: Remove tags from wrapper*/}
-                                    <InputWrapper>
-                                        Uruchom integrację
-                                        <IconButton aria-label="Uruchom"
-                                                    disabled={this.props.integration.enable === false}
-                                                    onClick={this.handleRunTests}>
-                                            <RunIcon/>
-                                        </IconButton>
-                                    </InputWrapper>
+                                    <RunItemComponent header="Uruchom integrację"
+                                                      info="Uruchom proces integracji"
+                                                      disabled={this.props.integration.enable === false}
+                                                      runActionHandler={this.handleRunTests}/>
                                 </CustomTableCell>
                                 <CustomTableCell>Schemat integracji:</CustomTableCell>
                                 <CustomTableCell>Zaliczone:</CustomTableCell>

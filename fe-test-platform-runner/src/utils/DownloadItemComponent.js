@@ -1,18 +1,20 @@
 import React, {Component} from "react";
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import DeleteIcon from "@material-ui/icons/DeleteForever";
+import DownloadIcom from "@material-ui/icons/CloudDownload";
 import InputWrapper from "./InputWrapper";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
-class DeleteItemComponent extends Component {
+class DownloadItemComponent extends Component {
 
     render() {
         return (
             <InputWrapper>
+                {this.props.header}
                 <IconButton aria-label={this.props.info}
-                            onClick={this.props.deleteActionHandler}>
+                            disabled={this.props.disabled}
+                            onClick={this.props.downloadActionHandler}>
                     <Tooltip title={this.props.info}>
-                        <DeleteIcon/>
+                        <DownloadIcom/>
                     </Tooltip>
                 </IconButton>
             </InputWrapper>
@@ -20,4 +22,4 @@ class DeleteItemComponent extends Component {
     }
 }
 
-export default DeleteItemComponent;
+export default DownloadItemComponent;

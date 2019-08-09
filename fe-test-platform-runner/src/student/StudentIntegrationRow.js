@@ -2,14 +2,13 @@ import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
 import backendUrl from "../backendUrl";
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import RunIcon from '@material-ui/icons/PlayArrow';
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
 import {getAuthHeader} from "../Api";
+import RunItemComponent from "../utils/RunItemComponent";
 
 class StudentIntegrationRow extends Component {
 
@@ -54,15 +53,10 @@ class StudentIntegrationRow extends Component {
                         <TableHead>
                             <TableRow>
                                 <CustomTableCell>
-                                    {/*TODO: Remove tags from wrapper*/}
-                                    <InputWrapper>
-                                        Uruchom integrację
-                                        <IconButton aria-label="Uruchom"
-                                                    disabled={this.props.integration.enable === false}
-                                                    onClick={this.handleRunTests}>
-                                            <RunIcon/>
-                                        </IconButton>
-                                    </InputWrapper>
+                                    <RunItemComponent header="Uruchom integrację"
+                                                      info="Uruchom proces integracji"
+                                                      disabled={this.props.integration.enable === false}
+                                                      runActionHandler={this.handleRunTests}/>
                                 </CustomTableCell>
                                 <CustomTableCell>Schemat integracji:</CustomTableCell>
                                 <CustomTableCell>Zaliczone:</CustomTableCell>

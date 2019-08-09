@@ -4,9 +4,8 @@ import green from "@material-ui/core/es/colors/green";
 import red from "@material-ui/core/es/colors/red";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableCell from "@material-ui/core/TableCell/TableCell";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import DownloadIcon from "@material-ui/icons/CloudDownload";
 import * as Api from "../Api";
+import DownloadItemComponent from "../utils/DownloadItemComponent";
 
 class StudentTestCaseRow extends Component {
 
@@ -46,33 +45,29 @@ class StudentTestCaseRow extends Component {
                         color={this.props.testCase.status === 'SUCCESS' ? "green" : "red"}>{this.props.testCase.status}</font>
                     </p>
                 </CustomTableCell>
-                <CustomTableCell >
+                <CustomTableCell>
                     <p>{this.props.testCase.message ? this.props.testCase.message : "Brak"}</p>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="5%">
-                    {this.props.testCase.logsFile === true ? "Logi" : "Brak"}
-                    <IconButton aria-label="Pobierz"
-                                disabled={!this.props.testCase.logsFile === true}
-                                onClick={this.handleDownloadLogsFile}>
-                        <DownloadIcon/>
-                    </IconButton>
+                    <DownloadItemComponent header={this.props.testCase.logsFile === true ? "Logi" : "Brak"}
+                                           info="Pobierz logi"
+                                           disabled={!this.props.testCase.logsFile === true}
+                                           downloadActionHandler={this.handleDownloadLogsFile}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="15%">
                     {this.props.testCase.parameters ? this.props.testCase.parameters : "Brak"}
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="8%">
-                    input
-                    <IconButton aria-label="Pobierz"
-                                onClick={this.handleDownloadInputFile}>
-                        <DownloadIcon/>
-                    </IconButton>
+                    <DownloadItemComponent header="input"
+                                           info="Pobierz plik wejściowy"
+                                           disabled={false}
+                                           downloadActionHandler={this.handleDownloadInputFile}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="8%">
-                    output
-                    <IconButton aria-label="Pobierz"
-                                onClick={this.handleDownloadOutputFile}>
-                        <DownloadIcon/>
-                    </IconButton>
+                    <DownloadItemComponent header="output"
+                                           info="Pobierz plik wyjściowy"
+                                           disabled={false}
+                                           downloadActionHandler={this.handleDownloadOutputFile}/>
                 </CustomTableCell>
             </TableRow>
         );

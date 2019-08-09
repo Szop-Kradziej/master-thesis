@@ -19,6 +19,8 @@ import PreviewStudentStageRow from "./PreviewStudentStageRow";
 import PreviewStudentTestCasesDetails from "./PreviewStudentTestCasesDetails";
 import PreviewStudentIntegrationRow from "./PreviewStudentIntegrationRow";
 import {getAdminAuthHeader} from "../../Api";
+import DescriptionAndStatisticsItemComponent from "../../utils/DescriptionAndStatisticsItemComponent";
+import DescriptionAndSettingsItemComponent from "../../utils/DescriptionAndSettingsItemComponent";
 
 class PreviewStudentProjectBoard extends Component {
 
@@ -103,16 +105,11 @@ class PreviewStudentProjectBoard extends Component {
     render() {
         return (
             <div className={this.props.classes.app}>
-                <div>
-                    Projekt: {this.props.match.params.projectId}
-                    <IconButton aria-label="Pobierz opis projektu" onClick={this.handleDownloadProjectDescription}>
-                        <DescriptionIcon/>
-                    </IconButton>
-                    <IconButton aria-label="Pobierz konfigurację środowiska"
-                                onClick={this.handleDownloadProjectEnvironment}>
-                        <SettingsIcon/>
-                    </IconButton>
-                </div>
+                <DescriptionAndSettingsItemComponent header={"Projekt: " + this.props.match.params.projectId}
+                                                     descriptionInfo="Pobierz opis projektu"
+                                                     getDescriptionActionHandler={this.handleDownloadProjectDescription}
+                                                     settingsInfo="Pobierz konfigurację środowiska"
+                                                     getSettingsActionHandler={this.handleDownloadProjectEnvironment}/>
                 <div>
                     Grupa: {this.props.match.params.groupId} ({this.getStudentsNames()})
                 </div>

@@ -2,11 +2,6 @@ import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
 import backendUrl from "../backendUrl";
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import DownloadIcon from '@material-ui/icons/CloudDownload';
-import UploadIcon from '@material-ui/icons/CloudUpload';
-import RunIcon from '@material-ui/icons/PlayArrow';
-import DescriptionIcon from '@material-ui/icons/Description';
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
@@ -19,6 +14,8 @@ import StudentUploadBinaryDialog from "./StudentUploadBinaryDialog";
 import StudentUploadReportDialog from "./StudentUploadReportDialog";
 import StudentUploadCodeLinkDialog from "./StudentUploadCodeLinkDialog";
 import {getAuthHeader} from "../Api";
+import DescriptionItemComponent from "../utils/DescriptionItemComponent";
+import UploadDownloadAndRunItemComponent from "../utils/UploadDownloadAndRunItemComponent";
 
 class StudentStageRow extends Component {
 
@@ -97,36 +94,24 @@ class StudentStageRow extends Component {
         return (
             <div className={this.props.classes.stageRow}>
                 <Typography className={this.props.classes.heading}>
-                    <InputWrapper>
-                        {this.props.stage.stageName}
-                        <IconButton aria-label="Pobierz opis etapu"
-                                    onClick={this.handleDownloadStageDescription}>
-                            <DescriptionIcon/>
-                        </IconButton>
-                    </InputWrapper>
+                    <DescriptionItemComponent header={this.props.stage.stageName}
+                                              info="Pobierz opis etapu"
+                                              getDescriptionActionHandler={this.handleDownloadStageDescription}/>
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
                     <Table width="1700">
                         <TableHead>
                             <TableRow>
                                 <CustomTableCell>
-                                    {/*TODO: Remove tags from wrapper*/}
-                                    <InputWrapper>
-                                        Bin:
-                                        <IconButton aria-label="Zmień" onClick={this.handleOpenAddBinaryDialog}>
-                                            <UploadIcon/>
-                                        </IconButton>
-                                        <IconButton aria-label="Pobierz"
-                                                    disabled={this.props.stage.binaryName === null}
-                                                    onClick={this.handleDownloadBin}>
-                                            <DownloadIcon/>
-                                        </IconButton>
-                                        <IconButton aria-label="Uruchom"
-                                                    disabled={this.props.stage.binaryName === null}
-                                                    onClick={this.handleRunTests}>
-                                            <RunIcon/>
-                                        </IconButton>
-                                    </InputWrapper>
+                                    <UploadDownloadAndRunItemComponent
+                                        header="Bin:"
+                                        uploadInfo="Załaduj plik binarny"
+                                        uploadActionHandler={this.handleOpenAddBinaryDialog}
+                                        downloadInfo="Pobierz plik binarny"
+                                        disabled={this.props.stage.binaryName === null}
+                                        downloadActionHandler={this.handleDownloadBin}
+                                        runInfo="Uruchom plik binarny"
+                                        runActionHandler={this.handleRunTests}/>
                                 </CustomTableCell>
                                 <CustomTableCell>
                                     <EditItemComponent

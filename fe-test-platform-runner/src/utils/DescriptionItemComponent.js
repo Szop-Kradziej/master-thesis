@@ -1,18 +1,19 @@
 import React, {Component} from "react";
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import DeleteIcon from "@material-ui/icons/DeleteForever";
+import DescriptionIcon from "@material-ui/icons/Description";
 import InputWrapper from "./InputWrapper";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
-class DeleteItemComponent extends Component {
+class DescriptionItemComponent extends Component {
 
     render() {
         return (
             <InputWrapper>
+                {this.props.header}
                 <IconButton aria-label={this.props.info}
-                            onClick={this.props.deleteActionHandler}>
+                            onClick={this.props.getDescriptionActionHandler}>
                     <Tooltip title={this.props.info}>
-                        <DeleteIcon/>
+                        <DescriptionIcon/>
                     </Tooltip>
                 </IconButton>
             </InputWrapper>
@@ -20,4 +21,4 @@ class DeleteItemComponent extends Component {
     }
 }
 
-export default DeleteItemComponent;
+export default DescriptionItemComponent;

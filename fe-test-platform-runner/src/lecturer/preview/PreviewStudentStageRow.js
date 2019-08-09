@@ -2,12 +2,6 @@ import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
 import backendUrl from "../../backendUrl";
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import DownloadIcon from '@material-ui/icons/CloudDownload';
-import UploadIcon from '@material-ui/icons/CloudUpload';
-import RunIcon from '@material-ui/icons/PlayArrow';
-import DescriptionIcon from '@material-ui/icons/Description';
-import AssessmentIcon from '@material-ui/icons/Assessment';
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
@@ -20,6 +14,8 @@ import StudentUploadBinaryDialog from "./PreviewStudentUploadBinaryDialog";
 import StudentUploadReportDialog from "./PreviewStudentUploadReportDialog";
 import StudentUploadCodeLinkDialog from "./PreviewStudentUploadCodeLinkDialog";
 import {getAdminAuthHeader} from "../../Api";
+import DescriptionAndStatisticsItemComponent from "../../utils/DescriptionAndStatisticsItemComponent";
+import UploadDownloadAndRunItemComponent from "../../utils/UploadDownloadAndRunItemComponent";
 
 class PreviewStudentStageRow extends Component {
 
@@ -102,41 +98,28 @@ class PreviewStudentStageRow extends Component {
         return (
             <div className={this.props.classes.stageRow}>
                 <Typography className={this.props.classes.heading}>
-                    <InputWrapper>
-                        {this.props.stage.stageName}
-                        <IconButton aria-label="Pobierz opis etapu"
-                                    onClick={this.handleDownloadStageDescription}>
-                            <DescriptionIcon/>
-                        </IconButton>
-                        <IconButton aria-label="Pobierz statystyki dla etapu"
-                                    disabled={this.props.stage.statistics === false}
-                                    onClick={this.handleDownloadStageStatistics}>
-                            <AssessmentIcon/>
-                        </IconButton>
-                    </InputWrapper>
+                    <DescriptionAndStatisticsItemComponent
+                        header={this.props.stage.stageName}
+                        descriptionInfo="Pobierz opis etapu"
+                        getDescriptionActionHandler={this.handleDownloadStageDescription}
+                        statisticsInfo="Pobierz statystyki dla etapu"
+                        statisticsDisabled={this.props.stage.statistics === false}
+                        getStatisticsActionHandler={this.handleDownloadStageStatistics}/>
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
                     <Table width="1700">
                         <TableHead>
                             <TableRow>
                                 <CustomTableCell>
-                                    {/*TODO: Remove tags from wrapper*/}
-                                    <InputWrapper>
-                                        Bin:
-                                        <IconButton aria-label="Zmień" onClick={this.handleOpenAddBinaryDialog}>
-                                            <UploadIcon/>
-                                        </IconButton>
-                                        <IconButton aria-label="Pobierz"
-                                                    disabled={this.props.stage.binaryName === null}
-                                                    onClick={this.handleDownloadBin}>
-                                            <DownloadIcon/>
-                                        </IconButton>
-                                        <IconButton aria-label="Uruchom"
-                                                    disabled={this.props.stage.binaryName === null}
-                                                    onClick={this.handleRunTests}>
-                                            <RunIcon/>
-                                        </IconButton>
-                                    </InputWrapper>
+                                    <UploadDownloadAndRunItemComponent
+                                        header="Bin:"
+                                        uploadInfo="Załaduj plik binarny"
+                                        uploadActionHandler={this.handleOpenAddBinaryDialog}
+                                        downloadInfo="Pobierz plik binarny"
+                                        disabled={this.props.stage.binaryName === null}
+                                        downloadActionHandler={this.handleDownloadBin}
+                                        runInfo="Uruchom plik binarny"
+                                        runActionHandler={this.handleRunTests}/>
                                 </CustomTableCell>
                                 <CustomTableCell>
                                     <EditItemComponent
