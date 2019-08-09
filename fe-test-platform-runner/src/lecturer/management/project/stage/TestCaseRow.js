@@ -1,13 +1,12 @@
 import React, {Component} from "react";
 import {CustomTableCell} from "../../../../styles/ProjectBoardStyles";
-import IconButton from "@material-ui/core/IconButton/IconButton";
 import TableRow from "@material-ui/core/TableRow/TableRow";
-import DeleteIcon from "@material-ui/icons/DeleteForever";
 import EditItemComponent from "../../../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
 import * as Api from "../../../../Api";
 import UploadTestCaseFileDialog from "./UploadTestCaseFileDialog";
 import EditParametersDialog from "./dialog/EditParametersDialog";
+import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
 
 class TestCaseRow extends Component {
 
@@ -129,9 +128,8 @@ class TestCaseRow extends Component {
                 </CustomTableCell>
                 <CustomTableCell>
                     <CustomTableCell>
-                        <IconButton aria-label="Usuń" onClick={this.handleDeleteTestCase}>
-                            <DeleteIcon/>
-                        </IconButton>
+                        <DeleteItemComponent info="Usuń przypadek testowy"
+                                             deleteActionHandler={this.handleDeleteTestCase}/>
                     </CustomTableCell>
                 </CustomTableCell>
                 <CustomTableCell/>

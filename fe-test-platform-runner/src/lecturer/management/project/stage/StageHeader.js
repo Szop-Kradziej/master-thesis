@@ -5,14 +5,13 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import {CustomTableCell, styles} from "../../../../styles/ProjectBoardStyles";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import DeleteIcon from "@material-ui/icons/DeleteForever";
 import EditItemComponent from "../../../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
 import * as Api from "../../../../Api";
 import UploadStageDescriptionDialog from "./dialog/UploadStageDescriptionDialog";
 import EditStageStartDateDialog from "./dialog/EditStageStartDateDialog";
 import EditStageEndDateDialog from "./dialog/EditStageEndDateDialog";
+import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
 
 class StageHeader extends Component {
 
@@ -100,9 +99,8 @@ class StageHeader extends Component {
                                     editActionHandler={this.handleOpenEditEndDateDialog}/>
                             </CustomTableCell>
                             <CustomTableCell>
-                                <IconButton aria-label="Usuń" onClick={this.handleDeleteStage}>
-                                    <DeleteIcon/>
-                                </IconButton>
+                                <DeleteItemComponent info="Usuń etap"
+                                                     deleteActionHandler={this.handleDeleteStage}/>
                             </CustomTableCell>
                         </TableRow>
                     </TableHead>

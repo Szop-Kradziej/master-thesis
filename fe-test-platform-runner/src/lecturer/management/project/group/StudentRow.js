@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import {CustomTableCell} from "../../../../styles/ProjectBoardStyles";
-import IconButton from "@material-ui/core/IconButton/IconButton";
 import TableRow from "@material-ui/core/TableRow/TableRow";
-import DeleteIcon from "@material-ui/icons/DeleteForever";
 import * as Api from "../../../../Api";
+import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
 
 class StudentRow extends Component {
 
@@ -22,9 +21,8 @@ class StudentRow extends Component {
                 </CustomTableCell>
                 <CustomTableCell>
                     <CustomTableCell>
-                        <IconButton aria-label="Usuń" onClick={this.handleRemoveStudent}>
-                            <DeleteIcon/>
-                        </IconButton>
+                        <DeleteItemComponent info="Usuń studenta z grupy"
+                                             deleteActionHandler={this.handleRemoveStudent}/>
                     </CustomTableCell>
                 </CustomTableCell>
                 <CustomTableCell/>

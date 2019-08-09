@@ -5,10 +5,9 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import {CustomTableCell, styles} from "../../../../styles/ProjectBoardStyles";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import DeleteIcon from "@material-ui/icons/DeleteForever";
 import EditItemComponent from "../../../../utils/EditItemComponent";
 import * as Api from "../../../../Api";
+import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
 
 class GroupHeader extends Component {
 
@@ -37,9 +36,8 @@ class GroupHeader extends Component {
                         </CustomTableCell>
                         <CustomTableCell width="80%"/>
                         <CustomTableCell>
-                            <IconButton aria-label="Usuń" onClick={this.handleDeleteGroup}>
-                                <DeleteIcon/>
-                            </IconButton>
+                            <DeleteItemComponent info="Usuń grupę"
+                                                 deleteActionHandler={this.handleDeleteGroup}/>
                         </CustomTableCell>
                     </TableRow>
                 </TableHead>

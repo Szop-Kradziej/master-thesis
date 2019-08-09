@@ -4,8 +4,7 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import {Link} from "react-router-dom";
 import {CustomTableCell, styles} from "../../styles/ProjectssBoardStyles";
 import * as Api from "../../Api";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import DeleteIcon from "@material-ui/icons/DeleteForever";
+import DeleteItemComponent from "../../utils/DeleteItemComponent";
 
 class ProjectRow extends React.Component {
 
@@ -30,9 +29,9 @@ class ProjectRow extends React.Component {
                     </Link>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
-                    <IconButton aria-label="Usuń" onClick={this.handleDeleteProject}>
-                        <DeleteIcon/>
-                    </IconButton>
+                    <DeleteItemComponent info="Usuń projekt"
+                                         deleteActionHandler={this.handleDeleteProject}/>
+
                 </CustomTableCell>
             </TableRow>
         );

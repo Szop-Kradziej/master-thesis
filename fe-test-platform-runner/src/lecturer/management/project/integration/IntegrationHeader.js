@@ -5,11 +5,9 @@ import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import {CustomTableCell, styles} from "../../../../styles/ProjectBoardStyles";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import DeleteIcon from "@material-ui/icons/DeleteForever";
 import EditItemComponent from "../../../../utils/EditItemComponent";
 import * as Api from "../../../../Api";
-import InputWrapper from "../../../../utils/InputWrapper";
+import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
 
 class GroupHeader extends Component {
 
@@ -63,11 +61,8 @@ class GroupHeader extends Component {
                                 editActionHandler={this.handleEditIntegrationSchema}/>
                         </CustomTableCell>
                         <CustomTableCell>
-                            <InputWrapper>
-                                <IconButton aria-label="Usuń" onClick={this.handleDeleteIntegration}>
-                                    <DeleteIcon/>
-                                </IconButton>
-                            </InputWrapper>
+                            <DeleteItemComponent info="Usuń proces integracji"
+                                                 deleteActionHandler={this.handleDeleteIntegration}/>
                         </CustomTableCell>
                     </TableRow>
                 </TableHead>
