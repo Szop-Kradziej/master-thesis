@@ -45,7 +45,7 @@ class StageService(
         saveStageMetadata(projectName, stageName, startDate, endDate)
         log.info("Stage with name: $stageName for project $projectName created")
 
-        return "200"
+        return SUCCESS_RESPONSE
     }
 
     private fun saveStageMetadata(projectName: String, stageName: String, startDate: String?, endDate: String?) =
@@ -112,7 +112,7 @@ class StageService(
 
         log.info("Description file for stage: $stageName in project $projectName saved")
 
-        return "200"
+        return SUCCESS_RESPONSE
     }
 
     fun getStageDescription(projectName: String, stageName: String): File {
@@ -123,6 +123,25 @@ class StageService(
         }
         log.warn("Can not get description file for stage: $stageName and project: $projectName. File doesn't exist")
         throw java.lang.RuntimeException("Error file doesn't exist")
+    }
+
+    fun editStageDate(projectName: String, stageName: String, date: String?, type: String): String {
+        log.info("Editing ${type.toLowerCase()} date for stage: $stageName in project: $projectName")
+
+        stagesRepository.findByNameAndProject_Name(stageName, projectName)
+                .also { changeDate(it, date, type) }
+                ?.let { stagesRepository.save(it) }
+                .also { log.info("Stage ${type.toLowerCase()} date for stage: $stageName in projectL $projectName edited") }
+
+        return SUCCESS_RESPONSE
+    }
+
+    private fun changeDate(it: Stage?, date: String?, type: String) {
+        if (type == START_DATE) {
+            it?.startDate = date.toDate()
+        } else {
+            it?.endDate = date.toDate()
+        }
     }
 
     fun deleteStage(projectName: String, stageName: String): String {
@@ -147,9 +166,8 @@ class StageService(
 
         log.info("Stage: $stageName for project: $projectName deleted")
 
-        return "200"
+        return SUCCESS_RESPONSE
     }
-
 
     private fun deleteStageDescriptionDir(projectName: String, stageName: String) {
         val stageDir = stagePathProvider.getTaskDir(projectName, stageName)
@@ -160,24 +178,6 @@ class StageService(
         }
 
         log.info("Description directory for stage: $stageName in project: $projectName deleted")
-    }
-
-    fun editStageDate(projectName: String, stageName: String, date: String?, type: String): String {
-        log.info("Editing ${type.toLowerCase()} date for stage: $stageName in project: $projectName")
-
-        stagesRepository.findByNameAndProject_Name(stageName, projectName)
-                .also { changeDate(it, date, type) }
-                ?.let { stagesRepository.save(it) }
-                .also { log.info("Stage ${type.toLowerCase()} date for stage: $stageName in projectL $projectName edited") }
-
-        return "200"
-    }
-    private fun changeDate(it: Stage?, date: String?, type: String) {
-        if (type == "START") {
-            it?.startDate = date.toDate()
-        } else {
-            it?.endDate = date.toDate()
-        }
     }
 
     fun editTestCaseParameters(projectName: String, stageName: String, testCaseName: String, parameters: String?): String {
@@ -201,7 +201,9 @@ class StageService(
     }
 
     companion object {
-        val log = LoggerFactory.getLogger(StageService::class.java);
+        val log = LoggerFactory.getLogger(StageService::class.java)
+        const val SUCCESS_RESPONSE = "200"
+        const val START_DATE = "START"
     }
 }
 
