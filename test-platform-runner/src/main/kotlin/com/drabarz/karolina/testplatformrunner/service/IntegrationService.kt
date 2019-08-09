@@ -5,6 +5,7 @@ import com.drabarz.karolina.testplatformrunner.api.IntegrationStageDao
 import com.drabarz.karolina.testplatformrunner.api.IntegrationsDao
 import com.drabarz.karolina.testplatformrunner.model.*
 import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
@@ -20,14 +21,34 @@ class IntegrationService(
 
     private final val testCaseService = TestCaseService(pathProvider)
 
+    fun getIntegrations(projectName: String): IntegrationsDao {
+        log.info("Getting all integrations for project: $projectName")
+
+        return IntegrationsDao(integrationsRepository.findAllByProject_Name(projectName)
+                .map {
+                    IntegrationDao(
+                            it.name,
+                            getIntegrationStages(it),
+                            testCaseService.getTestCases(projectName, it.name))
+                })
+    }
+
     fun addIntegration(projectName: String, integrationName: String, integrationStages: List<IntegrationStageDao>): String {
+        log.info("Adding integration: $integrationName for project: $projectName")
+
         val projectDir = pathProvider.getProjectDir(projectName)
 
         if (!projectDir.exists()) {
-            throw RuntimeException("Error. Can not create test case for project. Project $projectName doesn't exist")
+            log.error("Can not create integration: $integrationName for project $projectName, project doesn't exist")
+            throw RuntimeException("Error. Can not create integration for project. Project $projectName doesn't exist")
         }
 
         val integrationDir = pathProvider.getTaskDir(projectName, integrationName)
+
+        if (integrationDir.exists()) {
+            log.warn("Can not create integration: $integrationName for project $projectName, stage already exist")
+            throw RuntimeException("Warning. Integration already exists")
+        }
 
         integrationDir.mkdirs()
 
@@ -49,20 +70,14 @@ class IntegrationService(
             }
         }
 
-        return "200"
-    }
+        log.info("Integration: $integrationName for project $projectName created")
 
-    fun getIntegrations(projectName: String): IntegrationsDao {
-        return IntegrationsDao(integrationsRepository.findAllByProject_Name(projectName)
-                .map {
-                    IntegrationDao(
-                            it.name,
-                            getIntegrationStages(it),
-                            testCaseService.getTestCases(projectName, it.name))
-                })
+        return SUCCESS_RESPONSE
     }
 
     fun deleteIntegration(projectName: String, integrationName: String): String {
+        log.info("Deleting integration: $integrationName for project: $projectName")
+
         val integrationDir = pathProvider.getTaskDir(projectName, integrationName)
 
         if (integrationDir.exists()) {
@@ -79,10 +94,14 @@ class IntegrationService(
 
         integrationsRepository.delete(integration)
 
-        return "200"
+        log.info("Integration: $integrationName for project: $projectName deleted")
+
+        return SUCCESS_RESPONSE
     }
 
     fun getIntegrationStages(projectName: String, integrationName: String): List<IntegrationStageDao> {
+        log.info("Getting assigned stages for integration: $integrationName in project: $projectName")
+
         val integration = integrationsRepository.findByNameAndProject_Name(integrationName, projectName)
 
         return getIntegrationStages(integration)
@@ -112,5 +131,10 @@ class IntegrationService(
 
     fun deleteTestCase(projectName: String, integrationName: String, testCaseName: String): String {
         return testCaseService.deleteTestCase(projectName, integrationName, testCaseName)
+    }
+
+    companion object {
+        val log = LoggerFactory.getLogger(IntegrationService::class.java)
+        const val SUCCESS_RESPONSE = "200"
     }
 }
