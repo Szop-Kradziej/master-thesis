@@ -11,7 +11,7 @@ interface PathProv {
 
 @Component
 class PathProvider : PathProv {
-    private final val pathPrefix = "/home/karolina/MGR/platform"
+    private final val pathPrefix = "${System.getProperty("user.home")}/platform"
     final override val binPath = "$pathPrefix/bins"
     final override val projectsPath = "$pathPrefix/projects"
 
