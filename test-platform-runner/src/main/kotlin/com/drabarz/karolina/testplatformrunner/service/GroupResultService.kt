@@ -64,6 +64,8 @@ class GroupResultService(
     }
 
     fun saveFile(userName: String, groupName: String, projectName: String, stageName: String, uploadedFile: MultipartFile, fileType: FileType) {
+        log.info("Adding $fileType file for group: $groupName for stage: $stageName in project: $projectName")
+
         var dir = stagePathProvider.getStudentTaskDir(groupName, projectName, stageName)
         if (fileType == FileType.BINARY) {
             dir = stagePathProvider.getStudentBinDir(groupName, projectName, stageName)
@@ -79,9 +81,13 @@ class GroupResultService(
 
         val outputFile = File(dir.path, uploadedFile.originalFilename)
         uploadedFile.transferTo(outputFile)
+
+        log.info("File $fileType for group: $groupName for stage: $stageName in project: $projectName added")
     }
 
     fun getStudentStages(groupName: String, projectName: String): List<StudentStage> {
+        log.info("Getting stages data for group: $groupName in project: $projectName")
+
         return stageService
                 .getStages(projectName)
                 .filter { !it.startDate.isNullOrBlank() }
@@ -122,6 +128,8 @@ class GroupResultService(
     }
 
     fun getStudentPreviewStages(groupName: String, projectName: String): List<StudentPreviewStage> {
+        log.info("Getting stages data for group: $groupName in project: $projectName")
+
         return stageService
                 .getStages(projectName)
                 .filter { !it.startDate.isNullOrBlank() }
@@ -217,24 +225,34 @@ class GroupResultService(
     }
 
     fun saveCodeLink(userName: String, groupName: String, projectName: String, stageName: String, codeLink: String): String {
+        log.info("Adding code link by $userName for group: $groupName for stage: $stageName in project: $projectName")
+
         val dir = stagePathProvider.getStudentCodeDir(groupName, projectName, stageName)
         dir.mkdirs()
 
         val outputFile = File(dir.path, PathProvider.CODE)
         outputFile.writeText(codeLink)
 
-        return "200"
+        log.info("Code link for group: $groupName for stage: $stageName in project: $projectName added by $userName")
+
+        return SUCCESS_RESPONSE
     }
 
     fun getBin(groupName: String, projectName: String, stageName: String): File {
+        log.info("Getting bin for group: $groupName for stage: $stageName in project: $projectName")
+
         return getSingleFile(stagePathProvider.getStudentBinDir(groupName, projectName, stageName))
     }
 
     fun getReport(groupName: String, projectName: String, stageName: String): File {
+        log.info("Getting report for group: $groupName for stage: $stageName in project: $projectName")
+
         return getSingleFile(stagePathProvider.getStudentReportDir(groupName, projectName, stageName))
     }
 
     fun getStageLogsFile(groupName: String, projectName: String, stageName: String, testCaseName: String): File {
+        log.info("Getting logs for group: $groupName for testCase: $testCaseName in stage: $stageName in project: $projectName")
+
         return getExactFile(stagePathProvider.getStudentLogsFileDir(groupName, projectName, stageName, testCaseName))
     }
 
@@ -255,6 +273,8 @@ class GroupResultService(
     }
 
     fun getStudentIntegrations(groupName: String, projectName: String): List<StudentIntegration> {
+        log.info("Getting integrations data for group: $groupName in project: $projectName")
+
         return integrationService
                 .getIntegrations(projectName)
                 .integrations
@@ -292,6 +312,8 @@ class GroupResultService(
     }
 
     fun getStudentPreviewIntegrations(groupName: String, projectName: String): List<StudentPreviewIntegration> {
+        log.info("Getting integrations data for group: $groupName in project: $projectName")
+
         return integrationService
                 .getIntegrations(projectName)
                 .integrations
@@ -346,10 +368,14 @@ class GroupResultService(
     }
 
     fun getIntegrationLogsFile(groupName: String, projectName: String, integrationName: String, testCaseName: String): File {
+        log.info("Getting logs for group: $groupName for testCase: $testCaseName in integration: $integrationName in project: $projectName")
+
         return getExactFile(integrationPathProvider.getStudentLogsFileDir(groupName, projectName, integrationName, testCaseName))
     }
 
     fun getStageStatisticsFile(groupName: String, projectName: String, stageName: String): File {
+        log.info("Getting statistics for group: $groupName for stage: $stageName in project: $projectName")
+
         val statisticsFileName = getStatisticsFileName(projectName, stageName, groupName)
         return getResultsFile(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), statisticsFileName)
     }
@@ -358,11 +384,13 @@ class GroupResultService(
             projectName + "_" + taskName + "_" + groupName + "_" + "statistics.csv"
 
     fun getIntegrationStatisticsFile(groupName: String, projectName: String, integrationName: String): File {
+        log.info("Getting statistics for group: $groupName for integration: $integrationName in project: $projectName")
+
         val statisticsFileName = getStatisticsFileName(projectName, integrationName, groupName)
         return getResultsFile(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), statisticsFileName)
     }
 
-    fun getResultsFile(resultsDir: File, statisticsFileName: String): File {
+    private fun getResultsFile(resultsDir: File, statisticsFileName: String): File {
         if (hasStatistics(resultsDir)) {
             return convertResultFileToCsv(resultsDir, statisticsFileName)
         }
@@ -371,7 +399,6 @@ class GroupResultService(
     }
 
     private fun convertResultFileToCsv(resultDir: File, statisticsFileName: String): File {
-
         val jsonData = resultDir.listFiles().find { it.name == RESULT_FILE_NAME }!!.readBytes()
         val fullTestResponses = jacksonObjectMapper().readerFor(Array<FullTestResponse>::class.java).readValue<Array<FullTestResponse>>(jsonData).toMutableList()
 
@@ -407,6 +434,7 @@ class GroupResultService(
     companion object {
         val log = LoggerFactory.logger(GroupResultService::class.java)
         const val RESULT_FILE_NAME = "result.json"
+        const val SUCCESS_RESPONSE = "200"
     }
 }
 
