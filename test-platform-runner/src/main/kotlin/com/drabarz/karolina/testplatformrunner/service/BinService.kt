@@ -2,6 +2,7 @@ package com.drabarz.karolina.testplatformrunner.service
 
 import com.drabarz.karolina.testplatformrunner.api.TestCase
 import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
+import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
 import org.hibernate.annotations.common.util.impl.LoggerFactory
 import org.springframework.stereotype.Component
@@ -50,13 +51,26 @@ class BinService(
 
         return testCases.map {
             val inputFile = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "input").listFiles().first()
+            val parametersFile = getParameters(stagePathProvider.getTaskTestCaseParametersDir(projectName, stageName, it.testCaseName))
             val outputFile = File(stagePathProvider.getStudentOutputDir(groupName, projectName, stageName).apply { mkdir() }, "output").apply { createNewFile() }
-            val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, outputFile.absolutePath, "${binDir.absolutePath}/$binName")
+            val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, parametersFile.absolutePath, outputFile.absolutePath, "${binDir.absolutePath}/$binName")
             containerService.runTestCase(container)
                     .also { logs -> saveLogsToStageResultFile(groupName, logs, projectName, stageName, it.testCaseName) }
             val expectedOutput = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "output").listFiles().first().readText()
             checkCorrectness(it.testCaseName, outputFile, expectedOutput)
         }
+    }
+
+    private fun getParameters(parametersDir: File): File {
+        if (!parametersDir.exists()) {
+            parametersDir.mkdir()
+        }
+
+        if (parametersDir.list().isEmpty()) {
+            File(parametersDir.absolutePath, PathProvider.PARAMETERS).createNewFile()
+        }
+
+        return parametersDir.listFiles().first()
     }
 
     private fun saveLogsToStageResultFile(groupName: String, logs: String, projectName: String, stageName: String, testCaseName: String) {
@@ -73,12 +87,12 @@ class BinService(
             val testOutput = outputFile.readText()
 
             if (testOutput.trim() == expectedOutput.trim()) {
-                return TestResponse(testCaseName, "SUCCESS")
+                return TestResponse(testCaseName, SUCCESS_STATUS)
             }
 
-            return TestResponse(testCaseName, "FAILURE", "Error: \n Actual: $testOutput \n Expected: $expectedOutput")
+            return TestResponse(testCaseName, FAILURE_STATUS, "Error: \n Actual: $testOutput \n Expected: $expectedOutput")
         } catch (e: RuntimeException) {
-            return TestResponse(testCaseName, "FAILURE", e.message!!)
+            return TestResponse(testCaseName, FAILURE_STATUS, e.message!!)
         }
     }
 
@@ -115,9 +129,10 @@ class BinService(
 
         return testCases.map { testCase ->
             val inputFile = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "input").listFiles().first()
+            val parametersFile = getParameters(integrationPathProvider.getTaskTestCaseParametersDir(projectName, integrationName, testCase.testCaseName))
             val outputFile = binPaths.fold(inputFile) { inputFile, it ->
                 val binPath = it.absolutePath
-                generateOutputFile(environmentDir, groupName, projectName, integrationName, inputFile, binPath, testCase)
+                generateOutputFile(environmentDir, groupName, projectName, integrationName, inputFile, parametersFile, binPath, testCase)
             }
 
             val expectedOutput = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "output").listFiles().first().readText()
@@ -126,10 +141,10 @@ class BinService(
         }
     }
 
-    private fun generateOutputFile(environmentDir: File, groupName: String, projectName: String, integrationName: String, inputFile: File, binPath: String, testCase: TestCase): File {
+    private fun generateOutputFile(environmentDir: File, groupName: String, projectName: String, integrationName: String, inputFile: File, parametersFile: File, binPath: String, testCase: TestCase): File {
         val outputFile = File(integrationPathProvider.getStudentOutputDir(groupName, projectName, integrationName).apply { mkdirs() }, "output").apply { createNewFile() }
 
-        val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, outputFile.absolutePath, binPath)
+        val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, parametersFile.absolutePath, outputFile.absolutePath, binPath)
         containerService.runTestCase(container)
                 .also { logs -> saveLogsToIntegrationResultFile(groupName, logs, projectName, integrationName, testCase.testCaseName) }
         return outputFile
@@ -146,6 +161,9 @@ class BinService(
 
     companion object {
         val log = LoggerFactory.logger(BinService::class.java)
+        const val SUCCESS_STATUS = "SUCCESS"
+        const val FAILURE_STATUS = "FAILURE"
+        const val NO_RUN_STATUS = "NO_RUN"
     }
 }
 
@@ -154,7 +172,7 @@ data class TestResponse constructor(val testCaseName: String, val status: String
 @Component
 class ContainerFactory {
 
-    fun createContainerWithFilesBinded(environmentDir: File, inputFilePath: String, outputFilePath: String, binPath: String): KGenericContainer {
+    fun createContainerWithFilesBinded(environmentDir: File, inputFilePath: String, parametersFilePath: String, outputFilePath: String, binPath: String): KGenericContainer {
 
         return KGenericContainer(
                 ImageFromDockerfile()
@@ -162,6 +180,7 @@ class ContainerFactory {
         )
                 .withCopyFileToContainer(MountableFile.forHostPath(binPath), "/home/app")
                 .withFileSystemBind(inputFilePath, "/home/input.txt", BindMode.READ_ONLY)
+                .withFileSystemBind(parametersFilePath, "/home/parameters.txt", BindMode.READ_ONLY)
                 .withFileSystemBind(outputFilePath, "/home/output.txt", BindMode.READ_WRITE)
     }
 }

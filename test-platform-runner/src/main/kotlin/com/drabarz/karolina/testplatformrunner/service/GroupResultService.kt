@@ -7,6 +7,7 @@ import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.opencsv.CSVWriter
+import org.hibernate.annotations.common.util.impl.LoggerFactory
 import org.springframework.stereotype.Component
 import org.springframework.web.multipart.MultipartFile
 import java.io.ByteArrayOutputStream
@@ -43,7 +44,7 @@ class GroupResultService(
 
         val fullTestResponse = FullTestResponse(Date().time, userName, testResponses)
 
-        val file = File(resultsDir, "result.json")
+        val file = File(resultsDir, RESULT_FILE_NAME)
 
         val out = ByteArrayOutputStream()
         val mapper = ObjectMapper()
@@ -190,7 +191,7 @@ class GroupResultService(
     }
 
     private fun getTestCasesWithResults(groupName: String, projectName: String, stageName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
-        val resultFile = File(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), "result.json")
+        val resultFile = File(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), RESULT_FILE_NAME)
 
         if (!resultFile.exists()) {
             return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters, "NO RUN", null) }
@@ -319,7 +320,7 @@ class GroupResultService(
     }
 
     private fun getTestCasesWithResultsIntegration(groupName: String, projectName: String, integrationName: String, testCases: List<StudentTestCase>): List<TestCaseWithResult> {
-        val resultFile = File(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), "result.json")
+        val resultFile = File(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), RESULT_FILE_NAME)
 
         if (!resultFile.exists()) {
             return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters, "NO RUN", null) }
@@ -371,7 +372,7 @@ class GroupResultService(
 
     private fun convertResultFileToCsv(resultDir: File, statisticsFileName: String): File {
 
-        val jsonData = resultDir.listFiles().find { it.name == "result.json" }!!.readBytes()
+        val jsonData = resultDir.listFiles().find { it.name == RESULT_FILE_NAME }!!.readBytes()
         val fullTestResponses = jacksonObjectMapper().readerFor(Array<FullTestResponse>::class.java).readValue<Array<FullTestResponse>>(jsonData).toMutableList()
 
         Files.newBufferedWriter(File(resultDir, statisticsFileName).toPath()).use { writer ->
@@ -400,7 +401,12 @@ class GroupResultService(
     }
 
     private fun hasStatistics(resultsDir: File): Boolean {
-        return resultsDir.exists() && resultsDir.list().any { it == "result.json" }
+        return resultsDir.exists() && resultsDir.list().any { it == RESULT_FILE_NAME }
+    }
+
+    companion object {
+        val log = LoggerFactory.logger(GroupResultService::class.java)
+        const val RESULT_FILE_NAME = "result.json"
     }
 }
 
