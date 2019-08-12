@@ -11,7 +11,10 @@ import org.springframework.web.multipart.MultipartFile
 @CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000"], allowCredentials = "true")
 @RestController
 //TODO: check access rights
-class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService) {
+class TestPlatformLecturerPreviewApi(
+        val groupResultService: GroupResultService,
+        val authHelper: TestPlatformApiHelper
+) {
 
     @PostMapping("/preview/{groupName}/upload/bin")
     fun uploadBin(
@@ -20,7 +23,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         groupResultService.saveFile(userName, groupName, projectName, stageName, uploadedFile, FileType.BINARY)
 
         return "200"
@@ -32,7 +35,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @PathVariable("groupName") groupName: String,
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(groupResultService.getBin(groupName, projectName, stageName))
     }
 
@@ -43,7 +46,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         groupResultService.saveFile(userName, groupName, projectName, stageName, uploadedFile, FileType.REPORT)
 
         return "200"
@@ -56,7 +59,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @RequestParam("codeLink") codeLink: String,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return groupResultService.saveCodeLink(userName, groupName, projectName, stageName, codeLink)
     }
 
@@ -66,7 +69,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @PathVariable("groupName") groupName: String,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): List<TestResponse> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return groupResultService.runStageTests(userName, groupName, projectName, stageName)
     }
 
@@ -76,7 +79,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @PathVariable("groupName") groupName: String,
             @RequestParam("projectName") projectName: String,
             @RequestParam("integrationName") integrationName: String): List<TestResponse> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return groupResultService.runIntegrationTests(userName, groupName, projectName, integrationName)
     }
 
@@ -86,7 +89,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @PathVariable("groupName") groupName: String,
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(groupResultService.getReport(groupName, projectName, stageName))
     }
 
@@ -97,7 +100,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(groupResultService.getStageLogsFile(groupName, projectName, stageName, testCaseName))
     }
 
@@ -107,7 +110,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @PathVariable("groupName") groupName: String,
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(groupResultService.getStageStatisticsFile(groupName, projectName, stageName))
     }
 
@@ -116,7 +119,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @RequestHeader headers: HttpHeaders,
             @PathVariable("groupName") groupName: String,
             @PathVariable("projectName") projectName: String): StudentPreviewStagesResponse {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return StudentPreviewStagesResponse(groupResultService.getStudentPreviewStages(groupName, projectName))
     }
 
@@ -125,7 +128,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @RequestHeader headers: HttpHeaders,
             @PathVariable("groupName") groupName: String,
             @PathVariable("projectName") projectName: String): StudentPreviewIntegrationsResponse {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return StudentPreviewIntegrationsResponse(groupResultService.getStudentPreviewIntegrations(groupName, projectName))
     }
 
@@ -135,7 +138,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @PathVariable("groupName") groupName: String,
             @PathVariable("projectName") projectName: String,
             @PathVariable("integrationName") integrationName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(groupResultService.getIntegrationStatisticsFile(groupName, projectName, integrationName))
     }
 
@@ -146,7 +149,7 @@ class TestPlatformLecturerPreviewApi(val groupResultService: GroupResultService)
             @PathVariable("projectName") projectName: String,
             @PathVariable("integrationName") integrationName: String,
             @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(groupResultService.getIntegrationLogsFile(groupName, projectName, integrationName, testCaseName))
     }
 }

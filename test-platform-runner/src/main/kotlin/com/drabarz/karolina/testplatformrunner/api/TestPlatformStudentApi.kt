@@ -11,11 +11,14 @@ import org.springframework.web.multipart.MultipartFile
 @CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000"], allowCredentials = "true")
 @RestController
 //TODO: check access rights
-class TestPlatformStudentApi(val studentService: StudentService) {
+class TestPlatformStudentApi(
+        val studentService: StudentService,
+        val authHelper: TestPlatformApiHelper
+) {
 
     @GetMapping("/student/projects")
     fun getProjectsList(@RequestHeader headers: HttpHeaders): ProjectResponse {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return ProjectResponse(studentService.getStudentProjects(userName))
     }
 
@@ -25,7 +28,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         studentService.saveFile(userName, projectName, stageName, uploadedFile, FileType.BINARY)
 
         return "200"
@@ -36,7 +39,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             @RequestHeader headers: HttpHeaders,
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(studentService.getBin(userName, projectName, stageName))
     }
 
@@ -46,7 +49,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             @RequestParam("file") uploadedFile: MultipartFile,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         studentService.saveFile(userName, projectName, stageName, uploadedFile, FileType.REPORT)
 
         return "200"
@@ -58,7 +61,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             @RequestParam("codeLink") codeLink: String,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return studentService.saveCodeLink(userName, projectName, stageName, codeLink)
     }
 
@@ -67,7 +70,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             @RequestHeader headers: HttpHeaders,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): List<TestResponse> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return studentService.runStageTests(userName, projectName, stageName)
     }
 
@@ -76,7 +79,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             @RequestHeader headers: HttpHeaders,
             @RequestParam("projectName") projectName: String,
             @RequestParam("integrationName") integrationName: String): List<TestResponse> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return studentService.runIntegrationTests(userName, projectName, integrationName)
     }
 
@@ -85,7 +88,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             @RequestHeader headers: HttpHeaders,
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(studentService.getReport(userName, projectName, stageName))
     }
 
@@ -95,7 +98,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(studentService.getStageLogsFile(userName, projectName, stageName, testCaseName))
     }
 
@@ -103,7 +106,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
     fun getGroup(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("projectName") projectName: String): StudentGroup {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return studentService.getStudentGroup(userName, projectName)
     }
 
@@ -111,7 +114,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
     fun getStudentStagesList(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("projectName") projectName: String): StudentStagesResponse {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return StudentStagesResponse(studentService.getStudentStages(userName, projectName))
     }
 
@@ -119,7 +122,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
     fun getStudentIntegrationsList(
             @RequestHeader headers: HttpHeaders,
             @PathVariable("projectName") projectName: String): StudentIntegrationsResponse {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return StudentIntegrationsResponse(studentService.getStudentIntegrations(userName, projectName))
     }
 
@@ -129,7 +132,7 @@ class TestPlatformStudentApi(val studentService: StudentService) {
             @PathVariable("projectName") projectName: String,
             @PathVariable("integrationName") integrationName: String,
             @PathVariable("testCaseName") testCaseName: String): ResponseEntity<*> {
-        val userName = getUserNameFromRequestHeader(headers)
+        val userName = authHelper.getUserNameFromRequestHeader(headers)
         return createFileResponse(studentService.getIntegrationLogsFile(userName, projectName, integrationName, testCaseName))
     }
 }
