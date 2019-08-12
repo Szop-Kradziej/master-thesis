@@ -11,15 +11,11 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import DescriptionIcon from "@material-ui/icons/Description";
-import SettingsIcon from "@material-ui/icons/Settings";
 import * as Api from "../../Api";
 import PreviewStudentStageRow from "./PreviewStudentStageRow";
 import PreviewStudentTestCasesDetails from "./PreviewStudentTestCasesDetails";
 import PreviewStudentIntegrationRow from "./PreviewStudentIntegrationRow";
-import {getAdminAuthHeader} from "../../Api";
-import DescriptionAndStatisticsItemComponent from "../../utils/DescriptionAndStatisticsItemComponent";
+import {getAuthHeader} from "../../Api";
 import DescriptionAndSettingsItemComponent from "../../utils/DescriptionAndSettingsItemComponent";
 
 class PreviewStudentProjectBoard extends Component {
@@ -50,7 +46,7 @@ class PreviewStudentProjectBoard extends Component {
         fetch(backendUrl(`/preview/${this.props.match.params.groupId}/${this.props.match.params.projectId}/stages`), {
             method: "GET",
             credentials: "include",
-            headers: {'Authorization': getAdminAuthHeader()}
+            headers: {'Authorization': getAuthHeader()}
         })
             .then(response => response.json())
             .then(json => this.setState({
@@ -62,7 +58,7 @@ class PreviewStudentProjectBoard extends Component {
         fetch(backendUrl(`/preview/${this.props.match.params.groupId}/${this.props.match.params.projectId}/integrations`), {
             method: "GET",
             credentials: "include",
-            headers: {'Authorization': getAdminAuthHeader()}
+            headers: {'Authorization': getAuthHeader()}
         })
             .then(response => response.json())
             .then(json => this.setState({

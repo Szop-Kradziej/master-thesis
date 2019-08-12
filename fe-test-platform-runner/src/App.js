@@ -16,21 +16,16 @@ class App extends Component {
             </header>
             <body className={this.props.classes.body}>
             <div className={this.props.classes.marginTop}>
-                <Link to={"/projects"} className={this.props.classes.link}>
+                <Link to={"/lecturer/projects"} className={this.props.classes.link}>
                     <Button size="large" className={classNames(this.props.classes.button, this.props.classes.marginRight)} variant="contained">
                         Zarządzaj projektami
                     </Button>
                 </Link>
-                <Link to={"/preview"} className={this.props.classes.link}>
+                <Link to={"/lecturer/preview"} className={this.props.classes.link}>
                     <Button size="large"
                             className={classNames(this.props.classes.button, this.props.classes.marginRight)}
                             variant="contained">
                         Przeglądaj wyniki
-                    </Button>
-                </Link>
-                <Link to={"/student/projects"} className={this.props.classes.link}>
-                    <Button size="large" className={this.props.classes.button} variant="contained">
-                        Widok studenta
                     </Button>
                 </Link>
             </div>

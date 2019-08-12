@@ -12,7 +12,6 @@ data class User(
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_id_generator")
         val id: Long = -1,
         val name: String = "",
-        val password: String = "password",
         val isStudent: Boolean = true,
         @ManyToMany(cascade = arrayOf(CascadeType.ALL))
         @JoinTable(
@@ -26,5 +25,5 @@ data class User(
 @Repository
 interface UsersRepository : CrudRepository<User, Long> {
     fun findAllByIsStudentIsTrue(): MutableList<User>
-    fun findByName(name: String): User
+    fun findByName(name: String): User?
 }

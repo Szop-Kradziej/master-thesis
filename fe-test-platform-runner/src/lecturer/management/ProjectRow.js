@@ -24,7 +24,7 @@ class ProjectRow extends React.Component {
         return (
             <TableRow key={this.props.projectName}>
                 <CustomTableCell width="95%" component="th" scope="row">
-                    <Link to={`/projects/${this.props.projectName}`} className={this.props.classes.link}>
+                    <Link to={`/lecturer/projects/${this.props.projectName}`} className={this.props.classes.link}>
                         {this.props.projectName}
                     </Link>
                 </CustomTableCell>

@@ -24,7 +24,7 @@ class ProjectService(
     fun getProjects(): List<String> {
         log.info("Getting all projects")
 
-        return File(pathProvider.projectsPath).list().asList().sortedBy { it }
+        return File(pathProvider.projectsPath).list()?.asList()?.sortedBy { it } ?: emptyList()
     }
 
     fun addProject(projectName: String): String {
@@ -37,7 +37,7 @@ class ProjectService(
             throw RuntimeException("Warning. Project already exists")
         }
 
-        projectDir.mkdir()
+        projectDir.mkdirs()
         projectsRepository.save(Project(name = projectName))
 
         log.info("Project: $projectName added")

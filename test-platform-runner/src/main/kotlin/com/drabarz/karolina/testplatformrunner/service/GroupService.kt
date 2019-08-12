@@ -66,7 +66,7 @@ class GroupService(
 
         log.info("Adding ${groupDao.students.size} students to group: ${groupDao.name}")
         groupDao.students.forEach { studentName ->
-            usersRepository.findByName(studentName).groups.add(group)
+            usersRepository.findByName(studentName)!!.groups.add(group)
                     .also { log.info("Student: $studentName added to group: ${group.name}") }
         }
 
@@ -82,7 +82,7 @@ class GroupService(
         log.info("Adding student to group: $groupName")
         val group = groupsRepository.findByName(groupName)
 
-        usersRepository.findByName(studentName).groups.add(group)
+        usersRepository.findByName(studentName)!!.groups.add(group)
                     .also { log.info("Student: $studentName added to group ${group.name}") }
 
         return SUCCESS_RESPONSE
@@ -104,7 +104,7 @@ class GroupService(
         log.info("Deleting student: $studentName from group: $groupName in project $projectName")
 
         val student = usersRepository.findByName(studentName)
-        student.groups.remove(groupsRepository.findByName(groupName))
+        student!!.groups.remove(groupsRepository.findByName(groupName))
 
         usersRepository.save(student)
 

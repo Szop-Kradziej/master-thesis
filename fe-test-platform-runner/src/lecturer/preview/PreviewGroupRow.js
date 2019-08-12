@@ -10,7 +10,7 @@ class PreviewGroupRow extends React.Component {
         return (
             <TableRow key={this.props.group.groupName}>
                 <CustomTableCell>
-                    <Link to={`/preview/student/${this.props.projectName}/${this.props.group.groupName}`} className={this.props.classes.link}>
+                    <Link to={`/lecturer/preview/student/${this.props.projectName}/${this.props.group.groupName}`} className={this.props.classes.link}>
                         {this.props.group.groupName}
                     </Link>
                 </CustomTableCell>

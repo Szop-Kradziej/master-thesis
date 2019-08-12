@@ -2,15 +2,12 @@ import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
 import backendUrl from "../../backendUrl";
 import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import RunIcon from '@material-ui/icons/PlayArrow';
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
 import TableCell from "@material-ui/core/TableCell/TableCell";
-import {getAdminAuthHeader} from "../../Api";
-import AssessmentIcon from "@material-ui/icons/Assessment";
+import {getAuthHeader} from "../../Api";
 import * as Api from "../../Api";
 import RunItemComponent from "../../utils/RunItemComponent";
 import StatisticsItemComponent from "../../utils/StatisticsItemComponent";
@@ -21,7 +18,7 @@ class PreviewStudentIntegrationRow extends Component {
         fetch(backendUrl(`/preview/${this.props.groupName}/integration/run`), {
             method: "POST",
             credentials: "include",
-            headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAdminAuthHeader()},
+            headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
             body: "projectName=" + this.props.projectName + "&integrationName=" + this.props.integration.integrationName
         })
             .then(this.props.integrationChangedHandler)

@@ -1,22 +1,39 @@
 package com.drabarz.karolina.testplatformrunner.api
 
-import com.drabarz.karolina.testplatformrunner.service.GroupService
-import com.drabarz.karolina.testplatformrunner.service.IntegrationService
-import com.drabarz.karolina.testplatformrunner.service.ProjectService
-import com.drabarz.karolina.testplatformrunner.service.StageService
+import com.drabarz.karolina.testplatformrunner.service.*
+import com.fasterxml.jackson.core.TreeNode
+import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
+import org.springframework.http.HttpEntity
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
+import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.util.ArrayList
+import org.springframework.web.client.RestTemplate
+import java.io.ByteArrayOutputStream
+import javax.validation.constraints.Email
+import org.springframework.core.ParameterizedTypeReference
+
+
+
 
 @CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000"], allowCredentials = "true")
 @RestController
-class TestPlatformApi(val stageService: StageService,
+class TestPlatformApi( val loginService: LoginService,
+        val stageService: StageService,
                       val projectService: ProjectService,
                       val groupService: GroupService,
                       val integrationService: IntegrationService) {
+
+    @PostMapping("/login")
+    fun logIn(@RequestBody loginRequest: LoginRequest): LoginResponse {
+        return loginService.loginUser(loginRequest)
+    }
 
     @GetMapping("/projects")
     fun getProjectsList(): ProjectResponse {
@@ -279,6 +296,11 @@ class TestPlatformApi(val stageService: StageService,
     }
 }
 
+data class EmailDao(val email: String, val verified: Boolean, val primary: Boolean, val visibility: String)
+data class LoginRequest(val code: String)
+data class LoginResponse(val token: String, val userName: String, val accessRights: String)
+data class GithubAuthRequest(val client_id: String, val client_secret: String, val code: String)
+data class GithubAuthResponse(val access_token: String)
 class ProjectResponse(val projects: List<String>)
 class StagesResponse(val projectDescription: String?, val projectEnvironment: String?, val stages: List<StageDao>)
 class StageDao(val stageName: String, val stageDescription: String?, val startDate: String?, val endDate: String?, val testCases: List<TestCase>)

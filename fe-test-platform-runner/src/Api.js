@@ -121,17 +121,17 @@ export function uploadStudentCodeLink(data) {
 }
 
 export function uploadPreviewStudentBinary(groupName, data) {
-    let headers = {'Authorization': getAdminAuthHeader()};
+    let headers = {'Authorization': getAuthHeader()};
     return postData(backendUrl("/preview/" + groupName + "/upload/bin"), data, headers)
 }
 
 export function uploadPreviewStudentReport(groupName, data) {
-    let headers = {'Authorization': getAdminAuthHeader()};
+    let headers = {'Authorization': getAuthHeader()};
     return postData(backendUrl("/preview/" + groupName + "/upload/report"), data, headers)
 }
 
 export function uploadPreviewStudentCodeLink(groupName, data) {
-    let headers = {'Authorization': getAdminAuthHeader()};
+    let headers = {'Authorization': getAuthHeader()};
     return postData(backendUrl("/preview/" + groupName + "/upload/code"), data, headers)
 }
 
@@ -171,12 +171,12 @@ export function downloadStageDescription(projectName, stageName) {
 }
 
 export function downloadStageStatistics(groupName, projectName, stageName) {
-    let headers = {'Authorization': getAdminAuthHeader()};
+    let headers = {'Authorization': getAuthHeader()};
     return downloadFile(backendUrl('/preview/' + groupName + '/stage/' + projectName + '/' + stageName + "/statistics"), headers)
 }
 
 export function downloadIntegrationStatistics(groupName, projectName, integrationName) {
-    let headers = {'Authorization': getAdminAuthHeader()};
+    let headers = {'Authorization': getAuthHeader()};
     return downloadFile(backendUrl('/preview/' + groupName + '/integration/' + projectName + '/' + integrationName + "/statistics"), headers)
 }
 
@@ -196,7 +196,7 @@ export function downloadPreviewBin(groupName, projectName, stageName) {
 }
 
 export function downloadPreviewReport(groupName, projectName, stageName) {
-    let headers = {'Authorization': getAdminAuthHeader()};
+    let headers = {'Authorization': getAuthHeader()};
     return downloadFile(backendUrl('/preview/' + groupName + '/' + projectName + '/' + stageName + "/report"), headers)
 }
 
@@ -219,12 +219,12 @@ export function downloadStudentIntegrationLogsFile(projectName, integrationName,
 }
 
 export function downloadPreviewStudentStageLogsFile(groupName, projectName, stageName, testCaseName) {
-    let headers = {'Authorization': getAdminAuthHeader()};
+    let headers = {'Authorization': getAuthHeader()};
     return downloadFile(backendUrl('/preview/' + groupName + '/stage/' + projectName + '/' + stageName + '/' + testCaseName + '/logs'), headers)
 }
 
 export function downloadPreviewStudentIntegrationLogsFile(groupName, projectName, integrationName, testCaseName) {
-    let headers = {'Authorization': getAdminAuthHeader()};
+    let headers = {'Authorization': getAuthHeader()};
     return downloadFile(backendUrl('/preview/' + groupName + '/integration/' + projectName + '/' + integrationName + '/' + testCaseName + '/logs'), headers)
 }
 
@@ -296,17 +296,8 @@ export function removeStudentFromGroup(projectName, groupName, studentName) {
 }
 
 export function getAuthHeader() {
-    var user = 'user';
-    var password = 'password';
-
-    var base64encodedData = new Buffer(user + ':' + password).toString('base64');
-
-    return 'Basic ' + base64encodedData
-}
-
-export function getAdminAuthHeader() {
-    var user = 'admin';
-    var password = 'root';
+    var user = localStorage.getItem("userName");
+    var password = localStorage.getItem("token");
 
     var base64encodedData = new Buffer(user + ':' + password).toString('base64');
 

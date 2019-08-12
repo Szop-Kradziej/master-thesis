@@ -22,12 +22,20 @@ CREATE TABLE users
 (
     id         SERIAL,
     name       VARCHAR(128) NOT NULL,
-    password   VARCHAR(64)  NOT NULL DEFAULT 'password',
     is_student BOOLEAN      NOT NULL DEFAULT TRUE,
 
     CONSTRAINT users_pk PRIMARY KEY (id),
     CONSTRAINT users_name_uk UNIQUE (name)
 );
+
+CREATE TABLE users_auth
+(
+  id SERIAL,
+  token VARCHAR(128) NOT NULL,
+  user_id BIGINT NOT NULL,
+
+  CONSTRAINT users_auth_pk PRIMARY KEY (id)
+)
 
 CREATE TABLE students_in_groups
 (
