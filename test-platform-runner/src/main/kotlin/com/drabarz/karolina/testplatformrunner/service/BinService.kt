@@ -22,8 +22,8 @@ class BinService(
         val containerFactory: ContainerFactory,
         val containerService: ContainerService) {
 
-    private final val stagesTestCaseService = TestCaseService(stagePathProvider)
-    private final val integrationTestCaseService = TestCaseService(integrationPathProvider)
+    private val stagesTestCaseService = TestCaseService(stagePathProvider)
+    private val integrationTestCaseService = TestCaseService(integrationPathProvider)
 
     fun runBin(groupName: String, projectName: String, stageName: String): List<TestResponse> {
         log.info("Running program of group: $groupName for stage: $stageName in project: $projectName")
@@ -77,7 +77,7 @@ class BinService(
         val logsDir = stagePathProvider.getStudentLogsDir(groupName, projectName, stageName)
         logsDir.mkdirs()
 
-        val file = File(logsDir, testCaseName);
+        val file = File(logsDir, testCaseName)
 
         file.writeText(logs)
     }
@@ -130,9 +130,9 @@ class BinService(
         return testCases.map { testCase ->
             val inputFile = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "input").listFiles().first()
             val parametersFile = getParameters(integrationPathProvider.getTaskTestCaseParametersDir(projectName, integrationName, testCase.testCaseName))
-            val outputFile = binPaths.fold(inputFile) { inputFile, it ->
+            val outputFile = binPaths.fold(inputFile) { accumulatedInputFile, it ->
                 val binPath = it.absolutePath
-                generateOutputFile(environmentDir, groupName, projectName, integrationName, inputFile, parametersFile, binPath, testCase)
+                generateOutputFile(environmentDir, groupName, projectName, integrationName, accumulatedInputFile, parametersFile, binPath, testCase)
             }
 
             val expectedOutput = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "output").listFiles().first().readText()
@@ -154,7 +154,7 @@ class BinService(
         val logsDir = integrationPathProvider.getStudentLogsDir(groupName, projectName, integrationName)
         logsDir.mkdirs()
 
-        val file = File(logsDir, testCaseName);
+        val file = File(logsDir, testCaseName)
 
         file.appendText(logs)
     }
