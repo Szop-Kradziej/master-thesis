@@ -1,6 +1,7 @@
 package com.drabarz.karolina.testplatformrunner.service
 
 import com.drabarz.karolina.testplatformrunner.api.*
+import com.drabarz.karolina.testplatformrunner.model.User
 import com.drabarz.karolina.testplatformrunner.model.UserAuth
 import com.drabarz.karolina.testplatformrunner.model.UsersAuthRepository
 import com.drabarz.karolina.testplatformrunner.model.UsersRepository
@@ -12,7 +13,6 @@ import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
-import java.lang.RuntimeException
 
 @Component
 class LoginService(val usersRepository: UsersRepository,
@@ -29,9 +29,15 @@ class LoginService(val usersRepository: UsersRepository,
 
         log.info("Got user emails ${emailsResponse.size}")
 
-        val accessRights = checkUserAccessRights(emailsResponse.first().email)
+        val user = findFirstUserForEmailList(emailsResponse)
 
-        saveToken(tokenResponse.access_token, emailsResponse.first().email)
+        saveToken(tokenResponse.access_token, user)
+
+        val accessRights = if (user.isStudent) {
+            "student"
+        } else {
+            "lecturer"
+        }
 
         return LoginResponse(tokenResponse.access_token, emailsResponse.first().email, accessRights)
     }
@@ -63,29 +69,17 @@ class LoginService(val usersRepository: UsersRepository,
         return response.body ?: emptyList()
     }
 
-    private fun checkUserAccessRights(email: String): String {
-        val user = usersRepository.findByName(email)
-
-        if (user == null) {
-            log.warn("User with email: $email doesn't exist")
+    private fun findFirstUserForEmailList(emails: List<EmailDao>): User {
+        emails.forEach { email ->
+            val user = usersRepository.findByName(email.email)
+            if (user != null) {
+                return user
+            }
         }
-
-        if (user!!.isStudent) {
-            return "student"
-        } else {
-            return "lecturer"
-        }
+        throw IllegalAccessError()
     }
 
-    private fun saveToken(access_token: String, email: String) {
-
-        val user = usersRepository.findByName(email)
-
-        if (user == null) {
-            log.warn("User with email: $email doesn't exist")
-            return
-        }
-
+    private fun saveToken(access_token: String, user: User) {
         usersAuthRepository.save(UserAuth(token = access_token, user = user))
     }
 
