@@ -11,7 +11,8 @@ data class Integration(
         @SequenceGenerator(name = "integrations_id_generator", sequenceName = "integrations_id_seq", allocationSize = 1)
         @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "integrations_id_generator")
         val id: Long = -1,
-        val name: String = "",
+        var name: String = "",
+        var comment: String? = null,
         @ManyToOne
         @JoinColumn(name = "project_id")
         val project: Project

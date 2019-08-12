@@ -12,8 +12,17 @@ import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import CommentIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import InputWrapper from "../../../../utils/InputWrapper";
+import EditStageCommentDialog from "../stage/dialog/EditStageCommentDialog";
+import EditIntegrationCommentDialog from "./EditIntegrationCommentDialog";
 
 class GroupHeader extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            isEditCommentDialogVisible: false,
+        };
+    }
 
     handleEditIntegrationName = () => {
         //TODO: do action
@@ -24,7 +33,11 @@ class GroupHeader extends Component {
     };
 
     handleOpenEditCommentDialog = () => {
-        //TODO: implement
+        this.setState({isEditCommentDialogVisible: true});
+    };
+
+    handleCloseEditCommentDialog = () => {
+        this.setState({isEditCommentDialogVisible: false});
     };
 
     handleDeleteIntegration = () => {
@@ -53,54 +66,62 @@ class GroupHeader extends Component {
 
     render() {
         return (
-            <Table>
-                <TableHead>
-                    <TableRow>
-                        <CustomTableCell width="15%">
-                            <EditItemComponent
-                                header="Nazwa integracji:"
-                                info="Edytuj nazwę integracji"
-                                editActionHandler={this.handleEditIntegrationName}/>
+            <div>
+                <Table>
+                    <TableHead>
+                        <TableRow>
+                            <CustomTableCell width="15%">
+                                <EditItemComponent
+                                    header="Nazwa integracji:"
+                                    info="Edytuj nazwę integracji"
+                                    editActionHandler={this.handleEditIntegrationName}/>
+                            </CustomTableCell>
+                            <CustomTableCell width="65%">
+                                <EditItemComponent
+                                    header="Schemat integracji:"
+                                    info="Edytuj schemat integracji"
+                                    editActionHandler={this.handleEditIntegrationSchema}/>
+                            </CustomTableCell>
+                            <CustomTableCell width="15%">
+                                <EditItemComponent
+                                    header="Komentarz:"
+                                    info="Edytuj komentarz do integracji"
+                                    editActionHandler={this.handleOpenEditCommentDialog}/>
+                            </CustomTableCell>
+                            <CustomTableCell>
+                                <DeleteItemComponent info="Usuń proces integracji"
+                                                     deleteActionHandler={this.handleDeleteIntegration}/>
+                            </CustomTableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        <CustomTableCell component="th" scope="row">
+                            {this.props.integration.name}
                         </CustomTableCell>
-                        <CustomTableCell width="65%">
-                            <EditItemComponent
-                                header="Schemat integracji:"
-                                info="Edytuj schemat integracji"
-                                editActionHandler={this.handleEditIntegrationSchema}/>
-                        </CustomTableCell>
-                        <CustomTableCell width="15%">
-                            <EditItemComponent
-                                header="Komentarz:"
-                                info="Edytuj komentarz dla etapu"
-                                editActionHandler={this.handleOpenEditCommentDialog}/>
+                        <CustomTableCell component="th" scope="row">
+                            {this.createIntegrationSchema()}
                         </CustomTableCell>
                         <CustomTableCell>
-                            <DeleteItemComponent info="Usuń proces integracji"
-                                                 deleteActionHandler={this.handleDeleteIntegration}/>
+                            {this.props.integration.comment == null ? 'Brak' :
+                                <InputWrapper>
+                                    <IconButton>
+                                        <Tooltip
+                                            title={this.props.integration.comment}>
+                                            <CommentIcon/>
+                                        </Tooltip>
+                                    </IconButton>
+                                </InputWrapper>}
                         </CustomTableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    <CustomTableCell component="th" scope="row">
-                        {this.props.integration.name}
-                    </CustomTableCell>
-                    <CustomTableCell component="th" scope="row">
-                        {this.createIntegrationSchema()}
-                    </CustomTableCell>
-                    <CustomTableCell>
-                        {this.props.integration.comment == null ? 'Brak' :
-                            <InputWrapper>
-                                <IconButton>
-                                    <Tooltip
-                                        title={this.props.integration.comment}>
-                                        <CommentIcon/>
-                                    </Tooltip>
-                                </IconButton>
-                            </InputWrapper>}
-                    </CustomTableCell>
-                    <CustomTableCell component="th" scope="row"/>
-                </TableBody>
-            </Table>
+                        <CustomTableCell component="th" scope="row"/>
+                    </TableBody>
+                </Table>
+                <EditIntegrationCommentDialog isOpen={this.state.isEditCommentDialogVisible}
+                                              closeActionHandler={this.handleCloseEditCommentDialog}
+                                              successActionHandler={this.props.integrationChangedHandler}
+                                              projectName={this.props.projectName}
+                                              integrationName={this.props.integration.name}
+                                              headerText="Edytuj komentarz do integracji"/>
+            </div>
         );
     }
 }

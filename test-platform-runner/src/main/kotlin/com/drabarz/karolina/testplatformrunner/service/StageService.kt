@@ -48,6 +48,7 @@ class StageService(
                             getStageDescriptionName(projectName, it),
                             stageMetadata?.startDate.toFormattedString(),
                             stageMetadata?.endDate.toFormattedString(),
+                            stageMetadata?.comment,
                             testCaseService.getTestCases(projectName, it).sortedBy { it.testCaseName })
                 }.sortedBy { it.endDate }
     }
@@ -123,6 +124,18 @@ class StageService(
         uploadedFile.transferTo(outputFile)
 
         log.info("Description file for stage: $stageName in project $projectName saved")
+
+        return SUCCESS_RESPONSE
+    }
+
+    fun editComment(projectName: String, stageName: String, comment: String?): String {
+        log.info("Editing comment for stage $stageName in project $projectName")
+
+        stagesRepository.findByNameAndProject_Name(stageName, projectName)
+                ?.also { it.comment = comment }
+                ?.let { stagesRepository.save(it) }
+
+        log.info("Comment for stage $stageName in project $projectName edited")
 
         return SUCCESS_RESPONSE
     }

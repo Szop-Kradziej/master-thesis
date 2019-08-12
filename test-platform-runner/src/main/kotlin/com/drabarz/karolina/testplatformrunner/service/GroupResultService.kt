@@ -143,6 +143,7 @@ class GroupResultService(
                             stage.testCases.size,
                             stage.startDate,
                             stage.endDate,
+                            stage.comment,
                             countSuccessfulStageGroups(projectName, stage.stageName),
                             countTotalGroups(projectName),
                             getCodeLink(groupName, projectName, stage.stageName),
@@ -321,6 +322,7 @@ class GroupResultService(
                     StudentPreviewIntegration(
                             integration.name,
                             integration.integrationStages,
+                            integration.comment,
                             getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, it.parameters) }),
                             getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
                             integration.testCases.count(),

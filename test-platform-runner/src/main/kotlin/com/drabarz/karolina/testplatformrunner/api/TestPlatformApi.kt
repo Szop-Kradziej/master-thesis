@@ -1,25 +1,12 @@
 package com.drabarz.karolina.testplatformrunner.api
 
 import com.drabarz.karolina.testplatformrunner.service.*
-import com.fasterxml.jackson.core.TreeNode
-import com.fasterxml.jackson.core.type.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.readValue
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
 import org.springframework.http.ResponseEntity
-import org.springframework.util.MultiValueMap
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.multipart.MultipartFile
 import java.util.ArrayList
-import org.springframework.web.client.RestTemplate
-import java.io.ByteArrayOutputStream
-import javax.validation.constraints.Email
-import org.springframework.core.ParameterizedTypeReference
-
-
 
 
 @CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000"], allowCredentials = "true")
@@ -106,6 +93,14 @@ class TestPlatformApi( val loginService: LoginService,
             @RequestParam("projectName") projectName: String,
             @RequestParam("stageName") stageName: String): String {
         return stageService.editStageDate(projectName, stageName, endDate, "END")
+    }
+
+    @PostMapping("/stage/comment")
+    fun addStageComment(
+            @RequestParam("comment") comment: String?,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("stageName") stageName: String): String {
+        return stageService.editComment(projectName, stageName, comment)
     }
 
     @GetMapping("/{projectName}/stages")
@@ -241,6 +236,14 @@ class TestPlatformApi( val loginService: LoginService,
         return integrationService.getIntegrations(projectName)
     }
 
+    @PostMapping("/integration/comment")
+    fun addIntegrationComment(
+            @RequestParam("comment") comment: String?,
+            @RequestParam("projectName") projectName: String,
+            @RequestParam("integrationName") integrationName: String): String {
+        return integrationService.editComment(projectName, integrationName, comment)
+    }
+
     @DeleteMapping("/integration/{projectName}/{integrationName}")
     fun deleteIntegration(
             @PathVariable("projectName") projectName: String,
@@ -303,12 +306,12 @@ data class GithubAuthRequest(val client_id: String, val client_secret: String, v
 data class GithubAuthResponse(val access_token: String)
 class ProjectResponse(val projects: List<String>)
 class StagesResponse(val projectDescription: String?, val projectEnvironment: String?, val stages: List<StageDao>)
-class StageDao(val stageName: String, val stageDescription: String?, val startDate: String?, val endDate: String?, val testCases: List<TestCase>)
+class StageDao(val stageName: String, val stageDescription: String?, val startDate: String?, val endDate: String?, val comment: String?, val testCases: List<TestCase>)
 class TestCase(val testCaseName: String, val parameters: String?, val inputFileName: String?, val outputFileName: String?)
 class GroupsResponse(val groups: List<Group>)
 class Group(val groupName: String, val projectName: String, val students: List<String>)
 data class GroupsDao(val groups: List<GroupDao> = ArrayList())
 data class GroupDao(val name: String = "", val students: List<String> = ArrayList())
 data class IntegrationsDao(val integrations: List<IntegrationDao> = ArrayList())
-data class IntegrationDao(val name: String, val integrationStages: List<IntegrationStageDao>, val testCases: List<TestCase>?)
+data class IntegrationDao(val name: String, val integrationStages: List<IntegrationStageDao>, val comment: String?, val testCases: List<TestCase>?)
 data class IntegrationStageDao(val name: String, val orderNumber: Int, val stageName: String)

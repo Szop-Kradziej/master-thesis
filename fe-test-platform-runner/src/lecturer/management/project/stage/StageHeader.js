@@ -16,6 +16,7 @@ import CommentIcon from "@material-ui/icons/Info";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import InputWrapper from "../../../../utils/InputWrapper";
+import EditStageCommentDialog from "./dialog/EditStageCommentDialog";
 
 class StageHeader extends Component {
 
@@ -25,12 +26,9 @@ class StageHeader extends Component {
             isAddDescriptionDialogVisible: false,
             isEditStartDateDialogVisible: false,
             isEditEndDateDialogVisible: false,
+            isEditCommentDialogVisible: false,
         };
     }
-
-    handleEditStageName = () => {
-        //TODO: do action
-    };
 
     handleOpenAddDescriptionDialog = () => {
         this.setState({isAddDescriptionDialogVisible: true});
@@ -57,7 +55,11 @@ class StageHeader extends Component {
     };
 
     handleOpenEditCommentDialog = () => {
-        //TODO: implement
+        this.setState({isEditCommentDialogVisible: true});
+    };
+
+    handleCloseEditCommentDialog = () => {
+        this.setState({isEditCommentDialogVisible: false});
     };
 
     handleDownloadStageDescription = () => {
@@ -109,7 +111,7 @@ class StageHeader extends Component {
                             <CustomTableCell width="15%">
                                 <EditItemComponent
                                     header="Komentarz:"
-                                    info="Edytuj komentarz dla etapu"
+                                    info="Edytuj komentarz do etapu"
                                     editActionHandler={this.handleOpenEditCommentDialog}/>
                             </CustomTableCell>
                             <CustomTableCell>
@@ -163,6 +165,13 @@ class StageHeader extends Component {
                                         projectName={this.props.projectName}
                                         stageName={this.props.stage.stageName}
                                         headerText="Edytuj datę zakończenia etapu"/>
+                <EditStageCommentDialog isOpen={this.state.isEditCommentDialogVisible}
+                                        closeActionHandler={this.handleCloseEditCommentDialog}
+                                        successActionHandler={this.props.stageChangedHandler}
+                                        projectName={this.props.projectName}
+                                        stageName={this.props.stage.stageName}
+                                        headerText="Edytuj komentarz do etapu"/>
+
             </div>
         );
     }

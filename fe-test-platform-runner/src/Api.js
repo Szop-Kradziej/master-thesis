@@ -143,6 +143,14 @@ export function editStageEndDate(data) {
     return postData(backendUrl("/stage/endDate"), data)
 }
 
+export function editStageComment(data) {
+    return postData(backendUrl("/stage/comment"), data)
+}
+
+export function editIntegrationComment(data) {
+    return postData(backendUrl("/integration/comment"), data)
+}
+
 export function editStageTestCaseParameters(data) {
     return postData(backendUrl("/stage/testCase/parameters"), data)
 }

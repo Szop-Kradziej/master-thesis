@@ -26,9 +26,12 @@ class IntegrationService(
 
         return IntegrationsDao(integrationsRepository.findAllByProject_Name(projectName)
                 .map {
+                    val integrationMetadata: Integration =
+                            integrationsRepository.findByNameAndProject_Name(it.name, projectName)
                     IntegrationDao(
                             it.name,
                             getIntegrationStages(it),
+                            integrationMetadata.comment,
                             testCaseService.getTestCases(projectName, it.name))
                 })
     }
@@ -71,6 +74,18 @@ class IntegrationService(
         }
 
         log.info("Integration: $integrationName for project $projectName created")
+
+        return SUCCESS_RESPONSE
+    }
+
+    fun editComment(projectName: String, integrationName: String, comment: String?): String {
+        log.info("Editing comment for integration: $integrationName in project: $projectName")
+
+        integrationsRepository.findByNameAndProject_Name(integrationName, projectName)
+                .also { it.comment = comment }
+                .let { integrationsRepository.save(it) }
+
+        log.info("Comment for integration $integrationName in project $projectName edited")
 
         return SUCCESS_RESPONSE
     }
