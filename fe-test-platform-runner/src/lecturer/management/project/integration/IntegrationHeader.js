@@ -8,6 +8,9 @@ import {CustomTableCell, styles} from "../../../../styles/ProjectBoardStyles";
 import EditItemComponent from "../../../../utils/EditItemComponent";
 import * as Api from "../../../../Api";
 import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
+import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+import CommentIcon from "@material-ui/icons/Info";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
 
 class GroupHeader extends Component {
 
@@ -17,6 +20,10 @@ class GroupHeader extends Component {
 
     handleEditIntegrationSchema = () => {
         //TODO: do action
+    };
+
+    handleOpenEditCommentDialog = () => {
+        //TODO: implement
     };
 
     handleDeleteIntegration = () => {
@@ -54,11 +61,17 @@ class GroupHeader extends Component {
                                 info="Edytuj nazwę integracji"
                                 editActionHandler={this.handleEditIntegrationName}/>
                         </CustomTableCell>
-                        <CustomTableCell width="80%">
+                        <CustomTableCell width="65%">
                             <EditItemComponent
                                 header="Schemat integracji:"
                                 info="Edytuj schemat integracji"
                                 editActionHandler={this.handleEditIntegrationSchema}/>
+                        </CustomTableCell>
+                        <CustomTableCell width="15%">
+                            <EditItemComponent
+                                header="Komentarz:"
+                                info="Edytuj komentarz dla etapu"
+                                editActionHandler={this.handleOpenEditCommentDialog}/>
                         </CustomTableCell>
                         <CustomTableCell>
                             <DeleteItemComponent info="Usuń proces integracji"
@@ -72,6 +85,13 @@ class GroupHeader extends Component {
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row">
                         {this.createIntegrationSchema()}
+                    </CustomTableCell>
+                    <CustomTableCell>
+                        <IconButton>
+                            <Tooltip title={this.props.integration.comment ? this.props.integration.comment : 'Brak'}>
+                                <CommentIcon/>
+                            </Tooltip>
+                        </IconButton>
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row"/>
                 </TableBody>

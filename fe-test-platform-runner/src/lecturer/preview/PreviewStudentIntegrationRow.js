@@ -10,7 +10,7 @@ import TableCell from "@material-ui/core/TableCell/TableCell";
 import {getAuthHeader} from "../../Api";
 import * as Api from "../../Api";
 import RunItemComponent from "../../utils/RunItemComponent";
-import StatisticsItemComponent from "../../utils/StatisticsItemComponent";
+import StatisticsAndCommentItemComponent from "../../utils/StatisticsAndCommentItemComponent";
 
 class PreviewStudentIntegrationRow extends Component {
 
@@ -50,10 +50,11 @@ class PreviewStudentIntegrationRow extends Component {
         return (
             <div className={this.props.classes.stageRow}>
                 <Typography className={this.props.classes.heading}>
-                    <StatisticsItemComponent header={this.props.integration.integrationName}
-                                             info="Pobierz statystyki dla procesu integracji"
-                                             disabled={this.props.integration.statistics === false}
-                                             getStatisticsActionHandler={this.handleDownloadIntegrationStatistics}/>
+                    <StatisticsAndCommentItemComponent header={this.props.integration.integrationName}
+                                                       statisticsInfo="Pobierz statystyki dla procesu integracji"
+                                                       statisticsDisabled={this.props.integration.statistics === false}
+                                                       getStatisticsActionHandler={this.handleDownloadIntegrationStatistics}
+                                                       commentInfo={this.props.integration.comment ? this.props.integration.comment : 'Brak'}/>
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
                     <Table width="1700">

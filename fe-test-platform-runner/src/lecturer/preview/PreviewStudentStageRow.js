@@ -14,7 +14,7 @@ import StudentUploadBinaryDialog from "./PreviewStudentUploadBinaryDialog";
 import StudentUploadReportDialog from "./PreviewStudentUploadReportDialog";
 import StudentUploadCodeLinkDialog from "./PreviewStudentUploadCodeLinkDialog";
 import {getAuthHeader} from "../../Api";
-import DescriptionAndStatisticsItemComponent from "../../utils/DescriptionAndStatisticsItemComponent";
+import DescriptionStatisticsAndCommentItemComponent from "../../utils/DescriptionStatisticsAndCommentItemComponent";
 import UploadDownloadAndRunItemComponent from "../../utils/UploadDownloadAndRunItemComponent";
 
 class PreviewStudentStageRow extends Component {
@@ -98,13 +98,14 @@ class PreviewStudentStageRow extends Component {
         return (
             <div className={this.props.classes.stageRow}>
                 <Typography className={this.props.classes.heading}>
-                    <DescriptionAndStatisticsItemComponent
+                    <DescriptionStatisticsAndCommentItemComponent
                         header={this.props.stage.stageName}
                         descriptionInfo="Pobierz opis etapu"
                         getDescriptionActionHandler={this.handleDownloadStageDescription}
                         statisticsInfo="Pobierz statystyki dla etapu"
                         statisticsDisabled={this.props.stage.statistics === false}
-                        getStatisticsActionHandler={this.handleDownloadStageStatistics}/>
+                        getStatisticsActionHandler={this.handleDownloadStageStatistics}
+                        commentInfo={this.props.stage.comment ? this.props.stage.comment : 'Brak'}/>
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
                     <Table width="1700">

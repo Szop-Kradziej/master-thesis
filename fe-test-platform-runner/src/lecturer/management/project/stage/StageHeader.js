@@ -12,6 +12,9 @@ import UploadStageDescriptionDialog from "./dialog/UploadStageDescriptionDialog"
 import EditStageStartDateDialog from "./dialog/EditStageStartDateDialog";
 import EditStageEndDateDialog from "./dialog/EditStageEndDateDialog";
 import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
+import CommentIcon from "@material-ui/icons/Info";
+import Tooltip from "@material-ui/core/Tooltip/Tooltip";
+import IconButton from "@material-ui/core/es/IconButton/IconButton";
 
 class StageHeader extends Component {
 
@@ -52,6 +55,10 @@ class StageHeader extends Component {
         this.setState({isEditEndDateDialogVisible: false});
     };
 
+    handleOpenEditCommentDialog = () => {
+        //TODO: implement
+    };
+
     handleDownloadStageDescription = () => {
         Api.downloadStageDescription(this.props.projectName, this.props.stage.stageName)
     };
@@ -85,7 +92,7 @@ class StageHeader extends Component {
                                     downloadDisabled={this.props.stage.stageDescription === null}
                                     downloadActionHandler={this.handleDownloadStageDescription}/>
                             </CustomTableCell>
-                            <CustomTableCell width="35%"/>
+                            <CustomTableCell width="20%"/>
                             <CustomTableCell width="15%">
                                 <EditItemComponent
                                     header="Rozpoczęcie:"
@@ -97,6 +104,12 @@ class StageHeader extends Component {
                                     header="Zakończenie:"
                                     info="Edytuj datę zakończenia etapu"
                                     editActionHandler={this.handleOpenEditEndDateDialog}/>
+                            </CustomTableCell>
+                            <CustomTableCell width="15%">
+                                <EditItemComponent
+                                    header="Komentarz:"
+                                    info="Edytuj komentarz dla etapu"
+                                    editActionHandler={this.handleOpenEditCommentDialog}/>
                             </CustomTableCell>
                             <CustomTableCell>
                                 <DeleteItemComponent info="Usuń etap"
@@ -117,6 +130,13 @@ class StageHeader extends Component {
                         </CustomTableCell>
                         <CustomTableCell component="th" scope="row">
                             {this.props.stage.endDate ? this.props.stage.endDate : 'Brak'}
+                        </CustomTableCell>
+                        <CustomTableCell>
+                            <IconButton>
+                                <Tooltip title={this.props.stage.comment ? this.props.stage.comment : 'Brak'}>
+                                    <CommentIcon/>
+                                </Tooltip>
+                            </IconButton>
                         </CustomTableCell>
                         <CustomTableCell component="th" scope="row"/>
                     </TableBody>

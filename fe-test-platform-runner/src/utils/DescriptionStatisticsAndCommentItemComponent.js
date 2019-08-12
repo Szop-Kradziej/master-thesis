@@ -2,10 +2,11 @@ import React, {Component} from "react";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import DescriptionIcon from "@material-ui/icons/Description";
 import StatisticsIcon from "@material-ui/icons/Assessment";
+import CommentIcon from "@material-ui/icons/Info";
 import InputWrapper from "./InputWrapper";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 
-class DescriptionAndStatisticsItemComponent extends Component {
+class DescriptionStatisticsAndCommentItemComponent extends Component {
 
     render() {
         return (
@@ -24,9 +25,14 @@ class DescriptionAndStatisticsItemComponent extends Component {
                         <StatisticsIcon/>
                     </Tooltip>
                 </IconButton>
+                <IconButton>
+                    <Tooltip title={this.props.commentInfo}>
+                        <CommentIcon/>
+                    </Tooltip>
+                </IconButton>
             </InputWrapper>
         );
     }
 }
 
-export default DescriptionAndStatisticsItemComponent;
+export default DescriptionStatisticsAndCommentItemComponent;
