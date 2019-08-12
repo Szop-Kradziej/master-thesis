@@ -57,33 +57,30 @@ class GroupService(
     }
 
     private fun addGroupWithStudents(groupDao: GroupDao, projectName: String) {
-        val group = groupsRepository.save(
+        groupsRepository.save(
                 Group(
                         name = groupDao.name,
                         project = projectsRepository.findByName(projectName)))
 
-        groupDao.students.forEach { addStudent(it) }
-
-        log.info("Adding ${groupDao.students.size} students to group: ${groupDao.name}")
-        groupDao.students.forEach { studentName ->
-            usersRepository.findByName(studentName)!!.groups.add(group)
-                    .also { log.info("Student: $studentName added to group: ${group.name}") }
-        }
+        groupDao.students.forEach { addStudentToGroup(projectName, groupDao.name, it) }
 
         log.info("All students added to group: ${groupDao.name}")
     }
 
     @Transactional
-    fun addStudentToGroup(projectName:String, groupName:String, studentName: String): String {
+    fun addStudentToGroup(projectName: String, groupName: String, studentName: String): String {
         log.info("Adding student: $studentName to group: $groupName in project: $projectName")
 
-        addStudent(studentName)
+        usersRepository.findByName(studentName) ?: addStudent(studentName)
 
         log.info("Adding student to group: $groupName")
         val group = groupsRepository.findByName(groupName)
 
-        usersRepository.findByName(studentName)!!.groups.add(group)
+        val groups = usersRepository.findByName(studentName)!!.groups
+        if (!groups.contains(group)) {
+            groups.add(group)
                     .also { log.info("Student: $studentName added to group ${group.name}") }
+        }
 
         return SUCCESS_RESPONSE
     }
