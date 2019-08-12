@@ -304,10 +304,5 @@ export function removeStudentFromGroup(projectName, groupName, studentName) {
 }
 
 export function getAuthHeader() {
-    var user = localStorage.getItem("userName");
-    var password = localStorage.getItem("token");
-
-    var base64encodedData = new Buffer(user + ':' + password).toString('base64');
-
-    return 'Basic ' + base64encodedData
+    return 'token ' + localStorage.getItem("token")
 }
