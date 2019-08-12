@@ -1,5 +1,6 @@
 package com.drabarz.karolina.testplatformrunner.api
 
+import com.drabarz.karolina.testplatformrunner.model.User
 import com.drabarz.karolina.testplatformrunner.model.UsersAuthRepository
 import org.springframework.http.HttpHeaders
 import org.springframework.http.ResponseEntity
@@ -19,11 +20,22 @@ fun createFileResponse(file: File): ResponseEntity<*> {
 class TestPlatformApiHelper(val usersAuthRepository: UsersAuthRepository) {
 
     fun getUserNameFromRequestHeader(headers: HttpHeaders): String =
-            headers["Authorization"]
-                    ?.get(0)
-                    ?.removePrefix("token ")
-                    ?.let { usersAuthRepository.findByToken(it) }
-                    ?.user
-                    ?.name
-                    ?: throw IllegalAccessError()
+            getUser(headers).name
+
+    fun isLecturerOrThrow(headers: HttpHeaders): User {
+        val user = getUser(headers)
+        if (!user.isStudent) {
+            return user
+        }
+        throw IllegalAccessError()
+    }
+
+    fun getUser(headers: HttpHeaders): User {
+        return headers["Authorization"]
+                ?.get(0)
+                ?.removePrefix("token ")
+                ?.let { usersAuthRepository.findByToken(it) }
+                ?.user
+                ?: throw IllegalAccessError()
+    }
 }
