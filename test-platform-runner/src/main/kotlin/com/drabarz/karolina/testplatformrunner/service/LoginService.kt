@@ -1,6 +1,8 @@
 package com.drabarz.karolina.testplatformrunner.service
 
 import com.drabarz.karolina.testplatformrunner.api.*
+import com.drabarz.karolina.testplatformrunner.model.UserAuth
+import com.drabarz.karolina.testplatformrunner.model.UsersAuthRepository
 import com.drabarz.karolina.testplatformrunner.model.UsersRepository
 import org.slf4j.LoggerFactory
 import org.springframework.core.ParameterizedTypeReference
@@ -10,9 +12,11 @@ import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Component
 import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
+import java.lang.RuntimeException
 
 @Component
-class LoginService(val usersRepository: UsersRepository) {
+class LoginService(val usersRepository: UsersRepository,
+                   val usersAuthRepository: UsersAuthRepository) {
 
     fun loginUser(loginRequest: LoginRequest): LoginResponse {
         log.info("Getting user login data")
@@ -26,6 +30,8 @@ class LoginService(val usersRepository: UsersRepository) {
         log.info("Got user emails ${emailsResponse.size}")
 
         val accessRights = checkUserAccessRights(emailsResponse.first().email)
+
+        saveToken(tokenResponse.access_token, emailsResponse.first().email)
 
         return LoginResponse(tokenResponse.access_token, emailsResponse.first().email, accessRights)
     }
@@ -69,6 +75,18 @@ class LoginService(val usersRepository: UsersRepository) {
         } else {
             return "lecturer"
         }
+    }
+
+    private fun saveToken(access_token: String, email: String) {
+
+        val user = usersRepository.findByName(email)
+
+        if (user == null) {
+            log.warn("User with email: $email doesn't exist")
+            return
+        }
+
+        usersAuthRepository.save(UserAuth(token = access_token, user = user))
     }
 
     companion object {

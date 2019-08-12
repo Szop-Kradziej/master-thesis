@@ -27,3 +27,21 @@ interface UsersRepository : CrudRepository<User, Long> {
     fun findAllByIsStudentIsTrue(): MutableList<User>
     fun findByName(name: String): User?
 }
+
+@Entity
+@Table(name = "users_auth")
+data class UserAuth(
+        @Id
+        @SequenceGenerator(name = "users_auth_id_generator", sequenceName = "users_auth_id_seq", allocationSize = 1)
+        @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "users_auth_id_generator")
+        val id: Long = -1,
+        val token: String,
+        @ManyToOne
+        @JoinColumn(name = "user_id")
+        val user: User
+)
+
+@Repository
+interface UsersAuthRepository : CrudRepository<UserAuth, Long> {
+    fun findByToken(token: String): UserAuth?
+}
