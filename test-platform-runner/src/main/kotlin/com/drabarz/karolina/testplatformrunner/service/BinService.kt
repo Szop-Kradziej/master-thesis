@@ -173,7 +173,6 @@ data class TestResponse constructor(val testCaseName: String, val status: String
 class ContainerFactory {
 
     fun createContainerWithFilesBinded(environmentDir: File, inputFilePath: String, parametersFilePath: String, outputFilePath: String, binPath: String): KGenericContainer {
-
         return KGenericContainer(
                 ImageFromDockerfile()
                         .withFileFromFile("Dockerfile", environmentDir.listFiles().first())
@@ -191,7 +190,10 @@ class ContainerService {
     fun runTestCase(container: KGenericContainer): String {
         container.start()
 
-        Thread.sleep(1000)
+        val startTime = System.currentTimeMillis()
+        while (container.isRunning && startTime + 5000 > System.currentTimeMillis()) {
+            Thread.sleep(10)
+        }
 
         val toStringConsumer = ToStringConsumer()
         container.followOutput(toStringConsumer, OutputFrame.OutputType.STDERR)
