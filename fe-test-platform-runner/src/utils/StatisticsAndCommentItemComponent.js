@@ -3,7 +3,7 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import StatisticsIcon from "@material-ui/icons/Assessment";
 import InputWrapper from "./InputWrapper";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
-import CommentIcon from "@material-ui/core/SvgIcon/SvgIcon";
+import CommentIcon from "@material-ui/icons/Info";
 
 class StatisticsAndCommentItemComponent extends Component {
 
@@ -18,7 +18,7 @@ class StatisticsAndCommentItemComponent extends Component {
                         <StatisticsIcon/>
                     </Tooltip>
                 </IconButton>
-                <IconButton>
+                <IconButton disabled={this.props.commentDisabled}>
                     <Tooltip title={this.props.commentInfo}>
                         <CommentIcon/>
                     </Tooltip>

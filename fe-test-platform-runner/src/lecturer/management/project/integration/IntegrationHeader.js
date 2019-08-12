@@ -11,6 +11,7 @@ import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import CommentIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import InputWrapper from "../../../../utils/InputWrapper";
 
 class GroupHeader extends Component {
 
@@ -87,11 +88,15 @@ class GroupHeader extends Component {
                         {this.createIntegrationSchema()}
                     </CustomTableCell>
                     <CustomTableCell>
-                        <IconButton>
-                            <Tooltip title={this.props.integration.comment ? this.props.integration.comment : 'Brak'}>
-                                <CommentIcon/>
-                            </Tooltip>
-                        </IconButton>
+                        {this.props.integration.comment == null ? 'Brak' :
+                            <InputWrapper>
+                                <IconButton>
+                                    <Tooltip
+                                        title={this.props.integration.comment}>
+                                        <CommentIcon/>
+                                    </Tooltip>
+                                </IconButton>
+                            </InputWrapper>}
                     </CustomTableCell>
                     <CustomTableCell component="th" scope="row"/>
                 </TableBody>

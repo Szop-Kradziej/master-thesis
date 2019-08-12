@@ -105,7 +105,8 @@ class PreviewStudentStageRow extends Component {
                         statisticsInfo="Pobierz statystyki dla etapu"
                         statisticsDisabled={this.props.stage.statistics === false}
                         getStatisticsActionHandler={this.handleDownloadStageStatistics}
-                        commentInfo={this.props.stage.comment ? this.props.stage.comment : 'Brak'}/>
+                        commentInfo={this.props.stage.comment ? this.props.stage.comment : 'Brak'}
+                        commentDisabled={this.props.stage.comment == null}/>
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
                     <Table width="1700">

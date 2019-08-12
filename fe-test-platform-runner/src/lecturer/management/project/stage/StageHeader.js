@@ -15,6 +15,7 @@ import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
 import CommentIcon from "@material-ui/icons/Info";
 import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
+import InputWrapper from "../../../../utils/InputWrapper";
 
 class StageHeader extends Component {
 
@@ -132,11 +133,14 @@ class StageHeader extends Component {
                             {this.props.stage.endDate ? this.props.stage.endDate : 'Brak'}
                         </CustomTableCell>
                         <CustomTableCell>
-                            <IconButton>
-                                <Tooltip title={this.props.stage.comment ? this.props.stage.comment : 'Brak'}>
-                                    <CommentIcon/>
-                                </Tooltip>
-                            </IconButton>
+                            {this.props.stage.comment == null ? 'Brak' :
+                                <InputWrapper>
+                                    <IconButton>
+                                        <Tooltip title={this.props.stage.comment}>
+                                            <CommentIcon/>
+                                        </Tooltip>
+                                    </IconButton>
+                                </InputWrapper>}
                         </CustomTableCell>
                         <CustomTableCell component="th" scope="row"/>
                     </TableBody>

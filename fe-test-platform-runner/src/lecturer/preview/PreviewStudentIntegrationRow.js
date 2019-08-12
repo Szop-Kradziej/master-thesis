@@ -54,7 +54,8 @@ class PreviewStudentIntegrationRow extends Component {
                                                        statisticsInfo="Pobierz statystyki dla procesu integracji"
                                                        statisticsDisabled={this.props.integration.statistics === false}
                                                        getStatisticsActionHandler={this.handleDownloadIntegrationStatistics}
-                                                       commentInfo={this.props.integration.comment ? this.props.integration.comment : 'Brak'}/>
+                                                       commentInfo={this.props.integration.comment}
+                                                       commentDisabled={this.props.integration.comment == null}/>
                 </Typography>
                 <div className={this.props.classes.inputWrapper}>
                     <Table width="1700">

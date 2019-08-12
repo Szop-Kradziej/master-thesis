@@ -25,7 +25,7 @@ class DescriptionStatisticsAndCommentItemComponent extends Component {
                         <StatisticsIcon/>
                     </Tooltip>
                 </IconButton>
-                <IconButton>
+                <IconButton disabled={this.props.commentDisabled}>
                     <Tooltip title={this.props.commentInfo}>
                         <CommentIcon/>
                     </Tooltip>
