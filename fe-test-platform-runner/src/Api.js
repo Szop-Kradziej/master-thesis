@@ -16,6 +16,7 @@ export function fetchProjects() {
     return fetch(backendUrl(`/projects`), {
         method: "GET",
         credentials: "include",
+        headers: {'Authorization': getAuthHeader()}
     })
 }
 
@@ -26,7 +27,6 @@ export function fetchStudentProjects() {
         headers: {'Authorization': getAuthHeader()}
     })
 }
-
 
 export function fetchStages(projectName) {
     return fetch(backendUrl(`/${projectName}/stages`), {
@@ -53,7 +53,7 @@ export function addNewStage(projectName, stageName, startDate, endDate) {
     return fetch(backendUrl(`/stage`), {
         method: "POST",
         credentials: "include",
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
         body: "projectName=" + projectName + "&stageName=" + stageName + "&startDate=" + startDate + "&endDate=" + endDate
     })
 }
@@ -62,7 +62,7 @@ export function addNewIntegration(projectName, data) {
     return fetch(backendUrl(`/${projectName}/integrations`), {
         method: "POST",
         credentials: "include",
-        headers: {'Content-Type': 'application/json'},
+        headers: {'Content-Type': 'application/json', 'Authorization': getAuthHeader()},
         body: data
     })
 }
@@ -71,7 +71,7 @@ export function addNewGroup(projectName, groupName) {
     return fetch(backendUrl(`/group`), {
         method: "POST",
         credentials: "include",
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
         body: "projectName=" + projectName + "&groupName=" + groupName
     })
 }
@@ -80,7 +80,7 @@ export function addNewStudent(projectName, groupName, studentName) {
     return fetch(backendUrl(`/group/student`), {
         method: "POST",
         credentials: "include",
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
         body: "projectName=" + projectName + "&groupName=" + groupName + "&studentName=" + studentName
     })
 }
@@ -106,33 +106,27 @@ export function uploadIntegrationTestCaseFile(projectName, integrationName, test
 }
 
 export function uploadStudentBinary(data) {
-    let headers = {'Authorization': getAuthHeader()};
-    return postData(backendUrl("/student/upload/bin"), data, headers)
+    return postData(backendUrl("/student/upload/bin"), data)
 }
 
 export function uploadStudentReport(data) {
-    let headers = {'Authorization': getAuthHeader()};
-    return postData(backendUrl("/student/upload/report"), data, headers)
+    return postData(backendUrl("/student/upload/report"), data)
 }
 
 export function uploadStudentCodeLink(data) {
-    let headers = {'Authorization': getAuthHeader()};
-    return postData(backendUrl("/student/upload/code"), data, headers)
+    return postData(backendUrl("/student/upload/code"), data)
 }
 
 export function uploadPreviewStudentBinary(groupName, data) {
-    let headers = {'Authorization': getAuthHeader()};
-    return postData(backendUrl("/preview/" + groupName + "/upload/bin"), data, headers)
+    return postData(backendUrl("/preview/" + groupName + "/upload/bin"), data)
 }
 
 export function uploadPreviewStudentReport(groupName, data) {
-    let headers = {'Authorization': getAuthHeader()};
-    return postData(backendUrl("/preview/" + groupName + "/upload/report"), data, headers)
+    return postData(backendUrl("/preview/" + groupName + "/upload/report"), data)
 }
 
 export function uploadPreviewStudentCodeLink(groupName, data) {
-    let headers = {'Authorization': getAuthHeader()};
-    return postData(backendUrl("/preview/" + groupName + "/upload/code"), data, headers)
+    return postData(backendUrl("/preview/" + groupName + "/upload/code"), data)
 }
 
 export function editStageStartDate(data) {
@@ -159,7 +153,9 @@ export function editIntegrationTestCaseParameters(data) {
     return postData(backendUrl("/integration/testCase/parameters"), data)
 }
 
-function postData(url, data, headers) {
+function postData(url, data) {
+    let headers = {'Authorization': getAuthHeader()};
+
     return axios.post(url, data, { headers: headers})
         .then(function (response) {
             console.log("success");
@@ -282,13 +278,14 @@ export function deleteGroup(projectName, groupName) {
     return fetch(backendUrl(`/group`), {
         method: "DELETE",
         credentials: "include",
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
         body: "projectName=" + projectName + "&groupName=" + groupName
     })
 }
 
 function deleteItem(url) {
-    return axios.delete(url)
+    let headers = {'Authorization': getAuthHeader()};
+    return axios.delete(url, headers)
         .then(function (response) {
             console.log("success");
         })
@@ -298,7 +295,7 @@ export function removeStudentFromGroup(projectName, groupName, studentName) {
     return fetch(backendUrl(`/group/student`), {
         method: "DELETE",
         credentials: "include",
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
         body: "projectName=" + projectName + "&groupName=" + groupName + "&studentName=" + studentName
     })
 }

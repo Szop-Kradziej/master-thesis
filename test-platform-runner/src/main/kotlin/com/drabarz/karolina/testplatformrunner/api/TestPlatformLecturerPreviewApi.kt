@@ -35,7 +35,7 @@ class TestPlatformLecturerPreviewApi(
             @PathVariable("groupName") groupName: String,
             @PathVariable("projectName") projectName: String,
             @PathVariable("stageName") stageName: String): ResponseEntity<*> {
-        authHelper.isLecturerOrThrow(headers).name
+        authHelper.isLecturerOrThrow(headers)
         return createFileResponse(groupResultService.getBin(groupName, projectName, stageName))
     }
 
