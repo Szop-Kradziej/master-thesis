@@ -137,22 +137,4 @@ class TestCaseRow extends Component {
     }
 }
 
-const CustomTableCell = withStyles(() => ({
-    head: {
-        color: "black",
-        fontWeight: 700,
-        fontSize: 12,
-        margin: 0,
-        padding: 0,
-        border: 0
-    },
-    body: {
-        color: "black",
-        fontSize: 12,
-        margin: 0,
-        padding: 0,
-        border: 0,
-        height: 5
-    }
-
 export default (TestCaseRow);
