@@ -23,7 +23,7 @@ class GroupComponent extends Component {
                     </Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
-                    <Typography className={this.props.classes.heading}>
+                    <Typography className={this.props.classes.testsHeading}>
                         <div className={this.props.classes.panel}>
                             <StudentsDetails
                                 groupName={this.props.group.groupName}

@@ -23,7 +23,7 @@ class IntegrationComponent extends Component {
                     </Typography>
                 </ExpansionPanelSummary>
                 <ExpansionPanelDetails>
-                    <Typography className={this.props.classes.heading}>
+                    <Typography className={this.props.classes.testsHeading}>
                         <div className={this.props.classes.panel}>
                             <TestCasesDetails
                                 testCases={this.props.integration.testCases}

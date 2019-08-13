@@ -73,6 +73,7 @@ export const styles = (theme) => ({
         fontWeight: 700,
     },
     testsHeading: {
+        width: 1700,
         fontSize: 16,
         fontWeight: 700
     },

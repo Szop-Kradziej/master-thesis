@@ -7,6 +7,7 @@ import * as Api from "../../../../Api";
 import UploadTestCaseFileDialog from "./UploadTestCaseFileDialog";
 import EditParametersDialog from "./dialog/EditParametersDialog";
 import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
+import {withStyles} from "@material-ui/core";
 
 class TestCaseRow extends Component {
 
@@ -135,5 +136,23 @@ class TestCaseRow extends Component {
         );
     }
 }
+
+const CustomTableCell = withStyles(() => ({
+    head: {
+        color: "black",
+        fontWeight: 700,
+        fontSize: 12,
+        margin: 0,
+        padding: 0,
+        border: 0
+    },
+    body: {
+        color: "black",
+        fontSize: 12,
+        margin: 0,
+        padding: 0,
+        border: 0,
+        height: 5
+    }
 
 export default (TestCaseRow);

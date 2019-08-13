@@ -20,10 +20,8 @@ class StudentRow extends Component {
                     {this.props.studentName}
                 </CustomTableCell>
                 <CustomTableCell>
-                    <CustomTableCell>
-                        <DeleteItemComponent info="Usuń studenta z grupy"
-                                             deleteActionHandler={this.handleRemoveStudent}/>
-                    </CustomTableCell>
+                    <DeleteItemComponent info="Usuń studenta z grupy"
+                                         deleteActionHandler={this.handleRemoveStudent}/>
                 </CustomTableCell>
                 <CustomTableCell/>
             </TableRow>
