@@ -126,11 +126,9 @@ class TestCaseRow extends Component {
                                               fileType="output"
                                               headerText="Dodaj plik wyjściowy"/>
                 </CustomTableCell>
-                <CustomTableCell>
-                    <CustomTableCell>
-                        <DeleteItemComponent info="Usuń przypadek testowy"
-                                             deleteActionHandler={this.handleDeleteTestCase}/>
-                    </CustomTableCell>
+                <CustomTableCell component="th" scope="row">
+                    <DeleteItemComponent info="Usuń przypadek testowy"
+                                         deleteActionHandler={this.handleDeleteTestCase}/>
                 </CustomTableCell>
                 <CustomTableCell/>
             </TableRow>
