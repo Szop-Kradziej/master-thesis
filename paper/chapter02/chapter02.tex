@@ -118,6 +118,9 @@ Przebieg procesu integracji jest bardzo podobny do wykonania pojedynczego przypa
 Różnica polega na tym, że plik wyjściowy utworzony w wyniku uruchomienia poprzedniego etapu jest plikiem wejściowym dla kolejnego, następującego po nim.
 Plik wyjściowy dla ostatniego etapu jest porównywany ze zdefiniowanym oczekiwanym plikiem wyjściowym.
 
+TODO:
+- napisać o timeout wykonania = 5s
+
 \vfill
 
 \section {Konfiguracja uruchomieniowego środowiska Dockerowego}
@@ -125,13 +128,32 @@ Plik wyjściowy dla ostatniego etapu jest porównywany ze zdefiniowanym oczekiwa
 TODO: Opis i przykład
 \\ Dodać przykłady w załączniku na JVM i C pod linuchem
 
+-opis CMD, którego należy się trzymać
+
+- input.txt
+
+- parameters.txt
+
+- output.txt
+
 \section {Uwierzytelnienie użytkowników}
 \label{authorization}
 
 TODO: opis:
-1) proste uwierzytelnienie oparte o login i hasło
+1) proste uwierzytelnienie oparte o github
+
+- sprawdzenie zgodności maila użytkownika
+
+- wymaga podpięcia maila uczelnianego do konta github
+
+- link do opisu autoryzacji przez github i do endpointow []
+
 2)prosta autoryzacja oparta o nadanie praw administratora prowadzącym
-oraz ograniczenie praw wykonania studentom,
+oraz ograniczenie praw wykonania studentom
+
+- zapis w bazie czy użytkownik jest studentem czy prowadzącym
+
+- sprawdzenie dla każdego z endpointów czy użytkownik ma prawo wykonać daną akcję
 
 \section {Zestawienie platformy na serwerze}
 \label{run-platform}
