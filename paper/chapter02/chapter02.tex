@@ -202,33 +202,35 @@ Warto zaznaczyć, że omawiany plik konfiguracyjny nie jest walidowany przez pla
 \section {Uwierzytelnianie użytkowników}
 \label{authorization}
 
-Uwierzytelnienie użytkowników odbywa się przy pomocy GitHub.
+Uwierzytelnianie użytkowników odbywa się przy pomocy serwisu GitHub \cite{gitHub}.
+Jest to najpopularniejsze repozytorium kodu używane przez większość programistów.
+Uwierzytelnianie przy użyciu zweryfikowanego źródła jest zarówno łatwiejsze od strony technicznej jak i bezpieczniejsze dla użytkowników.
+W ramach platformy nie ma potrzeby przechowywania i zabezpieczania wrażliwych danych użytkowników jakimi są prywatne hasła.
 
-Ten sposób został wybrany między innymi dla tego, że studenci dla przemiotu Podstawy Programowania mają za zadanie zamieszczać kod na GitLab.
-Do serwisu GitLab można uzyskać dostęp przez GitHub.
-GitHub jest najpopularniejszym repozytorium kodu i praktycznie każdy programista ma tan swoje konto.
-Takie uwierzytelnienie przy użyciu zweryfikowanego źródła jest za równo łatwiejsze jak i bezpieczniejsze dla użytkowników.
-Od strony platformy nie ma potrzeby przechowywania wrażliwych danych użytkowników jakim są hasła.
-Uwierzytelnienie odbywa się w następujących krokach:
-Użytkownik kilka przycisk zaloguj.
-Aplikacja webowa przekierowuje użytkownika na stronę GiHub, na której użytkownik loguje się i daje odpowiednie uprawnienia platformie.
-Aplikacja webowa otrzymuje tymczasowy token z GitHub opisujący profil zalogowanego użytkownika.
-Aplikacja webowa przekazuje token do Serwera.
-Serwer odpytuje GiHub o adresy mailowe przypisane w serwisie do użytkownika o zadanym tokenie.
-Serwer filtruje otrzymane maile i sprawdza czy któryś z nich jest zgodny z mailem użytkownika zapisanym w bazie.
-Jeśli jest informacja zwrotna jest odsyłana do użytkownika i przekierowywany jest on na odpowiedni dla jego uprawnień ekran (projetku w przypadku studenta lub wyboru podglądu albo zarządzania projektami w przypadku prowadzącego).
-Dodatkowo serwis w miarę potrzeby może sprawdzić czy dany użytkownik jest studentem czy prowadzącym.
+W celu zastosowania takiego typu uwierzytelnienia wymagane jest aby identyfikatorem użytkownika na platformie był adres email.
+Z założenia jest to email uczelniany.
+Wymagane jest więc od użytkowników (studentów i prowadzących) dodanie uczelnianego adresu email do prywatnych kont githubowych.
+
+Proces uwierzytelniania można podzielić na następujące kroki:
+\begin{enumerate}
+\item Użytkownik kilka przycisk zaloguj na interfejsie webowym platformy.
+\item Aplikacja webowa przekierowuje użytkownika na stronę GitHub, na której loguje się on do serwisu i nadaje odpowiednie uprawnienia do odczytu danych platformie.
+\item Aplikacja webowa otrzymuje tymczasowy kod dostępu z GitHub odpowiadający profilowi zalogowanego użytkownika.
+\item Aplikacja webowa przekazuje kod dostępu do serwera.
+\item Serwer odpytuje GitHub o token dla użytkownika na podstawie otrzymanego z aplikacji webowej kodu dostępu.
+\item Serwer odpytuje GitHub o adresy mailowe przypisane do konta użytkownika o zadanym tokenie.
+\item Serwer filtruje otrzymane maile i sprawdza czy któryś z nich jest zgodny z mailem użytkownika(nazwą) zapisanym w bazie.
+\item Jeśli tak to odsyłana jest do użytkownika informacja zwrotna zawierająca token a zweryfikowany użytkownik przekierowywany jest na odpowiedni dla jego uprawnień ekran (widok projektu w przypadku studenta lub widok wyboru podglądu albo zarządzania projektami w przypadku prowadzącego).
+\end{enumerate}
+
+Serwis w miarę potrzeby może zweryfikować czy dany użytkownik jest studentem czy prowadzącym.
 Poziom uprawnień dla użytkownika jest zapisywany i odczytywany z bazy z tabeli Users.
-Więcej informacji o procesie autoryzacji przez GitHub, implementacji i bezpieczeństwie takiego rozwiązania można znaleźć w dokumentacji [].
+Więcej informacji o procesie uwierzytelniania przez GitHub, implementacji i bezpieczeństwie takiego rozwiązania można znaleźć w dokumentacji \cite{gitHub-auth-basic} \cite{gitHub-oauth-app}.
 
-W celu zastosowania takiego typu uwierzytelnienia wymagane jest aby identyfikatorem użytkownika na platformie był email.
-Z założenia email służący do uwierzytelnienia jest emailem uczelnianym.
-Wymagane jest więc od użytkowników dodanie emaila uczelnianego do ich konta githubowego.
-
-Uwierzytelnienie jest potrzebne do dostępu do platformy.
-Wykonywanie zapytań na platformie wymaga uwierzytelnienia.
-Użytkownik, który nie ma uprawnień np do usunięcia projektu nie może wykonać takiej akcji.
-Prowadzący jest traktowany jako administrator i ma dostęp do wszystkich akcji studenta oraz definicji projektu i podglądu statystyk uruchomienia etapów oraz projektów.
+Uwierzytelnienie jest potrzebne do dostępu do platformy i wykonywania zapytań.
+Przykładowo użytkownik będący studentem nie ma uprawnień do usunięcia projektu i nie może wykonać takiej akcji.
+Prowadzący jest traktowany jako administrator i ma dostęp do wszystkich akcji studenta.
+Dodatkowo ma on uprawnienia do definicji i edycji projektu oraz podglądu statystyk uruchomienia etapów oraz integracji.
 
 \section {Zestawienie platformy na serwerze}
 \label{run-platform}
