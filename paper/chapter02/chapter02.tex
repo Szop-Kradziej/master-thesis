@@ -70,12 +70,12 @@ Pełne definicje tabel wraz z użytymi typami danych i więzami znajdują się w
 \end{figure}
 
 Główny schemat katalogów plików znajduje się na rysunku \ref{fig:platform-main-directories}.
-Można wyróżnić na nim dwa podstawowe foldery: students oraz projects.
+Można wyróżnić na nim dwa podstawowe foldery: \textit{students} oraz \textit{projects}.
 Wewnątrz pierwszego z nich zapisywane są wszystkie dane i pliki związane z aktywnością studentów zarejestrowaną na platformie.
 Do zapamiętywanych informacji należą: zamieszczane raporty, linki do kodu, programy oraz logi z przebiegu aplikacji i wyniki przeprowadzonych testów akceptacyjnych.
 Drugi folder zawiera definicje projektów wraz z etapami i integracjami oraz utworzone przez prowadzących przypadki testowe.
 
-Na rysunkach \ref{fig:projects-directories} i \ref{fig:students-directories} został zamieszone odpowiednio schematy katalogów wewnątrz folderów projects oraz students.
+Na rysunkach \ref{fig:projects-directories} i \ref{fig:students-directories} został zamieszone odpowiednio schematy katalogów wewnątrz folderów \textit{projects} oraz \textit{students}.
 Dla obu schematów zostały wyróżnione pliki i foldery, które nie występują pojedynczo w ramach katalogów.
 W miejscu zbiorczej nazwy oznaczonej jako ${nazwa\_katalogu}_{i}$ należy rozumieć docelową nazwę folderu.
 
@@ -111,7 +111,7 @@ Samo uruchamianie kontenerów, ich integracja oraz konfiguracja nowych środowis
     \label{fig:single-test-case}
 \end{figure}
 
-Poprzez naciśnięcie na platformie przycisku play dla wybranej aplikacji studenckiej uruchamiane są kolejno wszystkie zdefiniowane przypadki testowe dla zadanego etapu.
+Poprzez naciśnięcie na platformie przycisku \textit{play} dla wybranej aplikacji studenckiej uruchamiane są kolejno wszystkie zdefiniowane przypadki testowe dla zadanego etapu.
 Schemat wykonania pojedynczego przypadku testowego w ramach etapu dla programu studentów został przedstawiony na rysunku \ref{fig:single-test-case}.
 Uruchomienie pojedynczego przypadku testowego sprowadza się do utworzenia nowego kontenera Dockerowego i podania mu odpowiednich ścieżek do:
 \begin{itemize}
@@ -135,7 +135,7 @@ Jeśli rezulataty dla wszystkich przypadków testowych są prawidłowe to progra
     \label{fig:integration}
 \end{figure}
 
-Poprzez naciśnięcie na platformie przycisku play dla wybranego procesu integracji uruchamiane są kolejno wszystkie zdefiniowane dla niego przypadki testowe.
+Poprzez naciśnięcie na platformie przycisku \textit{play} dla wybranego procesu integracji uruchamiane są kolejno wszystkie zdefiniowane dla niego przypadki testowe.
 Schemat wykonania pojedynczego przypadku testowego w ramach procesu integracji został przedstawiony na rysunku \ref{fig:integration}.
 Przebieg procesu integracji jest podobny do wykonania pojedynczego przypadku testowego.
 Różnica polega na tym, że w ramach tego zadania uruchamiane jest kolejno kilka programów studenów dla zdefiniowanych przez prowadzącego etapów integracji.
@@ -154,7 +154,7 @@ Dzięki takiemu rozwiązaniu można uniknąć między innymi wyczerpania zasobó
 \label{environment_configuration}
 
 Dla każdego projektu należy zdefiniować środowisko na jakim uruchamiane mają być programy studentów.
-Jego konfiguracja odbywa się poprzez załączenie dla projektu odpowiednio zdefiniowanego pliku Dockerfile.
+Konfiguracja odbywa się poprzez załączenie dla projektu odpowiednio sformułowanego pliku Dockerfile.
 
 Przykład poprawnie zdefiniowanego środowiska dla systemu Linux z zainstalowaną Javą w wersji 8 został przedstawiony poniżej:
 
@@ -169,7 +169,7 @@ Przykład poprawnie zdefiniowanego środowiska dla systemu Linux z zainstalowan�
 \end{lstlisting}
 }
 
-Przykład poprawnie zdefiniowanego środowiska dla systemu linux i języka C wygląda następująco:
+Przykład poprawnie zdefiniowanego środowiska dla systemu Linux i języka C wygląda następująco:
 
 {\fontfamily{qcr}\selectfont
 \tiny
@@ -177,28 +177,29 @@ Przykład poprawnie zdefiniowanego środowiska dla systemu linux i języka C wyg
 
     FROM openjdk:8-alpine
 
-    CMD ["java", "-jar", "/home/app", "/home/input.txt", "/home/parameters.txt", "/home/output.txt"]
+    CMD ["gcc", "./home/app", "/home/input.txt", "/home/parameters.txt", "/home/output.txt"]
 
 \end{lstlisting}
 }
 
-Komenda FROM definiuje obraz jaki ma zostać użyty do stworzenia środowiska.
-CMD opisuję polecenie wykonania dla programu wraz z przyjmowanymi parametrami.
-Powyższe pliki są pełnoprawnymi plikami konfiguracyjnymi dla kontenerów Docker'wych.
-Dokładny opis tworzenia poprawnych plików Dockerfile można znaleźć w dokumentacji dla narzędzia Docker [].
+Komenda FROM definiuje obraz systemu jaki ma zostać użyty do stworzenia środowiska.
+CMD opisuje polecenie uruchomienia programu wraz z przyjmowanymi parametrami.
+Powyższe pliki są poprawnymi plikami konfiguracyjnymi dla kontenerów Docker'wych.
+Dokładny opis tworzenia prawidłowych i bardziej złożonych plików Dockerfile można znaleźć w dokumentacji dla narzędzia Docker \cite{docker-config}.
 
-Platforma akceptuje dowolny plik Dockerfile, w którym dla komendy wykoania przekazywane są 4 następujące parametry:
+Platforma akceptuje dowolny plik Dockerfile, który opiera komendę uruchomienia programu na czterech następujących ścieżkach:
 \begin{itemize}
-    \item "/home/app" - ścieżka do programu wewnątrz kontenera,
-    \item "/home/input.txt" - ścieżka do pliku wejściowego dla przypadku testowego wewnątrz kontenera,
-    \item "/home/parameters.txt" - ścieżka do parametrów wywołania programu dla przypadku testowego wewnątrz kontenera,
-    \item "/home/output.txt" - ścieżka do oczekiwanego pliku wyjściowego dla przypadku testowego wewnątrz kontenera.
+    \item \textit{/home/app} - ścieżka do programu studentów wewnątrz kontenera,
+    \item \textit{/home/input.txt} - ścieżka do pliku wejściowego dla przypadku testowego wewnątrz kontenera,
+    \item \textit{/home/parameters.txt} - ścieżka do parametrów wywołania programu dla przypadku testowego wewnątrz kontenera,
+    \item \textit{/home/output.txt} - ścieżka do oczekiwanego pliku wyjściowego dla przypadku testowego wewnątrz kontenera.
 \end{itemize}
 
-Podczas wykonywania przypadku testowego platforma kopiuje odpowiednie pliki pod wskazane ścieżki wewnątrz kontenera, stąd podane wyżej parametry powinny być niezmienne w ramach wszystkich Dockerfile.
+W trakcie wykonywania przypadku testowego platforma kopiuje odpowiednie pliki pod wskazane ścieżki wewnątrz kontenera, stąd podane wyżej parametry powinny być niezmienne w ramach wszystkich Dockerfile.
+Warto zaznaczyć, że omawiany plik konfiguracyjny nie jest walidowany przez platformę podczas załączania do projektu.
 
 
-\section {Uwierzytelnienie użytkowników}
+\section {Uwierzytelnianie użytkowników}
 \label{authorization}
 
 Uwierzytelnienie użytkowników odbywa się przy pomocy GitHub.
