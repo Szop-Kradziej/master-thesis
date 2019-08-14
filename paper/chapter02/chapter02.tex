@@ -10,19 +10,19 @@ Ogólny schemat platformy wraz z użytymi technologiami został przedstawiony na
 \end{figure}
 
 Platforma składa się z dwóch webowych interfejsów graficznych: interfejsu prowadzącego oraz studenta.
-Oba interfejsy zostały napisane w technologii ReactJS z użyciem MaterialUI.
+Oba interfejsy zostały napisane w technologii ReactJS z użyciem biblioteki MaterialUI.
 
-Moduł serwera został napisany w języku Kotlin z użyciem SpringBoot’a w wersji 2.0.
+Moduł serwera został napisany w języku Kotlin z wykorzystaniem SpringBoot’a w~wersji 2.0.
 
-Serwer przechowuje dane w formie rekordów w bazie danych oraz plików.
-Metadane, takie jak termin realizacji wskazanego etapu lub grupy, do których są przypisani studenci, są zapisywane w bazie PostgreSQL.
+Serwer przechowuje dane w dwóch formach: rekordów w bazie danych oraz plików.
+Metadane, takie jak termin realizacji wskazanego etapu lub grupy projektowe, do których są przypisani studenci, są zapisywane w bazie PostgreSQL.
 Schematy tabel i ich relacji zostały omówione w podrozdziale \ref{database}.
 Dane w postaci plików są przechowywane na dysku serwera w systemie plików Linux.
 W podrozdziale \ref{directories} opisano użyte struktury katalogów.
 
 Programy studentów są uruchamiane w kontenerach Dockerowych.
-Proces testowania aplikacji studentów został opisany w podrodziale \ref{run-and-test}.
-Kolejna sekcja przedstawia utworzenie nowego środowiska uruchomieniowego w postaci Dockerfile.
+Proces testowania aplikacji studentów został opisany w sekcji \ref{run-and-test}.
+Kolejny podrozdział omawia utworzenie nowego środowiska uruchomieniowego w postaci pliku konfiguracyjnego Dockerfile.
 
 Opis zastosowanej autoryzacji i autentykacji użytkowników można znaleźć w podrozdziale \ref{authorization}.
 
@@ -30,8 +30,8 @@ Przykład konfiguracji i uruchomienia platformy na dowolnym serwerze został om�
 
 Platformę można zintegrować z zewnętrznymi narzędziami.
 Przykładem takiej integracji może być repozytorium kodu oraz system CI (ang. Continious Integration).
-System CI (Travis) można skonfigurować w taki sposób, aby bezpośrednio po zaakceptowaniu PR (ang. Pull Request) do repozytorium kodu (GitLab) uruchamiany był job, który po poprawnym zbudowaniu programu automatycznie przesyłał go do platformy i uruchamiał.
-Przykład takiej integracji platformy z zewnętrznymi narzędziami został opisany w podrozdziale \ref{ci-integration}.
+System CI (Travis) można skonfigurować w taki sposób, aby bezpośrednio po zaakceptowaniu PR (ang. Pull Request) do repozytorium kodu (GitLab) uruchamiany był job, który po poprawnym zbudowaniu programu automatycznie przesyłał by go do platformy i uruchamiał.
+Przykład takiej integracji platformy z zewnętrznymi narzędziami został opisany w~podrozdziale \ref{ci-integration}.
 
 \section{Schemat bazy}
 \label{database}
@@ -43,122 +43,202 @@ Przykład takiej integracji platformy z zewnętrznymi narzędziami został opisa
     \label{fig:platform-db-schema}
 \end{figure}
 
-Schemat table i relacji bazodanowych, utworzony w ramach pracy, znajduje się na rysunku \ref{fig:platform-db-schema}.
-Do przechowywania metadanych wykorzystano siedem tabel.
-W przedstawionych strukturach przechowywane są informacje o:
+Schemat tabel i relacji bazodanowych, utworzony w ramach pracy, znajduje się na rysunku \ref{fig:platform-db-schema}.
+Do przechowywania metadanych wykorzystano osiem tabel.
+W przedstawionych strukturach zapisywane są informacje o:
 \begin{itemize}
     \item istniejących projektach,
     \item grupach w ramach projektów,
     \item studentach w ramach grup,
     \item etapach w ramach projektów,
-    \item integracjach w ramach projektów wraz z wykorzystywanymi do przeprowadzenia integracji etapami.
+    \item integracjach w ramach projektów wraz z wykorzystywanymi do przeprowadzenia integracji etapami,
+    \item tokenach użytkowników, uzyskanych w ramach procesu uwierzytelnienia.
 \end{itemize}
 
-Do przechowywania danych użyto relacyjnej bazy PostgreSQL.
-Pełne definicje tabel wraz z użytymi typami danych i więzami znajdują się w załączniku \ref{file:database-schema}.
+Do przechowywania danych użyto relacyjnej bazy PostgreSQL w wersji 12 beta 1.
+Pełne definicje tabel wraz z użytymi typami danych i więzami znajdują się w załączniku~\ref{file:database-schema}.
 
 
 \section{Schemat katalogów plików}
 \label{directories}
 
-Pełny schemat katalogów plików znajduje się na rysunku \ref{fig:platform-directories}.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 6cm]{chapter02/platform_main_dirs.png}
+    \caption{Główny schemat katalogów (źródło własne).}
+    \label{fig:platform-main-directories}
+\end{figure}
+
+Główny schemat katalogów plików znajduje się na rysunku \ref{fig:platform-main-directories}.
 Można wyróżnić na nim dwa podstawowe foldery: students oraz projects.
 Wewnątrz pierwszego z nich zapisywane są wszystkie dane i pliki związane z aktywnością studentów zarejestrowaną na platformie.
-Do zapamiętywanych informacji należą: raporty, linki do kodu, programy, logi z przebiegu aplikacji oraz wyniki przeprowadzonych testów akceptacyjnych.
+Do zapamiętywanych informacji należą: zamieszczane raporty, linki do kodu, programy oraz logi z przebiegu aplikacji i wyniki przeprowadzonych testów akceptacyjnych.
 Drugi folder zawiera definicje projektów wraz z etapami i integracjami oraz utworzone przez prowadzących przypadki testowe.
 
-Pliki i foldery, które nie występują pojedynczo w ramach katalogu zostały wyróżnione na schemacie.
-W miejscu zbiorczej nazwy nazwa katalogu i należy rozumieć docelową nazwę folderu.
-
-\vfill
+Na rysunkach \ref{fig:projects-directories} i \ref{fig:students-directories} został zamieszone odpowiednio schematy katalogów wewnątrz folderów projects oraz students.
+Dla obu schematów zostały wyróżnione pliki i foldery, które nie występują pojedynczo w ramach katalogów.
+W miejscu zbiorczej nazwy oznaczonej jako ${nazwa\_katalogu}_{i}$ należy rozumieć docelową nazwę folderu.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = 16cm, angle =90]{chapter02/directories.png}
-    \caption{Schemat katalogów plików (źródło własne).}
-    \label{fig:platform-directories}
+    \includegraphics[width = 13cm]{chapter02/projects_dirs.png}
+    \caption{Schemat katalogów i plików wewnątrz folderu projects (źródło własne).}
+    \label{fig:projects-directories}
 \end{figure}
 
-\vfill
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/students_dirs.png}
+    \caption{Schemat katalogów i plików wewnątrz folderu students (źródło własne).}
+    \label{fig:students-directories}
+\end{figure}
 
 \section{Uruchomianie i testowanie programów studentów}
 \label{run-and-test}
 
 Programy studentów są uruchamiane w kontenerach Dockerowych.
-Obraz środowiska jest ustalany dla zadanego projektu.
+Obraz środowiska jest ustalany dla zadanego projektu poprzez plik konfiguracyjny Dockerfile (patrz podrozdział \ref{environment_configuration}).
+
 Technologia Docker jest szeroko używana komercyjnie.
 Dzięki temu charakteryzuje się ona wysoką niezawodnością i stabilnością.
-Również biblioteki OpenSource ułatwiające uruchamianie kontenerów Dockerowych bezpośrednio z kodu Javowego są szeroko stosowana i dobrze przetestowane.
-Samo uruchamianie kontenerów, ich integracja oraz konfiguracja nowych środowiska, jest szybka i stosunkowo prosta.
+Również biblioteki OpenSource ułatwiające uruchamianie kontenerów Dockerowych bezpośrednio z kodu Javowego są szeroko stosowane i dobrze przetestowane.
+Samo uruchamianie kontenerów, ich integracja oraz konfiguracja nowych środowiska jest szybka i stosunkowo prosta.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 9cm]{chapter02/single_test_case.png}
-    \caption{Schemat sprawdzenia poprawności działania programu studenta (źródło własne).}
+    \includegraphics[width = 7cm]{chapter02/single_test_case.png}
+    \caption{Schemat wykonania pojedynczego przypadku testowego w ramach etapu (źródło własne).}
     \label{fig:single-test-case}
 \end{figure}
 
-Schemat sprawdzenia poprawności działania programów studentów został przedstawiony na rysunku \ref{fig:single-test-case}.
-Po uruchomieniu programu studenta na platformie, uruchamiane są wszystkie przypadki testowe dla zadanego etapu.
-Uruchomienie pojedynczego przypadku testowego sprowadza się do utworzenia nowego kontenera Dockerowego i podania mu jako volumenu ścieżki do programu studenta oraz ścieżki do pliku wejściowego.
-Program studenta jest uruchamiany dla zadanych danych wejściowych w kontenerze.
-Oczekuje się, że program studenta w wyniku swojego działania utworzy plik wyjściowy.
-Zawartość tego pliku zostanie porównana z zawartością oczekiwanego pliku wejściowego dla danego przypadku testowego. Jeśli dane są zgodne, przypadek testowy uważa się za spełniony.
+Poprzez naciśnięcie na platformie przycisku play dla wybranej aplikacji studenckiej uruchamiane są kolejno wszystkie zdefiniowane przypadki testowe dla zadanego etapu.
+Schemat wykonania pojedynczego przypadku testowego w ramach etapu dla programu studentów został przedstawiony na rysunku \ref{fig:single-test-case}.
+Uruchomienie pojedynczego przypadku testowego sprowadza się do utworzenia nowego kontenera Dockerowego i podania mu odpowiednich ścieżek do:
+\begin{itemize}
+    \item programu studenta, dla którego ma zostać uruchomiony dany przypadek testowy,
+    \item pliku definiującego dane wejściowe dla zadanego przypadku testowego (pliku wejściowego),
+    \item pliku definiującego parametry wejściowe dla programu (pliku z parametrami),
+    \item pliku wyjściowego, do którego zapisany zostanie rezultat wykonania danego przypadku testowego.
+\end{itemize}
+Zarówno utworzenie kontenera jak i załączenie odpowiednich ścieżek do plików jest wykonywane automatycznie przez platformę.
+
+W celu ustalenia poprawności działania aplikacji dla zadanego przypadku testowego platforma dokonuje porównania otrzymanego w wyniku przebiegu testu pliku wyjściowego ze zdefiniowanym w ramach przpadku testowego oczekiwanym plikiem wyjściowym.
+Jeśli obie dane są zgodne, działanie programu dla wykonywanego testu uważa się za prawidłowe.
+
+Platforma zlicza również liczbę zaliczonych testów w ramach etapu.
+Jeśli rezulataty dla wszystkich przypadków testowych są prawidłowe to program uznaje się za ukończony w ramach danego zadania.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 13cm]{chapter02/integration.png}
-    \caption{Schemat sprawdzenia poprawności procesu integracji programów studentów (źródło własne).}
+    \includegraphics[width = 12cm]{chapter02/integration.png}
+    \caption{Schemat wykonania pojedynczego przypadku testowego w ramach procesu integracji (źródło własne).}
     \label{fig:integration}
 \end{figure}
 
-Schemat przebiegu procesu integracji został przedstawiony na rysunku \ref{fig:integration}.
-Prowadzący definiuje kolejne etapy wykonywane w ramach procesu integracji.
-Przebieg procesu integracji jest bardzo podobny do wykonania pojedynczego przypadku testowego.
-Różnica polega na tym, że plik wyjściowy utworzony w wyniku uruchomienia poprzedniego etapu jest plikiem wejściowym dla kolejnego, następującego po nim.
-Plik wyjściowy dla ostatniego etapu jest porównywany ze zdefiniowanym oczekiwanym plikiem wyjściowym.
+Poprzez naciśnięcie na platformie przycisku play dla wybranego procesu integracji uruchamiane są kolejno wszystkie zdefiniowane dla niego przypadki testowe.
+Schemat wykonania pojedynczego przypadku testowego w ramach procesu integracji został przedstawiony na rysunku \ref{fig:integration}.
+Przebieg procesu integracji jest podobny do wykonania pojedynczego przypadku testowego.
+Różnica polega na tym, że w ramach tego zadania uruchamiane jest kolejno kilka programów studenów dla zdefiniowanych przez prowadzącego etapów integracji.
+Plik wyjściowy utworzony w wyniku uruchomienia etapu jest plikiem wejściowym dla kolejnego, następującego po nim.
+W celu oceny poprawności wykonania przypadku testowego oczekiwany plik wyjściowy zdefiniowany dla procesu integracji jest porównywany z plikiem wyjściowym dla ostatniego etapu w ramach badanego procesu integracji.
 
-TODO:
-- napisać o timeout wykonania = 5s
+Aby uniknąć nieprawidłowego i niekontrolowanego zachowania programów studentów został wprowadzony ograniczony czas ich wykonania.
+Ten okres dla każdego, pojedynczego przypadku testowego wynosi pięć sekund.
+Po tym czasie kontener uruchamiający przypadek testowy jest zatrzymywany i test kończy się automatycznie.
+Rezultat przerwanego testu uważa się za nieprawidłowy.
+Dzięki takiemu rozwiązaniu można uniknąć między innymi wyczerpania zasobów sprzętowych dla platformy w wyniku uruchamiania programów zawierających nieskończone pętle.
 
 \vfill
 
-\section {Konfiguracja uruchomieniowego środowiska Dockerowego}
+\section {Konfiguracja środowiska uruchomieniowego}
+\label{environment_configuration}
 
-TODO: Opis i przykład
-\\ Dodać przykłady w załączniku na JVM i C pod linuchem
+Dla każdego projektu należy zdefiniować środowisko na jakim uruchamiane mają być programy studentów.
+Jego konfiguracja odbywa się poprzez załączenie dla projektu odpowiednio zdefiniowanego pliku Dockerfile.
 
--opis CMD, którego należy się trzymać
+Przykład poprawnie zdefiniowanego środowiska dla systemu Linux z zainstalowaną Javą w wersji 8 został przedstawiony poniżej:
 
-- input.txt
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
 
-- parameters.txt
+    FROM openjdk:8-alpine
 
-- output.txt
+    CMD ["java", "-jar", "/home/app", "/home/input.txt", "/home/parameters.txt", "/home/output.txt"]
+
+\end{lstlisting}
+}
+
+Przykład poprawnie zdefiniowanego środowiska dla systemu linux i języka C wygląda następująco:
+
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
+
+    FROM openjdk:8-alpine
+
+    CMD ["java", "-jar", "/home/app", "/home/input.txt", "/home/parameters.txt", "/home/output.txt"]
+
+\end{lstlisting}
+}
+
+Komenda FROM definiuje obraz jaki ma zostać użyty do stworzenia środowiska.
+CMD opisuję polecenie wykonania dla programu wraz z przyjmowanymi parametrami.
+Powyższe pliki są pełnoprawnymi plikami konfiguracyjnymi dla kontenerów Docker'wych.
+Dokładny opis tworzenia poprawnych plików Dockerfile można znaleźć w dokumentacji dla narzędzia Docker [].
+
+Platforma akceptuje dowolny plik Dockerfile, w którym dla komendy wykoania przekazywane są 4 następujące parametry:
+\begin{itemize}
+    \item "/home/app" - ścieżka do programu wewnątrz kontenera,
+    \item "/home/input.txt" - ścieżka do pliku wejściowego dla przypadku testowego wewnątrz kontenera,
+    \item "/home/parameters.txt" - ścieżka do parametrów wywołania programu dla przypadku testowego wewnątrz kontenera,
+    \item "/home/output.txt" - ścieżka do oczekiwanego pliku wyjściowego dla przypadku testowego wewnątrz kontenera.
+\end{itemize}
+
+Podczas wykonywania przypadku testowego platforma kopiuje odpowiednie pliki pod wskazane ścieżki wewnątrz kontenera, stąd podane wyżej parametry powinny być niezmienne w ramach wszystkich Dockerfile.
+
 
 \section {Uwierzytelnienie użytkowników}
 \label{authorization}
 
-TODO: opis:
-1) proste uwierzytelnienie oparte o github
+Uwierzytelnienie użytkowników odbywa się przy pomocy GitHub.
 
-- sprawdzenie zgodności maila użytkownika
+Ten sposób został wybrany między innymi dla tego, że studenci dla przemiotu Podstawy Programowania mają za zadanie zamieszczać kod na GitLab.
+Do serwisu GitLab można uzyskać dostęp przez GitHub.
+GitHub jest najpopularniejszym repozytorium kodu i praktycznie każdy programista ma tan swoje konto.
+Takie uwierzytelnienie przy użyciu zweryfikowanego źródła jest za równo łatwiejsze jak i bezpieczniejsze dla użytkowników.
+Od strony platformy nie ma potrzeby przechowywania wrażliwych danych użytkowników jakim są hasła.
+Uwierzytelnienie odbywa się w następujących krokach:
+Użytkownik kilka przycisk zaloguj.
+Aplikacja webowa przekierowuje użytkownika na stronę GiHub, na której użytkownik loguje się i daje odpowiednie uprawnienia platformie.
+Aplikacja webowa otrzymuje tymczasowy token z GitHub opisujący profil zalogowanego użytkownika.
+Aplikacja webowa przekazuje token do Serwera.
+Serwer odpytuje GiHub o adresy mailowe przypisane w serwisie do użytkownika o zadanym tokenie.
+Serwer filtruje otrzymane maile i sprawdza czy któryś z nich jest zgodny z mailem użytkownika zapisanym w bazie.
+Jeśli jest informacja zwrotna jest odsyłana do użytkownika i przekierowywany jest on na odpowiedni dla jego uprawnień ekran (projetku w przypadku studenta lub wyboru podglądu albo zarządzania projektami w przypadku prowadzącego).
+Dodatkowo serwis w miarę potrzeby może sprawdzić czy dany użytkownik jest studentem czy prowadzącym.
+Poziom uprawnień dla użytkownika jest zapisywany i odczytywany z bazy z tabeli Users.
+Więcej informacji o procesie autoryzacji przez GitHub, implementacji i bezpieczeństwie takiego rozwiązania można znaleźć w dokumentacji [].
 
-- wymaga podpięcia maila uczelnianego do konta github
+W celu zastosowania takiego typu uwierzytelnienia wymagane jest aby identyfikatorem użytkownika na platformie był email.
+Z założenia email służący do uwierzytelnienia jest emailem uczelnianym.
+Wymagane jest więc od użytkowników dodanie emaila uczelnianego do ich konta githubowego.
 
-- link do opisu autoryzacji przez github i do endpointow []
-
-2)prosta autoryzacja oparta o nadanie praw administratora prowadzącym
-oraz ograniczenie praw wykonania studentom
-
-- zapis w bazie czy użytkownik jest studentem czy prowadzącym
-
-- sprawdzenie dla każdego z endpointów czy użytkownik ma prawo wykonać daną akcję
+Uwierzytelnienie jest potrzebne do dostępu do platformy.
+Wykonywanie zapytań na platformie wymaga uwierzytelnienia.
+Użytkownik, który nie ma uprawnień np do usunięcia projektu nie może wykonać takiej akcji.
+Prowadzący jest traktowany jako administrator i ma dostęp do wszystkich akcji studenta oraz definicji projektu i podglądu statystyk uruchomienia etapów oraz projektów.
 
 \section {Zestawienie platformy na serwerze}
 \label{run-platform}
 
 TODO: Opis i przykład
+
+- zmienne systemowe TEST\_PLATFORM\_CLIENT\_ID, TEST\_PLATFORM\_SECRET
+- secret - nie powinien być publicznie udostępniany
+- strona startowa i callback
+- nadawane przez github
+- strona do rejestracji aplikacji []
 
 \section {Przykład integracji platformy z narzędziem CI oraz repozytorium kodu}
 \label{ci-integration}
