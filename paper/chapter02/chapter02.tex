@@ -1,250 +1,319 @@
-\chapter{Platforma od strony technicznej}
-\label{chapter:platform-technical}
-Ogólny schemat platformy wraz z użytymi technologiami został przedstawiony na rysunku \ref{fig:platform-schema}.
+\chapter{Wstęp}
+\label{intro}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 13cm]{chapter02/platform_schema.png}
-    \caption{Schemat platformy i użytych technologii (źródło własne).}
-    \label{fig:platform-schema}
-\end{figure}
+W~ramach pracy rozpatrywany jest problem weryfikacji postępów prac studentów dla projektu informatycznego, gdzie mamy zdefiniowane kilka grup projektowych.
+Każdy z~zespołów, podczas trwania semestru, wykonuje taki sam rodzaj projektu.
+Studenci przybliżają się do jego ukończenia poprzez zaliczanie kolejnych etapów.
+Przykładem takiego przedmiotu są między innymi ”Podstawy Programowania”, prowadzone na wydziale Elektroniki i Technik Informacyjnych.
 
-Platforma składa się z dwóch webowych interfejsów graficznych: interfejsu prowadzącego oraz studenta.
-Oba interfejsy zostały napisane w technologii ReactJS z użyciem biblioteki MaterialUI.
+W pierwszym podrozdziale omówiono potrzebę oraz korzyści płynące z realizowania projektów grupowych w ramach programu studiów. 
+Przedstawiony również został kierunek, w jakim będą zmierzać przedmioty projektowe w myśl reformy edukacji z roku 2018.
 
-Moduł serwera został napisany w języku Kotlin z wykorzystaniem SpringBoot’a w~wersji 2.0.
+Kolejny podrozdział opisuje aktualny proces weryfikacji pracy studentów dla rozpatrywanych projektów grupowych.
+Przybliżone są w nim problemy, na jakie napotykają prowadzący oraz studenci uczestniczący w tego typu przedmiocie.
 
-Serwer przechowuje dane w dwóch formach: rekordów w bazie danych oraz plików.
-Metadane, takie jak termin realizacji wskazanego etapu lub grupy projektowe, do których są przypisani studenci, są zapisywane w bazie PostgreSQL.
-Schematy tabel i ich relacji zostały omówione w podrozdziale \ref{database}.
-Dane w postaci plików są przechowywane na dysku serwera w systemie plików Linux.
-W podrozdziale \ref{directories} opisano użyte struktury katalogów.
+W podrozdziale \ref{programs-testing} omówiono potrzebę nauki umiejętności testowania aplikacji przez studentów studiów informatycznych.
+Przedstawiono także podstawowe rodzaje metod testowania: testowanie białej i czarnej skrzynki, wraz z wadami oraz zaletami tych podejść.
 
-Programy studentów są uruchamiane w kontenerach Dockerowych.
-Proces testowania aplikacji studentów został opisany w sekcji \ref{run-and-test}.
-Kolejny podrozdział omawia utworzenie nowego środowiska uruchomieniowego w postaci pliku konfiguracyjnego Dockerfile.
+Podrozdział \ref{tools} zawiera przegląd dostępnych, istniejących narzędzi wspomagających weryfikację umiejętności programistycznych użytkowników oraz ich zastosowanie w branży informatycznej.
 
-Opis zastosowanej autoryzacji i autentykacji użytkowników można znaleźć w podrozdziale \ref{authorization}.
-
-Przykład konfiguracji i uruchomienia platformy na dowolnym serwerze został omówiony w ramach sekcji \ref{run-platform}.
-
-Platformę można zintegrować z zewnętrznymi narzędziami.
-Przykładem takiej integracji może być repozytorium kodu oraz system CI (ang. Continious Integration).
-System CI (Travis) można skonfigurować w taki sposób, aby bezpośrednio po zaakceptowaniu PR (ang. Pull Request) do repozytorium kodu (GitLab) uruchamiany był job, który po poprawnym zbudowaniu programu automatycznie przesyłał by go do platformy i uruchamiał.
-Przykład takiej integracji platformy z zewnętrznymi narzędziami został opisany w~podrozdziale \ref{ci-integration}.
-
-\section{Schemat bazy}
-\label{database}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 13cm]{chapter02/db_schema.png}
-    \caption{Schemat bazy danych (źródło własne).}
-    \label{fig:platform-db-schema}
-\end{figure}
-
-Schemat tabel i relacji bazodanowych, utworzony w ramach pracy, znajduje się na rysunku \ref{fig:platform-db-schema}.
-Do przechowywania metadanych wykorzystano osiem tabel.
-W przedstawionych strukturach zapisywane są informacje o:
-\begin{itemize}
-    \item istniejących projektach,
-    \item grupach w ramach projektów,
-    \item studentach w ramach grup,
-    \item etapach w ramach projektów,
-    \item integracjach w ramach projektów wraz z wykorzystywanymi do przeprowadzenia integracji etapami,
-    \item tokenach użytkowników, uzyskanych w ramach procesu uwierzytelnienia.
-\end{itemize}
-
-Do przechowywania danych użyto relacyjnej bazy PostgreSQL w wersji 12 beta 1.
-Pełne definicje tabel wraz z użytymi typami danych i więzami znajdują się w załączniku~\ref{file:database-schema}.
-
-
-\section{Schemat katalogów plików}
-\label{directories}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 6cm]{chapter02/platform_main_dirs.png}
-    \caption{Główny schemat katalogów (źródło własne).}
-    \label{fig:platform-main-directories}
-\end{figure}
-
-Główny schemat katalogów plików znajduje się na rysunku \ref{fig:platform-main-directories}.
-Można wyróżnić na nim dwa podstawowe foldery: \textit{students} oraz \textit{projects}.
-Wewnątrz pierwszego z nich zapisywane są wszystkie dane i pliki związane z aktywnością studentów zarejestrowaną na platformie.
-Do zapamiętywanych informacji należą: zamieszczane raporty, linki do kodu, programy oraz logi z przebiegu aplikacji i wyniki przeprowadzonych testów akceptacyjnych.
-Drugi folder zawiera definicje projektów wraz z etapami i integracjami oraz utworzone przez prowadzących przypadki testowe.
-
-Na rysunkach \ref{fig:projects-directories} i \ref{fig:students-directories} został zamieszone odpowiednio schematy katalogów wewnątrz folderów \textit{projects} oraz \textit{students}.
-Dla obu schematów zostały wyróżnione pliki i foldery, które nie występują pojedynczo w ramach katalogów.
-W miejscu zbiorczej nazwy oznaczonej jako ${nazwa\_katalogu}_{i}$ należy rozumieć docelową nazwę folderu.
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width = 13cm]{chapter02/projects_dirs.png}
-    \caption{Schemat katalogów i plików wewnątrz folderu projects (źródło własne).}
-    \label{fig:projects-directories}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width = 13cm]{chapter02/students_dirs.png}
-    \caption{Schemat katalogów i plików wewnątrz folderu students (źródło własne).}
-    \label{fig:students-directories}
-\end{figure}
-
-\section{Uruchomianie i testowanie programów studentów}
-\label{run-and-test}
-
-Programy studentów są uruchamiane w kontenerach Dockerowych.
-Obraz środowiska jest ustalany dla zadanego projektu poprzez plik konfiguracyjny Dockerfile (patrz podrozdział \ref{environment_configuration}).
-
-Technologia Docker jest szeroko używana komercyjnie.
-Dzięki temu charakteryzuje się ona wysoką niezawodnością i stabilnością.
-Również biblioteki OpenSource ułatwiające uruchamianie kontenerów Dockerowych bezpośrednio z kodu Javowego są szeroko stosowane i dobrze przetestowane.
-Samo uruchamianie kontenerów, ich integracja oraz konfiguracja nowych środowiska jest szybka i stosunkowo prosta.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 7cm]{chapter02/single_test_case.png}
-    \caption{Schemat wykonania pojedynczego przypadku testowego w ramach etapu (źródło własne).}
-    \label{fig:single-test-case}
-\end{figure}
-
-Poprzez naciśnięcie na platformie przycisku \textit{play} dla wybranej aplikacji studenckiej uruchamiane są kolejno wszystkie zdefiniowane przypadki testowe dla zadanego etapu.
-Schemat wykonania pojedynczego przypadku testowego w ramach etapu dla programu studentów został przedstawiony na rysunku \ref{fig:single-test-case}.
-Uruchomienie pojedynczego przypadku testowego sprowadza się do utworzenia nowego kontenera Dockerowego i podania mu odpowiednich ścieżek do:
-\begin{itemize}
-    \item programu studenta, dla którego ma zostać uruchomiony dany przypadek testowy,
-    \item pliku definiującego dane wejściowe dla zadanego przypadku testowego (pliku wejściowego),
-    \item pliku definiującego parametry wejściowe dla programu (pliku z parametrami),
-    \item pliku wyjściowego, do którego zapisany zostanie rezultat wykonania danego przypadku testowego.
-\end{itemize}
-Zarówno utworzenie kontenera jak i załączenie odpowiednich ścieżek do plików jest wykonywane automatycznie przez platformę.
-
-W celu ustalenia poprawności działania aplikacji dla zadanego przypadku testowego platforma dokonuje porównania otrzymanego w wyniku przebiegu testu pliku wyjściowego ze zdefiniowanym w ramach przpadku testowego oczekiwanym plikiem wyjściowym.
-Jeśli obie dane są zgodne, działanie programu dla wykonywanego testu uważa się za prawidłowe.
-
-Platforma zlicza również liczbę zaliczonych testów w ramach etapu.
-Jeśli rezulataty dla wszystkich przypadków testowych są prawidłowe to program uznaje się za ukończony w ramach danego zadania.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 12cm]{chapter02/integration.png}
-    \caption{Schemat wykonania pojedynczego przypadku testowego w ramach procesu integracji (źródło własne).}
-    \label{fig:integration}
-\end{figure}
-
-Poprzez naciśnięcie na platformie przycisku \textit{play} dla wybranego procesu integracji uruchamiane są kolejno wszystkie zdefiniowane dla niego przypadki testowe.
-Schemat wykonania pojedynczego przypadku testowego w ramach procesu integracji został przedstawiony na rysunku \ref{fig:integration}.
-Przebieg procesu integracji jest podobny do wykonania pojedynczego przypadku testowego.
-Różnica polega na tym, że w ramach tego zadania uruchamiane jest kolejno kilka programów studenów dla zdefiniowanych przez prowadzącego etapów integracji.
-Plik wyjściowy utworzony w wyniku uruchomienia etapu jest plikiem wejściowym dla kolejnego, następującego po nim.
-W celu oceny poprawności wykonania przypadku testowego oczekiwany plik wyjściowy zdefiniowany dla procesu integracji jest porównywany z plikiem wyjściowym dla ostatniego etapu w ramach badanego procesu integracji.
-
-Aby uniknąć nieprawidłowego i niekontrolowanego zachowania programów studentów został wprowadzony ograniczony czas ich wykonania.
-Ten okres dla każdego, pojedynczego przypadku testowego wynosi pięć sekund.
-Po tym czasie kontener uruchamiający przypadek testowy jest zatrzymywany i test kończy się automatycznie.
-Rezultat przerwanego testu uważa się za nieprawidłowy.
-Dzięki takiemu rozwiązaniu można uniknąć między innymi wyczerpania zasobów sprzętowych dla platformy w wyniku uruchamiania programów zawierających nieskończone pętle.
+Ogólne założenia dotyczące funkcjonalności platformy wraz z uzasadnieniem ich stosowności zostały omówione w rozdziale \ref{requirements}.
 
 \vfill
 
-\section {Konfiguracja środowiska uruchomieniowego}
-\label{environment_configuration}
+\section{Projekty grupowe}
 
-Dla każdego projektu należy zdefiniować środowisko na jakim uruchamiane mają być programy studentów.
-Konfiguracja odbywa się poprzez załączenie dla projektu odpowiednio sformułowanego pliku Dockerfile.
+Prowadzenie projektów grupowych niesie ze sobą wiele korzyści.
+Na podstawie obserwacji obecnego rynku IT (ang. Information Technology) można stwierdzić, że większość komercyjnych projektów to projekty zespołowe.
+Uczestnicząc w~projekcie grupowym w~ramach zajęć, student przystosowuje się do warunków, z~jakimi zetknie się w~swojej pierwszej pracy.
 
-Przykład poprawnie zdefiniowanego środowiska dla systemu Linux z zainstalowaną Javą w wersji 8 został przedstawiony poniżej:
+Projekt zespołowy pozwala na naukę pracy w grupie.
+Wymusza na studentach komunikację zarówno z członkami zespołu, jak i z prowadzącym.
+Kształtuje umiejętność analizy, właściwego podziału zadań oraz estymacji czasu ich wykonania.
+Studenci uczą się również odpowiedzialności nie tylko za swoją pracę, ale również za efekty całego zespołu.
+Niejednokrotnie biorą też udział w rozwiązywaniu konfliktów w grupie.
+Wszystkie powyżej wymienione kompetencje są istotne podczas pracy zawodowej.
 
-{\fontfamily{qcr}\selectfont
-\tiny
-\begin{lstlisting}
 
-    FROM openjdk:8-alpine
+Umiejętność pracy w grupie jest bardzo pożądana przez pracodawców.
+W ramach pracy \cite{soft-skills} zgrupowano i poddano ocenie miękkie umiejętności, jakimi powinni posługiwać się pracownicy branży IT.
+Badania zostały przeprowadzone na podstawie analizy wymagań zawartych w 650 ofertach pracy z uwzględnieniem różnych lokalizacji.
+Wyróżniono cztery kategorie stanowisk: analityk systemowy, projektant oprogramowania, programista oraz tester.
+Dla każdego ze stanowisk najczęściej wymaganą cechą jest komunikatywność.
+Praca w grupie jest kolejną wskazywaną miękką umiejętnością.
+Jest ona ceniona wyżej niż samodzielność w wykonywaniu zadań.
+Zestawienie pożądanych umiejętności miękkich, jakimi powinni posługiwać się programiści, uzyskanych w ramach pracy F.~Ahmed, L. F. Capretz, S. Bouktif i P. Campbell, zostało przedstawione na rysunku \ref{fig:soft-skills}.
 
-    CMD ["java", "-jar", "/home/app", "/home/input.txt", "/home/parameters.txt", "/home/output.txt"]
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/soft-skills.png}
+    \caption{Pożądane umiejętności miękkie, jakimi powinni posługiwać się programiści (źródło \cite{soft-skills}).}
+    \label{fig:soft-skills}
+\end{figure}
 
-\end{lstlisting}
-}
+Również wśród czterech wartości będących filarami metodyki Agile, zawartymi w manifeście, dwie z nich odnoszą się bezpośrednio do komunikacji.
+W myśl założeń zwinnego podejścia do wytwarzania oprogramowania przedkłada się ludzi i interakcje ponad narzędzia i procesy oraz współpracę z klientem ponad negocjacje umów \cite{agile-manifesto}.
+Umiejętność komunikacji można szlifować zarówno przez wspólną pracę w ramach zespołu, jak i dialog z prowadzącym.
 
-Przykład poprawnie zdefiniowanego środowiska dla systemu Linux i języka C wygląda następująco:
+Korzyści z projektów grupowych nie odnoszą się tylko do polepszenia umiejętności miękkich uczestników projektu.
+Z założenia grupę projektową tworzą różne osoby, z których każda ma inne, własne zaplecze wiedzy technicznej.
+Poprzez pracę w grupie studenci mają możliwość wymienienia się swoimi doświadczeniami i wiedzą.
+Co więcej, mogą spojrzeć na ten sam, zadany problem z różnych perspektyw i dojść do odrębnych wniosków.
+Może to znacznie skrócić czas wykonania zadania i wyeliminować błędy na wczesnym etapie. 
+Wymiana doświadczeń i dyskusje na temat różnych podejść do zadanego problemu mogą również rzutować na lepsze podejście do rozwiązywania zadań w~przyszłości.
 
-{\fontfamily{qcr}\selectfont
-\tiny
-\begin{lstlisting}
+W myśl ustawy ”Prawo o szkolnictwie wyższym i nauce” z dnia 20 lipca 2018 \cite{higher-education-law}, od semestru zima 2019, w ramach programu studiów będzie kładziony nacisk na prowadzenie projektów grupowych.
+Jest to podyktowane dążeniem do zapewnienia wysokiej jakości kształcenia oraz właściwego przygotowania do wykonywania zawodu.
 
-    FROM openjdk:8-alpine
+\vfill
 
-    CMD ["gcc", "./home/app", "/home/input.txt", "/home/parameters.txt", "/home/output.txt"]
+\section{Proces weryfikacji pracy studentów}
 
-\end{lstlisting}
-}
+Obecnie proces weryfikacji pracy studentów nad projektem zespołowym podczas semestru jest czasochłonny.
+Każdy z prowadzących ma pod swoją opieką kilka (w przypadku przedmiotu "Podstawy Programowania" najczęściej od pięciu do siedmiu) grup projektowych.
+W skład każdej grupy wchodzi kilku studentów.
+Projekt jest podzielony na etapy. 
+W przypadku przedmiotu podstawy programowania odbyło się sześć faz, każda zakończona przesłaniem sprawozdania.
 
-Komenda FROM definiuje obraz systemu jaki ma zostać użyty do stworzenia środowiska.
-CMD opisuje polecenie uruchomienia programu wraz z przyjmowanymi parametrami.
-Powyższe pliki są poprawnymi plikami konfiguracyjnymi dla kontenerów Docker'wych.
-Dokładny opis tworzenia prawidłowych i bardziej złożonych plików Dockerfile można znaleźć w dokumentacji dla narzędzia Docker \cite{docker-config}.
+Poszczególne zadania wykonywane przez studentów są oceniane indywidualnie, pomimo powtarzalności problemów, jakie mają do rozwiązania zespoły.
+W celu oceny pracy w ramach jednego etapu prowadzący przegląda kod zamieszczony przez studentów w systemie kontroli wersji, ocenia sprawozdanie oraz przeprowadza spotkanie ze studentami.
+Przy ocenie postępów prowadzący bazuje na prezentacji programu wykonanej przez studentów lub na własnych doświadczeniach z interakcji z programem.
 
-Platforma akceptuje dowolny plik Dockerfile, który opiera komendę uruchomienia programu na czterech następujących ścieżkach:
+Przedstawienie prowadzącemu wyników cząstkowych oraz końcowych przez studentów może okazać się kłopotliwe.
+Manualne uruchamianie programów na prywatnych maszynach studentów jest czasochłonne.
+Dodatkowo podczas przedstawiania wyników, mogą zaistnieć komplikacje związane między innymi z niepoprawną konfiguracją środowiska uruchomieniowego lub niewłaściwym doborem przypadków testowych.
+W sytuacji, gdy zadaniem studentów jest zaprezentowanie interakcji pomiędzy stworzonymi przez nich modułami programów, prawdopodobieństwo wystąpienia powyższych błędów wzrasta.
+Prowadzący, decydując się na samodzielne uruchomienie programów studentów, w~celu ich oceny, jest również narażony na powyższe sytuacje.
+W przypadku niedokładnej dokumentacji dotyczącej pracy studentów, jego zadanie może zostać znacznie utrudnione.
+Taka sytuacja może doprowadzić do uzyskania niskiego wyniku przez studentów mimo niewielkich błędów w implementacji lub błędnie zrozumianych założeń.
+Ze względu na indywidualne podejście do każdego z zespołów i etapów proces weryfikacji jest czasochłonny.
+
+Studenci otrzymują informację dotyczącą oceny danego etapu, po jego zakończeniu.
+W trakcie zadania oczywiście mogą doprecyzować szczegóły z prowadzącym.
+Zdarza się jednak, że pomimo dodatkowego uszczegółowienia, niektóre założenia są przez studentów zrozumiane w inny sposób niż oczekiwałby tego prowadzący.
+W takim przypadku studenci podczas trwania etapu mogą napisać program zgodny z błędnie rozumianymi założeniami i dopiero po złożeniu kompletnego sprawozdania z etapu dowiedzieć się o niepoprawnej interpretacji zadania.
+Dla obecnego procesu prowadzenia projektu informacja zwrotna dotycząca postępów pracy dociera do studentów stosunkowo późno.
+
+Podczas prowadzenia projektu prowadzący napotykają również na problem braku systematycznej pracy studentów podczas semestru.
+Może on wynikać częściowo z nie posiadania oficjalnej wiedzy o aktualnych postępach innych grup.
+Podgląd statusu prac pozostałych zespołów mógłby być dodatkową motywacją dla studentów do podjęcia działań i wykonania danego etapu.
+
+Proces prowadzenia projektów grupowych jest aktualnie modernizowany.
+Dla przedmiotu ”Podstawy Programowania” wśród wprowadzanych usprawnień można wyróżnić między innymi zobligowanie studentów do zamieszczania kodu swoich aplikacji w systemie kontroli wersji GitLab.
+Jest to istotna modernizacja pozwalająca na lepsze zarządzanie kodem programów i jego archiwizację.
+Jednak studenci (zwłaszcza pierwszych lat studiów) nie potrafią w pełni wykorzystać zalet tego narzędzia i poprawnie z niego korzystać.
+Często nie zamieszczają kodu w postaci małych czytelnych commit'ów.
+Zamiast tego zamieszczają całe archiwa z nowymi wersjami oprogramowania.
+Dokumentacja programów również nie jest zawsze pełna.
+Usprawnienie w postaci systemu kontroli wersji ułatwia dostęp do kodu programów studentów i pozwala przeglądać go na przystosowanym do tego interfejsie.
+Nie eliminuje to jednak czasochłonnego, indywidualnego podejścia do oceny każdej z grup i etapu.
+
+
+\section{Testowanie aplikacji}
+\label{programs-testing}
+
+Dzięki wprowadzeniu systemu kontroli wersji można uzyskać szereg statystyk dotyczących pracy studentów.
+Nie są to jednak pełne informacje, które mogłyby interesować prowadzącego.
+Sam kod zamieszczany w systemie, nie jest wystarczający do oceny etapu.
+Co więcej, jego samodzielna analiza nie poprawiłaby, a być może nawet pogorszyła, czasochłonność weryfikacji wyników cząstkowych.
+Ważnym elementem oceny poszczególnych etapów jest ocena poprawności działania uruchomionych programów dla zadanych danych wejściowych.
+
+Można byłoby oczekiwać, aby studenci sami dodawaliby przypadki testowe dla swoich aplikacji.
+Podczas prezentacji do ich zadania należałoby udowodnić, że kończą się one pozytywnym wynikiem.
+Niestety ciężko ocenić trafność napisanych przez studentów przypadków testowych.
+Podjęcie się takiego zadania przez prowadzącego wymagałoby od niego jeszcze bardziej indywidualnego podejścia do weryfikacji pracy grupy niż obecnie, w przypadku sprawdzenia wyniku działania samego programu.
+Jest to związane między innymi z tym, że część napisanych przez studentów testów mogłaby się powtarzać.
+Aby poprawnie ocenić jakość przypadków testowych należałoby rozważyć  między innymi priorytetyzajcę testowanych funkcjonalności, użyte narzędzia i poprawność asercji.
+Samo zadanie napisania testów dla tworzonego programu mogłoby się okazać wyjątkowo ciężkie do zrealizowania w przypadku studentów, którzy są dopiero na początku swojej kariery programistycznej.
+Takie osoby dopiero uczą się struktur języka i bardzo często nie mają wystarczająco dużo wiedzy, aby napisać poprawnie testy \cite{tests-and-begginers}.
+
+Na podstawie wyników ankiety portalu Stack Overflow z roku 2019 widać, że umiejętność testowania kodu jest bardzo istotna w przyszłej pracy \cite{stack-overflow-survey}.
+W ramach badania zapytano ankietowanych, czy w ich miejscach pracy używa się testów jednostkowych podczas wytwarzania oprogramowania.
+Na rysunku \ref{fig:unit-tests-use} przedstawiono wyniki ankiety.
+W~przybliżeniu jeden na trzech ankietowanych nie używa testów najniższego poziomu w swoim procesie, ale zaledwie 4.4\% jest zadowolna z takiego podejścia.
+95.6\% osób testuje jednostkowo swoje aplikacje lub uważa, że ten rodzaj testów byłby przydatny w procesie wytwarzania oprogramowania. 
+Warty uwagi jest również rezultat otrzymany w powiązaniu używania testów jednostkowych z poziomem satysfakcji z pracy ankietowanych, który został przedstawiony na rysunku \ref{fig:unit-tests-satisfaction}.
+Osoby używające tego rodzaju testów są bardziej zadowolone ze swojej pracy.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/unit-tests-use.png}
+    \caption{Używanie testów jednostkowych w procesie wytwarzania oprogramowania (źródło: \cite{stack-overflow-survey}).}
+    \label{fig:unit-tests-use}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/unit-tests-satisfaction.png}
+    \caption{Powiązanie używania testów jednostkowych i zadowolenia z pracy (źródło: \cite{stack-overflow-survey}).}
+    \label{fig:unit-tests-satisfaction}
+\end{figure}
+
+Umiejętność testowania kodu jest często sprawdzana podczas procesu rekrutacyjnego.
+Zarówno w przypadku, gdy kandydat ma za zadanie zaimplementować małe zdanie algorytmiczne, jak i napisać działającą aplikację.
+W obu przypadkach musi on udowodnić poprawność swojego rozwiązania poprzez testy. 
+Niezależnie czy poprzez analizę słowną przebiegu działania programu, czy przez zaimplementowane testy wewnątrz aplikacji.
+W~pozycji pomagającej przygotować się do procesu rekrutacji ”Cracking the coding interview” \cite{cracking-the-coding-interview} testowaniu został poświęcony odrębny rozdział.
+
+Programiści ćwiczący umiejętność testowania aplikacji potrafią lepiej wychwytywać potencjalne błędy na wczesnym etapie tworzenia oprogramowania \cite{testing-better-error-catch}.
+W przypadku małych i średnich firm wytwarzających oprogramowanie z wykorzystaniem podejścia Agile, często nie ma oddzielnych zespołów testerów.
+W takich software house'ach zadaniem inżyniera oprogramowanie jest nie tylko napisanie działającej funkcjonalność, ale również samodzielne przetestowanie jej, poprzez testy jednostkowe i integracyjne.
+W dużych korporacjach wykorzystujących metodyki Agile umiejętność testowania jest również istotna ze względu na ścisłą współpracę między interdyscyplinarnymi członkami zespołu.
+
+Wśród wartości fundamentalnych dla podejścia XP (ang. Extreme Programming) do wytwarzania oprogramowania jest wymieniona informacja zwrotna (ang. feedback) \cite{extreem-programming}.
+Opisywana jest ona jako szybkość oceny poprawności dodawanego kodu i jego interakcji z innymi częściami systemu oraz oszacowania regresji.
+Szybką informację zwrotną dotyczącą dodawanej funkcjonalności można osiągnąć między innymi przez utrzymywanie poprawnych przypadków testowych.
+
+Jedną z kategorii podziału testów, jest klasyfikacja ze względu na wiedzę na temat testowanego programu.
+W tym przypadku wyróżniamy dwie podstawowe kategorie:
 \begin{itemize}
-    \item \textit{/home/app} - ścieżka do programu studentów wewnątrz kontenera,
-    \item \textit{/home/input.txt} - ścieżka do pliku wejściowego dla przypadku testowego wewnątrz kontenera,
-    \item \textit{/home/parameters.txt} - ścieżka do parametrów wywołania programu dla przypadku testowego wewnątrz kontenera,
-    \item \textit{/home/output.txt} - ścieżka do oczekiwanego pliku wyjściowego dla przypadku testowego wewnątrz kontenera.
+\item testy czarnej skrzynki (ang. black box testing),
+\item testy białej skrzynki (ang. white box testing).
 \end{itemize}
 
-W trakcie wykonywania przypadku testowego platforma kopiuje odpowiednie pliki pod wskazane ścieżki wewnątrz kontenera, stąd podane wyżej parametry powinny być niezmienne w ramach wszystkich Dockerfile.
-Warto zaznaczyć, że omawiany plik konfiguracyjny nie jest walidowany przez platformę podczas załączania do projektu.
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/black-box.png}
+    \caption{Schemat testu czarnej skrzynki (źródło własne).}
+    \label{fig:black-box}
+\end{figure}
+
+Na rysunku \ref{fig:black-box} został przedstawiony ogólny schemat procesu dla black box testów.
+Dla tego przypadku fragment kodu lub cały testowany program nie jest znany dla testera.
+Black box testing może odnosić się zarówno do testów funkcjonalnych, jak i niefunkcjonalnych.
+Najczęściej jednak dotyczy on pierwszego rodzaju.
+Na rysunku \ref{fig:tests-levels} zostały przedstawione poziomy testów.
+Testy czarnej skrzynki mają zastosowanie na następujących poziomach:
+\begin{itemize}
+\item testów integracyjnych,
+\item testów systemowych,
+\item testów akceptacyjnych.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 7cm]{chapter02/tests_levels.jpg}
+    \caption{Poziomy testów (źródło: \cite{tests-levels}).}
+    \label{fig:tests-levels}
+\end{figure}
+
+Ten rodzaj testów jest wykonywany z perspektywy użytkownika.
+Pozwala to między innymi na wskazanie rozbieżności pomiędzy wytworzonym kodem a założoną specyfikacją zadania w tym:
+\begin {itemize}
+\item niepoprawnych lub brakujących funkcjonalności,
+\item błędów w interfejsie,
+\item błędów w strukturach danych,
+\item błędów zachowania programów oraz wydajnościowych.
+\end{itemize}
+Zaletą tego rodzaju podejścia jest fakt, że osoba testująca nie musi znać kodu oraz języka programowania, w którym została napisana aplikacja.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/white-box.png}
+    \caption{Schemat testu białej skrzynki (źródło własne).}
+    \label{fig:white-box}
+\end{figure}
+
+Drugim rodzajem testowania programów jest metoda białej skrzynki (ang. white box testing).
+Schemat procesu tego typu został przedstawiony na rysunku \ref{fig:white-box}.
+W tym przypadku tester zna pełną implementację badanej funkcjonalności.
+Jego zadaniem jest dobranie odpowiednich wartości wejściowych dla sprawdzanej funkcjonalności i uzyskanie założonych wartości wyjściowych, w ramach testowanego kodu.
+Do realizacji tego zadania niezbędne są umiejętności programistyczne i wiedza na temat implementacji.
+Testy białej skrzynki mają zastosowanie na następujących poziomach:
+\begin{itemize}
+\item testów jednostkowych,
+\item testów integracyjnych,
+\item testów systemowych.
+\end{itemize}
+Warto jednak zaznaczyć, że ten typ testów używany jest głównie w testach jednostkowych.
+
+Dzięki takiemu podejściu programiści mogą uzyskać bardzo szybką informację zwrotną.
+Pozwala ono także na szczegółowe przetestowanie aplikacji.
+Jednak poprawne napisanie testów jednostkowych jest bardziej złożone i wymaga dobrych umiejętności programistycznych.
+Z założenia testów jednostkowych jest więcej niż integracyjnych czy akceptacyjnych i dla częstych zmian implementacji (co jest bardzo prawdopodobne na początkowym etapie nauki programowania) utrzymanie white box testów może okazać się bardzo kłopotliwe, a nawet wręcz niemożliwe dla studentów.
+Warto też zauważyć, że testy jednostkowe są ściśle związane z implementacją, a więc z językiem programowania, w którym został napisany program.
+W celu dodatnia testów najniższego poziomu należałoby posłużyć się dodatkową biblioteką, która byłaby wspomagana przez dany język.
+Poznanie zewnętrznych bibliotek i zaznajamianie się z ich interfejsami na początkowej drodze nauki programowania mogłoby przynieść negatywne rezultaty.
+Studenci, zamiast skupić się na zrozumieniu podstaw programowania, zmuszeni byliby do poznania bibliotek, dla których nie rozumieliby w pełni słuszności zastosowania.
+
+W literaturze można znaleźć wiele prac poświęconych testowaniu programów i wprowadzaniu nauki umiejętności testowania w ramach programu studiów.
+Kładziony jest coraz większy nacisk na tę umiejętność \cite{tests-important}.
+Wśród zamieszczonych opinii powszechną jest, że testowanie aplikacji jest ważne i potrzebne od samego początku studiów \cite{test-from-scratch}.
+Wśród propozycji można znaleźć pomysł nauki pisania programów w metodyce TDD (ang. Test Driven Development) już od pierwszego semestru studiów \cite{tdd-on-start}.
+Wymagałoby to jednak wysokich kwalifikacji prowadzących co do znajomości metodyki i jej praktyki.
+Warto zaznaczyć, że TDD opiera się na pisaniu testów jednostkowych, co, jak zostało wspomniane wcześniej, wymaga wiedzy na temat programowania.
+
+Jak zostało napisane wcześniej, studentom rozpoczynającym naukę programowania bardzo ciężko byłoby napisać odpowiednie testy do swoich programów.
+Praktycznie niemożliwe jest też wprowadzenie na początku studiów całego przedmiotu poświęconego nauce pisania testów, ze względu na przepełniony obecnie program studiów \cite{overflow-studies-program}.
+Warto jednak pokazywać studentom zalety testowania aplikacji.
+W przypadku jednakowych, wieloetapowych projektów prowadzący mógłby przygotować szereg przypadków testowych, które następnie zostałyby użyte do sprawdzenia poprawności programów studentów.
+Idąc krok dalej, mógłby udostępnić je wcześniej studentom, aby mieli możliwość samodzielnie, lokalnie przetestować swój kod, przed ostateczną prezentacją prowadzącemu.
+Taki proces sprawdzania programów studentów dla zadanych przypadków testowych można byłoby zautomatyzować tak, aby studenci mogli w prosty sposób wielokrotnie uruchamiać te same testy dla nowych wariantów swoich programów.
+Opisany sposób testowania leży na poziomie testów akceptacyjnych w formie testów czarnej skrzynki.
+
+Automatyzacja uruchamiania testów pozwoliłaby prowadzącemu na zmniejszenie czasochłonności oceny cząstkowych prac studentów.
+Prowadzący mógłby oczekiwać, że programy, które pomyślnie przejdą przez testy akceptacyjne, są zaimplementowane prawidłowo.
+Pozwoliłoby to na zniwelowanie indywidualnego podejścia do każdej z grupy.
+Dzięki automatyzacji informacja zwrotna dotycząca wyniku działania aplikacji trafiałaby do studentów dużo szybciej niż w przypadku obecnego procesu weryfikacji.
+Co więcej, mogliby mieć oni wgląd do testów akceptacyjnych, dzięki czemu analizując przykłady, uczyliby się poprawnie definiować przypadki testowe.
+
+W zależności od poziomu złożoności aplikacji wysokie pokrycie testowe mogłoby być jednak trudne do utrzymania.
+Wraz ze wzrostem skomplikowania programów tworzenie przypadków testowych przez prowadzących stawałoby się coraz bardziej czasochłonne.
+
+Ciekawym pomysłem zmniejszenia czasu potrzebnego na dodawanie testów jest zobligowanie studentów do samodzielnego pisania przypadków testowych, zebranie wszystkich testów i uruchomienie programu każdej grupy dla wszystkich zebranych przypadków. 
+Słuszność takiego podejścia została opisana w artykule \cite{write-tests-by-students}.
+Warto jednak zaznaczyć, że zadaniem prowadzącego w tym przypadku byłaby ocena jakości przypadków testowych.
+Dodatkowo mogłoby się okazać, że zbiór testów ma stosunkowo niskie pokrycie, co jest wysoce prawdopodobne w przypadku studentów rozpoczynających naukę programowania.
+Można jednak oczekiwać, że im większe doświadczenie studentów tym lepsze pokrycie testami aplikacji osiągniemy.
+
+Innym pomysłem na zmniejszenie czasochłonności tworzenia testów akceptacyjnych jest porównywanie wyników programów studentów ze wzorcowym programem prowadzącego uruchomionym dla tych samych danych wejściowych.
+W tym przypadku dane wejściowe mogłyby być generowane losowo.
+Ten sposób chroniłby przed próbą sztywnej implementacji programu, która generowałaby właściwy wynik tylko dla znanych wcześniej przypadków testowych.
+To podejście ma też swoje wady, ponieważ używając zwykłego generatora losowego można uzyskać bardzo niskie pokrycie i nie przetestować poprawnie przypadków brzegowych.
+
+Kolejnym innowacyjnym podejściem jest wykorzystanie metod ML (ang. Machine Learning) do generowania przypadków testowych. 
+Ta metoda została opisana w pracy doktorskiej \cite{teach-testing-thesis}. 
+Dzięki uczeniu maszynowemu z wykorzystaniem prac studentów z poprzednich lat uzyskano narzędzie pozwalające generować przypadki testowe z bardzo wysokim pokryciem.
+Trudno byłoby jednak zastosować podobną metodę w ramach proponowanej platformy, ze względu na brak dostępnych i dobrze opisanych programów studentów poprzednich lat.
 
 
-\section {Uwierzytelnianie użytkowników}
-\label{authorization}
 
-Uwierzytelnianie użytkowników odbywa się przy pomocy serwisu GitHub \cite{gitHub}.
-Jest to najpopularniejsze repozytorium kodu używane przez większość programistów.
-Uwierzytelnianie przy użyciu zweryfikowanego źródła jest zarówno łatwiejsze od strony technicznej jak i bezpieczniejsze dla użytkowników.
-W ramach platformy nie ma potrzeby przechowywania i zabezpieczania wrażliwych danych użytkowników jakimi są prywatne hasła.
 
-W celu zastosowania takiego typu uwierzytelnienia wymagane jest aby identyfikatorem użytkownika na platformie był adres email.
-Z założenia jest to email uczelniany.
-Wymagane jest więc od użytkowników (studentów i prowadzących) dodanie uczelnianego adresu email do prywatnych kont githubowych.
+\section{Narzędzia wspomagające ocenę umiejętności programistycznych}
+\label{tools}
 
-Proces uwierzytelniania można podzielić na następujące kroki:
-\begin{enumerate}
-\item Użytkownik kilka przycisk zaloguj na interfejsie webowym platformy.
-\item Aplikacja webowa przekierowuje użytkownika na stronę GitHub, na której loguje się on do serwisu i nadaje odpowiednie uprawnienia do odczytu danych platformie.
-\item Aplikacja webowa otrzymuje tymczasowy kod dostępu z GitHub odpowiadający profilowi zalogowanego użytkownika.
-\item Aplikacja webowa przekazuje kod dostępu do serwera.
-\item Serwer odpytuje GitHub o token dla użytkownika na podstawie otrzymanego z aplikacji webowej kodu dostępu.
-\item Serwer odpytuje GitHub o adresy mailowe przypisane do konta użytkownika o zadanym tokenie.
-\item Serwer filtruje otrzymane maile i sprawdza czy któryś z nich jest zgodny z mailem użytkownika(nazwą) zapisanym w bazie.
-\item Jeśli tak to odsyłana jest do użytkownika informacja zwrotna zawierająca token a zweryfikowany użytkownik przekierowywany jest na odpowiedni dla jego uprawnień ekran (widok projektu w przypadku studenta lub widok wyboru podglądu albo zarządzania projektami w przypadku prowadzącego).
-\end{enumerate}
+Obecnie istnieje wiele narzędzi wspomagających ocenę umiejętności programistycznych użytkowników.
+Są to najczęściej platformy z interfejsem webowych dostępne dla wszystkich.
+Ogólna zasada działania tych narzędzi sprowadza się do napisania przez użytkownika prostego, odseparowanego programu z zadaną wejściową sygnaturą.
+Następnie kod jest kompilowany, budowany i przepuszczany przez szereg testów akceptacyjnych.
+Wynik testów jest przedstawiany użytkownikowi w postaci prostej wizualizacji.
 
-Serwis w miarę potrzeby może zweryfikować czy dany użytkownik jest studentem czy prowadzącym.
-Poziom uprawnień dla użytkownika jest zapisywany i odczytywany z bazy z tabeli Users.
-Więcej informacji o procesie uwierzytelniania przez GitHub, implementacji i bezpieczeństwie takiego rozwiązania można znaleźć w dokumentacji \cite{gitHub-auth-basic} \cite{gitHub-oauth-app}.
+Wśród narzędzi można wyróżnić strony umożliwiające testowanie umiejętności algorytmicznych użytkowników.
+Pozwalają one zarówno na sprawdzenie poprawności wykonania implementowanych algorytmów, jak i oceny ich złożoności.
+Wśród takich platform można wyróżnić między innymi: Codility \cite{codility} i HackerRank \cite{hacker-rank}. 
+Pozwalają one także na przeprowadzanie zawodów w szybkim tworzeniu poprawnych i efektywnych algorytmów. 
+Słuszność takich platform można potwierdzić między innymi na podstawie tego, że duże międzynarodowe korporacje takie jak Google zachęcają do przygotowywania się do procesów rekrutacyjnych z użyciem stron tego rodzaju. 
+Niektóre mniejsze firmy prowadzą początkowe etapy rekrutacji z wykorzystaniem tych platform.
 
-Uwierzytelnienie jest potrzebne do dostępu do platformy i wykonywania zapytań.
-Przykładowo użytkownik będący studentem nie ma uprawnień do usunięcia projektu i nie może wykonać takiej akcji.
-Prowadzący jest traktowany jako administrator i ma dostęp do wszystkich akcji studenta.
-Dodatkowo ma on uprawnienia do definicji i edycji projektu oraz podglądu statystyk uruchomienia etapów oraz integracji.
+Innym rodzajem narzędzi są strony umożliwiające naukę programowania lub naukę programowania we wskazanym języku. 
+Mogą być to proste symulatory środowisk, gdzie wraz z kolejnym etapem kursu użytkownik ma za zadanie napisać niewielki program lub jego część.
+Czasem jednak narzędzia są bardziej rozbudowane i pozwalają na wizualizację działania programów w formie gry np. GameCoder \cite{game-coder}.
+Podejście z tworzeniem gier jest wykorzystywane w celu zachęcenia i zainteresowania użytkowników oraz lepszego zobrazowania wyniku działania ich kodu.
+Wśród narzędzi mających na celu lepsze zrozumienie wykonania kodu przez wizualizację można wyróżnić platformę do nauki programowania równoległego opisaną w artykule \cite{pharaller-platform}.
 
-\section {Zestawienie platformy na serwerze}
-\label{run-platform}
+W ramach pracy doktorskiej \cite{teach-testing-thesis} opisano narzędzie pozwalające na naukę pisania testów jednostkowych.
+Bazując na danych historycznych, zaproponowano platformę pozwalającą na ocenę jakości testów pisanych przez użytkowników.
+Jest to bardzo ciekawe i godne uwagi podejście do oceny umiejętności testowania programów przez studentów.
 
-TODO: Opis i przykład
+Narzędzia wspomagające ocenę umiejętności programistycznych są powszechne i~mają różne zastosowania.
+Skupiają się one jednak na niewielkich, pojedynczych, indywidualnych zadaniach.
+Ze względu na powyższe cechy użycie ich w ramach wieloetapowego, długoterminowego i grupowego projektu nie pomoże znacząco usprawnić procesu weryfikacji pracy studentów.
+W ramach pracy zaimplementowano i zbadano platformę umożliwiającą lepszą ocenę całego procesu tworzenia projektu z uwzględnieniem każdego etapu.
+Proponowane rozwiązanie jest generyczne i poprzez odpowiednie zdefiniowanie środowiska uruchomieniowego może zostać użyte dla dowolnego języka programowania na każdym etapie studiów.
 
-- zmienne systemowe TEST\_PLATFORM\_CLIENT\_ID, TEST\_PLATFORM\_SECRET
-- secret - nie powinien być publicznie udostępniany
-- strona startowa i callback
-- nadawane przez github
-- strona do rejestracji aplikacji []
+\vfill
 
-\section {Przykład integracji platformy z narzędziem CI oraz repozytorium kodu}
-\label{ci-integration}
 
-TODO: opis i przykład integracji platformy z narzędziem CI oraz repozytorium
-kodu.
+\section{Podsumowanie}
+
+TODO: Napisać podsumowanie

@@ -1,175 +1,113 @@
-\chapter{Platforma od strony użytkowej}
-\label{chapter:interfaces}
+\chapter{Koncepcja rozwiązania}
+\label{requirements}
 
-W ramach platformy wyróżnia się dwa podstawowe interfejsy: prowadzącego i studenta.
-Dla pierwszego z nich wyróżnia się dwa widoki: zarządzania projektami i podglądu postępów studentów.
+W ramach pracy zaproponowano i zaimplementowano platformę wspomagającą weryfikację pracy studentów podczas projektu grupowego.
+Omawiane narzędzie zostało utworzone jako MVP (ang. Minimal Value Product).
+Oznacza to, że podczas implementacji ograniczono się do dodania głównych funkcjonalności, pozwalających na wykorzystanie narzędzia podczas prowadzenia przedmiotu realizującego projekt grupowy.
+Pozostałe, dodatkowe funkcjonalności mogą zostać dodane w ramach rozwinięcia pracy.
 
-\section{Interfejs prowadzącego}
+Podstawowym zadaniem platformy jest zredukowanie czasochłonności procesu weryfikacji pracy studentów wynikającej z indywidualnego podejścia przy rozpatrywaniu cząstkowych rezultatów dla każdej z grup.
+To założenie można osiągnąć poprzez automatyzację procesu sprawdzania wyników wykonania programów w ramach kolejnych etapów.
+Automatyzacja sprowadzałaby się do utworzenia szeregu przypadków testowych przez prowadzącego w ramach każdego z etapów.
+Następnie testy akceptacyjne zostałyby przeprowadzane na programach napisanych przez studentów.
+Wynik testów byłby znany zarówno dla prowadzącego, jak i studentów.
+Otrzymane rezultaty byłby jednoznaczne.
+Jeśli wszystkie testy zakończyłyby się sukcesem, to dana grupa zaliczyłaby w pełni zadany etap.
+W przypadku, gdy któryś z testów ukończyłby się błędem, aplikacja studencka nie spełniałaby wszystkich założeń projektowych.
+Na podstawie znajomości ilości i rodzaju testów, które zakończyły się niepoprawnie, prowadzący miałby jasną sytuację co do postępów pracy danego zespołu dla zadanego etapu.
+Te same testy służyłyby do weryfikacji cząstkowej pracy każdej z grup, dzięki czemu prowadzący nie musiałby już indywidualnie oceniać poprawności programów.
 
-\subsection{Zarządzanie projektami}
+Wymuszenie usunięcia indywidualnego podejścia do grup nie jest w pełni możliwe i~wskazane.
+Obecnie w ramach każdego etapu studenci udostępniają swoje sprawozdania z postępów prac prowadzącym.
+Analiza i ocena dokumentów odbywa się indywidualnie dla każdej grupy.
+Studenci zamieszczają sprawozdania korzystając z systemu kontroli wersji.
+Dokumenty jednak nie zawsze znajdują się w jasno określonym, intuicyjnym miejscu w repozytorium, a odnalezienie ich zajmuje zbędny czas.
+Również w przypadku kodu programu niejednokrotnie ciężko stwierdzić, która wersja jest ostateczna dla zadanego etapu.
+W celu ułatwienia oceny pracy studentów należałoby zebrać w jednym, intuicyjnym miejscu trzy elementy cząstkowej pracy studentów pozwalające na jej ocenę: program wykonywalny, link do kodu aplikacji oraz sprawozdanie.
+Dzięki łatwemu dostępowi do tych elementów prowadzący może uniknąć błędów podczas oceniania etapu.
 
-Na rysunku \ref{fig:lecturer-interface-management} został przedstawiony widok zarządzania projektami.
-W ramach interfejsu udostępnione jest tworzenie i edytowanie projektów, w tym wyznaczanie etapów i dodawanie do nich przypadków testowych.
-Definiowanie projektu przebiega następująco:
-\begin {itemize}
-    \item Prowadzący tworzy nowy projekt.
-    \item Prowadzący tworzy etapy w ramach danego projektu.
-    \item Prowadzący tworzy przypadki testowe dla etapów.
-    \item Prowadzący tworzy procesy integracji w ramach danego projektu.
-    \item Prowadzący tworzy grupy projektowe.
-\end {itemize}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 13cm]{chapter03/lecturer_interface_management.png}
-    \caption{Interfejs prowadzącego - zarządzanie projektami (źródło własne).}
-    \label{fig:lecturer-interface-management}
-\end{figure}
-
-Nowy projekt definiowany jest przez następujące dane:
-\begin {itemize}
-    \item Nazwę projektu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi projektu.
-    Nazwa jest parametrem będącym ciągiem znaków (String).
-    \item Plik z opisem projektu o dowolnym formacie.
-    \item Plik Dockerfile definiujący środowisko uruchomieniowe programów.
-\end {itemize}
-
-Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
-Dla wszystkich parametrów będących plikami interfejs umożliwia dodanie ich poprzez wskazanie, w oknie dialogowym, ścieżki na dysku użytkownika, pod którą znajduje się plik.
-
-Nowy etap definiowany jest przez następujące dane:
-\begin {itemize}
-    \item Nazwę etapu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi etapu.
-    Nazwa jest parametrem będącym ciągiem znaków (String).
-    \item Plik z opisem etapu o dowolnym formacie.
-    \item Metadane dotyczące etapu, takie jak:
-    \begin {itemize}
-        \item Data rozpoczęcia etapu.
-        Data rozpoczęcia jest rozumiana jako data, od której studenci mają możliwość rozpoczęcia prac nad etapem (dostęp do opisu etapu, możliwość zaimportowania i uruchomienia swoich programów),
-        \item Data zakończenia etapu.
-        Data zakończenia jest rozumiana jako data, do której studenci mają możliwość zaimportowania i uruchomienia swoich programów.
-        Po przekroczeniu tej daty zmian programów i ponownych uruchomień może dokonywać tylko prowadzący,
-        \item Punktacja za wskazany etap, podawana w postaci liczby całkowitej.
-        Na podstawie punktacji poszczególnych etapów zliczana jest automatycznie ocena końcowa dla projektu.
-    \end{itemize}
-\end {itemize}
-
-Etapy, które nie mają zdefiniowanej daty rozpoczęcia nie są widoczne dla studentów.
-Interfejs umożliwia wskazanie daty poprzez wybór jej w oknie dialogowym z kalendarzem.
-
-Nowy przypadek testowy jest definiowany przez następujące dane:
-\begin {itemize}
-    \item Nazwę przypadku testowego, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego przypadku.
-    Nazwa jest parametrem będącym ciągiem znaków(String).
-    \item Parametry uruchomienia programu, podawane jako ciąg znaków (String).
-    \item Plik z danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
-    Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego.
-    \item oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
-    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w wyniku działania programów studentów i na jego podstawie oceniana jest poprawność programów.
-\end {itemize}
-
-Opis uruchamianie i testowania programów studentów został zamieszczony w rodziale \ref{chapter:platform-technical}.
-
-Oprócz możliwości tworzenia przypadków testowych w ramach widoku istnieje również możliwość utworzenia procesów integracji w obrębie projektu.
-Nowy proces integracji jest definiowany przez następujące dane:
-\begin {itemize}
-    \item Nazwę procesu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego procesu.
-    Nazwa jest parametrem będącym ciągiem znaków (String).
-    \item Plik z danymi wejściowymi o dowolnym, najczęściej tekstowym, formacie.
-    Plik wejściowy jest używany jako dana wejściowa dla danego procesu integracji.
-    \item Oczekiwany plik wyjściowy o dowolnym, najczęściej tekstowym, formacie.
-    \item Priorytetyzowaną listę etapów, które zostaną wykonane kolejno w ramach procesu integracji.
-\end {itemize}
-
-Prowadzący ma również możliwość utworzenia grup projektowych wraz z przypisaniem do nich studentów.
-Utworzenie grup projektowych może zostać zrobione na dwa sposoby.
-Pierwszy z nich to manualne utworzenie grup, definiowanych przez nazwę i dodanie kolejnych studentów w oknie dialogowym.
-Drugi to wczytanie danych dotyczących podziału na grupy z pliku w formacie JSON.
-Przykład struktury akceptowalnego pliku wygląda następująco:
-
-{\fontfamily{qcr}\selectfont
-\footnotesize
-\begin{lstlisting}
-{
-    "groups":[
-        {
-            "name":"A",
-            "students":[
-                "Student1",
-                "Student2"
-            ]
-        },
-        {
-            "name":"B",
-            "students":[
-                "Student3",
-                "Student4"
-            ]
-        }
-    ]
-}
-\end{lstlisting}
-}
-
-\subsection{Podgląd postępów studentów}
-
-Na rysunku \ref{fig:lecturer-interface-view} został przedstawiony widok podglądu postępów studentów.
-W ramach interfejsu prowadzący ma możliwość przeglądania postępów za równo poprzez wyszukanie po nazwie grupy, jak i po identyfikatorze poszczególnych studentów.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 13cm]{chapter03/lecturer_interface_view.png}
-    \caption{Interfejs prowadzącego - podgląd postępów studentów (źródło własne).}
-    \label{fig:lecturer-interface-view}
-\end{figure}
-
-Prowadzący ma umożliwiony wgląd w:
-\begin {itemize}
-    \item Aktualną punktację projektu dla grupy.
-    \item Liczbę prób podjętych przez daną grupę, dla każdego z etapów.
-    \item Daty wykonania poszczególnych prób oraz ich statusy.
-    \item Pełne komunikaty błędów i logi z ostatniej wykonanej przez studentów próby.
-    \item Link do kodu źródłowego, który został użyty przez studentów do zbudowania programu.
-    \item Sprawozdanie wykonane dla zadanego etapu.
-\end {itemize}
-
-Dodatkowo prowadzący ma możliwość edycji danych studentów z dodatkowymi uprawnieniami administratora.
-Pozwalają one między innymi na edycję wprowadzonych przez studentów danych po upływie terminów realizacji poszczególnych etapów.
-Są to uprawnienia, które nie powinny być nadużywane przez prowadzącego, jednak mogą okazać się użyteczne w wyjątkowych sytuacjach.
-
-
-\section{Interfejs studenta}
-
-Na rysunku \ref{fig:student-interface} został przedstawiony interfejs studenta.
-Umożliwia on dodawanie i edycję danych dla kolejnych etapów projektu oraz podgląd aktualnych postępów.
-W ramach projektu student ma między innymi dostęp do dwóch plików: z opisem zadania oraz definicją środowiska Dockerowego.
-Interfejs umożliwia też dostęp do opisów kolejnych etapów, terminów ich realizacji i punktacji.
-
-Dla zadanego etapu student ma możliwość załączenia:
-\begin {itemize}
-    \item Pliku wykonywalnego z programem, który będzie testowany na platformie.
-    \item Linku do kodu, z którego został zbudowany plik wykonywalny.
-    \item Sprawozdania, sporządzonego w ramach etapu.
-\end {itemize}
-
-Po załączeniu programu student ma możliwość uruchomienia go na platformie.
-Wynik działania programu jest przedstawiony studentowi w postaci listy rezultatów z wykonania poszczególnych przypadków testowych.
-Poszczególny rekord zawiera informacje o:
-\begin {itemize}
-    \item Nazwie przypadku testowego, którego dotyczy wynik.
-    \item Parametrach wejściowych, które zostały użyte przy uruchomieniu programu.
-    \item Statusie wykonania przypadku testowego (sukces/porażka).
-    \item Komunikatu błędu, w przypadku porażki.
-    \item Pliku z logami z wykonania danego przypadku testowego.
+Aktualnie informacja zwrotna dotycząca wyniku uzyskanego dla zadanego podzadania jest przekazywana studentom na zakończenie etapu.
+Jest to stosunkowo późny moment.
+Uzyskanie informacji zwrotnej przez grupę można przyspieszyć, poprzez udostępnienie im narzędzia pozwalającego na wielokrotne sprawdzenie działania programu przy użyciu zdefiniowanych przez prowadzących testów akceptacyjnych.
+Umożliwiając studentom samodzielne sprawdzenie ich aplikacji, pozwalamy im na zdobycie w szybszym czasie informacji o nieprawidłowościach w ich programie.
+Dzięki temu studenci mają czas na eliminację błędów i doprecyzowanie założeń na wstępnym etapie implementacji danego etapu.
+Studenci powinni mieć wgląd do pełnej definicji wszystkich przypadków testowych, aby mogli lepiej zrozumieć błędne działanie swoich aplikacji.
+Wśród informacji zwrotnej dla każdego z testów powinny znajdować się:
+\begin{itemize}
+    \item dane wejściowe,
+    \item oczekiwane dane wyjściowe oraz zwrócony wynik,
+    \item status,
+    \item logi aplikacji.
 \end{itemize}
 
-W ramach podglądu postępów student ma dostęp do:
-\begin {itemize}
-    \item Wyników wszystkich dotychczasowych etapów.
-    \item Informacji zbiorczej o liczbie zaliczonych etapów i aktualnej punktacji.
-    \item Zbiorczej informacji o postępach innych grup.
-    Informacja ta jest przedstawiono jako liczba grup, które zaliczyły wskazany etap w stosunku do wszystkich grup.
-\end {itemize}
+Zadaniem grupy studentów korzystającej z platformy jest zamieszenie na niej wyników swojej pracy dla kolejnych etapów.
+Należą do nich: sprawozdanie, link do kodu oraz program.
+Platforma powinna umożliwiać umieszczanie dokumentu w dowolnym formacie.
+Użytkownicy powinny móc w intuicyjny sposób przejść do kodu programu powstałego dla zadanego etapu poprzez link prowadzący do odpowiedniego commita w systemie kontroli wersji.
+W wersji MVP nie zakłada się kompilacji kodu studentów bezpośrednio na platformie.
+Oczekuje się, że studenci sami zbudują swoje projekty i zamieszczą na platformie wykonywalne programy.
+Warto zaznaczyć, że umieszczane aplikacje mogą zawierać istotne błędy powodujące przykładowo wycieki pamięci i nieskończone pętle.
+Platforma powinna być odporna na takie sytuacje i zwrócić błąd wykonania danego programu, nie doprowadzając do zawieszenia i zamknięcia całego systemu.
 
-Student po zakończeniu odpowiedniej liczby etapów wchodzących w skład zdefiniowanego procesu integracji ma możliwość uruchomienia tego procesu.
-Wynik działania procesu jest reprezentowany w taki sam sposób jak wynik uruchomienia poszczególnego etapu.
+Studenci przedstawiający manualnie swoje wyniki cząstkowe prowadzącym mogą natrafić obecnie na szereg problemów.
+Podczas prezentacji mogą zaistnieć komplikacje związane między innymi z niepoprawną konfiguracją środowiska uruchomieniowego lub niewłaściwym doborem przypadków testowych.
+W sytuacji, gdy zadaniem studentów jest zaprezentowanie interakcji pomiędzy stworzonymi
+przez nich modułami programów, prawdopodobieństwo wystąpienia powyższych błędów
+wzrasta.
+Proponowane narzędzie powinno przechowywać i udostępniać wspólną konfigurację środowiska uruchomieniowego w ramach projektu i umożliwiać definiowanie procesu integracji poszczególnych modułów.
+W ramach procesu integracji prowadzący powinien móc zdefiniować przypadki testowe pozwalające na ocenę interakcji programów.
+
+Wszystkie wprowadzane przez użytkowników dane dotyczące projektów, grup, integracji oraz etapów powinny być edytowalne.
+Wyjątek stanowią kod, program oraz raport dla zadanego etapu.
+Ich edycja powinna być możliwa przez studentów od daty rozpoczęcia do daty zakończenia danej części projektu.
+Oba terminy powinny być dostępne dla użytkowników.
+
+Platforma powinna udostępniać studentom wyniki poszczególnych etapów ich pracy.
+Dla aktualnie prowadzonego etapu powinny być to pełne, opisane wyżej, wyniki testów.
+W przypadku już zakończonych etapów studenci powinni mieć wgląd do podsumowanego statusu ich pracy, mówiącego o tym ile z testów akceptacyjnych zostało przez nich zaliczone.
+Jak zostało wspomniane wcześniej, studenci nie pracują systematycznie.
+Aby zmotywować ich do regularnych działań, platforma powinna udostępniać zbiorczy podgląd wyników innych grup, tak aby mogli oni sklasyfikować swoje postępy na tle innych.
+
+Wprowadzane narzędzie powinno integrować się z używanym obecnie systemem kontroli wersji.
+W myśl tego założenia prowadzący powinien mieć możliwość konfiguracji na platformie takich samych grup projektowych jak grupy zdefiniowane w systemie.
+Dodanie zespołów projektowych powinno być proste i nie wymagać powielania tych samych czynności w obu narzędziach.
+Platforma powinna umożliwiać wgranie grup bezpośrednio z pliku w formacie JSON, wyeksportowanego wcześniej z systemu kontroli wersji.
+
+W celu lepszego zrozumienia procesu pracy studentów podczas semestru powinny zostać zbierane i przechowywane statystyki z~wykonania kolejnych etapów.
+Platforma powinna umożliwiać zapisywanie prostych danych audytowych, dotyczących każdej z~prób uruchomienia programu.
+W skład gromadzonych informacji powinny wchodzić:
+\begin{itemize}
+    \item identyfikator użytkownika,
+    \item data próby,
+    \item rezultat, jaki uzyskano w wyniku działania programu.
+\end{itemize}
+Dane powinny być przechowywane w ramach platformy i dostępne dla prowadzącego.
+Opisane wyżej statystyki posłużą do analizy procesu pracy studentów i pozwolą usprawnić proces prowadzenia projektów grupowych.
+
+Proponowane narzędzie powinno być generyczne.
+Prowadzący powinien móc zdefiniować w analogiczny sposób wiele projektów, etapów, integracji, grup oraz przypadków testowych.
+Obecnie w ramach programu kształcenia kładzie się nacisk na projekty grupowe.
+Proponowane narzędzie powinno być uniwersalne i umożliwiać prostą definicję różnych środowisk uruchomieniowych z dowolną ich konfiguracją.
+Pliki konfiguracyjne powinny być udostępnione dla użytkowników.
+Takie podejście umożliwia zastosowanie platformy na każdym etapie studiów dla projektów prowadzonych w dowolnym języku programowania.
+
+Zarówno od strony interfejsu użytkownika, jak i prowadzącego narzędzie powinno być proste i intuicyjne.
+Dostępne dla użytkowników widoki powinny wyświetlać minimum niezbędnych informacji i być stworzone w myśl dobrych praktyk UX (ang. User Experience)~\cite{ux-good-practicies}.
+
+Dostęp do funkcjonalności platformy powinien być zależny od poziomu uprawnień użytkownika.
+Prowadzący powinien mieć szersze uprawnienia niż student, w tym możliwość pełnej konfiguracji projektów i podglądu danych statystycznych.
+Widok studenta powinien ograniczać się do projektów, do których został przypisany.
+
+Platforma powinna umożliwiać równoległy dostęp dla kilkudziesięciu użytkowników.
+Narzędzie powinno być skalowalne i proste w konfiguracji tak, aby umożliwiać w przyszłości prowadzenie kilku projektów jednocześnie.
+Czas uruchamiania platformy oraz przeprowadzania testów akceptacyjnych na programach studentów powinien być stosunkowo szybki.
+
+Warto podkreślić, że celem wprowadzenia platformy nie jest eliminacja spotkań z~prowadzącym.
+Zastosowanie narzędzia nie dąży również do zastąpienia funkcjonalności systemów do kontroli wersji, których interfejs usprawnia przeglądanie kodu.
+Podstawowym zadaniem platformy jest usprawnienie procesu weryfikacji pracy postępów pracy w ramach studenckiego grupowego projektu informatycznego, zarówno dla nauczycieli akademickich, jak i studentów.
+
+
+
+
+
+

@@ -1,135 +1,175 @@
-\chapter{Badania i weryfikacja}
-\label{chapter:research}
+\chapter{Platforma od strony użytkowej}
+\label{chapter:interfaces}
 
-W ramach badania i weryfikacji platformy zostały przeprowadzone symulacje wykonania projektów oraz testy poprawności na podstawie danych historycznych.
+W ramach platformy wyróżnia się dwa podstawowe interfejsy: prowadzącego i studenta.
+Dla pierwszego z nich wyróżnia się dwa widoki: zarządzania projektami i podglądu postępów studentów.
 
-\section{Weryfikacja}
+\section{Interfejs prowadzącego}
 
-Weryfikacja działania platformy odbyła się na podstawie uruchomienia programów studentów z poprzednich semestrów.
-Dane historyczne dotyczą projektu Podstawy programowania.
-Proces weryfikacji można podzielić na następujące kroki:
-\begin{itemize}
-    \item Przeanalizowanie zadania projektowego.
-    \item Lokalne uruchomienie programów.
-    \item Zdefiniowanie nowego projektu na platformie wraz z przypadkami testowymi.
-    \item Uruchomienie skryptów studentów z poprzednich lat na platformie.
-    \item Porównanie otrzymanych rezultatów z wynikami i ocenami projektów studentów w poprzednim semestrze.
+\subsection{Zarządzanie projektami}
+
+Na rysunku \ref{fig:lecturer-interface-management} został przedstawiony widok zarządzania projektami.
+W ramach interfejsu udostępnione jest tworzenie i edytowanie projektów, w tym wyznaczanie etapów i dodawanie do nich przypadków testowych.
+Definiowanie projektu przebiega następująco:
+\begin {itemize}
+    \item Prowadzący tworzy nowy projekt.
+    \item Prowadzący tworzy etapy w ramach danego projektu.
+    \item Prowadzący tworzy przypadki testowe dla etapów.
+    \item Prowadzący tworzy procesy integracji w ramach danego projektu.
+    \item Prowadzący tworzy grupy projektowe.
+\end {itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/lecturer_interface_management.png}
+    \caption{Interfejs prowadzącego - zarządzanie projektami (źródło własne).}
+    \label{fig:lecturer-interface-management}
+\end{figure}
+
+Nowy projekt definiowany jest przez następujące dane:
+\begin {itemize}
+    \item Nazwę projektu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi projektu.
+    Nazwa jest parametrem będącym ciągiem znaków (String).
+    \item Plik z opisem projektu o dowolnym formacie.
+    \item Plik Dockerfile definiujący środowisko uruchomieniowe programów.
+\end {itemize}
+
+Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
+Dla wszystkich parametrów będących plikami interfejs umożliwia dodanie ich poprzez wskazanie, w oknie dialogowym, ścieżki na dysku użytkownika, pod którą znajduje się plik.
+
+Nowy etap definiowany jest przez następujące dane:
+\begin {itemize}
+    \item Nazwę etapu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi etapu.
+    Nazwa jest parametrem będącym ciągiem znaków (String).
+    \item Plik z opisem etapu o dowolnym formacie.
+    \item Metadane dotyczące etapu, takie jak:
+    \begin {itemize}
+        \item Data rozpoczęcia etapu.
+        Data rozpoczęcia jest rozumiana jako data, od której studenci mają możliwość rozpoczęcia prac nad etapem (dostęp do opisu etapu, możliwość zaimportowania i uruchomienia swoich programów),
+        \item Data zakończenia etapu.
+        Data zakończenia jest rozumiana jako data, do której studenci mają możliwość zaimportowania i uruchomienia swoich programów.
+        Po przekroczeniu tej daty zmian programów i ponownych uruchomień może dokonywać tylko prowadzący,
+        \item Punktacja za wskazany etap, podawana w postaci liczby całkowitej.
+        Na podstawie punktacji poszczególnych etapów zliczana jest automatycznie ocena końcowa dla projektu.
+    \end{itemize}
+\end {itemize}
+
+Etapy, które nie mają zdefiniowanej daty rozpoczęcia nie są widoczne dla studentów.
+Interfejs umożliwia wskazanie daty poprzez wybór jej w oknie dialogowym z kalendarzem.
+
+Nowy przypadek testowy jest definiowany przez następujące dane:
+\begin {itemize}
+    \item Nazwę przypadku testowego, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego przypadku.
+    Nazwa jest parametrem będącym ciągiem znaków(String).
+    \item Parametry uruchomienia programu, podawane jako ciąg znaków (String).
+    \item Plik z danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
+    Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego.
+    \item oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
+    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w wyniku działania programów studentów i na jego podstawie oceniana jest poprawność programów.
+\end {itemize}
+
+Opis uruchamianie i testowania programów studentów został zamieszczony w rodziale \ref{chapter:platform-technical}.
+
+Oprócz możliwości tworzenia przypadków testowych w ramach widoku istnieje również możliwość utworzenia procesów integracji w obrębie projektu.
+Nowy proces integracji jest definiowany przez następujące dane:
+\begin {itemize}
+    \item Nazwę procesu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego procesu.
+    Nazwa jest parametrem będącym ciągiem znaków (String).
+    \item Plik z danymi wejściowymi o dowolnym, najczęściej tekstowym, formacie.
+    Plik wejściowy jest używany jako dana wejściowa dla danego procesu integracji.
+    \item Oczekiwany plik wyjściowy o dowolnym, najczęściej tekstowym, formacie.
+    \item Priorytetyzowaną listę etapów, które zostaną wykonane kolejno w ramach procesu integracji.
+\end {itemize}
+
+Prowadzący ma również możliwość utworzenia grup projektowych wraz z przypisaniem do nich studentów.
+Utworzenie grup projektowych może zostać zrobione na dwa sposoby.
+Pierwszy z nich to manualne utworzenie grup, definiowanych przez nazwę i dodanie kolejnych studentów w oknie dialogowym.
+Drugi to wczytanie danych dotyczących podziału na grupy z pliku w formacie JSON.
+Przykład struktury akceptowalnego pliku wygląda następująco:
+
+{\fontfamily{qcr}\selectfont
+\footnotesize
+\begin{lstlisting}
+{
+    "groups":[
+        {
+            "name":"A",
+            "students":[
+                "Student1",
+                "Student2"
+            ]
+        },
+        {
+            "name":"B",
+            "students":[
+                "Student3",
+                "Student4"
+            ]
+        }
+    ]
+}
+\end{lstlisting}
+}
+
+\subsection{Podgląd postępów studentów}
+
+Na rysunku \ref{fig:lecturer-interface-view} został przedstawiony widok podglądu postępów studentów.
+W ramach interfejsu prowadzący ma możliwość przeglądania postępów za równo poprzez wyszukanie po nazwie grupy, jak i po identyfikatorze poszczególnych studentów.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/lecturer_interface_view.png}
+    \caption{Interfejs prowadzącego - podgląd postępów studentów (źródło własne).}
+    \label{fig:lecturer-interface-view}
+\end{figure}
+
+Prowadzący ma umożliwiony wgląd w:
+\begin {itemize}
+    \item Aktualną punktację projektu dla grupy.
+    \item Liczbę prób podjętych przez daną grupę, dla każdego z etapów.
+    \item Daty wykonania poszczególnych prób oraz ich statusy.
+    \item Pełne komunikaty błędów i logi z ostatniej wykonanej przez studentów próby.
+    \item Link do kodu źródłowego, który został użyty przez studentów do zbudowania programu.
+    \item Sprawozdanie wykonane dla zadanego etapu.
+\end {itemize}
+
+Dodatkowo prowadzący ma możliwość edycji danych studentów z dodatkowymi uprawnieniami administratora.
+Pozwalają one między innymi na edycję wprowadzonych przez studentów danych po upływie terminów realizacji poszczególnych etapów.
+Są to uprawnienia, które nie powinny być nadużywane przez prowadzącego, jednak mogą okazać się użyteczne w wyjątkowych sytuacjach.
+
+
+\section{Interfejs studenta}
+
+Na rysunku \ref{fig:student-interface} został przedstawiony interfejs studenta.
+Umożliwia on dodawanie i edycję danych dla kolejnych etapów projektu oraz podgląd aktualnych postępów.
+W ramach projektu student ma między innymi dostęp do dwóch plików: z opisem zadania oraz definicją środowiska Dockerowego.
+Interfejs umożliwia też dostęp do opisów kolejnych etapów, terminów ich realizacji i punktacji.
+
+Dla zadanego etapu student ma możliwość załączenia:
+\begin {itemize}
+    \item Pliku wykonywalnego z programem, który będzie testowany na platformie.
+    \item Linku do kodu, z którego został zbudowany plik wykonywalny.
+    \item Sprawozdania, sporządzonego w ramach etapu.
+\end {itemize}
+
+Po załączeniu programu student ma możliwość uruchomienia go na platformie.
+Wynik działania programu jest przedstawiony studentowi w postaci listy rezultatów z wykonania poszczególnych przypadków testowych.
+Poszczególny rekord zawiera informacje o:
+\begin {itemize}
+    \item Nazwie przypadku testowego, którego dotyczy wynik.
+    \item Parametrach wejściowych, które zostały użyte przy uruchomieniu programu.
+    \item Statusie wykonania przypadku testowego (sukces/porażka).
+    \item Komunikatu błędu, w przypadku porażki.
+    \item Pliku z logami z wykonania danego przypadku testowego.
 \end{itemize}
 
-W celu weryfikacji platformy posłużono się kodem studentów napisanym w ramach przedmiotu podstawy programowania.
-Zadaniem studentów było napisanie programu umożliwiającego interaktywną oraz autonomiczną grę Hey, that’s mine fish.
-Programy miały za zadanie wczytać wejściowy układ planszy z pliku, wykonać zadaną opercaję oraz zapisać zmodyfikowany układ planszy do pliku.
-Format pliku jest jednoznacznie określony w treści zadania i składa się z:
-\begin{itemize}
-    \item Wiersz 1: m n (rozmiar planszy).
-    \item Wiersze od 2 do m+1: n pól odseparowanych znakiem spacji, każde z pól zawiera 2 cyfry: liczbę ryb (0-3) oraz cyfrę reprezentującą gracza (1-9 lub 0 jeśli pole nie jest zajęte).
-    \item Wiersze od m+2: 3 pól, kolejno: nazwy gracza (string), cyfra reprezentująca gracza (1-9), liczba punktów danego gracza.
-\end{itemize}
+W ramach podglądu postępów student ma dostęp do:
+\begin {itemize}
+    \item Wyników wszystkich dotychczasowych etapów.
+    \item Informacji zbiorczej o liczbie zaliczonych etapów i aktualnej punktacji.
+    \item Zbiorczej informacji o postępach innych grup.
+    Informacja ta jest przedstawiono jako liczba grup, które zaliczyły wskazany etap w stosunku do wszystkich grup.
+\end {itemize}
 
-Zgodnie z założeniami programy mają przyjmować następujące parametry:
-\begin{itemize}
-    \item phase=phase\_mark, phase\_mark może przyjąć jedną z dwóch wartości: placement lub movement.
-    \item penguins=N, gdzie N oznacza liczbę pingwinów (pionków) danego gracza.
-    Parametr jest używany tylko w fazie rozmieszczania.
-    \item inputboardfile, nazwa pliku wejściowego z układem planszy.
-    \item outputboardfile, nazwa pliku wyjściowego z układem planszy.
-    \item id, w przypadku podania argumentu "id" program powinien wypisać identyfikator gracza i zakończyć działanie.
-\end{itemize}
-
-Program rozwiązujący opisane wyżej zadanie można uruchomić na platformie i sprawdzić jego działanie.
-Jednak przy założonych parametrach wykonania trudno jest napisać black-box testy, które pozwolą na automatyczną weryfikację programów.
-Do otrzymania korzyści z użytkowania platformy należałoby zmienić założenia co do komend i przyjmowanych parametrów, tak aby można było napisać przypadki testowe.
-W tym przypadku wystarczyłoby dla fazy ruchu dodać dwa parametry wykonania: położenie pingwina, którym chcemy poruszyć oraz docelowe miejsce, w które chcemy go przesunąć.
-Dla fazy rozmieszczania, należałoby również podać listę położeń w których chcemy umieścić pingwiny.
-
-W celu zbadania platformy udostępnione zostało siedem projektów, napisanych przez studentów w semestrze 2018Z i dostępnych na GitLab.
-Wstępna analiza danych pozwoliła ustalić, że spośród dostępnych grup cztery z nich ukończyły zadanie.
-Dwie z pozostałych grup przerwały projekt już na początku, a jedna z grup dołączyła do innej, przez co kod z ich pracy nie jest analizowany.
-
-Podczas lokalnego uruchamiania programów studentów napotykamy na kilka problemów.
-Projekt był prowadzony przez cały semestr a kod studentów sytematycznie wrzucany na GitLab.
-Studenci nie używali tagowania commitów (ciężko też od nich tego wymagać na 1 roku studiów).
-Z tych powodów granice wykonania kolejnych etapów są zatarte i ciężko je odtworzyć.
-Zakłada się więc, że kod znajdujący się na GitLab to ostateczne wersje projektów, które powinny spełniać wymienione wyżej założenia.
-
-Kolejnym problemem jest określenie, wewnątrz repozytorium, która wersja kodu jest ostateczna i powinna zostać zweryfikowana.
-W tym przypadku można posłużyć się datą ostatniego commita, jednak nie zawsze wydaje się to być odpowiednim rozwiązaniem.
-Często zdarza się, że studenci tuż przez końcem projektu (zwłaszcza na samym początku studiów) poprawiają szybko swoje rozwiązania.
-Takie działania bardzo często doprowadzają do powstawania dodatkowych błędów i powrotu do poprzedniej wersji rozwiązania.
-Tak więc data ostatniego commita może nie określać jednoznacznie wersji kodu która została przedstawiona oficjalnie prowadzącemu.
-
-Kompilacja programów sprawdza się do indywidualnego przejrzenia kodu każdego z projektów.
-Spośród wszystkich czterech projektów tylko jeden miał zdefiniowany i poprawny plik Makefile.
-Kolejny posiadał tylko jeden plik z właściwym kodem aplikacji (rozszerzenie .c), więc jego kompilacja była prosta.
-Dwa pozostałe projekty wymagały własnoręcznej kompilacji przez zdefiniowanie pliku Makefile.
-
-Lokalne uruchomienie i ocena sposobu działania programów wymagała również indywidualnego podejścia do każdego z zespołów.
-Można założyć, że w celu weryfikacji programów każdy z nich uruchomimy w trybie interaktywnym.
-Następnie dla każdego wykonamy identyczne kroki i porównany otrzymane wyniki.
-Jeden z programów uruchomiony w trybie interaktywnym pozwalał na wprowadzenie ruchu gracza i przeprowadzenia założonych testów.
-Inny program, posiadający jeden plik z rozszerzeniem .c uruchomił się w wersji autmatycznej rozgrywki.
-Sprawia to, że przetestowanie dla założonego wcześniej schematu jest niemożliwe, ponieważ nie mamy wpływu na ruch pionków.
-Dodatkowo ciężko przez to ocenić, jak zachowuje się program dla przypadków brzegowych, ponieważ nie ma możliwości ustawienia pingwinów w dowolnej lokalizacji.
-W tym przypadku ocena sposobu działania programu opierała się na przeanalizowaniu algorytmu AI zaimplementowanego przez studentów i porównaniu jego działania z wynikiem symulacji.
-
-W celu uruchomienia programów na platformie został zdefiniowany nowy projekt o nazwie penguins z jednym etapem interactive i trzema przypadkami testowymi.
-Tak jak zostało wspomniane wcześniej, dla obecnych założeń projektu ciężko utworzyć black-box testy pozwalające na autmatyczną weryfikację programów.
-Sprawdzenie poprawności programów studentów na platformie sprowadziło się więc do skompilowania programów lokalnie, wrzucenia ich na platformę i indywidualnego przejrzenia logów z wynikami ich wykonania.
-W przypadku, gdy programy nie zalogowały błędów wykonania uznaje się, że uruchamiają się poprawnie.
-Wyniki przeprowadzonych testów zostały przedstawione w tabeli TODO.
-
-Spośród czterech testowanych programów TODO.
-
-Jak łatwo zauważyć, taki sposób przetestowania programów nie przynosi wiele korzyści.
-Równocześnie pokazuje na jak wiele problemów może napotkać prowadzący podczas weryfkacji pracy studentów, mimo korzystania z narzędzia do wersjonowania kodu.
-Takie komplikacje mogą wystąpić podczas sprawdzania każdego z kolejnych etapów i nałożyć się w momencie próby przeprowadzenia integracji programów.
-Jednak przy niewielkiej modyfikacji zadania, można osiągnąć dużo lepszą automatyzację procesu oceny efektów pracy zespołów.
-W kolejnym rozdziale zostaną omówione zmiany założeń zadania, tak aby osiągnąć korzyści wynikające z korzystania z platformy.
-Opisane również zostaną wnioski z przeprowadzenia zmodyfikowanego projektu na grupie testowej.
-
-\section{Badania}
-
-Badania systemu mają na celu sprawdzenie wpływu zastosowania platformy na wykonanie projektu, w tym ocenę usprawnienia pracy studentów i wpływu na ich sposób uczestnictwa w projekcie.
-Badania odbyły się na co dwu osobowej grupie testowej, której zadaniem było wykonanie dwóch rodzajów projektów.
-Dodatkowo badania systemu pozwoliły na ocenę łatwości i intuicyjności obsługi interfejsów oraz ocenę zadowolenia użytkowników z działania platformy.
-
-TODO: Coś więcej napisać o Agile, dodać matrix
-
-Opis grupy testowej:
-- absolwenci
-- ukończyli EiTI
-- mają doświadczenie w braniu udziału w projektach grupowych na wydziale (podczas studiów)
-- znają podstawy programowania (nie trzeba ich uczyć)
-- mają komercyjne doświadczenie
-- mogą ocenić dzięki doświadczeniu czy rozwiązanie jest przydatne podczas studiów
-- mogą powiedzieć jak platforma wpływa na ich pracę w porównaniu do projektu bez platformy
-
-Dlaczego nie studenci:
-- doprowadzenie platformy do postaci MVP jest czasochłonne
-- MVP ciągle mogą wystąpić jakieś nieprzewidzanie zachowania błedy
-- ciężko dać studentom nie przetestowaną na mniejszej grupie platformę
-- źle działająca platforma mogłaby znstudenci pierwszego roku nie iechęcić studentów
-- w przypadku studentów pierwszego roku mogłaby utrudnić znacznie im pracę zamiast pomóc
-- nie da się wyeliminować wszystkich błędów na początkowej fazie projektu, trzeba utrzymywać i supportować aplikacje
-- trzeba byłoby przy okazji nauczyć programowania osoby z pierwszego roku
-- testy dla studentów pierwszego roku trwałyby cały semestr
-- testowanie na studentach i dodanie dodatkowych funkcjonalności i usprawnień - rozszerzenie pracy
-- studenci pierwszego roku nie mogą powiedzieć jak platforma wpływa na ich pracę w porównaniu do projektu bez platformy
-
-\subsection{Symulacja zdefiniowanego projektu}
-
-W przypadku symulacji zdefiniowanego zadania pełny cel projektu jest znany od samego początku.
-Wykonywanie kolejnych etapów przybliża studentów do wyznaczonego początkowo celu.
-Taki typ projektu jest bardzo często prowadzony w ramach różnych przedmiotów.
-W ramach pracy został przygotowany i zdefiniowany na platformie projekt symulujący ten rodzaj zadania.
-
-\subsection{Symulacja złożonego środowiska}
-
-W przypadku symulacji złożonego środowiska, znany jest ogólny cel projektu, natomiast nieznany jest pełny jego zakres.
-Nowe zadania definiowane są po zakończeniu poprzednich etapów.
-W tym przypadku prowadzący pełni rolę Agile Product Owner’a, który doprecyzowuje treści zadań w miarę kolejnych zapytań studentów.
-Taka symulacja ma za zadanie odzwierciedlić na grupie testowej rzeczywiste środowisko, z którym studenci spotkają się na co dzień w pracy zawodowej.
-
-
-
-
+Student po zakończeniu odpowiedniej liczby etapów wchodzących w skład zdefiniowanego procesu integracji ma możliwość uruchomienia tego procesu.
+Wynik działania procesu jest reprezentowany w taki sam sposób jak wynik uruchomienia poszczególnego etapu.
