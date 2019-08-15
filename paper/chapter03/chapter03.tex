@@ -1,20 +1,27 @@
 \chapter{Koncepcja rozwiązania}
 \label{chapter:requirements}
 
-W ramach pracy zaproponowano i zaimplementowano platformę wspomagającą weryfikację pracy studentów podczas projektu grupowego.
+W ramach rozdziału omówiono założenia projektowe oraz koncepcję platformy.
+Pierwszy podrozdział opisuje sposób testowania wybrany do weryfikacji programów studentów w ramach platformy.
+W kolejnych podrozdziałach rzedstawiono problemy na jakie napotykają prowadzący i studenci podczas uczestnictwa w projekcie informatycznym.
+Dla każdej z wymienionych trudności opisano sposób jej załagodzenia z wykorzystaniem zaimplementowanej w ramach pracy platformy.
+W przedostatniej sekcji omówiono wymagania niefunkcjonalne dla narzędzia.
+Ostatni podrozdział zawiera opis ograniczeń proponowanego rozwiązania.
+
+\section{Sprawdzenie poprawności działania programu studentów}
+
 
 \section{Redukcja czasochłonności}
 
 Podstawowym zadaniem platformy jest zredukowanie czasochłonności procesu weryfikacji pracy studentów wynikającej z indywidualnego podejścia przy rozpatrywaniu cząstkowych rezultatów dla każdej z grup.
 To założenie można osiągnąć poprzez automatyzację procesu sprawdzania wyników wykonania programów w ramach kolejnych etapów.
-Automatyzacja sprowadzałaby się do utworzenia szeregu przypadków testowych przez prowadzącego w ramach każdego z etapów.
-Następnie testy akceptacyjne zostałyby przeprowadzane na programach napisanych przez studentów.
-Wynik testów byłby znany zarówno dla prowadzącego, jak i studentów.
-Otrzymane rezultaty byłby jednoznaczne.
-Jeśli wszystkie testy zakończyłyby się sukcesem, to dana grupa zaliczyłaby w pełni zadany etap.
-W przypadku, gdy któryś z testów ukończyłby się błędem, aplikacja studencka nie spełniałaby wszystkich założeń projektowych.
-Na podstawie znajomości ilości i rodzaju testów, które zakończyły się niepoprawnie, prowadzący miałby jasną sytuację co do postępów pracy danego zespołu dla zadanego etapu.
-Te same testy służyłyby do weryfikacji cząstkowej pracy każdej z grup, dzięki czemu prowadzący nie musiałby już indywidualnie oceniać poprawności programów.
+Automatyzacja sprowadza się do utworzenia szeregu przypadków testowych przez prowadzącego w ramach każdego z etapów.
+Następnie przeprowadzane są testy akceptacyjne na programach napisanych przez studentów.
+Wyniki testów są jednoznaczne i znane zarówno dla prowadzącego, jak i studentów.
+Jeśli wszystkie testy zakończą się sukcesem, to dana grupa zalicza w pełni zadany etap.
+W przypadku, gdy któryś z testów zakończył się błędem, aplikacja studencka nie spełnia wszystkich założeń projektowych.
+Na podstawie znajomości ilości i rodzaju testów, które zakończyły się niepoprawnie, prowadzący ma jasną sytuację co do postępów pracy danego zespołu dla zadanego etapu.
+Te same testy służą do weryfikacji cząstkowej pracy każdej z grup, dzięki czemu prowadzący nie musi już indywidualnie oceniać poprawności programów.
 
 Wymuszenie usunięcia indywidualnego podejścia do grup nie jest w pełni możliwe i~wskazane.
 Obecnie w ramach każdego etapu studenci udostępniają swoje sprawozdania z postępów prac prowadzącym.
@@ -22,14 +29,15 @@ Analiza i ocena dokumentów odbywa się indywidualnie dla każdej grupy.
 Studenci zamieszczają sprawozdania korzystając z systemu kontroli wersji.
 Dokumenty jednak nie zawsze znajdują się w jasno określonym, intuicyjnym miejscu w repozytorium, a odnalezienie ich zajmuje zbędny czas.
 Również w przypadku kodu programu niejednokrotnie ciężko stwierdzić, która wersja jest ostateczna dla zadanego etapu.
-W celu ułatwienia oceny pracy studentów należałoby zebrać w jednym, intuicyjnym miejscu trzy elementy cząstkowej pracy studentów pozwalające na jej ocenę: program wykonywalny, link do kodu aplikacji oraz sprawozdanie.
-Dzięki łatwemu dostępowi do tych elementów prowadzący może uniknąć błędów podczas oceniania etapu.
+W celu ułatwienia oceny pracy studentów na interfejsie webowym platformy są zgrupowane w jednym, intuicyjnym miejscu trzy elementy cząstkowej pracy studentów pozwalające na jej ocenę: program wykonywalny, link do kodu aplikacji oraz sprawozdanie.
+Dzięki łatwemu dostępowi do tych elementów prowadzący uniknie błędów podczas oceniania etapu.
+
 
 \section{Informacja zwrotna}
 
 Aktualnie informacja zwrotna dotycząca wyniku uzyskanego dla zadanego podzadania jest przekazywana studentom na zakończenie etapu.
 Jest to stosunkowo późny moment.
-Uzyskanie informacji zwrotnej przez grupę można przyspieszyć, poprzez udostępnienie im narzędzia pozwalającego na wielokrotne sprawdzenie działania programu przy użyciu zdefiniowanych przez prowadzących testów akceptacyjnych.
+Uzyskanie informacji zwrotnej przez grupę można przyspieszyć, udostępnieniając im narzędzia pozwalającego na wielokrotne sprawdzenie działania programu przy użyciu zdefiniowanych przez prowadzących testów akceptacyjnych.
 Umożliwiając studentom samodzielne sprawdzenie ich aplikacji, pozwalamy im na zdobycie w szybszym czasie informacji o nieprawidłowościach w ich programie.
 Dzięki temu studenci mają czas na eliminację błędów i doprecyzowanie założeń na wstępnym etapie implementacji danego etapu.
 Studenci powinni mieć wgląd do pełnej definicji wszystkich przypadków testowych, aby mogli lepiej zrozumieć błędne działanie swoich aplikacji.
@@ -41,83 +49,124 @@ Wśród informacji zwrotnej dla każdego z testów powinny znajdować się:
     \item logi aplikacji.
 \end{itemize}
 
-\section{Sprawdzenie poprawności działania programu studentów}
+Zaimplementowane narzędzie umożliwia pozyskanie powyżej opisanej informacji zwrotnej w krótkim czasie.
 
-\section{Praca w ramach etapów}
 
-Zadaniem grupy studentów korzystającej z platformy jest zamieszenie na niej wyników swojej pracy dla kolejnych etapów.
+\section{Praca w ramach etapów i integracji}
+
+Pierwszym zadaniem grupy studentów korzystającej z platformy jest między innymi zamieszenie na niej wyników swojej pracy dla kolejnych etapów.
 Należą do nich: sprawozdanie, link do kodu oraz program.
-Platforma powinna umożliwiać umieszczanie dokumentu w dowolnym formacie.
-Użytkownicy powinny móc w intuicyjny sposób przejść do kodu programu powstałego dla zadanego etapu poprzez link prowadzący do odpowiedniego commita w systemie kontroli wersji.
+Platforma umożliwia umieszczanie dokumentu w dowolnym formacie.
+Użytkownicy mogą w intuicyjny sposób przejść do kodu programu powstałego dla zadanego etapu poprzez link prowadzący do odpowiedniego tzw. \"commita\" w systemie kontroli wersji.
 
-Platforma powinna udostępniać studentom wyniki poszczególnych etapów ich pracy.
-Dla aktualnie prowadzonego etapu powinny być to pełne, opisane wyżej, wyniki testów.
-W przypadku już zakończonych etapów studenci powinni mieć wgląd do podsumowanego statusu ich pracy, mówiącego o tym ile z testów akceptacyjnych zostało przez nich zaliczone.
+Kolejnym zadaniem zespołu jest przeprowadzenie procesu integracji w ramach projektu.
+Proces integracji jest definiowany przez prowadzącego.
+Składa się on z listy kolejnych etapów.
+Przeprowadzenie procesu polega na uruchomieniu przez platformę w odpowiedniej kolejności programów studentów załączonych dla wskazanych etapów i sprawdzenia wyniku końcowego.
+Aby lepiej przybliżyć koncepcję integracji jako prosty przykład projektu można byłoby podać projekt mający na celu odwracenie macierzy.
+Mógłby mieć on wyróżnione dwa etapy: pierwszy polegający wyznaczanie wyznacznika i drugi służący do obliczenia nowej macierzy w oparciu o podany wyznacznik i macierz wejściową.
+Po zamieszczeniu programów dla obu etapów można byłoby przeprowadzić proces integracji.
+Polegała by ona na uruchomieniu pierwszego etapu dla zadanej macierzy wejściowej a następnie uruchomieniu drugiego etapu dla otrzymanych w kroku pierwszym wyników.
+Końcowy wynik zostałby sprawdzony z oczekiwanym wynikiem w ramach testu akceptacyjnego.
+W ramach platformy można definiować procesy integracji składające się maksymalnie z pięciu etapów.
+
+Platforma udostępnia studentom wyniki dla przeprowadzonych etapów oraz integracji.
+Dla każdego zadania są to pełne, opisane w poprzednim podrozdziale, wyniki testów.
+W przypadku już zakończonych etapów oraz integracji studenci mają wgląd do podsumowanego statusu ich pracy, mówiącego o tym ile z testów akceptacyjnych zostało przez nich zaliczone.
+
 Jak zostało wspomniane wcześniej, studenci nie pracują systematycznie.
-Aby zmotywować ich do regularnych działań, platforma powinna udostępniać zbiorczy podgląd wyników innych grup, tak aby mogli oni sklasyfikować swoje postępy na tle innych.
+Aby zmotywować ich do regularnych działań, platforma wprowadza element grywalizacji udostępniając zbiorczy podgląd wyników innych grup.
+Dzięki temu studenci mogą sklasyfikować swoje postępy na tle innych.
 
-\section{Praca w ramach integracji}
-
-TODO: Uzupełnić
 
 \section{Konfiguracja środowiska uruchomieniowego}
 
 Studenci przedstawiający manualnie swoje wyniki cząstkowe prowadzącym mogą natrafić obecnie na szereg problemów.
 Podczas prezentacji mogą zaistnieć komplikacje związane między innymi z niepoprawną konfiguracją środowiska uruchomieniowego lub niewłaściwym doborem przypadków testowych.
-W sytuacji, gdy zadaniem studentów jest zaprezentowanie interakcji pomiędzy stworzonymi
-przez nich modułami programów, prawdopodobieństwo wystąpienia powyższych błędów
-wzrasta.
-Proponowane narzędzie powinno przechowywać i udostępniać wspólną konfigurację środowiska uruchomieniowego w ramach projektu i umożliwiać definiowanie procesu integracji poszczególnych modułów.
-W ramach procesu integracji prowadzący powinien móc zdefiniować przypadki testowe pozwalające na ocenę interakcji programów.
+W sytuacji, gdy zadaniem studentów jest zaprezentowanie interakcji pomiędzy stworzonymi przez nich modułami programów, prawdopodobieństwo wystąpienia powyższych błędów wzrasta.
+Proponowane narzędzie przechowuje i udostępnia wspólną konfigurację środowiska uruchomieniowego w ramach projektu.
 
 
 \section{Tworzenie grup projektowych}
 
-Wprowadzane narzędzie powinno integrować się z używanym obecnie systemem kontroli wersji.
-W myśl tego założenia prowadzący powinien mieć możliwość konfiguracji na platformie takich samych grup projektowych jak grupy zdefiniowane w systemie.
-Dodanie zespołów projektowych powinno być proste i nie wymagać powielania tych samych czynności w obu narzędziach.
-Platforma powinna umożliwiać wgranie grup bezpośrednio z pliku w formacie JSON, wyeksportowanego wcześniej z systemu kontroli wersji.
+Wprowadzane narzędzie może zostać zintegrowane z używanym obecnie systemem kontroli wersji.
+W myśl tego założenia prowadzący ma możliwość konfiguracji na platformie takich samych grup projektowych jak grupy zdefiniowane w systemie kontroli wersji.
+Dodanie zespołów projektowych jest proste i nie wymagać powielania tych samych czynności w obu narzędziach.
+Platforma umożliwia wgranie grup bezpośrednio z pliku w formacie JSON, wyeksportowanego wcześniej z systemu kontroli wersji.
+Przykład struktury akceptowalnego pliku wygląda następująco:
+
+{\fontfamily{qcr}\selectfont
+\footnotesize
+\begin{lstlisting}
+{
+    "groups":[
+        {
+            "name":"A",
+            "students":[
+                "Student1",
+                "Student2"
+            ]
+        },
+        {
+            "name":"B",
+            "students":[
+                "Student3",
+                "Student4"
+            ]
+        }
+    ]
+}
+\end{lstlisting}
+}
+
 
 \section{Zbieranie statystyk}
 
-W celu lepszego zrozumienia procesu pracy studentów podczas semestru powinny zostać zbierane i przechowywane statystyki z~wykonania kolejnych etapów.
-Platforma powinna umożliwiać zapisywanie prostych danych audytowych, dotyczących każdej z~prób uruchomienia programu.
-W skład gromadzonych informacji powinny wchodzić:
+W celu lepszego zrozumienia procesu pracy studentów podczas semestru zbierane i przechowywane są statystyki z~wykonania kolejnych zadań.
+Platforma powinna umożliwiać zapisywanie prostych danych audytowych, dotyczących każdej z~prób uruchomienia programów w ramach etapu lub integracji.
+W skład gromadzonych informacji wchodzą:
 \begin{itemize}
     \item identyfikator użytkownika,
     \item data próby,
     \item rezultat, jaki uzyskano w wyniku działania programu.
 \end{itemize}
-Powyższe informacje powinny być przechowywane przez platformę i dostępne na żądanie prowadzącego.
-Opisane wyżej statystyki posłużą do analizy procesu pracy studentów i pozwolą usprawnić proces prowadzenia projektów grupowych.
+Powyższe informacje są przechowywane przez platformę i dostępne na żądanie prowadzącego.
+Opisane wyżej statystyki mogą posłużyć do dalszej analizy procesu pracy studentów i usprawnienia proces prowadzenia projektów grupowych.
+
 
 \section{Wymagania niefunkcjonalne}
 
-Proponowane narzędzie powinno być generyczne.
-Prowadzący powinien móc zdefiniować w analogiczny sposób wiele projektów, etapów, integracji, grup oraz przypadków testowych.
+Proponowane narzędzie jest generyczne.
+Prowadzący powinien może zdefiniować w analogiczny sposób wiele projektów, etapów, integracji, grup oraz przypadków testowych.
 Obecnie w ramach programu kształcenia kładzie się nacisk na projekty grupowe.
-Proponowane narzędzie powinno być uniwersalne i umożliwiać prostą definicję różnych środowisk uruchomieniowych z dowolną ich konfiguracją.
-Pliki konfiguracyjne powinny być udostępnione dla użytkowników.
+Proponowane narzędzie jest uniwersalne i umożliwia prostą definicję różnych środowisk uruchomieniowych z dowolną ich konfiguracją.
+Pliki konfiguracyjne powinny są udostępnione dla użytkowników.
 Takie podejście umożliwia zastosowanie platformy na każdym etapie studiów dla projektów prowadzonych w dowolnym języku programowania.
 
-Zarówno od strony interfejsu użytkownika, jak i prowadzącego narzędzie powinno być proste i intuicyjne.
-Dostępne dla użytkowników widoki powinny wyświetlać minimum niezbędnych informacji i być stworzone w myśl dobrych praktyk UX (ang. User Experience)~\cite{ux-good-practicies}.
+Zarówno od strony interfejsu użytkownika, jak i prowadzącego narzędzie jest proste i intuicyjne.
+Dostępne dla użytkowników widoki wyświetlają minimum niezbędnych informacji i są stworzone w myśl dobrych praktyk UX (ang. User Experience)~\cite{ux-good-practicies}.
 
-Dostęp do funkcjonalności platformy powinien być zależny od poziomu uprawnień użytkownika.
-Prowadzący powinien mieć szersze uprawnienia niż student, w tym możliwość pełnej konfiguracji projektów i podglądu danych statystycznych.
-Widok studenta powinien ograniczać się do projektów, do których został przypisany.
+Dostęp do funkcjonalności platformy jest zależny od poziomu uprawnień użytkownika.
+Prowadzący ma szersze uprawnienia niż student, w tym możliwość pełnej konfiguracji projektów i podglądu danych statystycznych.
+Widok studenta ogranicza się do projektów, do których został przypisany.
 
-Wszystkie wprowadzane przez użytkowników dane dotyczące projektów, grup, integracji oraz etapów powinny być edytowalne.
+Wszystkie wprowadzane przez użytkowników dane dotyczące projektów, grup, integracji oraz etapów powinny są edytowalne.
 Wyjątek stanowią kod, program oraz raport dla zadanego etapu.
-Ich edycja powinna być możliwa przez studentów od daty rozpoczęcia do daty zakończenia danej części projektu.
-Oba terminy powinny być dostępne dla użytkowników.
+Ich edycja jest możliwa przez studentów od daty rozpoczęcia do daty zakończenia danej części projektu.
+Oba terminy są widoczne dla użytkowników.
 
 Warto zaznaczyć, że umieszczane aplikacje studenckie mogą zawierać istotne błędy powodujące przykładowo wycieki pamięci i nieskończone pętle.
-Platforma powinna być odporna na takie sytuacje i zwrócić błąd wykonania danego programu, nie doprowadzając do zawieszenia i zamknięcia całego systemu.
+Platforma jest odporna na takie sytuacje i zwróci błąd wykonania danego programu, nie doprowadzając do zawieszenia i zamknięcia całego systemu.
 
-Platforma powinna umożliwiać równoległy dostęp dla kilkudziesięciu użytkowników.
-Narzędzie powinno być skalowalne i proste w konfiguracji tak, aby umożliwiać w przyszłości prowadzenie kilku projektów jednocześnie.
-Czas uruchamiania platformy oraz przeprowadzania testów akceptacyjnych na programach studentów powinien być stosunkowo szybki.
+Platforma umożliwia równoległy dostęp dla wielu użytkowników.
+Narzędzie jest skalowalne i proste w konfiguracji.
+Dzięki temu umożliwia prowadzenie kilku projektów jednocześnie.
+Czas uruchamiania platformy oraz przeprowadzania testów akceptacyjnych na programach studentów jest stosunkowo krótki.
+
+Platforma została zaimplementowana jako narzędzie usprawniające prowadzenie projektów grupowych.
+Warto jednak zaznaczyć, że może ona również służyć do weryfikacji projektów indywidualnych.
+W takim przypadku każda ze zdefiniowanych grup projektowych powinna mieć przypisanego tylko jednego studenta.
+
 
 \section{Ograniczenia zakresu pracy}
 
@@ -132,7 +181,8 @@ Warto podkreślić, że celem wprowadzenia platformy nie jest eliminacja spotka�
 Zastosowanie narzędzia nie dąży również do zastąpienia funkcjonalności systemów do kontroli wersji, których interfejs usprawnia przeglądanie kodu.
 Podstawowym zadaniem platformy jest usprawnienie procesu weryfikacji pracy postępów pracy w ramach studenckiego grupowego projektu informatycznego, zarówno dla nauczycieli akademickich, jak i studentów.
 
-Celem pracy nie opracowanie systemu sprawiedliwej oceny członków zespołu, może ona jednak stanowić ważną pomoc w tym procesie.
+Celem pracy nie jest również opracowanie systemu sprawiedliwej oceny członków zespołu.
+Platforma może jednak stanowić ważną pomoc w tym procesie.
 
 
 
