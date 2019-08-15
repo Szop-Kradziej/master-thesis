@@ -1,10 +1,9 @@
 \chapter{Koncepcja rozwiązania}
-\label{requirements}
+\label{chapter:requirements}
 
 W ramach pracy zaproponowano i zaimplementowano platformę wspomagającą weryfikację pracy studentów podczas projektu grupowego.
-Omawiane narzędzie zostało utworzone jako MVP (ang. Minimal Value Product).
-Oznacza to, że podczas implementacji ograniczono się do dodania głównych funkcjonalności, pozwalających na wykorzystanie narzędzia podczas prowadzenia przedmiotu realizującego projekt grupowy.
-Pozostałe, dodatkowe funkcjonalności mogą zostać dodane w ramach rozwinięcia pracy.
+
+\section{Redukcja czasochłonności}
 
 Podstawowym zadaniem platformy jest zredukowanie czasochłonności procesu weryfikacji pracy studentów wynikającej z indywidualnego podejścia przy rozpatrywaniu cząstkowych rezultatów dla każdej z grup.
 To założenie można osiągnąć poprzez automatyzację procesu sprawdzania wyników wykonania programów w ramach kolejnych etapów.
@@ -26,6 +25,8 @@ Również w przypadku kodu programu niejednokrotnie ciężko stwierdzić, która
 W celu ułatwienia oceny pracy studentów należałoby zebrać w jednym, intuicyjnym miejscu trzy elementy cząstkowej pracy studentów pozwalające na jej ocenę: program wykonywalny, link do kodu aplikacji oraz sprawozdanie.
 Dzięki łatwemu dostępowi do tych elementów prowadzący może uniknąć błędów podczas oceniania etapu.
 
+\section{Informacja zwrotna}
+
 Aktualnie informacja zwrotna dotycząca wyniku uzyskanego dla zadanego podzadania jest przekazywana studentom na zakończenie etapu.
 Jest to stosunkowo późny moment.
 Uzyskanie informacji zwrotnej przez grupę można przyspieszyć, poprzez udostępnienie im narzędzia pozwalającego na wielokrotne sprawdzenie działania programu przy użyciu zdefiniowanych przez prowadzących testów akceptacyjnych.
@@ -40,14 +41,26 @@ Wśród informacji zwrotnej dla każdego z testów powinny znajdować się:
     \item logi aplikacji.
 \end{itemize}
 
+\section{Sprawdzenie poprawności działania programu studentów}
+
+\section{Praca w ramach etapów}
+
 Zadaniem grupy studentów korzystającej z platformy jest zamieszenie na niej wyników swojej pracy dla kolejnych etapów.
 Należą do nich: sprawozdanie, link do kodu oraz program.
 Platforma powinna umożliwiać umieszczanie dokumentu w dowolnym formacie.
 Użytkownicy powinny móc w intuicyjny sposób przejść do kodu programu powstałego dla zadanego etapu poprzez link prowadzący do odpowiedniego commita w systemie kontroli wersji.
-W wersji MVP nie zakłada się kompilacji kodu studentów bezpośrednio na platformie.
-Oczekuje się, że studenci sami zbudują swoje projekty i zamieszczą na platformie wykonywalne programy.
-Warto zaznaczyć, że umieszczane aplikacje mogą zawierać istotne błędy powodujące przykładowo wycieki pamięci i nieskończone pętle.
-Platforma powinna być odporna na takie sytuacje i zwrócić błąd wykonania danego programu, nie doprowadzając do zawieszenia i zamknięcia całego systemu.
+
+Platforma powinna udostępniać studentom wyniki poszczególnych etapów ich pracy.
+Dla aktualnie prowadzonego etapu powinny być to pełne, opisane wyżej, wyniki testów.
+W przypadku już zakończonych etapów studenci powinni mieć wgląd do podsumowanego statusu ich pracy, mówiącego o tym ile z testów akceptacyjnych zostało przez nich zaliczone.
+Jak zostało wspomniane wcześniej, studenci nie pracują systematycznie.
+Aby zmotywować ich do regularnych działań, platforma powinna udostępniać zbiorczy podgląd wyników innych grup, tak aby mogli oni sklasyfikować swoje postępy na tle innych.
+
+\section{Praca w ramach integracji}
+
+TODO: Uzupełnić
+
+\section{Konfiguracja środowiska uruchomieniowego}
 
 Studenci przedstawiający manualnie swoje wyniki cząstkowe prowadzącym mogą natrafić obecnie na szereg problemów.
 Podczas prezentacji mogą zaistnieć komplikacje związane między innymi z niepoprawną konfiguracją środowiska uruchomieniowego lub niewłaściwym doborem przypadków testowych.
@@ -57,21 +70,15 @@ wzrasta.
 Proponowane narzędzie powinno przechowywać i udostępniać wspólną konfigurację środowiska uruchomieniowego w ramach projektu i umożliwiać definiowanie procesu integracji poszczególnych modułów.
 W ramach procesu integracji prowadzący powinien móc zdefiniować przypadki testowe pozwalające na ocenę interakcji programów.
 
-Wszystkie wprowadzane przez użytkowników dane dotyczące projektów, grup, integracji oraz etapów powinny być edytowalne.
-Wyjątek stanowią kod, program oraz raport dla zadanego etapu.
-Ich edycja powinna być możliwa przez studentów od daty rozpoczęcia do daty zakończenia danej części projektu.
-Oba terminy powinny być dostępne dla użytkowników.
 
-Platforma powinna udostępniać studentom wyniki poszczególnych etapów ich pracy.
-Dla aktualnie prowadzonego etapu powinny być to pełne, opisane wyżej, wyniki testów.
-W przypadku już zakończonych etapów studenci powinni mieć wgląd do podsumowanego statusu ich pracy, mówiącego o tym ile z testów akceptacyjnych zostało przez nich zaliczone.
-Jak zostało wspomniane wcześniej, studenci nie pracują systematycznie.
-Aby zmotywować ich do regularnych działań, platforma powinna udostępniać zbiorczy podgląd wyników innych grup, tak aby mogli oni sklasyfikować swoje postępy na tle innych.
+\section{Tworzenie grup projektowych}
 
 Wprowadzane narzędzie powinno integrować się z używanym obecnie systemem kontroli wersji.
 W myśl tego założenia prowadzący powinien mieć możliwość konfiguracji na platformie takich samych grup projektowych jak grupy zdefiniowane w systemie.
 Dodanie zespołów projektowych powinno być proste i nie wymagać powielania tych samych czynności w obu narzędziach.
 Platforma powinna umożliwiać wgranie grup bezpośrednio z pliku w formacie JSON, wyeksportowanego wcześniej z systemu kontroli wersji.
+
+\section{Zbieranie statystyk}
 
 W celu lepszego zrozumienia procesu pracy studentów podczas semestru powinny zostać zbierane i przechowywane statystyki z~wykonania kolejnych etapów.
 Platforma powinna umożliwiać zapisywanie prostych danych audytowych, dotyczących każdej z~prób uruchomienia programu.
@@ -81,8 +88,10 @@ W skład gromadzonych informacji powinny wchodzić:
     \item data próby,
     \item rezultat, jaki uzyskano w wyniku działania programu.
 \end{itemize}
-Dane powinny być przechowywane w ramach platformy i dostępne dla prowadzącego.
+Powyższe informacje powinny być przechowywane przez platformę i dostępne na żądanie prowadzącego.
 Opisane wyżej statystyki posłużą do analizy procesu pracy studentów i pozwolą usprawnić proces prowadzenia projektów grupowych.
+
+\section{Wymagania niefunkcjonalne}
 
 Proponowane narzędzie powinno być generyczne.
 Prowadzący powinien móc zdefiniować w analogiczny sposób wiele projektów, etapów, integracji, grup oraz przypadków testowych.
@@ -98,15 +107,32 @@ Dostęp do funkcjonalności platformy powinien być zależny od poziomu uprawnie
 Prowadzący powinien mieć szersze uprawnienia niż student, w tym możliwość pełnej konfiguracji projektów i podglądu danych statystycznych.
 Widok studenta powinien ograniczać się do projektów, do których został przypisany.
 
+Wszystkie wprowadzane przez użytkowników dane dotyczące projektów, grup, integracji oraz etapów powinny być edytowalne.
+Wyjątek stanowią kod, program oraz raport dla zadanego etapu.
+Ich edycja powinna być możliwa przez studentów od daty rozpoczęcia do daty zakończenia danej części projektu.
+Oba terminy powinny być dostępne dla użytkowników.
+
+Warto zaznaczyć, że umieszczane aplikacje studenckie mogą zawierać istotne błędy powodujące przykładowo wycieki pamięci i nieskończone pętle.
+Platforma powinna być odporna na takie sytuacje i zwrócić błąd wykonania danego programu, nie doprowadzając do zawieszenia i zamknięcia całego systemu.
+
 Platforma powinna umożliwiać równoległy dostęp dla kilkudziesięciu użytkowników.
 Narzędzie powinno być skalowalne i proste w konfiguracji tak, aby umożliwiać w przyszłości prowadzenie kilku projektów jednocześnie.
 Czas uruchamiania platformy oraz przeprowadzania testów akceptacyjnych na programach studentów powinien być stosunkowo szybki.
+
+\section{Ograniczenia zakresu pracy}
+
+Omawiane narzędzie zostało utworzone jako MVP (ang. Minimal Value Product).
+Oznacza to, że podczas implementacji ograniczono się do dodania głównych funkcjonalności, pozwalających na wykorzystanie narzędzia podczas prowadzenia przedmiotu realizującego projekt grupowy.
+Pozostałe, dodatkowe funkcjonalności mogą zostać dodane w ramach rozwinięcia pracy.
+
+W wersji MVP nie zakłada się kompilacji kodu studentów bezpośrednio na platformie.
+Oczekuje się, że studenci sami zbudują swoje projekty i zamieszczą na platformie wykonywalne programy.
 
 Warto podkreślić, że celem wprowadzenia platformy nie jest eliminacja spotkań z~prowadzącym.
 Zastosowanie narzędzia nie dąży również do zastąpienia funkcjonalności systemów do kontroli wersji, których interfejs usprawnia przeglądanie kodu.
 Podstawowym zadaniem platformy jest usprawnienie procesu weryfikacji pracy postępów pracy w ramach studenckiego grupowego projektu informatycznego, zarówno dla nauczycieli akademickich, jak i studentów.
 
-
+Celem pracy nie opracowanie systemu sprawiedliwej oceny członków zespołu, może ona jednak stanowić ważną pomoc w tym procesie.
 
 
 

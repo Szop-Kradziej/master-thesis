@@ -1,40 +1,41 @@
 \chapter{Cel pracy}
 
 Obecnie proces weryfikacji cząstkowych wyników pracy studentów nad zespołowym projektem informatycznym jest czasochłonny.
-Nawet w przypadku gdy celem każdej z~grup jest wykonanie, podczas trwania semestru, tch samych zadań.
-Nie tylko ze względu na dużą liczbę studentów uczestniczących w zajęciach, ale również z powodu indywidualnego rozpatrywania rezultatów poszczególnych zespołów.
-Przedstawienie prowadzącym wyników cząstkowych oraz końcowych przez studentów również może okazać się czasochłonne i~kłopotliwe.
+Nawet w przypadku, gdy celem każdej z~grup jest wykonanie tych samych zadań.
+Czasochłonna weryfikacja wynika między innymi z indywidualnego rozpatrywania rezultatów poszczególnych zespołów.
+
+Przedstawienie prowadzącym wyników cząstkowych oraz końcowych przez studentów również może okazać się kłopotliwe.
 Manualne uruchamianie programów na prywatnych maszynach zajmuje czas.
 Często podczas prezentacji prac występują nieoczekiwane błędy np. niepoprawna konfiguracja środowiska, niewłaściwie wybrany plik z~przypadkiem testowym czy problem z siecią.
 W przypadku gdy studenci proszeni są o~zaprezentowanie integracji swoich modułów prawdopodobieństwo wystąpienia błędów rośnie.
+
 Kolejnym napotykanym problemem jest fakt, że studenci nie pracują systematycznie podczas semestru.
-Może to wynikać częściowo z~braku posiadania przez nich oficjalnej wiedzy o~aktualnych postępach innych grup.
-Powyższe zagadnienia są tylko częścią trudności z~jakimi spotyka się prowadzący podczas procesu weryfikacji pracy studentów.
-W rozdziale \ref{intro} zostały szerzej omówione motywacje do powstania pracy.
+Może to wynikać z braku doświadczenia w efektywnym planowaniu pracy, nieumiejętności szacowania czasochłonności i nieświadomości konsekwencji.
 
-Proponowanym rozwiązaniem powyżej przedstawionych problemów jest wprowadzenie platformy, wspomagającej weryfikację pracy studentów.
+Powyższe zagadnienia są tylko częścią trudności z~jakimi spotykają się prowadzący oraz studenci podczas uczestnictwa w zespołowym projekcie informatycznym.
 
-W ramach pracy zaproponowano, zaimplementowano i zbadano narzędzie pozwalające na lepszą automatyzację procesu oceny postępów uczniów.
-Stworzona platforma składa się z trzech odrębnych modułów:
+Proponowanym rozwiązaniem powyżej przedstawionych problemów jest wprowadzenie platformy wspomagającej.
+Stworzenie narzędzie wymagało realizacji następujących celów szczegółówych:
 \begin{itemize}
-    \item GUI (ang. Graphical User Interface) prowadzącego, będące interfejsem webowym. Umożliwia ono zarządzanie projektami oraz podgląd postępów studentów.
-    \item GUI studenta, będące interfejsem webowym. Pozwala na dodawanie i~uruchamianie programów oraz przeglądanie otrzymanych wyników.
-    \item Serwis umożliwiający przechowywanie danych oraz uruchamianie programów dla wskazanych przypadków testowych.
+    \item Analizy wymagań i specyfiki procesu nauczania zorientowanego na projekt zespołowy.
+    \item Opracowania i implementacji interfejsów webowych dla użytkowników: prowadzącego oraz studentów.
+    \item Opracowania i implementacji serwisu umożliwiającego wykonywanie akcji przez użytkowników.
+    \item Weryfikacji platformy przy pomocy danych historycznych.
+    \item Zbadania platformy dla grupy testowej poprzez symulację przeprowadzenia historycznego projektu studenckiego.
+    \item Analizy uzyskanych wyników i sformułowania wniosków.
 \end{itemize}
-Rozdział \ref{chapter:interfaces} zawiera szczegółowe opisy i~instrukcje użytkowania dostępnych dla prowadzącego i~studentów interfejsów (GUI prowadzącego oraz GUI studenta).
-Opis techniczny platformy, będącej proponowanym rozwiązaniem, znajduje się w~rozdziale \ref{chapter:platform-technical}.
 
-Weryfikacja platformy odbyła się na podstawie uruchomienia na platformie historycznych programów studentów i~analizie otrzymanych rezultatów.
+Warto zaznaczyć, że celem pracy nie jest opracowanie systemu sprawiedliwej oceny członków zespołu projektowego.
+Proponowane rozwiązanie może jednak stanowić ważną pomoc w procesie weryfikacji pracy studentów.
 
-W celu zbadania platformy zasymulowano dwa typy projektów.
-Pierwszy z nich jest projektem analogicznym do projektu wykonywanego przez studentów w~semestrze zima 2018 w~ramach przedmiotu ”Podstawy Programowania”.
-Drugi typ zadania jest autorskim pomysłem i~ma na celu symulację zmiennego i~złożonego środowiska pracy.
-Oba projekty zostały przeprowadzone na grupie testowej, składającej się z absolwentów Politechniki Warszawskiej.
-
+W rozdziale \ref{chapter:intro} zostały szerzej omówione motywacje do powstania pracy.
+Zamieszono tam również wnioski z analizy istniejących i badanych aktualnie podejść do weryfikacji programów w Polsce i na świecie.
+Trzecia sekcja pracy omawia koncepcję proponowanego rozwiązania oraz założenia projektowe.
+Rozdział \ref{chapter:interfaces} zawiera szczegółowe opisy i~instrukcje użytkowania dostępnych w ramach proponowanego rozwiązania interfejsów webowych (prowadzącego oraz studenta).
+Opis techniczny platformy znajduje się w~rozdziale \ref{chapter:platform-technical}.
 Rozdział \ref{chapter:research} opisuje przebieg oraz rezultaty otrzymane podczas badań i weryfikacji narzędzia.
-
-W~rozdziale \ref{chapter:conclusion} zostały przedstawione wnioski z~implementacji i~badań platformy.
-Omówiono również możliwości usprawnienia i~dodania nowych funkcjonalności, które mogłyby posłużyć do rozszerzenia pracy.
+W~rozdziale \ref{chapter:conclusion} zostały przedstawione wnioski z pracy dyplomowej.
+Omówiono również możliwości usprawnienia platformy i~dodania nowych funkcjonalności, które mogłyby posłużyć do rozszerzenia pracy.
 
 
 
