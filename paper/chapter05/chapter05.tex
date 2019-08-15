@@ -29,9 +29,9 @@ Opis zastosowanej autoryzacji i autentykacji użytkowników można znaleźć w p
 Przykład konfiguracji i uruchomienia platformy na dowolnym serwerze został omówiony w ramach sekcji \ref{run-platform}.
 
 Platformę można zintegrować z zewnętrznymi narzędziami.
-Przykładem takiej integracji może być repozytorium kodu oraz system CI (ang. Continious Integration).
-System CI (Travis) można skonfigurować w taki sposób, aby bezpośrednio po zaakceptowaniu PR (ang. Pull Request) do repozytorium kodu (GitLab) uruchamiany był job, który po poprawnym zbudowaniu programu automatycznie przesyłał by go do platformy i uruchamiał.
-Przykład takiej integracji platformy z zewnętrznymi narzędziami został opisany w~podrozdziale \ref{ci-integration}.
+Przykładem takiej integracji może być powiązanie z systemem Continuous Integration (na przykład Travis).
+Taki system można skonfigurować tak, aby w ramach testów automatycznych budował program, wysyłał plik wykonywalny do platformy i raportował o wyniku uruchomienia.
+Przykład takiej integracji platformy z zewnętrznym narzędziem został opisany w~podrozdziale \ref{ci-integration}.
 
 \section{Schemat bazy}
 \label{database}
@@ -47,12 +47,9 @@ Schemat tabel i relacji bazodanowych, utworzony w ramach pracy, znajduje się na
 Do przechowywania metadanych wykorzystano osiem tabel.
 W przedstawionych strukturach zapisywane są informacje o:
 \begin{itemize}
-    \item istniejących projektach,
-    \item grupach w ramach projektów,
-    \item studentach w ramach grup,
-    \item etapach w ramach projektów,
-    \item integracjach w ramach projektów wraz z wykorzystywanymi do przeprowadzenia integracji etapami,
-    \item tokenach użytkowników, uzyskanych w ramach procesu uwierzytelnienia.
+    \item projektach (grupach, etapach i integracjach w ramach projektu)
+    \item studentach (ich przynależności do grup i tokenach autoryzacyjnych)
+    \item prowadzących (i ich tokenach autoryzacyjnych)
 \end{itemize}
 
 Do przechowywania danych użyto relacyjnej bazy PostgreSQL w wersji 12 beta 1.
@@ -77,7 +74,7 @@ Drugi folder zawiera definicje projektów wraz z etapami i integracjami oraz utw
 
 Na rysunkach \ref{fig:projects-directories} i \ref{fig:students-directories} został zamieszone odpowiednio schematy katalogów wewnątrz folderów \textit{projects} oraz \textit{students}.
 Dla obu schematów zostały wyróżnione pliki i foldery, które nie występują pojedynczo w ramach katalogów.
-W miejscu zbiorczej nazwy oznaczonej jako ${nazwa\_katalogu}_{i}$ należy rozumieć docelową nazwę folderu.
+W miejscu zbiorczej nazwy oznaczonej jako ${nazwa\_katalogu}_{i}$ na schemacie należy rozumieć docelową nazwę folderu.
 
 \begin{figure}[H]
     \centering
@@ -192,7 +189,7 @@ Platforma akceptuje dowolny plik Dockerfile, który opiera komendę uruchomienia
     \item \textit{/home/app} - ścieżka do programu studentów wewnątrz kontenera,
     \item \textit{/home/input.txt} - ścieżka do pliku wejściowego dla przypadku testowego wewnątrz kontenera,
     \item \textit{/home/parameters.txt} - ścieżka do parametrów wywołania programu dla przypadku testowego wewnątrz kontenera,
-    \item \textit{/home/output.txt} - ścieżka do oczekiwanego pliku wyjściowego dla przypadku testowego wewnątrz kontenera.
+    \item \textit{/home/output.txt} - ścieżka do pliku wyjściowego dla przypadku testowego wewnątrz kontenera.
 \end{itemize}
 
 W trakcie wykonywania przypadku testowego platforma kopiuje odpowiednie pliki pod wskazane ścieżki wewnątrz kontenera, stąd podane wyżej parametry powinny być niezmienne w ramach wszystkich Dockerfile.
@@ -203,13 +200,14 @@ Warto zaznaczyć, że omawiany plik konfiguracyjny nie jest walidowany przez pla
 \label{authorization}
 
 Uwierzytelnianie użytkowników odbywa się przy pomocy serwisu GitHub \cite{gitHub}.
-Jest to najpopularniejsze repozytorium kodu używane przez większość programistów.
+Jest to najpopularniejsza platforma hostingowa przeznaczona dla repozytoriów gitowych oraz posiada otwarte API (ang. Application Programming Interface).
 Uwierzytelnianie przy użyciu zweryfikowanego źródła jest zarówno łatwiejsze od strony technicznej jak i bezpieczniejsze dla użytkowników.
 W ramach platformy nie ma potrzeby przechowywania i zabezpieczania wrażliwych danych użytkowników jakimi są prywatne hasła.
 
-W celu zastosowania takiego typu uwierzytelnienia wymagane jest aby identyfikatorem użytkownika na platformie był adres email.
-Z założenia jest to email uczelniany.
-Wymagane jest więc od użytkowników (studentów i prowadzących) dodanie uczelnianego adresu email do prywatnych kont githubowych.
+Najpopularniejszym sposobem identyfikacji użytkownika jest porównanie jego adresu email.
+Przy zastosowaniu takiego typu uwierzytelnienia wymagane od użytkowników (studentów i prowadzących) jest posiadanie konta na githubie z dodanym emailem uczelnianym (lub innym adresem znanym przez prowadzącego).
+Warto tutaj zaznaczyć, że do konta na githubie może być dodanych wiele adresów email.
+Dodanie nowego adresu nie wpływa negatywnie na sposób korzystania z konta github przez użytkowników.
 
 Proces uwierzytelniania można podzielić na następujące kroki:
 \begin{enumerate}
