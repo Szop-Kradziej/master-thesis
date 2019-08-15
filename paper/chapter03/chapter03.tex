@@ -10,6 +10,85 @@ Ostatni podrozdział zawiera opis ograniczeń proponowanego rozwiązania.
 
 \section{Sprawdzenie poprawności działania programu studentów}
 
+W celu oceny poprawności działania programów studentów należy przeprowadzić odpowiednie testy.
+Jedną z kategorii podziału testów, jest klasyfikacja ze względu na wiedzę na temat testowanego programu.
+W tym przypadku wyróżniamy dwie podstawowe kategorie:
+\begin{itemize}
+    \item testy czarnej skrzynki (ang. black box testing),
+    \item testy białej skrzynki (ang. white box testing).
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/black-box.png}
+    \caption{Schemat testu czarnej skrzynki (źródło własne).}
+    \label{fig:black-box}
+\end{figure}
+
+Na rysunku \ref{fig:black-box} został przedstawiony ogólny schemat procesu dla black box testów.
+Dla tego przypadku fragment kodu lub cały testowany program nie jest znany dla testera.
+Black box testing może odnosić się zarówno do testów funkcjonalnych, jak i niefunkcjonalnych.
+Najczęściej jednak dotyczy on pierwszego rodzaju.
+Na rysunku \ref{fig:tests-levels} zostały przedstawione poziomy testów.
+Testy czarnej skrzynki mają zastosowanie na następujących poziomach:
+\begin{itemize}
+    \item testów integracyjnych,
+    \item testów systemowych,
+    \item testów akceptacyjnych.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 7cm]{chapter02/tests_levels.jpg}
+    \caption{Poziomy testów (źródło: \cite{tests-levels}).}
+    \label{fig:tests-levels}
+\end{figure}
+
+Ten rodzaj testów jest wykonywany z perspektywy użytkownika.
+Pozwala to między innymi na wskazanie rozbieżności pomiędzy wytworzonym kodem a założoną specyfikacją zadania w tym:
+\begin {itemize}
+    \item niepoprawnych lub brakujących funkcjonalności,
+    \item błędów w interfejsie,
+    \item błędów w strukturach danych,
+    \item błędów zachowania programów oraz wydajnościowych.
+\end{itemize}
+Zaletą tego rodzaju podejścia jest fakt, że osoba testująca nie musi znać kodu oraz języka programowania, w którym została napisana aplikacja.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/white-box.png}
+    \caption{Schemat testu białej skrzynki (źródło własne).}
+    \label{fig:white-box}
+\end{figure}
+
+Drugim rodzajem testowania programów jest metoda białej skrzynki (ang. white box testing).
+Schemat procesu tego typu został przedstawiony na rysunku \ref{fig:white-box}.
+W tym przypadku tester zna pełną implementację badanej funkcjonalności.
+Jego zadaniem jest dobranie odpowiednich wartości wejściowych dla sprawdzanej funkcjonalności i uzyskanie założonych wartości wyjściowych, w ramach testowanego kodu.
+Do realizacji tego zadania niezbędne są umiejętności programistyczne i wiedza na temat implementacji.
+Testy białej skrzynki mają zastosowanie na następujących poziomach:
+\begin{itemize}
+    \item testów jednostkowych,
+    \item testów integracyjnych,
+    \item testów systemowych.
+\end{itemize}
+Warto jednak zaznaczyć, że ten typ testów używany jest głównie w testach jednostkowych.
+
+Dzięki takiemu podejściu programiści mogą uzyskać bardzo szybką informację zwrotną.
+Pozwala ono także na szczegółowe przetestowanie aplikacji.
+Jednak poprawne napisanie testów jednostkowych jest bardziej złożone i wymaga dobrych umiejętności programistycznych.
+Z założenia testów jednostkowych jest więcej niż integracyjnych czy akceptacyjnych i dla częstych zmian implementacji (co jest bardzo prawdopodobne na początkowym etapie nauki programowania) utrzymanie white box testów może okazać się bardzo kłopotliwe, a nawet wręcz niemożliwe dla studentów.
+Warto też zauważyć, że testy jednostkowe są ściśle związane z implementacją, a więc z językiem programowania, w którym został napisany program.
+W celu dodatnia testów najniższego poziomu należałoby posłużyć się dodatkową biblioteką, która byłaby wspomagana przez dany język.
+Poznanie zewnętrznych bibliotek i zaznajamianie się z ich interfejsami na początkowej drodze nauki programowania mogłoby przynieść negatywne rezultaty.
+Studenci, zamiast skupić się na zrozumieniu podstaw programowania, zmuszeni byliby do poznania bibliotek, dla których nie rozumieliby w pełni słuszności zastosowania.
+
+Przy użyciu platformy w przypadku jednakowych, wieloetapowych projektów prowadzący ma możliwość przygotowania szereg przypadków testowych, które następnie zostaną użyte do sprawdzenia poprawności programów studentów.
+Narzędzie udostępnia je studentom, dzięki czemu mają oni możliwość samodzielnie, lokalnie przetestować swój kod, przed ostateczną prezentacją prowadzącemu.
+Taki proces sprawdzania programów studentów dla zadanych przypadków testowych jest automatyczny.
+Dzięki temu studenci mogą w prosty sposób wielokrotnie uruchamiać te same testy dla nowych wariantów swoich programów.
+Mają również możliwość uczenia się poprawnego definiowania przypadkóœ testowych poprzez analizę testów akceptacyjnych.
+Opisany sposób testowania leży na poziomie testów akceptacyjnych w formie testów czarnej skrzynki.
 
 \section{Redukcja czasochłonności}
 

@@ -17,7 +17,7 @@ Przedstawiono także podstawowe rodzaje metod testowania: testowanie białej i c
 
 Podrozdział \ref{tools} zawiera przegląd dostępnych, istniejących narzędzi wspomagających weryfikację umiejętności programistycznych użytkowników oraz ich zastosowanie w branży informatycznej.
 
-Ogólne założenia dotyczące funkcjonalności platformy wraz z uzasadnieniem ich stosowności zostały omówione w rozdziale \ref{requirements}.
+W ostatniej sekcji zostało zamieszczone podsumowanie.
 
 \vfill
 
@@ -164,78 +164,6 @@ Wśród wartości fundamentalnych dla podejścia XP (ang. Extreme Programming) d
 Opisywana jest ona jako szybkość oceny poprawności dodawanego kodu i jego interakcji z innymi częściami systemu oraz oszacowania regresji.
 Szybką informację zwrotną dotyczącą dodawanej funkcjonalności można osiągnąć między innymi przez utrzymywanie poprawnych przypadków testowych.
 
-Jedną z kategorii podziału testów, jest klasyfikacja ze względu na wiedzę na temat testowanego programu.
-W tym przypadku wyróżniamy dwie podstawowe kategorie:
-\begin{itemize}
-\item testy czarnej skrzynki (ang. black box testing),
-\item testy białej skrzynki (ang. white box testing).
-\end{itemize}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 13cm]{chapter02/black-box.png}
-    \caption{Schemat testu czarnej skrzynki (źródło własne).}
-    \label{fig:black-box}
-\end{figure}
-
-Na rysunku \ref{fig:black-box} został przedstawiony ogólny schemat procesu dla black box testów.
-Dla tego przypadku fragment kodu lub cały testowany program nie jest znany dla testera.
-Black box testing może odnosić się zarówno do testów funkcjonalnych, jak i niefunkcjonalnych.
-Najczęściej jednak dotyczy on pierwszego rodzaju.
-Na rysunku \ref{fig:tests-levels} zostały przedstawione poziomy testów.
-Testy czarnej skrzynki mają zastosowanie na następujących poziomach:
-\begin{itemize}
-\item testów integracyjnych,
-\item testów systemowych,
-\item testów akceptacyjnych.
-\end{itemize}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 7cm]{chapter02/tests_levels.jpg}
-    \caption{Poziomy testów (źródło: \cite{tests-levels}).}
-    \label{fig:tests-levels}
-\end{figure}
-
-Ten rodzaj testów jest wykonywany z perspektywy użytkownika.
-Pozwala to między innymi na wskazanie rozbieżności pomiędzy wytworzonym kodem a założoną specyfikacją zadania w tym:
-\begin {itemize}
-\item niepoprawnych lub brakujących funkcjonalności,
-\item błędów w interfejsie,
-\item błędów w strukturach danych,
-\item błędów zachowania programów oraz wydajnościowych.
-\end{itemize}
-Zaletą tego rodzaju podejścia jest fakt, że osoba testująca nie musi znać kodu oraz języka programowania, w którym została napisana aplikacja.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 13cm]{chapter02/white-box.png}
-    \caption{Schemat testu białej skrzynki (źródło własne).}
-    \label{fig:white-box}
-\end{figure}
-
-Drugim rodzajem testowania programów jest metoda białej skrzynki (ang. white box testing).
-Schemat procesu tego typu został przedstawiony na rysunku \ref{fig:white-box}.
-W tym przypadku tester zna pełną implementację badanej funkcjonalności.
-Jego zadaniem jest dobranie odpowiednich wartości wejściowych dla sprawdzanej funkcjonalności i uzyskanie założonych wartości wyjściowych, w ramach testowanego kodu.
-Do realizacji tego zadania niezbędne są umiejętności programistyczne i wiedza na temat implementacji.
-Testy białej skrzynki mają zastosowanie na następujących poziomach:
-\begin{itemize}
-\item testów jednostkowych,
-\item testów integracyjnych,
-\item testów systemowych.
-\end{itemize}
-Warto jednak zaznaczyć, że ten typ testów używany jest głównie w testach jednostkowych.
-
-Dzięki takiemu podejściu programiści mogą uzyskać bardzo szybką informację zwrotną.
-Pozwala ono także na szczegółowe przetestowanie aplikacji.
-Jednak poprawne napisanie testów jednostkowych jest bardziej złożone i wymaga dobrych umiejętności programistycznych.
-Z założenia testów jednostkowych jest więcej niż integracyjnych czy akceptacyjnych i dla częstych zmian implementacji (co jest bardzo prawdopodobne na początkowym etapie nauki programowania) utrzymanie white box testów może okazać się bardzo kłopotliwe, a nawet wręcz niemożliwe dla studentów.
-Warto też zauważyć, że testy jednostkowe są ściśle związane z implementacją, a więc z językiem programowania, w którym został napisany program.
-W celu dodatnia testów najniższego poziomu należałoby posłużyć się dodatkową biblioteką, która byłaby wspomagana przez dany język.
-Poznanie zewnętrznych bibliotek i zaznajamianie się z ich interfejsami na początkowej drodze nauki programowania mogłoby przynieść negatywne rezultaty.
-Studenci, zamiast skupić się na zrozumieniu podstaw programowania, zmuszeni byliby do poznania bibliotek, dla których nie rozumieliby w pełni słuszności zastosowania.
-
 W literaturze można znaleźć wiele prac poświęconych testowaniu programów i wprowadzaniu nauki umiejętności testowania w ramach programu studiów.
 Kładziony jest coraz większy nacisk na tę umiejętność \cite{tests-important}.
 Wśród zamieszczonych opinii powszechną jest, że testowanie aplikacji jest ważne i potrzebne od samego początku studiów \cite{test-from-scratch}.
@@ -246,16 +174,7 @@ Warto zaznaczyć, że TDD opiera się na pisaniu testów jednostkowych, co, jak 
 Jak zostało napisane wcześniej, studentom rozpoczynającym naukę programowania bardzo ciężko byłoby napisać odpowiednie testy do swoich programów.
 Praktycznie niemożliwe jest też wprowadzenie na początku studiów całego przedmiotu poświęconego nauce pisania testów, ze względu na przepełniony obecnie program studiów \cite{overflow-studies-program}.
 Warto jednak pokazywać studentom zalety testowania aplikacji.
-W przypadku jednakowych, wieloetapowych projektów prowadzący mógłby przygotować szereg przypadków testowych, które następnie zostałyby użyte do sprawdzenia poprawności programów studentów.
-Idąc krok dalej, mógłby udostępnić je wcześniej studentom, aby mieli możliwość samodzielnie, lokalnie przetestować swój kod, przed ostateczną prezentacją prowadzącemu.
-Taki proces sprawdzania programów studentów dla zadanych przypadków testowych można byłoby zautomatyzować tak, aby studenci mogli w prosty sposób wielokrotnie uruchamiać te same testy dla nowych wariantów swoich programów.
-Opisany sposób testowania leży na poziomie testów akceptacyjnych w formie testów czarnej skrzynki.
-
-Automatyzacja uruchamiania testów pozwoliłaby prowadzącemu na zmniejszenie czasochłonności oceny cząstkowych prac studentów.
-Prowadzący mógłby oczekiwać, że programy, które pomyślnie przejdą przez testy akceptacyjne, są zaimplementowane prawidłowo.
-Pozwoliłoby to na zniwelowanie indywidualnego podejścia do każdej z grupy.
-Dzięki automatyzacji informacja zwrotna dotycząca wyniku działania aplikacji trafiałaby do studentów dużo szybciej niż w przypadku obecnego procesu weryfikacji.
-Co więcej, mogliby mieć oni wgląd do testów akceptacyjnych, dzięki czemu analizując przykłady, uczyliby się poprawnie definiować przypadki testowe.
+Można to osiągnąć między innymi przez dostarczanie studentom zdefiniowanych przez prowadzących poprawnych przypadków testowych dla ich programów.
 
 W zależności od poziomu złożoności aplikacji wysokie pokrycie testowe mogłoby być jednak trudne do utrzymania.
 Wraz ze wzrostem skomplikowania programów tworzenie przypadków testowych przez prowadzących stawałoby się coraz bardziej czasochłonne.
@@ -275,7 +194,6 @@ Kolejnym innowacyjnym podejściem jest wykorzystanie metod ML (ang. Machine Lear
 Ta metoda została opisana w pracy doktorskiej \cite{teach-testing-thesis}. 
 Dzięki uczeniu maszynowemu z wykorzystaniem prac studentów z poprzednich lat uzyskano narzędzie pozwalające generować przypadki testowe z bardzo wysokim pokryciem.
 Trudno byłoby jednak zastosować podobną metodę w ramach proponowanej platformy, ze względu na brak dostępnych i dobrze opisanych programów studentów poprzednich lat.
-
 
 
 
