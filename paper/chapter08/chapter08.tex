@@ -1,0 +1,23 @@
+\chapter{Wnioski}
+\label{chapter:conclusion}
+
+Zastosowanie platformy w~celu weryfikacji pracy studentów niesie ze sobą wiele korzyści.
+Podstawową zaletą płynącą z jej użycia jest automatyzacja procesu udostępniania oraz sprawdzania poprawności programów studentów.
+Przyśpiesza ona proces sprawdzania kolejnych etapów prac i umożliwia zwiększenie ich liczby.
+Student korzystający z platformy uzyskuje szybką informację zwrotną dotyczącą poprawności działania jego kodu poprzez wgląd do raportu wyników testów automatycznych.
+GUI studenta przedstawia również informację o zbiorczych postępach innych grup.
+Podgląd statusu prac pozostałych zespołów mógłby być dodatkową motywacją dla studentów do wykonania danego etapu.
+Dzięki platformie prowadzący otrzymuje ujednolicony wgląd w bieżące postępy studentów, co za tym idzie nie ma potrzeby rozpatrywać już kolejnych grup indywidualnie.
+Platforma testowa rozwiązuje też problem różnych konfiguracji systemów.
+W ramach danego projektu studenci mają dostęp do skonfigurowanego wcześniej kontenera Dockerowego, na którym żądane jest, aby zadziałał ich projekt.
+Samo środowisko jest wyeksportowane dla studenta, tak aby mógł testować swój program lokalnie.
+Platforma umożliwia także zbieranie danych statystycznych dotyczących procesu pracy studentów.
+Te informacje mogą posłużyć dalszym usprawnieniom weryfikacji pracy grup projektowych.
+
+W ramach rozszerzenia funkcjonalności pracy dyplomowej można rozpatrzyć dodanie modułu służący do przedstawienia graficznego postępów studentów, między innymi w postaci wykresów.
+
+Możliwym rozszerzeniem jest również dodanie moduł generatora testów.
+W ramach pracy założono, że prowadzący manualnie definiuje uruchamiane przypadki testowe.
+Dodatkowym rozszerzeniem pracy mogłaby być automatyzacja procesu.
+Zamiast definiowania szeregu przypadków testowych w postaci plików wejściowych i oczekiwanych plików wyjściowych można byłoby do kontenera dołączyć wzorcowy program napisany przez prowadzącego.
+Ten moduł miałby za zadanie dla losowych danych wejściowych o zadanej strukturze porównywać wynik działania programu studentów z wynikiem otrzymanym ze wzorcowego programu dla tych samych danych.

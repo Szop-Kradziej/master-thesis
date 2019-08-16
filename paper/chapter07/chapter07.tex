@@ -1,23 +1,96 @@
-\chapter{Wnioski}
-\label{chapter:conclusion}
+\chapter{Badania}
+\label{chapter:research}
 
-Zastosowanie platformy w~celu weryfikacji pracy studentów niesie ze sobą wiele korzyści.
-Podstawową zaletą płynącą z jej użycia jest automatyzacja procesu udostępniania oraz sprawdzania poprawności programów studentów.
-Przyśpiesza ona proces sprawdzania kolejnych etapów prac i umożliwia zwiększenie ich liczby.
-Student korzystający z platformy uzyskuje szybką informację zwrotną dotyczącą poprawności działania jego kodu poprzez wgląd do raportu wyników testów automatycznych.
-GUI studenta przedstawia również informację o zbiorczych postępach innych grup.
-Podgląd statusu prac pozostałych zespołów mógłby być dodatkową motywacją dla studentów do wykonania danego etapu.
-Dzięki platformie prowadzący otrzymuje ujednolicony wgląd w bieżące postępy studentów, co za tym idzie nie ma potrzeby rozpatrywać już kolejnych grup indywidualnie.
-Platforma testowa rozwiązuje też problem różnych konfiguracji systemów.
-W ramach danego projektu studenci mają dostęp do skonfigurowanego wcześniej kontenera Dockerowego, na którym żądane jest, aby zadziałał ich projekt.
-Samo środowisko jest wyeksportowane dla studenta, tak aby mógł testować swój program lokalnie.
-Platforma umożliwia także zbieranie danych statystycznych dotyczących procesu pracy studentów.
-Te informacje mogą posłużyć dalszym usprawnieniom weryfikacji pracy grup projektowych.
+W celu zbadania platformy zasymulowano dwa projekty.
+Oba zadania zostały przeprowadzone na grupie testowej, składającej się z absolwentów Politechniki Warszawskiej.
+Pierwsze z nich jest projektem analogicznym do historycznego zadania wykonywanego przez studentów w~semestrze zima 2018 w~ramach przedmiotu ”Podstawy Programowania”.
+Drugie zadanie sprowadza się do napisania programu umożliwiającego przekształcenie obrazu.
 
-W ramach rozszerzenia funkcjonalności pracy dyplomowej można rozpatrzyć dodanie modułu służący do przedstawienia graficznego postępów studentów, między innymi w postaci wykresów.
+Badania systemu mają na celu sprawdzenie wpływu zastosowania platformy na wykonanie projektu, w tym ocenę usprawnienia pracy studentów i wpływu na ich sposób uczestnictwa w projekcie.
+Badania odbyły się na co dwu osobowej grupie testowej, której zadaniem było wykonanie dwóch rodzajów projektów.
+Dodatkowo badania systemu pozwoliły na ocenę łatwości i intuicyjności obsługi interfejsów oraz ocenę zadowolenia użytkowników z działania platformy.
 
-Możliwym rozszerzeniem jest również dodanie moduł generatora testów.
-W ramach pracy założono, że prowadzący manualnie definiuje uruchamiane przypadki testowe.
-Dodatkowym rozszerzeniem pracy mogłaby być automatyzacja procesu.
-Zamiast definiowania szeregu przypadków testowych w postaci plików wejściowych i oczekiwanych plików wyjściowych można byłoby do kontenera dołączyć wzorcowy program napisany przez prowadzącego.
-Ten moduł miałby za zadanie dla losowych danych wejściowych o zadanej strukturze porównywać wynik działania programu studentów z wynikiem otrzymanym ze wzorcowego programu dla tych samych danych.
+
+\section{Opis grupy testowej}
+
+Opis grupy testowej:
+- absolwenci
+- ukończyli EiTI
+- mają doświadczenie w braniu udziału w projektach grupowych na wydziale (podczas studiów)
+- znają podstawy programowania (nie trzeba ich uczyć)
+- mają komercyjne doświadczenie
+- mogą ocenić dzięki doświadczeniu czy rozwiązanie jest przydatne podczas studiów
+- mogą powiedzieć jak platforma wpływa na ich pracę w porównaniu do projektu bez platformy
+
+Dlaczego nie studenci:
+- doprowadzenie platformy do postaci MVP jest czasochłonne
+- MVP ciągle mogą wystąpić jakieś nieprzewidzanie zachowania błedy
+- ciężko dać studentom nie przetestowaną na mniejszej grupie platformę
+- źle działająca platforma mogłaby znstudenci pierwszego roku nie iechęcić studentów
+- w przypadku studentów pierwszego roku mogłaby utrudnić znacznie im pracę zamiast pomóc
+- nie da się wyeliminować wszystkich błędów na początkowej fazie projektu, trzeba utrzymywać i supportować aplikacje
+- trzeba byłoby przy okazji nauczyć programowania osoby z pierwszego roku
+- testy dla studentów pierwszego roku trwałyby cały semestr
+- testowanie na studentach i dodanie dodatkowych funkcjonalności i usprawnień - rozszerzenie pracy
+- studenci pierwszego roku nie mogą powiedzieć jak platforma wpływa na ich pracę w porównaniu do projektu bez platformy
+
+
+\section{Symulacja projektu historycznego}
+
+W przypadku symulacji zdefiniowanego zadania pełny cel projektu jest znany od samego początku.
+Wykonywanie kolejnych etapów przybliża studentów do wyznaczonego początkowo celu.
+Taki typ projektu jest bardzo często prowadzony w ramach różnych przedmiotów.
+W ramach pracy został przygotowany i zdefiniowany na platformie projekt symulujący ten rodzaj zadania.
+
+
+\subsection{Definicja projektu}
+
+TODO
+
+
+\subsection{Przebieg symulacji}
+
+TODO
+
+
+\subsection{Podsumowanie}
+
+TODO
+
+
+\section{Symulacja projektu z procesem integracji}
+
+Przekształcanie obrazu
+
+
+\subsection{Definicja projektu}
+
+TODO
+
+
+\subsection{Przebieg symulacji}
+
+TODO
+
+
+\subsection{Podsumowanie}
+
+TODO
+
+
+\section{Udostępnienie grupie testowej platformy z prawami administratora}
+
+
+W przypadku symulacji złożonego środowiska, znany jest ogólny cel projektu, natomiast nieznany jest pełny jego zakres.
+Nowe zadania definiowane są po zakończeniu poprzednich etapów.
+W tym przypadku prowadzący pełni rolę Agile Product Owner’a, który doprecyzowuje treści zadań w miarę kolejnych zapytań studentów.
+Taka symulacja ma za zadanie odzwierciedlić na grupie testowej rzeczywiste środowisko, z którym studenci spotkają się na co dzień w pracy zawodowej.
+
+
+TODO: Coś więcej napisać o Agile, dodać matrix (eee czy na pewno?)
+
+
+\section{Podsumowanie}
+
+
+
