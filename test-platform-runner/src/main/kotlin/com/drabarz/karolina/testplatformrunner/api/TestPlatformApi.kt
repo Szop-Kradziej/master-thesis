@@ -358,7 +358,7 @@ class TestPlatformApi(val loginService: LoginService,
     }
 }
 
-data class EmailDao(val email: String, val verified: Boolean, val primary: Boolean, val visibility: String)
+data class EmailDao(val email: String)
 data class LoginRequest(val code: String)
 data class LoginResponse(val token: String, val userName: String, val accessRights: String)
 data class GithubAuthRequest(val client_id: String, val client_secret: String, val code: String)
