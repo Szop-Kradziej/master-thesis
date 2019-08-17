@@ -16,6 +16,7 @@ import {CustomTableCell} from "../../../../styles/ProjectBoardStyles";
 import Table from "@material-ui/core/Table/Table";
 import TableBody from "@material-ui/core/es/TableBody/TableBody";
 import AddNewItemComponent from "../../../../utils/AddNewItemComponent";
+import * as Api from "../../../../Api";
 
 class TestCasesDetails extends Component {
 
@@ -51,10 +52,7 @@ class TestCasesDetails extends Component {
         data.append('input', this.inputFile.files[0]);
         data.append('output', this.outputFile.files[0]);
 
-        axios.post(backendUrl("/stage/testCase"), data)
-            .then(function (response) {
-                console.log("success");
-            })
+        Api.addNewTestCaseForStage(data)
             .then(this.handleCloseNewTestDialog)
             .then(this.props.stageChangedHandler)
             .catch(function (error) {

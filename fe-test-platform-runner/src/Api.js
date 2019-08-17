@@ -85,6 +85,10 @@ export function addNewStudent(projectName, groupName, studentName) {
     })
 }
 
+export function addNewTestCaseForStage(data) {
+    return postData(backendUrl("/stage/testCase"), data)
+}
+
 export function uploadProjectFile(data, type) {
     return postData(backendUrl('/project/' + type), data)
 }
