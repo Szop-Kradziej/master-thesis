@@ -7,7 +7,7 @@ export function addNewProject(projectName) {
     return fetch(backendUrl(`/project`), {
         method: "POST",
         credentials: "include",
-        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
         body: "projectName=" + projectName
     })
 }
