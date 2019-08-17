@@ -9,11 +9,12 @@ Przykładem takiego przedmiotu są między innymi ”Podstawy Programowania”, 
 W pierwszym podrozdziale omówiono potrzebę oraz korzyści płynące z realizowania projektów grupowych w ramach programu studiów. 
 Przedstawiony również został kierunek, w jakim będą zmierzać przedmioty projektowe w myśl reformy edukacji z roku 2018.
 
+W podrozdziale \ref{programs-testing} omówiono sposoby oceny prawidłowości działania aplikacji.
+Opisano tam również potrzebę nauki umiejętności testowania aplikacji przez studentów studiów informatycznych.
+
 Kolejny podrozdział opisuje aktualny proces weryfikacji pracy studentów dla rozpatrywanych projektów grupowych.
 Przybliżone są w nim problemy, na jakie napotykają prowadzący oraz studenci uczestniczący w tego typu przedmiocie.
 
-W podrozdziale \ref{programs-testing} omówiono potrzebę nauki umiejętności testowania aplikacji przez studentów studiów informatycznych.
-Przedstawiono także podstawowe rodzaje metod testowania: testowanie białej i czarnej skrzynki, wraz z wadami oraz zaletami tych podejść.
 
 Podrozdział \ref{tools} zawiera przegląd dostępnych, istniejących narzędzi wspomagających weryfikację umiejętności programistycznych użytkowników oraz ich zastosowanie w branży informatycznej.
 
@@ -42,7 +43,7 @@ Wyróżniono cztery kategorie stanowisk: analityk systemowy, projektant oprogram
 Dla każdego ze stanowisk najczęściej wymaganą cechą jest komunikatywność.
 Praca w grupie jest kolejną wskazywaną miękką umiejętnością.
 Jest ona ceniona wyżej niż samodzielność w wykonywaniu zadań.
-Zestawienie pożądanych umiejętności miękkich, jakimi powinni posługiwać się programiści, uzyskanych w ramach pracy F.~Ahmed, L. F. Capretz, S. Bouktif i P. Campbell, zostało przedstawione na rysunku \ref{fig:soft-skills}.
+Zestawienie pożądanych umiejętności miękkich, jakimi powinni posługiwać się programiści, uzyskanych w ramach pracy F.~Ahmed zostało przedstawione na rysunku \ref{fig:soft-skills}.
 
 \begin{figure}[h]
     \centering
@@ -66,6 +67,92 @@ W myśl ustawy ”Prawo o szkolnictwie wyższym i nauce” z dnia 20 lipca 2018 
 Jest to podyktowane dążeniem do zapewnienia wysokiej jakości kształcenia oraz właściwego przygotowania do wykonywania zawodu.
 
 \vfill
+
+TODO: (FIX) Do tej pory było o tym, czemu warto opierać naukę na projektach zespołowych (i z tego wynika sens Pani pracy - czemu w ogóle zajmować się takim obszarem). Warto też wspomnieć krótko, że wiąże się z tm jednak wiele problemów, w szczególności dotyczących oceny, podtrzymywania motywacji, itp. - co zostanie omówione w dalszej części tego rozdziału.
+
+\section{Sposoby oceny działania aplikacji}
+\label{programs-testing}
+
+Ważnym elementem oceny rezultatu pracy grupy studentów jest zweryfikowanie poprawności działania programów dla zadanych danych wejściowych.
+
+Można byłoby oczekiwać, aby studenci sami dodawaliby przypadki testowe dla swoich aplikacji.
+Podczas prezentacji programów prowadzącemu do ich zadania należałoby udowodnić, że kończą się one pozytywnym wynikiem.
+Niestety ciężko ocenić trafność napisanych przez studentów przypadków testowych.
+Podjęcie się takiego zadania przez prowadzącego wymagałoby od niego jeszcze bardziej indywidualnego podejścia do weryfikacji pracy grupy niż obecnie, w przypadku sprawdzenia wyniku działania samego programu.
+Jest to związane między innymi z tym, że część napisanych przez studentów testów mogłaby się powtarzać.
+Aby poprawnie ocenić jakość przypadków testowych należałoby rozważyć  między innymi priorytetyzajcę testowanych funkcjonalności, użyte narzędzia i poprawność asercji.
+Samo zadanie napisania testów dla tworzonego programu mogłoby się okazać wyjątkowo ciężkie do zrealizowania w przypadku studentów, którzy są dopiero na początku swojej kariery programistycznej.
+Takie osoby dopiero uczą się struktur języka i bardzo często nie mają wystarczająco dużo wiedzy, aby napisać poprawnie testy \cite{tests-and-begginers}.
+
+Na podstawie wyników ankiety portalu Stack Overflow z roku 2019 widać, że umiejętność testowania kodu jest bardzo istotna w przyszłej pracy \cite{stack-overflow-survey}.
+W ramach badania zapytano ankietowanych, czy w ich miejscach pracy używa się testów jednostkowych podczas wytwarzania oprogramowania.
+Na rysunku \ref{fig:unit-tests-use} przedstawiono wyniki ankiety.
+W~przybliżeniu jeden na trzech ankietowanych nie używa testów najniższego poziomu w swoim procesie, ale zaledwie 4.4\% jest zadowolna z takiego podejścia.
+95.6\% osób testuje jednostkowo swoje aplikacje lub uważa, że ten rodzaj testów byłby przydatny w procesie wytwarzania oprogramowania.
+Warty uwagi jest również rezultat otrzymany w powiązaniu używania testów jednostkowych z poziomem satysfakcji z pracy ankietowanych, który został przedstawiony na rysunku \ref{fig:unit-tests-satisfaction}.
+Osoby używające tego rodzaju testów są bardziej zadowolone ze swojej pracy.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/unit-tests-use.png}
+    \caption{Używanie testów jednostkowych w procesie wytwarzania oprogramowania (źródło: \cite{stack-overflow-survey}).}
+    \label{fig:unit-tests-use}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter02/unit-tests-satisfaction.png}
+    \caption{Powiązanie używania testów jednostkowych i zadowolenia z pracy (źródło: \cite{stack-overflow-survey}).}
+    \label{fig:unit-tests-satisfaction}
+\end{figure}
+
+Umiejętność testowania kodu jest często sprawdzana podczas procesu rekrutacyjnego.
+Zarówno w przypadku, gdy kandydat ma za zadanie zaimplementować małe zdanie algorytmiczne, jak i napisać działającą aplikację.
+W obu przypadkach musi on udowodnić poprawność swojego rozwiązania poprzez testy.
+Niezależnie czy poprzez analizę słowną przebiegu działania programu, czy przez zaimplementowane testy wewnątrz aplikacji.
+W~pozycji pomagającej przygotować się do procesu rekrutacji ”Cracking the coding interview” \cite{cracking-the-coding-interview} testowaniu został poświęcony odrębny rozdział.
+
+Programiści ćwiczący umiejętność testowania aplikacji potrafią lepiej wychwytywać potencjalne błędy na wczesnym etapie tworzenia oprogramowania \cite{testing-better-error-catch}.
+W przypadku małych i średnich firm wytwarzających oprogramowanie z wykorzystaniem podejścia Agile, często nie ma oddzielnych zespołów testerów.
+W takich software house'ach zadaniem inżyniera oprogramowanie jest nie tylko napisanie działającej funkcjonalność, ale również samodzielne przetestowanie jej, poprzez testy jednostkowe i integracyjne.
+W dużych korporacjach wykorzystujących metodyki Agile umiejętność testowania jest również istotna ze względu na ścisłą współpracę między interdyscyplinarnymi członkami zespołu.
+
+Wśród wartości fundamentalnych dla podejścia XP (ang. Extreme Programming) do wytwarzania oprogramowania jest wymieniona informacja zwrotna (ang. feedback) \cite{extreem-programming}.
+Opisywana jest ona jako szybkość oceny poprawności dodawanego kodu i jego interakcji z innymi częściami systemu oraz oszacowania regresji.
+Szybką informację zwrotną dotyczącą dodawanej funkcjonalności można osiągnąć między innymi przez utrzymywanie poprawnych przypadków testowych.
+
+W literaturze można znaleźć wiele prac poświęconych testowaniu programów i wprowadzaniu nauki umiejętności testowania w ramach programu studiów.
+Kładziony jest coraz większy nacisk na tę umiejętność \cite{tests-important}.
+Wśród zamieszczonych opinii powszechną jest, że testowanie aplikacji jest ważne i potrzebne od samego początku studiów \cite{test-from-scratch}.
+Wśród propozycji można znaleźć pomysł nauki pisania programów w metodyce TDD (ang. Test Driven Development) już od pierwszego semestru studiów \cite{tdd-on-start}.
+Wymagałoby to jednak wysokich kwalifikacji prowadzących co do znajomości metodyki i jej praktyki.
+Warto zaznaczyć, że TDD opiera się na pisaniu testów jednostkowych, co, jak zostało wspomniane wcześniej, wymaga wiedzy na temat programowania.
+
+Jak zostało napisane wcześniej, studentom rozpoczynającym naukę programowania bardzo ciężko byłoby napisać odpowiednie testy do swoich programów.
+Praktycznie niemożliwe jest też wprowadzenie na początku studiów całego przedmiotu poświęconego nauce pisania testów, ze względu na przepełniony obecnie program studiów \cite{overflow-studies-program}.
+Warto jednak pokazywać studentom zalety testowania aplikacji.
+Można to osiągnąć między innymi przez dostarczanie studentom zdefiniowanych przez prowadzących poprawnych przypadków testowych dla ich programów.
+
+W zależności od poziomu złożoności aplikacji wysokie pokrycie testowe mogłoby być jednak trudne do utrzymania.
+Wraz ze wzrostem skomplikowania programów tworzenie przypadków testowych przez prowadzących stawałoby się coraz bardziej czasochłonne.
+
+Ciekawym pomysłem zmniejszenia czasu potrzebnego na dodawanie testów jest zobligowanie studentów do samodzielnego pisania przypadków testowych, zebranie wszystkich testów i uruchomienie programu każdej grupy dla wszystkich zebranych przypadków.
+Słuszność takiego podejścia została opisana w artykule \cite{write-tests-by-students}.
+Warto jednak zaznaczyć, że zadaniem prowadzącego w tym przypadku byłaby ocena jakości przypadków testowych.
+Dodatkowo mogłoby się okazać, że zbiór testów ma stosunkowo niskie pokrycie, co jest wysoce prawdopodobne w przypadku studentów rozpoczynających naukę programowania.
+Można jednak oczekiwać, że im większe doświadczenie studentów tym lepsze pokrycie testami aplikacji osiągniemy.
+
+Innym pomysłem na zmniejszenie czasochłonności tworzenia testów akceptacyjnych jest porównywanie wyników programów studentów ze wzorcowym programem prowadzącego uruchomionym dla tych samych danych wejściowych.
+W tym przypadku dane wejściowe mogłyby być generowane losowo.
+Ten sposób chroniłby przed próbą sztywnej implementacji programu, która generowałaby właściwy wynik tylko dla znanych wcześniej przypadków testowych.
+To podejście ma też swoje wady, ponieważ używając zwykłego generatora losowego można uzyskać bardzo niskie pokrycie i nie przetestować poprawnie przypadków brzegowych.
+
+Kolejnym innowacyjnym podejściem jest wykorzystanie metod ML (ang. Machine Learning) do generowania przypadków testowych.
+Ta metoda została opisana w pracy doktorskiej \cite{teach-testing-thesis}.
+Dzięki uczeniu maszynowemu z wykorzystaniem prac studentów z poprzednich lat uzyskano narzędzie pozwalające generować przypadki testowe z bardzo wysokim pokryciem.
+Trudno byłoby jednak zastosować podobną metodę w ramach proponowanej platformy, ze względu na brak dostępnych i dobrze opisanych programów studentów poprzednich lat.
+
+
 
 \section{Proces weryfikacji pracy studentów}
 
@@ -108,93 +195,11 @@ Dokumentacja programów również nie jest zawsze pełna.
 Usprawnienie w postaci systemu kontroli wersji ułatwia dostęp do kodu programów studentów i pozwala przeglądać go na przystosowanym do tego interfejsie.
 Nie eliminuje to jednak czasochłonnego, indywidualnego podejścia do oceny każdej z grup i etapu.
 
-
-\section{Testowanie aplikacji}
-\label{programs-testing}
-
 Dzięki wprowadzeniu systemu kontroli wersji można uzyskać szereg statystyk dotyczących pracy studentów.
 Nie są to jednak pełne informacje, które mogłyby interesować prowadzącego.
 Sam kod zamieszczany w systemie, nie jest wystarczający do oceny etapu.
 Co więcej, jego samodzielna analiza nie poprawiłaby, a być może nawet pogorszyła, czasochłonność weryfikacji wyników cząstkowych.
 Ważnym elementem oceny poszczególnych etapów jest ocena poprawności działania uruchomionych programów dla zadanych danych wejściowych.
-
-Można byłoby oczekiwać, aby studenci sami dodawaliby przypadki testowe dla swoich aplikacji.
-Podczas prezentacji do ich zadania należałoby udowodnić, że kończą się one pozytywnym wynikiem.
-Niestety ciężko ocenić trafność napisanych przez studentów przypadków testowych.
-Podjęcie się takiego zadania przez prowadzącego wymagałoby od niego jeszcze bardziej indywidualnego podejścia do weryfikacji pracy grupy niż obecnie, w przypadku sprawdzenia wyniku działania samego programu.
-Jest to związane między innymi z tym, że część napisanych przez studentów testów mogłaby się powtarzać.
-Aby poprawnie ocenić jakość przypadków testowych należałoby rozważyć  między innymi priorytetyzajcę testowanych funkcjonalności, użyte narzędzia i poprawność asercji.
-Samo zadanie napisania testów dla tworzonego programu mogłoby się okazać wyjątkowo ciężkie do zrealizowania w przypadku studentów, którzy są dopiero na początku swojej kariery programistycznej.
-Takie osoby dopiero uczą się struktur języka i bardzo często nie mają wystarczająco dużo wiedzy, aby napisać poprawnie testy \cite{tests-and-begginers}.
-
-Na podstawie wyników ankiety portalu Stack Overflow z roku 2019 widać, że umiejętność testowania kodu jest bardzo istotna w przyszłej pracy \cite{stack-overflow-survey}.
-W ramach badania zapytano ankietowanych, czy w ich miejscach pracy używa się testów jednostkowych podczas wytwarzania oprogramowania.
-Na rysunku \ref{fig:unit-tests-use} przedstawiono wyniki ankiety.
-W~przybliżeniu jeden na trzech ankietowanych nie używa testów najniższego poziomu w swoim procesie, ale zaledwie 4.4\% jest zadowolna z takiego podejścia.
-95.6\% osób testuje jednostkowo swoje aplikacje lub uważa, że ten rodzaj testów byłby przydatny w procesie wytwarzania oprogramowania. 
-Warty uwagi jest również rezultat otrzymany w powiązaniu używania testów jednostkowych z poziomem satysfakcji z pracy ankietowanych, który został przedstawiony na rysunku \ref{fig:unit-tests-satisfaction}.
-Osoby używające tego rodzaju testów są bardziej zadowolone ze swojej pracy.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 13cm]{chapter02/unit-tests-use.png}
-    \caption{Używanie testów jednostkowych w procesie wytwarzania oprogramowania (źródło: \cite{stack-overflow-survey}).}
-    \label{fig:unit-tests-use}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 13cm]{chapter02/unit-tests-satisfaction.png}
-    \caption{Powiązanie używania testów jednostkowych i zadowolenia z pracy (źródło: \cite{stack-overflow-survey}).}
-    \label{fig:unit-tests-satisfaction}
-\end{figure}
-
-Umiejętność testowania kodu jest często sprawdzana podczas procesu rekrutacyjnego.
-Zarówno w przypadku, gdy kandydat ma za zadanie zaimplementować małe zdanie algorytmiczne, jak i napisać działającą aplikację.
-W obu przypadkach musi on udowodnić poprawność swojego rozwiązania poprzez testy. 
-Niezależnie czy poprzez analizę słowną przebiegu działania programu, czy przez zaimplementowane testy wewnątrz aplikacji.
-W~pozycji pomagającej przygotować się do procesu rekrutacji ”Cracking the coding interview” \cite{cracking-the-coding-interview} testowaniu został poświęcony odrębny rozdział.
-
-Programiści ćwiczący umiejętność testowania aplikacji potrafią lepiej wychwytywać potencjalne błędy na wczesnym etapie tworzenia oprogramowania \cite{testing-better-error-catch}.
-W przypadku małych i średnich firm wytwarzających oprogramowanie z wykorzystaniem podejścia Agile, często nie ma oddzielnych zespołów testerów.
-W takich software house'ach zadaniem inżyniera oprogramowanie jest nie tylko napisanie działającej funkcjonalność, ale również samodzielne przetestowanie jej, poprzez testy jednostkowe i integracyjne.
-W dużych korporacjach wykorzystujących metodyki Agile umiejętność testowania jest również istotna ze względu na ścisłą współpracę między interdyscyplinarnymi członkami zespołu.
-
-Wśród wartości fundamentalnych dla podejścia XP (ang. Extreme Programming) do wytwarzania oprogramowania jest wymieniona informacja zwrotna (ang. feedback) \cite{extreem-programming}.
-Opisywana jest ona jako szybkość oceny poprawności dodawanego kodu i jego interakcji z innymi częściami systemu oraz oszacowania regresji.
-Szybką informację zwrotną dotyczącą dodawanej funkcjonalności można osiągnąć między innymi przez utrzymywanie poprawnych przypadków testowych.
-
-W literaturze można znaleźć wiele prac poświęconych testowaniu programów i wprowadzaniu nauki umiejętności testowania w ramach programu studiów.
-Kładziony jest coraz większy nacisk na tę umiejętność \cite{tests-important}.
-Wśród zamieszczonych opinii powszechną jest, że testowanie aplikacji jest ważne i potrzebne od samego początku studiów \cite{test-from-scratch}.
-Wśród propozycji można znaleźć pomysł nauki pisania programów w metodyce TDD (ang. Test Driven Development) już od pierwszego semestru studiów \cite{tdd-on-start}.
-Wymagałoby to jednak wysokich kwalifikacji prowadzących co do znajomości metodyki i jej praktyki.
-Warto zaznaczyć, że TDD opiera się na pisaniu testów jednostkowych, co, jak zostało wspomniane wcześniej, wymaga wiedzy na temat programowania.
-
-Jak zostało napisane wcześniej, studentom rozpoczynającym naukę programowania bardzo ciężko byłoby napisać odpowiednie testy do swoich programów.
-Praktycznie niemożliwe jest też wprowadzenie na początku studiów całego przedmiotu poświęconego nauce pisania testów, ze względu na przepełniony obecnie program studiów \cite{overflow-studies-program}.
-Warto jednak pokazywać studentom zalety testowania aplikacji.
-Można to osiągnąć między innymi przez dostarczanie studentom zdefiniowanych przez prowadzących poprawnych przypadków testowych dla ich programów.
-
-W zależności od poziomu złożoności aplikacji wysokie pokrycie testowe mogłoby być jednak trudne do utrzymania.
-Wraz ze wzrostem skomplikowania programów tworzenie przypadków testowych przez prowadzących stawałoby się coraz bardziej czasochłonne.
-
-Ciekawym pomysłem zmniejszenia czasu potrzebnego na dodawanie testów jest zobligowanie studentów do samodzielnego pisania przypadków testowych, zebranie wszystkich testów i uruchomienie programu każdej grupy dla wszystkich zebranych przypadków. 
-Słuszność takiego podejścia została opisana w artykule \cite{write-tests-by-students}.
-Warto jednak zaznaczyć, że zadaniem prowadzącego w tym przypadku byłaby ocena jakości przypadków testowych.
-Dodatkowo mogłoby się okazać, że zbiór testów ma stosunkowo niskie pokrycie, co jest wysoce prawdopodobne w przypadku studentów rozpoczynających naukę programowania.
-Można jednak oczekiwać, że im większe doświadczenie studentów tym lepsze pokrycie testami aplikacji osiągniemy.
-
-Innym pomysłem na zmniejszenie czasochłonności tworzenia testów akceptacyjnych jest porównywanie wyników programów studentów ze wzorcowym programem prowadzącego uruchomionym dla tych samych danych wejściowych.
-W tym przypadku dane wejściowe mogłyby być generowane losowo.
-Ten sposób chroniłby przed próbą sztywnej implementacji programu, która generowałaby właściwy wynik tylko dla znanych wcześniej przypadków testowych.
-To podejście ma też swoje wady, ponieważ używając zwykłego generatora losowego można uzyskać bardzo niskie pokrycie i nie przetestować poprawnie przypadków brzegowych.
-
-Kolejnym innowacyjnym podejściem jest wykorzystanie metod ML (ang. Machine Learning) do generowania przypadków testowych. 
-Ta metoda została opisana w pracy doktorskiej \cite{teach-testing-thesis}. 
-Dzięki uczeniu maszynowemu z wykorzystaniem prac studentów z poprzednich lat uzyskano narzędzie pozwalające generować przypadki testowe z bardzo wysokim pokryciem.
-Trudno byłoby jednak zastosować podobną metodę w ramach proponowanej platformy, ze względu na brak dostępnych i dobrze opisanych programów studentów poprzednich lat.
-
 
 
 \section{Narzędzia wspomagające ocenę umiejętności programistycznych}

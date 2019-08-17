@@ -1,41 +1,66 @@
 \chapter{Badania}
 \label{chapter:research}
 
-W celu zbadania platformy zasymulowano dwa projekty.
-Oba zadania zostały przeprowadzone na grupie testowej, składającej się z absolwentów Politechniki Warszawskiej.
-Pierwsze z nich jest projektem analogicznym do historycznego zadania wykonywanego przez studentów w~semestrze zima 2018 w~ramach przedmiotu ”Podstawy Programowania”.
-Drugie zadanie sprowadza się do napisania programu umożliwiającego przekształcenie obrazu.
-
-Badania systemu mają na celu sprawdzenie wpływu zastosowania platformy na wykonanie projektu, w tym ocenę usprawnienia pracy studentów i wpływu na ich sposób uczestnictwa w projekcie.
-Badania odbyły się na co dwu osobowej grupie testowej, której zadaniem było wykonanie dwóch rodzajów projektów.
+Badania systemu służą do sprawdzenia wpływu zastosowania platformy na wykonanie projektu, w tym ocenę usprawnienia pracy studentów i wpływu na ich sposób uczestnictwa w projekcie.
 Dodatkowo badania systemu pozwoliły na ocenę łatwości i intuicyjności obsługi interfejsów oraz ocenę zadowolenia użytkowników z działania platformy.
+W celu zbadania platformy zasymulowano dwa projekty.
+
+Oba zadania zostały przeprowadzone na grupie testowej, składającej się z absolwentów Politechniki Warszawskiej.
+Opis motywów doboru członków grupy testowej znajduje się w podrozdziale \ref{research_group}.
+
+Pierwsza z symulacji jest przeprowadzeniem projektu analogicznyego do historycznego zadania wykonywanego przez studentów w~semestrze zima 2018 w~ramach przedmiotu ”Podstawy Programowania”.
+Pełna definicja problemu, przebieg symulacji oraz wnioski zostały przedstawione w podrozdziale \ref{research_penguins}.
+
+Drugie zadanie sprowadza się do napisania programu umożliwiającego przekształcenie obrazu.
+Ma ono na celu zbadanie użyteczności tworzenia procesów integracji programów w ramach platformy.
+Opis tej symulacji znajduje się w podrozdziale \ref{research_image}.
+
+Kolejny podrozdział zawiera wnioski z nadania absolwentom uprawnień administratora podczas testowania platformy.
+Okazało się, że bardzo chętnie tworzyli oni własne etapy i testowali swój kod przy użyciu narzędzia.
+Doprowadziło to do wniosku, że platforma mogłaby zostać rozszerzona w przyszłości (nie tracąc dotychczasowych funkcjonalności) tak, aby możliwe było również przeprowadzenie z jej użyciem projektów w metodyce Agile.
+
+Ostatni podrozdział \ref{research_summary} zawiera podsumowanie przeprowadzonych badań.
 
 
 \section{Opis grupy testowej}
+\label{research_group}
 
-Opis grupy testowej:
-- absolwenci
-- ukończyli EiTI
-- mają doświadczenie w braniu udziału w projektach grupowych na wydziale (podczas studiów)
-- znają podstawy programowania (nie trzeba ich uczyć)
-- mają komercyjne doświadczenie
-- mogą ocenić dzięki doświadczeniu czy rozwiązanie jest przydatne podczas studiów
-- mogą powiedzieć jak platforma wpływa na ich pracę w porównaniu do projektu bez platformy
+W skład grupy testowej, dla której zostały przeprowadzone obie badane symulacje projektów wchodziło dwóch absolwentów Politechniki Warszawskiej.
+Obie osoby ukończyły wydział Elektroniki i Technik Informacyjnych.
 
-Dlaczego nie studenci:
-- doprowadzenie platformy do postaci MVP jest czasochłonne
-- MVP ciągle mogą wystąpić jakieś nieprzewidzanie zachowania błedy
-- ciężko dać studentom nie przetestowaną na mniejszej grupie platformę
-- źle działająca platforma mogłaby znstudenci pierwszego roku nie iechęcić studentów
-- w przypadku studentów pierwszego roku mogłaby utrudnić znacznie im pracę zamiast pomóc
-- nie da się wyeliminować wszystkich błędów na początkowej fazie projektu, trzeba utrzymywać i supportować aplikacje
-- trzeba byłoby przy okazji nauczyć programowania osoby z pierwszego roku
-- testy dla studentów pierwszego roku trwałyby cały semestr
-- testowanie na studentach i dodanie dodatkowych funkcjonalności i usprawnień - rozszerzenie pracy
-- studenci pierwszego roku nie mogą powiedzieć jak platforma wpływa na ich pracę w porównaniu do projektu bez platformy
+Absolwenci brali udział w projektach grupowych realizowanych na wydziale EiTI i znają podstawy programowania.
+Dzięki temu mają pełne zaplecze wiedzy potrzebnej do realizacji każdego z symulowanych projektów.
+Mogą oni dzięki swojemu doświadczeniu ocenić czy zastosowanie platformy byłoby użyteczne podczas prowadzenia projektów studenckich.
+Absolwenci potrafią także wskazać różnice w prowadzeniu projektu bez użycia platformy oraz z jej wykorzystaniem.
+
+Obie osoby posiadają również doświadczenie komercyjne, dzięki temu są w stanie ocenić narzędzie od strony technicznej i zasugerować dodatkowe funkcjonalności mające na celu zwiększenie użyteczności platformy.
+
+Drugą rozpatrywaną grupą osób, która mogłaby wydawać się właściwą do przetestowania użyteczności platformy są obecni studenci.
+Taki pomysł zespołu testowy został jednak odrzucony ze względu na ciągły proces udoskonalania narzędzia podczas badań.
+
+W testowanej wersji MVP ciągle mogą wystąpić nieprzewidziane zachowania platformy.
+Wynika to z faktu, że w początkowej fazie projektu ciężko jest wyeliminować wszystkie błędy.
+Do ich całkowitego usunięcia trzeba utrzymywać i wspierać aplikację na bieżąco.
+Takie niewielkie problemy pojawiły się podczas badania platformy przez grupę absolwentów i były na bieżąco naprawiane.
+
+Udostępnienie studentom platformy bez przetestowania jej na mniejszej grupie mogłoby spowodować rezultat odwrotny do zamierzonego.
+Zamiast wykorzystać zalety rozwiązania takie osoby mogłyby zniechęcić się ze względu na występujące błędy.
+Sam czas naprawy błędów mógłby nie być satysfakcjonujący dla studentów i pogłębiać flustrację.
+W przypadku studentów pierwszego roku przekazanie narzędzia na takim etapie pracy zdecydowanie utrudniłoby im wykonanie projektu.
+
+Warto również zaznaczyć, że studenci zwłaszcza pierwszego roku nie mają szerokiego doświadczenia w uczestnictwie w projektach grupowych.
+Stąd wprowadzenie dodatkowych narzędzi mogłoby wzbudzać u nich początkową niechęć.
+Mogłoby okazać się, że dopiero po zebraniu większego doświadczenia mogliby właściwie ocenić wpływ platformy na proces ich pracy.
+
+Samo doprowadzenie platformy do użytecznej formy i zaimplementowanie wszystkich niezbędnych funkcjonalności było czasochłonne.
+A w przypadku studentów należałoby udostępnić im platformę na pełen semestr, co znacznie wydłużyłoby proces pisania pracy.
+
+Przekazanie platformy w obecnej wersji dla studentów i monitorowanie ich interakcji z platformą podczas pełnego projektu jest jedną ze wskazanych możliwości kontynuacji pracy.
+Dzięki analizie przebiegu rzeczywistego projektu uczelnianego można byłoby zrozumieć lepiej proces pracy studentów i uzupełnić platformę o dodatkowe, pożyteczne funkcjonalności.
 
 
 \section{Symulacja projektu historycznego}
+\label{research_penguins}
 
 W przypadku symulacji zdefiniowanego zadania pełny cel projektu jest znany od samego początku.
 Wykonywanie kolejnych etapów przybliża studentów do wyznaczonego początkowo celu.
@@ -59,6 +84,8 @@ TODO
 
 
 \section{Symulacja projektu z procesem integracji}
+\label{research_image}
+
 
 Przekształcanie obrazu
 
@@ -80,6 +107,129 @@ TODO
 
 \section{Udostępnienie grupie testowej platformy z prawami administratora}
 
+- do testow udostepniono platforme z prawami admina
+
+- pozwalalo to na samodzielne tworzenie projektow
+
+- mialo na celu lepsze wychwycenie nieprawidlowosci w dzialaniu platformy
+
+- przetestowanie czy integracja FE z BE jest właściwa
+
+- ocena UI i UX (intuicyjności platformy)
+
+- WYNIKI:
+
+- absolwenci chetnie tworzyli własne projekty
+
+- z zaangażowaniem tworzyli przypadki testowe i programy spelniajace je
+
+- WNIOSKI:
+
+- platforma mogłaby posłużyć do monitorowania projektów w metodyce Agile
+
+- polegałoby to na tym, że studenci na początku sem dostają luźno zdefiniowane zadanie bez szczegółów
+
+- w trakcie trwania projektu doprecyzowują je z prowadzącym
+
+- sami tworzą kolejne etapy i testy akceptacyjne
+
+- prowadzący może w dowolnym momencie podejrzeć postępy prac
+
+- projekty mogą być zupełnie różne i wydaje się że podejście indywidualne do każdego z zespołów jest nieuniknione
+
+- rzeczywiście jest ale można je troche zautomatyzować i ograniczyć
+
+- tak jak w przypadku tradycyjnego projektu tak i tu prowadzacy ma jednolity wglad w postepy studentów
+
+- oczekuje sie ze etapy beda definiowane analogicznie w ramach kazdego z projektow
+
+- na pierwszy rzut oka widac postepty prac poprzez stworzone etapy
+
+- w zwizaku z tym w ramach pracy dokonano zgrubnej analizy przeprowadzenia tego typu projektu
+
+- wymagałoby to jedank pewnych mniejszych lub większych modyfikacji platformy
+
+- należałoby przeanalizować lepiej problemy stojące za przeprowadzeniem projektu w tej metodyce
+
+- napewo:
+
+    - dodanie nowego poziomu uprawnień
+
+    - w modelu MVP zakłada się że prowadzący edytują tylko swoje projekty i nie zmieniają innych (na złość komuś)
+
+    - do tej pory tylko student i prowadzący
+
+    - należałoby dodać studenta z możliwością zarządzania wskazanym projektem
+
+    - wymagało by to dodatkowej relacji w bazie "student w projekcie"
+
+    - warto zauważyć, że taka rola dalej nie mogłaby mieć pewłnych uprawnień
+
+    - trzeba byłoby przeanalizować i ustalić zakres uprawnień takiej roli
+
+    - np studenci nie powinni miec możliwości usunięcia całego projektu
+
+    - być może nie powinni również móc usuwać etapów które zostały przedstawione i zatwierdzone w jakiś sposób przez prowadzącego
+
+    - lepsze zrównoleglenie
+
+    - ponieważ  w tym momencie jedynym zasobem do którego strzeżony jest równoległy dostęp jest uruchamianie programów
+
+    - lepsze statystki
+
+    - na chwile obecną statystyki zbierane tylko z uruchomień programów
+
+    - dla MVP zakłada się ze prowadzący definiuje projekt na początku semestru i udostępnia go studentom
+
+    - zakład się ze prowadzący od poczatku ma pewne wymagania i wie do jakiej postaci chcialby aby studenci doprowadzili swoje aplikacje
+
+    - może on dokonywać modyfikacji w trakcie trwania semestru, dodawać etapy i testy jednak takie modyfikacje nie powinny być duże
+
+    - potrzeba było by zeby zbierać również informacje z tworzenia etapów oraz przechowywać informacje dla nieistniejących etapów
+
+    - takie dane mogłyby chociaż nie koniecznie musiały posłużyć do oceny pracy studentów w takcie semestru
+
+    - albo chociaż oceny zaangażowania w porównaniau do innych grup
+
+    - dane na pewno mogą posłużyć do analizy procesu pracy studentów podczas takiego typu projektu i zrozumienia specyfiki takiej pracy
+
+    - dodatkowe funkcjonalności
+
+    - jak zostało powiedziane wcześniej zostawienie studentom do napisania testow akceptacyjnych moze skutkowac niskim pokryciem testowym aplikacji
+
+    - prowadzacy mialby wglad do testow na wysokim poziomie
+
+    - nie musialby wnikac bezposrednio i bez potrzeby  w kod studentow w celu zrozumienia co ma zrobic dany etap
+
+    - samodzielne zrozumienie danych mimo wysokiego poziomu testow moglaby by jednak wciaz czasochlonne i klopotliwe
+
+    - usprawnienieniem procesu mogloby byc daodanie funkcjonalności komentarza dla przypadków testowych
+
+    - mozliwe ze warto byłoby dodać milestone - czyli zatwierdzenie etapów przez prowadzącego do danego momentu
+
+    - zatwierdzanie dalej powinno obywać się po spotkaniu z prowadzącym
+
+    - mogłoby to pomóc w ocenie końcowej kontaktu z prowadzącym podczas projektu
+
+- w większości nie są to trudne modyfikacje
+
+- wymagają jednak dodatkowej pełniejszej analizy
+
+- jednak dodanie nawet drobnych funkcjonalności i przetestowanie ich jest czasochłonne
+
+- dodatkowo dodanie nowej roli i ustalenie równoległego udostępniania większej ilość zasobów powinno być dobrze przemyślane i zaprojektowane przez implemetacją
+
+- w tym trzeba ustalić dokładnie które endpointy wymagają dostępu i które zasoby powinny być lockowane
+
+- te pomysly wyszly podczas badania gotowej platformy
+
+- jest to moment w którym projekt MVP platformy jest gotowy i zweryfikowany
+
+- dodanie na szybko (na tym etapie pracy) funkcjonalności doprowadziłoby do destabilizacji platformy i nie przyniosło pozytywnych rezultatów
+
+- stąd udostępnienie platformy dla projektów w systematyce Agile jest proponowanym rozszerzeniem pracy magisterskiej
+
+
 
 W przypadku symulacji złożonego środowiska, znany jest ogólny cel projektu, natomiast nieznany jest pełny jego zakres.
 Nowe zadania definiowane są po zakończeniu poprzednich etapów.
@@ -91,6 +241,9 @@ TODO: Coś więcej napisać o Agile, dodać matrix (eee czy na pewno?)
 
 
 \section{Podsumowanie}
+\label{research_summary}
+
+- można rozszerzyć o projekty Agile i wtedy platforma staje sie super uniwersalnym narzędziem
 
 
 

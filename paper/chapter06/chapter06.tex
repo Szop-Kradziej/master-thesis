@@ -1,52 +1,59 @@
 \chapter{Weryfikacja}
 \label{chapter:verify}
 
-Weryfikacja działania platformy odbyła się na podstawie uruchomienia programów studentów napisanych w ramach przedmiotu ”Podstawy Programowania” w semestrze zima 2018.
+Weryfikacja działania platformy odbyła się na podstawie uruchomienia na niej historycznych programów studentów.
+Wykorzystane aplikacje zostały stworzone w ramach przedmiotu ”Podstawy Programowania” w semestrze zima 2018.
+
 Proces weryfikacji można podzielić na następujące kroki:
-\begin{itemize}
-    \item Przeanalizowanie zadania projektowego.
+\begin{enumerate}
+    \item Przeanalizowanie zadania projektowego i dostępnych aplikacji studenckich.
     \item Lokalne uruchomienie programów.
     \item Zdefiniowanie nowego projektu na platformie wraz z przypadkami testowymi.
     \item Uruchomienie aplikacji studentów z poprzednich lat na platformie i przedstawienie otrzymanych wyników.
     \item Podsumowanie.
-\end{itemize}
+\end{enumerate}
 
-Przebieg powyższych kroków został opisany w kolejnych podrozdziałach od \ref{analysis_students_projects} do \ref{verification_summary}.
+Przebieg powyższych kroków został opisany w kolejnych podrozdziałach.
 
 
 \section{Analiza zadania projektowego}
 \label{analysis_students_projects}
 
 W celu weryfikacji platformy posłużono się kodem studentów napisanym w ramach przedmiotu podstawy programowania.
-Zadaniem studentów było napisanie programu umożliwiającego interaktywną oraz autonomiczną grę Hey, that’s mine fish.
-Programy miały za zadanie wczytać wejściowy układ planszy z pliku, wykonać zadaną opercaję oraz zapisać zmodyfikowany układ planszy do pliku.
+Zadaniem studentów było napisanie programu odzwierciedlającego logikę gry planszowej ”Hey, that’s mine fish”.
+Aplikacja miała umożliwiać interaktywny oraz autonomiczny rodzaj rozgrywki.
+Zadaniem programów było wczytanie wejściowego układ planszy z pliku, wykonanie zadanej akcji oraz zapisanie zmodyfikowanego układu planszy do pliku.
 Format pliku jest jednoznacznie określony w treści zadania i składa się z:
 \begin{itemize}
-    \item Wiersz 1: m n (rozmiar planszy).
-    \item Wiersze od 2 do m+1: n pól odseparowanych znakiem spacji, każde z pól zawiera 2 cyfry: liczbę ryb (0-3) oraz cyfrę reprezentującą gracza (1-9 lub 0 jeśli pole nie jest zajęte).
-    \item Wiersze od m+2: 3 pól, kolejno: nazwy gracza (string), cyfra reprezentująca gracza (1-9), liczba punktów danego gracza.
+    \item \textit{Wiersz 1}: \textit{m n} - dwóch wartości liczbowych oznaczających rozmiar planszy.
+    \item \textit{Wiersze od 2 do m+1}: \textit{n} pól odseparowanych znakiem spacji, każde z pól jest definiowane przez dwie cyfry.
+    Pierwsza oznaczająca liczbę ryb na danym polu (0-3) oraz druga będąca identyfikatorem gracza znajdującego się obecnie na tym polu (1-9 lub 0 jeśli pole nie jest zajęte).
+    \item \textit{Wiersze od m+2}: trzech pól, reprezentujących kolejno: nazwę gracza (String), identyfikator gracza (1-9), liczbę punktów uzyskanych przez gracza.
 \end{itemize}
 
 Zgodnie z założeniami programy mają przyjmować następujące parametry:
 \begin{itemize}
-    \item phase=phase\_mark, phase\_mark może przyjąć jedną z dwóch wartości: placement lub movement.
-    \item penguins=N, gdzie N oznacza liczbę pingwinów (pionków) danego gracza.
+    \item \textit{phase=phase\_mark}, parametr \textit{phase\_mark} może przyjąć jedną z dwóch wartości: \textit{placement} (rozmieszczanie) lub \textit{movement} (ruch).
+    \item \textit{penguins=N}, gdzie \textit{N} oznacza liczbę pingwinów (pionków) danego gracza.
     Parametr jest używany tylko w fazie rozmieszczania.
-    \item inputboardfile, nazwa pliku wejściowego z układem planszy.
-    \item outputboardfile, nazwa pliku wyjściowego z układem planszy.
-    \item id, w przypadku podania argumentu "id" program powinien wypisać identyfikator gracza i zakończyć działanie.
+    \item \textit{inputboardfile}, nazwa pliku wejściowego z układem planszy.
+    \item \textit{outputboardfile}, nazwa pliku wyjściowego z układem planszy.
+    \item \textit{id}, w przypadku podania argumentu \textit{id} program powinien wypisać identyfikator gracza i zakończyć działanie.
 \end{itemize}
+Pełna definicja zadanie projektowego znajduje się w załączniku~\ref{file:pengiuns_description}.
 
-Program rozwiązujący opisane wyżej zadanie można uruchomić na platformie i sprawdzić jego działanie.
-Jednak przy założonych parametrach wykonania trudno jest napisać black-box testy, które pozwolą na automatyczną weryfikację programów.
-Do otrzymania korzyści z użytkowania platformy należałoby zmienić założenia co do komend i przyjmowanych parametrów, tak aby można było napisać przypadki testowe.
-W tym przypadku wystarczyłoby dla fazy ruchu dodać dwa parametry wykonania: położenie pingwina, którym chcemy poruszyć oraz docelowe miejsce, w które chcemy go przesunąć.
-Dla fazy rozmieszczania, należałoby również podać listę położeń w których chcemy umieścić pingwiny.
+Aplikację rozwiązującą opisane wyżej zadanie można uruchomić na platformie i sprawdzić jej działanie.
+Jednak przy założonych parametrach wykonania trudno jest napisać testy akceptacyjne, które pozwolą na automatyczną weryfikację programów.
+Do otrzymania korzyści z użytkowania platformy należałoby zmienić założenia co do komend i przyjmowanych parametrów, tak aby można było napisać odpowiednie i proste przypadki testowe.
+Przykładowo dla fazy ruchu wystarczyłoby dodać dwa parametry wykonania: położenie pingwina, którym chcemy poruszyć oraz docelowe miejsce, w które chcemy go przesunąć.
+Faza rozmieszczania również wymagałaby modyfikacji.
+W tym przypadku jako dodatkowy parametr wejściowy należałoby podać listę położeń w których chcemy umieścić pingwiny.
 
-W celu zbadania platformy udostępnione zostało siedem projektów, napisanych przez studentów w semestrze 2018Z i dostępnych na GitLab.
-Wstępna analiza danych pozwoliła ustalić, że spośród dostępnych grup cztery z nich ukończyły zadanie.
-Dwie z pozostałych grup przerwały projekt już na początku, a jedna z grup dołączyła do innej, przez co kod z ich pracy nie jest analizowany.
-
+W celu zbadania platformy udostępnione zostało siedem projektów napisanych przez studentów i zamieszczonych na platformie GitLab.
+Wstępna analiza kodu znajdującego się w repozytoriach pozwoliła ustalić, że spośród dostępnych grup tylko cztery ukończyły zadanie projektowe.
+Dwie z pozostałych grup przerwały projekt już na samym początku semestru.
+Jeden z zespołów dołączył do innej grupy w trakcie trwania projektu, przez co kod z jego pracy przed przegrupowaniem nie jest analizowany.
+Z powyżej przedstawionych powodów do weryfikacji platformy zostały użyte cztery historyczne programy studenckie.
 
 \section{Lokalne uruchomienie historycznych programów studentów}
 
