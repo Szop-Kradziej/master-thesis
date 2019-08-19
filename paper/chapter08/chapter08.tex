@@ -21,3 +21,10 @@ W ramach pracy założono, że prowadzący manualnie definiuje uruchamiane przyp
 Dodatkowym rozszerzeniem pracy mogłaby być automatyzacja procesu.
 Zamiast definiowania szeregu przypadków testowych w postaci plików wejściowych i oczekiwanych plików wyjściowych można byłoby do kontenera dołączyć wzorcowy program napisany przez prowadzącego.
 Ten moduł miałby za zadanie dla losowych danych wejściowych o zadanej strukturze porównywać wynik działania programu studentów z wynikiem otrzymanym ze wzorcowego programu dla tych samych danych.
+
+
+- Warto dodać executor do porównywania wyników porwadzącego bo na razie platforma sprawdza tylko czy dwa pliki są identyczne
+
+- Sprawdzenie czy identyczne może nie być słuszne w trakcie gdy mamy do zaimplementowania algorytm niestabilny
+
+- Np. zadanie implementacja quick sort w przypadku dwóch takich samych danych może dać różne wyniki (na różnych pozycjach w liście wynikowej mogą znaleźć się dwie takie same dane)

@@ -1,43 +1,115 @@
 \chapter{Platforma od strony użytkowej}
 \label{chapter:interfaces}
 
-W ramach platformy wyróżnia się dwa podstawowe interfejsy: prowadzącego i studenta.
-Dla pierwszego z nich wyróżnia się dwa widoki: zarządzania projektami i podglądu postępów studentów.
+Stroną startową platformy jest ekran logowania użytkownika.
+Uwierzytelnienie użytkownika odbywa się z użyciem serwisu GitHub (opis techniczny procesu znajduje się w podrodziale \label{authorization}).
+Po poprawnym zalogowaniu użytkownik, w zależności od swoich uprawnień zostaje przekierowany do odpowiedniego widoku.
+W przypadku prowadzącego będzie to ekran wyboru zarządzania projektami lub podglądu postępów studentów.
+Użytkownik będący studentem zostanie przekierowany do widoku dostępnych dla niego projektów.
 
-\section{Interfejs prowadzącego}
+Opis ekranu logowania znajduje się w podrozdziale \ref{fe_login}.
+W kolejnym rozdziale zostały omówione interfejsy dostępne dla prowadzącego.
+Ostatni podrozdział zawiera opis widoku studenta.
 
-\subsection{Zarządzanie projektami}
+\section{Panel logowania}
+\label{fe_login}
 
-Na rysunku \ref{fig:lecturer-interface-management} został przedstawiony widok zarządzania projektami.
-W ramach interfejsu udostępnione jest tworzenie i edytowanie projektów, w tym wyznaczanie etapów i dodawanie do nich przypadków testowych.
-Definiowanie projektu przebiega następująco:
-\begin {itemize}
-    \item Prowadzący tworzy nowy projekt.
-    \item Prowadzący tworzy etapy w ramach danego projektu.
-    \item Prowadzący tworzy przypadki testowe dla etapów.
-    \item Prowadzący tworzy procesy integracji w ramach danego projektu.
-    \item Prowadzący tworzy grupy projektowe.
-\end {itemize}
+Panel logowania umożliwia uwierzytelnienie z użyciem serwisu GitHub.
+Po kliknięciu przycisku ”Zaloguj” użytkownik jest przekierowywany na stronę logowania GitHub.
+W serwisie można zalogować się poprzez podanie maila bądź nazwy użytkownika i hasła.
+Należy też wyraziź zgodę na przetwarzanie danych przez platformę.
+Po poprawnym zalogowaniu użytkownik zostaje przekierowany spowrotem na stronę platformy.
+Po przetworzeniu danych uwierzytelniających przez platformę użytkownikowi wyświetalny jest kolejny ekran, zależny od jego uprawnień.
+Na rysunkach od \ref{fig:log_in_butoon} do \ref{fig:wait_for_login} zostały przedstawione kolejne ekrany związane z procesem logowania.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 13cm]{chapter04/lecturer_interface_management.png}
-    \caption{Interfejs prowadzącego - zarządzanie projektami (źródło własne).}
-    \label{fig:lecturer-interface-management}
+    \includegraphics[width = 8cm]{chapter04/log_in_button.png}
+    \caption{Ekran logowania w ramach platformy (źródło własne).}
+    \label{fig:log_in_butoon}
 \end{figure}
 
-Nowy projekt definiowany jest przez następujące dane:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 8cm]{chapter04/log_in_button.png}
+    \caption{Ekran logowania do serwisu GitHub (źródło własne).}
+    \label{fig:log_in_butoon}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width = 8cm]{chapter04/wait_for_login.png}
+    \caption{Ekran oczekiwania na zalogowanie w ramach platformy (źródło własne).}
+    \label{fig:wait_for_login}
+\end{figure}
+
+\section{Interfejs prowadzącego}
+
+Jeśli zalogowany użytkownik posiad uprawnienia prowadzącego (administratora) po poprawnym zalogowaniu wyświetlany jest mu ekran wyboru zarządzania projektami lub podglądu postępów grup.
+Ekran wyboru akcji został zamieszczony na rysunku \ref{fig:lecturer_actions}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 8cm]{chapter04/lecturer_actions.png}
+    \caption{Ekran oczekiwania na zalogowanie w ramach platformy (źródło własne).}
+    \label{fig:lecturer_actions}
+\end{figure}
+
+Omówienie widoku zarządzania projektami znajduje się w podrozdziale \ref{lecturer-management}.
+Opis interfejsu podglądu postępów studentów został zamieszczony w sekcji \ref{lecturer_preview}.
+
+\subsection{Zarządzanie projektami}
+\label{lecturer-management}
+
+W ramach zarządzania udostępnione jest tworzenie i edytowanie projektów, w tym wyznaczanie etapów i integracji oraz dodawanie do nich przypadków testowych.
+Definiowanie projektu sprowadza się do:
+\begin {itemize}
+    \item Utworzenia nowego projektu.
+    \item Dodania etapów wraz z przypadkami testowymi.
+    \item Utworzenia procesów integracji wraz z przypadkami testowymi.
+    \item Dodania grup projektowych.
+\end {itemize}
+
+Dla wszystkich parametrów będących plikami interfejs umożliwia dodanie ich poprzez wskazanie, w oknie dialogowym, ścieżki na dysku użytkownika, pod którą znajduje się plik.
+
+Na rysunku \ref{fig:lecturer_projects_list} został przedstawiony podstawowy widok zarządzania projektami zawierający listę dostępnych projektów.
+Na tym ekranie prowadzący może przejść do wybranego projektu, usunąć go lub utworzyć nowy projekt.
+Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 8cm]{chapter04/lecturer_projects_list.png}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - lista projektów (źródło własne).}
+    \label{fig:lecturer_projects_list}
+\end{figure}
+
+Widok projektu oraz panele etapów, grup i integracji zostały omówione w ramach kolejnych sekcji.
+
+\subsubsection{Widok projektu}
+
+Projekt definiowany jest przez następujące dane:
 \begin {itemize}
     \item Nazwę projektu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi projektu.
     Nazwa jest parametrem będącym ciągiem znaków (String).
     \item Plik z opisem projektu o dowolnym formacie.
     \item Plik Dockerfile definiujący środowisko uruchomieniowe programów.
+    \item Listę etapów.
+    \item Listę grup.
+    \item Listę integracji.
 \end {itemize}
 
-Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
-Dla wszystkich parametrów będących plikami interfejs umożliwia dodanie ich poprzez wskazanie, w oknie dialogowym, ścieżki na dysku użytkownika, pod którą znajduje się plik.
+Na rysunku \ref{fig:lecturer_project_board} przedstawiono podstawowy widok projektu.
 
-Nowy etap definiowany jest przez następujące dane:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/lecturer_project_board.png}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - widok projektu (źródło własne).}
+    \label{fig:lecturer_project_board}
+\end{figure}
+
+\subsubsection{Panel etapów}
+
+Etap definiowany jest przez następujące dane:
 \begin {itemize}
     \item Nazwę etapu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi etapu.
     Nazwa jest parametrem będącym ciągiem znaków (String).
@@ -48,70 +120,166 @@ Nowy etap definiowany jest przez następujące dane:
         Data rozpoczęcia jest rozumiana jako data, od której studenci mają możliwość rozpoczęcia prac nad etapem (dostęp do opisu etapu, możliwość zaimportowania i uruchomienia swoich programów),
         \item Data zakończenia etapu.
         Data zakończenia jest rozumiana jako data, do której studenci mają możliwość zaimportowania i uruchomienia swoich programów.
-        Po przekroczeniu tej daty zmian programów i ponownych uruchomień może dokonywać tylko prowadzący,
-        \item Punktacja za wskazany etap, podawana w postaci liczby całkowitej.
-        Na podstawie punktacji poszczególnych etapów zliczana jest automatycznie ocena końcowa dla projektu.
+        Po przekroczeniu tej daty zmian programów i ponownych uruchomień może dokonywać tylko prowadzący.
+        \item Komentarz do etapu.
+        Jest on dodatkową informacją widoczną tylko dla prowadzącego.
     \end{itemize}
 \end {itemize}
 
 Etapy, które nie mają zdefiniowanej daty rozpoczęcia nie są widoczne dla studentów.
 Interfejs umożliwia wskazanie daty poprzez wybór jej w oknie dialogowym z kalendarzem.
 
-Nowy przypadek testowy jest definiowany przez następujące dane:
+Na rysunku \ref{fig:lecturer_stages} został przedstawiony przykładowy panel etapów.
+Komentarz do etapu wyświetlany jest po najechaniu na ikonę reprezentującą dodatkowe informacje.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 15cm]{chapter04/lecturer_stages.png}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel etapów (źródło własne).}
+    \label{fig:lecturer_stages}
+\end{figure}
+
+W ramach panelu można dodawać, edytować oraz usuwać etapy.
+
+
+Dla każdego z etapów można rozwinąć panel zawierający listę zdefiniowanych testów.
+Opis uruchamianie i testowania programów studentów w ramach etapów został zamieszczony w rodziale \ref{chapter:platform-technical}.
+Pojedynczy przypadek testowy jest definiowany przez następujące dane:
 \begin {itemize}
     \item Nazwę przypadku testowego, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego przypadku.
     Nazwa jest parametrem będącym ciągiem znaków(String).
-    \item Parametry uruchomienia programu, podawane jako ciąg znaków (String).
+    \item Parametry uruchomienia programu, podawane jako plik.
     \item Plik z danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
     Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego.
     \item oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
-    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w wyniku działania programów studentów i na jego podstawie oceniana jest poprawność programów.
+    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w rezultacie działania programów studentów i na jego podstawie oceniana jest poprawność programów.
 \end {itemize}
 
-Opis uruchamianie i testowania programów studentów został zamieszczony w rodziale \ref{chapter:platform-technical}.
+Rysunek \ref{fig:lecturer_stages_tests} przedstawia przykładowy panel zawierający testy dla etapu.
 
-Oprócz możliwości tworzenia przypadków testowych w ramach widoku istnieje również możliwość utworzenia procesów integracji w obrębie projektu.
-Nowy proces integracji jest definiowany przez następujące dane:
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 15cm]{chapter04/lecturer_stages_tests.png}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla etapu (źródło własne).}
+    \label{fig:lecturer_stages_tests}
+\end{figure}
+
+W ramach każdego z paneli można dodawać, edytować oraz usuwać przypadki testowe.
+
+\subsubsection{Panel integracji}
+
+Proces integracji jest definiowany przez następujące dane:
 \begin {itemize}
     \item Nazwę procesu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego procesu.
     Nazwa jest parametrem będącym ciągiem znaków (String).
-    \item Plik z danymi wejściowymi o dowolnym, najczęściej tekstowym, formacie.
-    Plik wejściowy jest używany jako dana wejściowa dla danego procesu integracji.
-    \item Oczekiwany plik wyjściowy o dowolnym, najczęściej tekstowym, formacie.
     \item Priorytetyzowaną listę etapów, które zostaną wykonane kolejno w ramach procesu integracji.
+    \item Komentarz do etapu.
+    Jest on dodatkową informacją widoczną tylko dla prowadzącego.
 \end {itemize}
 
-Prowadzący ma również możliwość utworzenia grup projektowych wraz z przypisaniem do nich studentów.
-Utworzenie grup projektowych może zostać zrobione na dwa sposoby.
-Pierwszy z nich to manualne utworzenie grup, definiowanych przez nazwę i dodanie kolejnych studentów w oknie dialogowym.
-Drugi to wczytanie danych dotyczących podziału na grupy z pliku w formacie JSON.
-Przykład struktury akceptowalnego pliku wygląda następująco:
+Na rysunku \ref{fig:lecturer_integrations} został przedstawiony przykładowy panel integracji.
 
-{\fontfamily{qcr}\selectfont
-\footnotesize
-\begin{lstlisting}
-{
-    "groups":[
-        {
-            "name":"A",
-            "students":[
-                "Student1",
-                "Student2"
-            ]
-        },
-        {
-            "name":"B",
-            "students":[
-                "Student3",
-                "Student4"
-            ]
-        }
-    ]
-}
-\end{lstlisting}
-}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 15cm]{chapter04/lecturer_integrations.png}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel integracji (źródło własne).}
+    \label{fig:lecturer_integrations}
+\end{figure}
+
+Dla każdej z integracji można rozwinąć panel zawierający listę zdefiniowanych testów.
+Opis uruchamianie i testowania programów studentów w ramach procesu integracji został zamieszczony w rodziale \ref{chapter:platform-technical}.
+Pojedynczy przypadek testowy jest definiowany przez następujące dane:
+\begin {itemize}
+    \item Nazwę przypadku testowego, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego przypadku.
+    Nazwa jest parametrem będącym ciągiem znaków(String).
+    \item Parametry uruchomienia programu, podawane jako pliki.
+    Dla każdego z etapów integracji podawane są oddzielne parametry wykonania w ramach jednego testu.
+    \item Plik z danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
+    Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego i jest pojedynczy w ramach jednego testu.
+    \item oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
+    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w rezultacie działania programów studentów i na jego podstawie oceniana jest poprawność programów.
+    Oczekiwany plik wyjściowy jest pojedynczy w ramach jednego testu.
+\end {itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 15cm]{chapter04/lecturer_integrations_tests.png}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla integracji (źródło własne).}
+    \label{fig:lecturer_integrations_tests}
+\end{figure}
+
+W ramach każdego z paneli można dodawać, edytować oraz usuwać przypadki testowe.
+
+\subsubsection{Panel grup}
+
+W ramach panelu prowadzący ma możliwość utworzenia grup projektowych wraz z przypisaniem do nich studentów.
+Na rysunku \ref{fig:lecturer_groups} zamieszczono widok rozwiniętego panelu grup.
+Kolejny rysunek \ref{fig:lecturer_students_in_group} przedstawia rozwiniętą listę studentów przypisanych do danego zespołu
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/lecturer_groups.png}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel grup (źródło własne).}
+    \label{fig:lecturer_groups}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/lecturer_students_in_group.png}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel grupy wraz z przypisanymi studentami (źródło własne).}
+    \label{fig:lecturer_students_in_group}
+\end{figure}
+
+Utworzenie grup projektowych może zostać zrealizowane na dwa sposoby.
+Pierwszy z nich to manualne utworzenie grup, definiowanych przez nazwę i dodanie kolejnych studentów w oknie dialogowym.
+Aby dodać grupy manualnie należy użyć przycisku ”+” znajdującego się obok etykiety \textit{Grupy}.
+Drugim sposobem załącznia grup jest wczytanie danych dotyczących z pliku w formacie JSON.
+Przykład struktury akceptowalnego pliku został zamieszczony w podrozdziale \ref{adding_project_groups}.
+W celu wczytania grup bezpośrednio z pliku należy użyć przycisku wgrywania danych znajdującego się obok etykiety \textit{Grupy}.
+
+W ramach panelu umożliwiona jest edycja grup i studentów.
 
 \subsection{Podgląd postępów studentów}
+\label{lecturer_preview}
+
+W ramach podglądu postępów studentów umożliwione jest:
+\begin {itemize}
+    \item Sprawdzenie statusu prac w ramach etapów i integracji dla każdej ze zdefiniowanych w ramach projektu grup.
+    \item Uruchomienie programów.
+    \item Edycja danych (programu, raportu, kodu) przez prowadzącego.
+    \item Pobranie pliku zawierającego statystyki uruchomień w ramach integracji i etapów.
+\end {itemize}
+
+Prowadzący ma możliwość edycji danych studentów z uprawnieniami administratora.
+Pozwalają one między innymi na edycję wprowadzonych przez studentów danych po upływie terminów realizacji poszczególnych etapów.
+Są to uprawnienia, które nie powinny być nadużywane przez prowadzącego, jednak mogą okazać się użyteczne w wyjątkowych sytuacjach.
+
+Na rysunku \ref{fig:lecturer_preview_projects_list} został przedstawiony podstawowy widok zarządzania projektami zawierający listę dostępnych projektów.
+Poprzez ten ekran prowadzący może przejść do wybranego projektu.
+Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/lecturer_preview_projects_list.png}
+    \caption{Interfejs prowadzącego, podgląd postępów - lista projektów (źródło własne).}
+    \label{fig:lecturer_preview_projects_list}
+\end{figure}
+
+Po przejściu do odpowiedniego projektu wyświetlany jest ekran z listą grup i studentów przypisanych do danego projektu.
+Poprzez ten ekran prowadzący może przejść do rezultatów wybranego zespołu.
+Lista grup jest posortowana alfabetycznie po nazwie.
+Przykładowy ekran wyboru zespołu projektowego został zamieszczony na rysunku \ref{fig:lecturer_preview_groups}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/lecturer_preview_groups.png}
+    \caption{Interfejs prowadzącego, podgląd postępów - lista grup (źródło własne).}
+    \label{fig:lecturer_preview_groups}
+\end{figure}
+
+
+
+\subsubsection{Pogląd postępów w ramach etapu}
 
 Na rysunku \ref{fig:lecturer-interface-view} został przedstawiony widok podglądu postępów studentów.
 W ramach interfejsu prowadzący ma możliwość przeglądania postępów za równo poprzez wyszukanie po nazwie grupy, jak i po identyfikatorze poszczególnych studentów.
@@ -133,12 +301,17 @@ Prowadzący ma umożliwiony wgląd w:
     \item Sprawozdanie wykonane dla zadanego etapu.
 \end {itemize}
 
-Dodatkowo prowadzący ma możliwość edycji danych studentów z dodatkowymi uprawnieniami administratora.
-Pozwalają one między innymi na edycję wprowadzonych przez studentów danych po upływie terminów realizacji poszczególnych etapów.
-Są to uprawnienia, które nie powinny być nadużywane przez prowadzącego, jednak mogą okazać się użyteczne w wyjątkowych sytuacjach.
+
+\subsubsection{Pogląd postępów w ramach integracji}
+
+
 
 
 \section{Interfejs studenta}
+
+\subsubsection{Pogląd postępów w ramach etapu}
+
+\subsubsection{Pogląd postępów w ramach integracji}
 
 Na rysunku \ref{fig:student-interface} został przedstawiony interfejs studenta.
 Umożliwia on dodawanie i edycję danych dla kolejnych etapów projektu oraz podgląd aktualnych postępów.
