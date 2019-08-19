@@ -183,7 +183,6 @@ class TestPlatformApi(val loginService: LoginService,
             @PathVariable("stageName") stageName: String,
             @PathVariable("testCaseName") testCaseName: String,
             @PathVariable("fileType") fileType: String): ResponseEntity<*> {
-        authHelper.isLecturerOrThrow(headers)
         return createFileResponse(stageService.getTestCaseFile(projectName, stageName, testCaseName, fileType))
     }
 

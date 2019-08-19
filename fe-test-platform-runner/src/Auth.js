@@ -34,8 +34,11 @@ class Auth extends Component {
     goToPage = (accessRight) => {
         if (accessRight === "lecturer") {
             window.location = '/lecturer'
-        } else {
+        } else if (accessRight === "student") {
             window.location = '/student/projects'
+        } else {
+            //TODO: LOGIN ERROR TRY AGAING
+            window.location = '/'
         }
     };
 
@@ -48,9 +51,7 @@ class Auth extends Component {
                     </p>
                 </header>
                 <body className={this.props.classes.body}>
-                {this.props.location.search.substring(6, this.props.location.search.length)}
                 </body>
-
             </div>
         );
     }

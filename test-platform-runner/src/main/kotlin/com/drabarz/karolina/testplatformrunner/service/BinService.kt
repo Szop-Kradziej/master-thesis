@@ -106,7 +106,7 @@ class BinService(
             throw java.lang.RuntimeException("Error. There are no test cases for integration $integrationName")
         }
 
-        log.info("Getting all binaries for assigned stages for integration: $integrationName in project: $projectName")
+        log.info("Getting all binaries for assigned stagpenguins_simulationpenguins_simulationpenguins_simulationpenguins_simulationpenguins_simulationpenguins_simulationes for integration: $integrationName in project: $projectName")
 
         val binPaths = integrationStages.map {
             val binDir = stagePathProvider.getStudentBinDir(groupName, projectName, it.stageName)
@@ -198,7 +198,9 @@ class ContainerService {
         val toStringConsumer = ToStringConsumer()
         container.followOutput(toStringConsumer, OutputFrame.OutputType.STDERR)
 
-        val containerLogs = container.containerId + "\n" + toStringConsumer.toUtf8String() + "\n" + container.logs + "\n"
+        val containerLogs = "Container id: " + container.containerId + "\n" +
+                "Program output: " + toStringConsumer.toUtf8String() + "\n" +
+                "Container logs: " + container.logs + "\n"
         log.info(containerLogs)
 
         container.stop()

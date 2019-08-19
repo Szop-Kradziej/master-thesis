@@ -289,7 +289,7 @@ export function deleteGroup(projectName, groupName) {
 
 function deleteItem(url) {
     let headers = {'Authorization': getAuthHeader()};
-    return axios.delete(url, headers)
+    return axios.delete(url, { headers: headers})
         .then(function (response) {
             console.log("success");
         })
