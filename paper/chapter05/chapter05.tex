@@ -43,7 +43,7 @@ Przykład takiej integracji platformy z zewnętrznym narzędziem został opisany
     \label{fig:platform-db-schema}
 \end{figure}
 
-Schemat tabel i relacji bazodanowych, utworzony w ramach pracy, znajduje się na rysunku \ref{fig:platform-db-schema}.
+Schemat tabel i relacji bazodanowych utworzony w ramach pracy znajduje się na rysunku \ref{fig:platform-db-schema}.
 Do przechowywania metadanych wykorzystano osiem tabel.
 W przedstawionych strukturach zapisywane są informacje o:
 \begin{itemize}
@@ -72,7 +72,7 @@ Wewnątrz pierwszego z nich zapisywane są wszystkie dane i pliki związane z ak
 Do zapamiętywanych informacji należą: zamieszczane raporty, linki do kodu, programy oraz logi z przebiegu aplikacji i wyniki przeprowadzonych testów akceptacyjnych.
 Drugi folder zawiera definicje projektów wraz z etapami i integracjami oraz utworzone przez prowadzących przypadki testowe.
 
-Na rysunkach \ref{fig:projects-directories} i \ref{fig:students-directories} został zamieszone odpowiednio schematy katalogów wewnątrz folderów \textit{projects} oraz \textit{students}.
+Na rysunkach \ref{fig:projects-directories} i \ref{fig:students-directories} zostały zamieszone odpowiednio schematy katalogów wewnątrz folderów \textit{projects} oraz \textit{students}.
 Dla obu schematów zostały wyróżnione pliki i foldery, które nie występują pojedynczo w ramach katalogów.
 W miejscu zbiorczej nazwy oznaczonej jako ${nazwa\_katalogu}_{i}$ na schemacie należy rozumieć docelową nazwę folderu.
 
@@ -101,6 +101,7 @@ Dzięki temu charakteryzuje się ona wysoką niezawodnością i stabilnością.
 Również biblioteki OpenSource ułatwiające uruchamianie kontenerów Dockerowych bezpośrednio z kodu Javowego są szeroko stosowane i dobrze przetestowane.
 Samo uruchamianie kontenerów, ich integracja oraz konfiguracja nowych środowiska jest szybka i stosunkowo prosta.
 
+TODO: change schema - add params
 \begin{figure}[h]
     \centering
     \includegraphics[width = 7cm]{chapter05/single_test_case.png}
@@ -108,7 +109,7 @@ Samo uruchamianie kontenerów, ich integracja oraz konfiguracja nowych środowis
     \label{fig:single-test-case}
 \end{figure}
 
-Poprzez naciśnięcie na platformie przycisku \textit{play} dla wybranej aplikacji studenckiej uruchamiane są kolejno wszystkie zdefiniowane przypadki testowe dla zadanego etapu.
+Poprzez naciśnięcie na platformie przycisku \textit{PLAY} dla wybranej aplikacji studenckiej uruchamiane są kolejno wszystkie zdefiniowane przypadki testowe dla zadanego etapu.
 Schemat wykonania pojedynczego przypadku testowego w ramach etapu dla programu studentów został przedstawiony na rysunku \ref{fig:single-test-case}.
 Uruchomienie pojedynczego przypadku testowego sprowadza się do utworzenia nowego kontenera Dockerowego i podania mu odpowiednich ścieżek do:
 \begin{itemize}
@@ -117,14 +118,15 @@ Uruchomienie pojedynczego przypadku testowego sprowadza się do utworzenia noweg
     \item pliku definiującego parametry wejściowe dla programu (pliku z parametrami),
     \item pliku wyjściowego, do którego zapisany zostanie rezultat wykonania danego przypadku testowego.
 \end{itemize}
-Zarówno utworzenie kontenera jak i załączenie odpowiednich ścieżek do plików jest wykonywane automatycznie przez platformę.
+Zarówno utworzenie kontenera, jak i załączenie odpowiednich ścieżek do plików jest wykonywane automatycznie przez platformę.
 
-W celu ustalenia poprawności działania aplikacji dla zadanego przypadku testowego platforma dokonuje porównania otrzymanego w wyniku przebiegu testu pliku wyjściowego ze zdefiniowanym w ramach przpadku testowego oczekiwanym plikiem wyjściowym.
+W celu ustalenia poprawności działania aplikacji dla zadanego przypadku testowego platforma dokonuje porównania otrzymanego w wyniku przebiegu testu pliku wyjściowego ze zdefiniowanym w ramach przypadku testowego oczekiwanym plikiem wyjściowym.
 Jeśli obie dane są zgodne, działanie programu dla wykonywanego testu uważa się za prawidłowe.
 
 Platforma zlicza również liczbę zaliczonych testów w ramach etapu.
-Jeśli rezulataty dla wszystkich przypadków testowych są prawidłowe to program uznaje się za ukończony w ramach danego zadania.
+Jeśli rezultaty dla wszystkich przypadków testowych są prawidłowe, to program uznaje się za ukończony w ramach danego zadania.
 
+TODO: change schema add params
 \begin{figure}[h]
     \centering
     \includegraphics[width = 12cm]{chapter05/integration.png}
@@ -132,10 +134,10 @@ Jeśli rezulataty dla wszystkich przypadków testowych są prawidłowe to progra
     \label{fig:integration}
 \end{figure}
 
-Poprzez naciśnięcie na platformie przycisku \textit{play} dla wybranego procesu integracji uruchamiane są kolejno wszystkie zdefiniowane dla niego przypadki testowe.
+Poprzez naciśnięcie na platformie przycisku \textit{PLAY} dla wybranego procesu integracji uruchamiane są kolejno wszystkie zdefiniowane dla niego przypadki testowe.
 Schemat wykonania pojedynczego przypadku testowego w ramach procesu integracji został przedstawiony na rysunku \ref{fig:integration}.
 Przebieg procesu integracji jest podobny do wykonania pojedynczego przypadku testowego.
-Różnica polega na tym, że w ramach tego zadania uruchamiane jest kolejno kilka programów studenów dla zdefiniowanych przez prowadzącego etapów integracji.
+Różnica polega na tym, że w ramach tego zadania uruchamiane jest kolejno kilka programów studentów dla zdefiniowanych przez prowadzącego etapów integracji.
 Plik wyjściowy utworzony w wyniku uruchomienia etapu jest plikiem wejściowym dla kolejnego, następującego po nim.
 W celu oceny poprawności wykonania przypadku testowego oczekiwany plik wyjściowy zdefiniowany dla procesu integracji jest porównywany z plikiem wyjściowym dla ostatniego etapu w ramach badanego procesu integracji.
 
@@ -145,12 +147,11 @@ Po tym czasie kontener uruchamiający przypadek testowy jest zatrzymywany i test
 Rezultat przerwanego testu uważa się za nieprawidłowy.
 Dzięki takiemu rozwiązaniu można uniknąć między innymi wyczerpania zasobów sprzętowych dla platformy w wyniku uruchamiania programów zawierających nieskończone pętle.
 
-\vfill
 
 \section {Konfiguracja środowiska uruchomieniowego}
 \label{environment_configuration}
 
-Dla każdego projektu należy zdefiniować środowisko na jakim uruchamiane mają być programy studentów.
+Dla każdego projektu należy zdefiniować środowisko, na jakim uruchamiane mają być programy studentów.
 Konfiguracja odbywa się poprzez załączenie dla projektu odpowiednio sformułowanego pliku Dockerfile.
 
 Przykład poprawnie zdefiniowanego środowiska dla systemu Linux z zainstalowaną Javą w wersji 8 został przedstawiony poniżej:
@@ -168,6 +169,7 @@ Przykład poprawnie zdefiniowanego środowiska dla systemu Linux z zainstalowan�
 
 Przykład poprawnie zdefiniowanego środowiska dla systemu Linux i języka C wygląda następująco:
 
+TODO: fix c dockerfile
 {\fontfamily{qcr}\selectfont
 \tiny
 \begin{lstlisting}
@@ -179,9 +181,9 @@ Przykład poprawnie zdefiniowanego środowiska dla systemu Linux i języka C wyg
 \end{lstlisting}
 }
 
-Komenda FROM definiuje obraz systemu jaki ma zostać użyty do stworzenia środowiska.
-CMD opisuje polecenie uruchomienia programu wraz z przyjmowanymi parametrami.
-Powyższe pliki są poprawnymi plikami konfiguracyjnymi dla kontenerów Docker'wych.
+Komenda \textit{FROM} definiuje obraz systemu jaki ma zostać użyty do stworzenia środowiska.
+\textit{CMD} opisuje polecenie uruchomienia programu wraz z przyjmowanymi parametrami.
+Powyższe pliki są poprawnymi plikami konfiguracyjnymi dla kontenerów Docker'owych.
 Dokładny opis tworzenia prawidłowych i bardziej złożonych plików Dockerfile można znaleźć w dokumentacji dla narzędzia Docker \cite{docker-config}.
 
 Platforma akceptuje dowolny plik Dockerfile, który opiera komendę uruchomienia programu na czterech następujących ścieżkach:
@@ -200,35 +202,35 @@ Warto zaznaczyć, że omawiany plik konfiguracyjny nie jest walidowany przez pla
 \label{authorization}
 
 Uwierzytelnianie użytkowników odbywa się przy pomocy serwisu GitHub \cite{gitHub}.
-Jest to najpopularniejsza platforma hostingowa przeznaczona dla repozytoriów gitowych oraz posiada otwarte API (ang. Application Programming Interface).
-Uwierzytelnianie przy użyciu zweryfikowanego źródła jest zarówno łatwiejsze od strony technicznej jak i bezpieczniejsze dla użytkowników.
-W ramach platformy nie ma potrzeby przechowywania i zabezpieczania wrażliwych danych użytkowników jakimi są prywatne hasła.
+Jest to najpopularniejsza platforma hostingowa przeznaczona dla repozytoriów gitowych, która posiada otwarte API (ang. Application Programming Interface).
+Uwierzytelnianie przy użyciu zweryfikowanego źródła jest zarówno łatwiejsze od strony technicznej, jak i bezpieczniejsze dla użytkowników.
+W ramach platformy nie ma potrzeby przechowywania i~zabezpieczania wrażliwych danych użytkowników, jakimi są prywatne hasła.
 
-Najpopularniejszym sposobem identyfikacji użytkownika jest porównanie jego adresu email.
-Przy zastosowaniu takiego typu uwierzytelnienia wymagane od użytkowników (studentów i prowadzących) jest posiadanie konta na githubie z dodanym emailem uczelnianym (lub innym adresem znanym przez prowadzącego).
-Warto tutaj zaznaczyć, że do konta na githubie może być dodanych wiele adresów email.
+Najpopularniejszym sposobem identyfikacji użytkownika jest porównanie jego adresu e-mail.
+Przy zastosowaniu takiego typu uwierzytelnienia wymagane od użytkowników (studentów i prowadzących) jest posiadanie konta na githubie z dodanym e-mailem uczelnianym (lub innym adresem znanym przez prowadzącego).
+Warto tutaj zaznaczyć, że do konta na githubie może być dodanych wiele adresów e-mail.
 Dodanie nowego adresu nie wpływa negatywnie na sposób korzystania z konta github przez użytkowników.
 
 Proces uwierzytelniania można podzielić na następujące kroki:
 \begin{enumerate}
-\item Użytkownik kilka przycisk zaloguj na interfejsie webowym platformy.
+\item Użytkownik naciska przycisk \textit{Zaloguj} na interfejsie webowym platformy.
 \item Aplikacja webowa przekierowuje użytkownika na stronę GitHub, na której loguje się on do serwisu i nadaje odpowiednie uprawnienia do odczytu danych platformie.
 \item Aplikacja webowa otrzymuje tymczasowy kod dostępu z GitHub odpowiadający profilowi zalogowanego użytkownika.
 \item Aplikacja webowa przekazuje kod dostępu do serwera.
-\item Serwer odpytuje GitHub o token dla użytkownika na podstawie otrzymanego z aplikacji webowej kodu dostępu.
-\item Serwer odpytuje GitHub o adresy mailowe przypisane do konta użytkownika o zadanym tokenie.
-\item Serwer filtruje otrzymane maile i sprawdza czy któryś z nich jest zgodny z mailem użytkownika(nazwą) zapisanym w bazie.
-\item Jeśli tak to odsyłana jest do użytkownika informacja zwrotna zawierająca token a zweryfikowany użytkownik przekierowywany jest na odpowiedni dla jego uprawnień ekran (widok projektu w przypadku studenta lub widok wyboru podglądu albo zarządzania projektami w przypadku prowadzącego).
+\item Serwer odpytuje GitHub o token dla użytkownika na podstawie otrzymanego z~aplikacji webowej kodu dostępu.
+\item Serwer odpytuje GitHub o adresy mailowe przypisane do konta użytkownika o~zadanym tokenie.
+\item Serwer filtruje otrzymane maile i sprawdza, czy któryś z nich jest zgodny z mailem użytkownika (nazwą) zapisanym w bazie.
+\item Jeśli tak to odsyłana jest do użytkownika informacja zwrotna zawierająca token, a~zweryfikowany użytkownik przekierowywany jest na odpowiedni dla jego uprawnień ekran (widok projektu w przypadku studenta lub widok wyboru podglądu albo zarządzania projektami w przypadku prowadzącego).
 \end{enumerate}
 
 Serwis w miarę potrzeby może zweryfikować czy dany użytkownik jest studentem czy prowadzącym.
-Poziom uprawnień dla użytkownika jest zapisywany i odczytywany z bazy z tabeli Users.
-Więcej informacji o procesie uwierzytelniania przez GitHub, implementacji i bezpieczeństwie takiego rozwiązania można znaleźć w dokumentacji \cite{gitHub-auth-basic} \cite{gitHub-oauth-app}.
+Poziom uprawnień dla użytkownika jest zapisywany i odczytywany z bazy z tabeli \textit{Users}.
+Więcej informacji o procesie uwierzytelniania przez GitHub, implementacji i bezpieczeństwie takiego rozwiązania można znaleźć w dokumentacji \cite{gitHub-auth-basic} i \cite{gitHub-oauth-app}.
 
 Uwierzytelnienie jest potrzebne do dostępu do platformy i wykonywania zapytań.
-Przykładowo użytkownik będący studentem nie ma uprawnień do usunięcia projektu i nie może wykonać takiej akcji.
+Przykładowo użytkownik będący studentem nie ma uprawnień do usunięcia projektu i~nie może wykonać takiej akcji.
 Prowadzący jest traktowany jako administrator i ma dostęp do wszystkich akcji studenta.
-Dodatkowo ma on uprawnienia do definicji i edycji projektu oraz podglądu statystyk uruchomienia etapów oraz integracji.
+Dodatkowo ma on uprawnienia do definicji i edycji projektu oraz podglądu statystyk z uruchomienia etapów oraz integracji.
 
 \section {Zestawienie platformy na serwerze}
 \label{run-platform}
