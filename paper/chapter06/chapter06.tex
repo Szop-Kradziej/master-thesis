@@ -2,7 +2,7 @@
 \label{chapter:verify}
 
 Weryfikacja działania platformy odbyła się na podstawie uruchomienia na niej historycznych programów studentów.
-Wykorzystane aplikacje zostały stworzone w ramach przedmiotu ”Podstawy Programowania” w semestrze zima 2018.
+Wykorzystane aplikacje zostały utworzone w ramach przedmiotu ”Podstawy Programowania” w semestrze zima 2018.
 
 Proces weryfikacji można podzielić na następujące kroki:
 \begin{enumerate}
@@ -23,12 +23,12 @@ W celu weryfikacji platformy posłużono się kodem studentów napisanym w ramac
 Zadaniem studentów było napisanie programu odzwierciedlającego logikę gry planszowej ”Hey, that’s mine fish”.
 Aplikacja miała umożliwiać interaktywny oraz autonomiczny rodzaj rozgrywki.
 Zadaniem programów było wczytanie wejściowego układ planszy z pliku, wykonanie zadanej akcji oraz zapisanie zmodyfikowanego układu planszy do pliku.
-Format pliku jest jednoznacznie określony w treści zadania i składa się z:
+Format pliku jest jednoznacznie określony w~treści zadania i składa się z:
 \begin{itemize}
     \item \textit{Wiersz 1}: \textit{m n} - dwóch wartości liczbowych oznaczających rozmiar planszy.
     \item \textit{Wiersze od 2 do m+1}: \textit{n} pól odseparowanych znakiem spacji, każde z pól jest definiowane przez dwie cyfry.
-    Pierwsza oznaczająca liczbę ryb na danym polu (0-3) oraz druga będąca identyfikatorem gracza znajdującego się obecnie na tym polu (1-9 lub 0 jeśli pole nie jest zajęte).
-    \item \textit{Wiersze od m+2}: trzech pól, reprezentujących kolejno: nazwę gracza (String), identyfikator gracza (1-9), liczbę punktów uzyskanych przez gracza.
+    Pierwszą oznaczającą liczbę ryb na danym polu (od 0 do 3) oraz druga będącą identyfikatorem gracza znajdującego się obecnie na tym polu (od 1 do 9 lub 0 jeśli pole nie jest zajęte).
+    \item \textit{Wiersze od m+2}: trzech pól, reprezentujących kolejno: nazwę gracza (String), identyfikator gracza (od 1 do 9), liczbę punktów uzyskanych przez gracza.
 \end{itemize}
 
 Zgodnie z założeniami programy mają przyjmować następujące parametry:
@@ -44,18 +44,19 @@ Pełna definicja zadanie projektowego znajduje się w załączniku~\ref{file:pen
 
 Aplikację rozwiązującą opisane wyżej zadanie można uruchomić na platformie i sprawdzić jej działanie.
 Jednak przy założonych parametrach wykonania trudno jest napisać testy akceptacyjne, które pozwolą na automatyczną weryfikację programów.
-Do otrzymania korzyści z użytkowania platformy należałoby zmienić założenia co do komend i przyjmowanych parametrów, tak aby można było napisać odpowiednie i proste przypadki testowe.
+Do otrzymania korzyści z użytkowania platformy należałoby zmienić założenia co do komend i~przyjmowanych parametrów, tak aby można było napisać odpowiednie i~proste przypadki testowe.
 Przykładowo dla fazy ruchu wystarczyłoby dodać dwa parametry wykonania: położenie pingwina, którym chcemy poruszyć oraz docelowe miejsce, w które chcemy go przesunąć.
 Faza rozmieszczania również wymagałaby modyfikacji.
-W tym przypadku jako dodatkowy parametr wejściowy należałoby podać listę położeń w których chcemy umieścić pingwiny.
 
-W celu zbadania platformy udostępnione zostało siedem projektów napisanych przez studentów i zamieszczonych na platformie GitLab.
+W celu zweryfikowania platformy udostępniono siedem projektów napisanych przez studentów i zamieszczonych na platformie GitLab.
 Wstępna analiza kodu znajdującego się w repozytoriach pozwoliła ustalić, że spośród dostępnych grup tylko cztery ukończyły zadanie projektowe.
 Dwie z pozostałych grup przerwały projekt już na samym początku semestru.
 Jeden z zespołów dołączył do innej grupy w trakcie trwania projektu, przez co kod z jego pracy przed przegrupowaniem nie jest analizowany.
 Z powyżej przedstawionych powodów do weryfikacji platformy zostały użyte cztery historyczne programy studenckie.
 
 \section{Lokalne uruchomienie historycznych programów studentów}
+
+TODO: Przeorganizować/przeedytować dodać informacje o czwartym programie (narazie opisane 3)
 
 Podczas lokalnego uruchamiania programów studentów napotykamy na kilka problemów.
 Projekt był prowadzony przez cały semestr a kod studentów sytematycznie wrzucany na GitLab.
@@ -85,6 +86,8 @@ W tym przypadku ocena sposobu działania programu opierała się na przeanalizow
 
 
 \section{Definicja projektu na platformie}
+
+TODO: Uzupełnić
 
 W celu uruchomienia programów na platformie został zdefiniowany nowy projekt o nazwie penguins z jednym etapem interactive i trzema przypadkami testowymi.
 Tak jak zostało wspomniane wcześniej, dla obecnych założeń projektu ciężko utworzyć black-box testy pozwalające na autmatyczną weryfikację programów.
