@@ -22,12 +22,20 @@ CREATE TABLE users
 (
     id         SERIAL,
     name       VARCHAR(128) NOT NULL,
-    password   VARCHAR(64)  NOT NULL DEFAULT 'password',
     is_student BOOLEAN      NOT NULL DEFAULT TRUE,
 
     CONSTRAINT users_pk PRIMARY KEY (id),
     CONSTRAINT users_name_uk UNIQUE (name)
 );
+
+CREATE TABLE users_auth
+(
+    id      SERIAL,
+    token   VARCHAR(128) NOT NULL,
+    user_id BIGINT       NOT NULL,
+
+    CONSTRAINT users_auth_pk PRIMARY KEY (id)
+)
 
 CREATE TABLE students_in_groups
 (
@@ -45,6 +53,7 @@ CREATE TABLE integrations
 (
     id         SERIAL,
     name       VARCHAR(128) NOT NULL,
+    comment    VARCHAR(1024),
     project_id BIGINT       NOT NULL,
 
     CONSTRAINT integrations_pk PRIMARY KEY (id),
@@ -54,12 +63,12 @@ CREATE TABLE integrations
 
 CREATE TABLE stages
 (
-    id            SERIAL,
-    name          VARCHAR(128) NOT NULL,
-    start_date    TIMESTAMP,
-    end_date      TIMESTAMP,
-    points_number INT,
-    project_id    BIGINT       NOT NULL,
+    id         SERIAL,
+    name       VARCHAR(128) NOT NULL,
+    start_date TIMESTAMP,
+    end_date   TIMESTAMP,
+    comment    VARCHAR(1024),
+    project_id BIGINT       NOT NULL,
 
     CONSTRAINT stages_pk PRIMARY KEY (id),
     CONSTRAINT stages_projects_fk FOREIGN KEY (project_id) REFERENCES projects (id),
