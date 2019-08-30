@@ -3,15 +3,15 @@ import Button from '@material-ui/core/Button';
 import {withStyles} from "@material-ui/core";
 import {Link} from "react-router-dom";
 import classNames from 'classnames';
-import {styles} from "./styles/AppStyles";
+import {styles} from "../styles/AppStyles";
 
-class App extends Component {
+class LecturerActionChooseBoard extends Component {
   render() {
     return (
         <div className={this.props.classes.app}>
             <header className={this.props.classes.header}>
                 <p>
-                    Panel administracyjny.
+                    Panel administracyjny
                 </p>
             </header>
             <body className={this.props.classes.body}>
@@ -36,4 +36,4 @@ class App extends Component {
   }
 }
 
-export default withStyles(styles)(App);
+export default withStyles(styles)(LecturerActionChooseBoard);

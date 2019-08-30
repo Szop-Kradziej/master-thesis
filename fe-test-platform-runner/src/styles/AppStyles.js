@@ -1,7 +1,7 @@
-export const styles = () => ({
+export const styles = (theme) => ({
 app: {
     textAlign: "center",
-    backgroundColor: "#e0e0e0",
+    backgroundColor: theme.palette.background.paper,
 },
 header: {
     minHeight: "50vh",
@@ -16,7 +16,6 @@ body: {
     minHeight: "50vh",
 },
 button: {
-    backgroundColor: "#1fbbb1",
     color: "black"
 },
 link: {

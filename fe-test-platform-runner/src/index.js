@@ -13,13 +13,13 @@ import PreviewProjectsBoard from "./lecturer/preview/PreviewProjectsBoard";
 import PreviewStudentProjectBoard from "./lecturer/preview/PreviewStudentProjectBoard";
 import Login from "./Login";
 import Auth from "./Auth";
-import App from "./App";
+import LecturerActionChooseBoard from "./lecturer/LecturerActionChooseBoard";
 
 const TopRoute = () => (
     <Switch>
         <Route exact path='/' component={Login}/>
         <Route exact path='/auth' component={Auth}/>
-        <Route exact path='/lecturer' component={App}/>
+        <Route exact path='/lecturer' component={LecturerActionChooseBoard}/>
         <Route exact path='/lecturer/projects' component={ProjectsBoard}/>
         <Route path="/lecturer/projects/:projectId" component={ProjectBoard}/>
         <Route exact path="/lecturer/preview" component={PreviewProjectsBoard}/>
