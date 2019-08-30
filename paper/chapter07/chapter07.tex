@@ -99,7 +99,7 @@ Celem kolejnych zadań jest:
 \begin{enumerate}
     \item Wczytanie i walidacja planszy.
     \item Ustawienie pingwina na wskazanym polu planszy.
-    \item Wykonanie zadanego ruchu pionkiem.
+    \item Wykonanie zadanego ruchu pingwinem.
 \end{enumerate}
 
 Dla każdego z etapów zarówno plik wejściowy, jak i wyjściowy posiada ten sam format jak w definicji historycznego projektu.
@@ -124,7 +124,7 @@ Pozostałe trzy testy sprawdzają zachowanie programu dla przypadków brzegowych
     \item próba ustawienia gracza, który nie istnieje dla danej rozgrywki.
 \end{itemize}
 
-Do definicji akcji ustawiania pionka dla drugiego etapu użyto czterech parametrów:
+Do definicji akcji ustawiania pingwina dla drugiego etapu użyto czterech parametrów:
 \begin{itemize}
     \item \textit{id=i}, gdzie \textit{i} jest identyfikatorem gracza i przyjmuje wartość od 1 do 9,
     \item \textit{phase=placement}, gdzie \textit{placement} oznacza fazę rozmieszczania,
@@ -143,17 +143,18 @@ Inne dwa przypadki testowe sprawdzają zachowanie aplikacji dla warunków brzego
     \item próba przemieszczenia pingwina poza planszę.
 \end{itemize}
 
-Do definicji akcji przesunięcia pionka dla trzeciego etapu użyto pięciu parametrów:
+Do definicji akcji przesunięcia pingwina dla trzeciego etapu użyto pięciu parametrów:
 \begin{itemize}
     \item \textit{id=i}, gdzie \textit{i} jest identyfikatorem gracza i przyjmuje wartość od 1 do 9,
     \item \textit{phase=move}, gdzie \textit{move} oznacza fazę ruchu,
     \item \textit{from\_x=j}, gdzie \textit{j} przyjmuje wartość od 0 do n-1 i oznacza początkowe położenie pingwina w poziomie,
     \item \textit{from\_y=k}, gdzie \textit{k} przyjmuje wartość od 0 do m-1 i oznacza początkowe położenie pingwina w pionie,
-    \item \textit{direction=d}, gdzie \textit{d} przyjmuje jedną z wartość: \textit{up, down, left, right} i oznacza kierunek przesunięcia pionka.
+    \item \textit{direction=d}, gdzie \textit{d} przyjmuje jedną z wartość: \textit{up, down, left, right} i oznacza kierunek przesunięcia pingwina.
 \end{itemize}
 
 Plik zawierające dane dla testów utworzonych dla powyższego etapu zostały umieszczone w załącznikach od \ref{file:pengiuns_e3_valid_move_input} do \ref{file:pengiuns_e2_move_to_empty_output}.
 
+TODO: Opisać definicje integracji
 
 \subsection{Przebieg symulacji}
 \label{penguins_simulation}
@@ -192,11 +193,11 @@ W ramach ostatniego podrozdziału przeanalizowano i podsumowano badanie.
 W ramach symulacji projektu na platformie zostało utworzone pięć etapów.
 Celem kolejnych zadań jest:
 \begin{enumerate}
-    \item Przemnożenie macierzy przez skalar.
+    \item Mnożenie macierzy przez skalar.
     \item Transpozycja macierzy.
     \item Rotacja macierzy o 90 stopni zgodnie z ruchem wskazówek zegara (rotacja w prawo o 90 stopni).
     \item Dodanie macierzy.
-    \item Przemnożenie dwóch macierzy.
+    \item Mnożenie dwóch macierzy.
 \end{enumerate}
 
 W ramach każdego etapu utworzono cztery przypadki testowe sprawdzające poprawność działań.
@@ -210,6 +211,7 @@ Format opisujący macierz zawartą w pliku z parametrami dla zadania cztery i pi
 
 Pliki zawierające dane dla wszystkich powyższych testów zostały zamieszczone w~załącznikach od \ref{file:matrix_e1_input} do \ref{file:matrix_e5_output}.
 
+TODO: Opisać definicje integracji
 
 \subsection{Przebieg symulacji}
 \label{matrix_simulation}
@@ -244,80 +246,80 @@ Ostatni podrozdział zawiera krótkie podsumowanie.
 \subsection{Propozycja przeprowadzenia zwinnego projektu z użyciem platformy}
 \label{agile_proposition}
 
-Propozycja projektu prowadzonego w metodyce zwinnej polega na tym, że na początku semestru studenci uzyskują luźno zdefiniowany, ogólny cel zadania.
-W trakcie semestru ich zadaniem jest doprecyzowanie z prowadzącym szczegółów.
-Dla takiego podejścia prowadzący traktowany jest jako PO (ang. Product Owner), z którym studenci odbywają regularne spotkania.
+Dla projektu prowadzonego w metodyce Agile na początku semestru studenci dostawaliby luźno zdefiniowany, ogólny cel pracy.
+W trakcie semestru ich zadaniem byłoby doprecyzowanie z prowadzącym szczegółów.
+Dla takiego podejścia prowadzący traktowany byłby jako PO (ang. Product Owner), z którym studenci odbywaliby regularne spotkania.
 
-Studenci w ramach takiego projektu sami decydują o zadaniach w ich pracy i raportują o statusie ich wykonania.
-Do tego procesu mogłaby posłużyć zmodyfikowana platforma, umożliwiająca studentom definicję własngo projektu.
+Studenci w ramach takiego projektu sami decydowaliby o wyznaczeniu kolejnych zadań oraz raportowali o statusie ich wykonania.
+Do tego procesu mogłaby posłużyć zmodyfikowana platforma, umożliwiająca studentom definicję własnego projektu.
 Zdaniem grupy byłoby samodzielne stworzenie kolejnych etapów wraz z poszerzeniem wiedzy na temat projektu.
-Dla każdego z kolejnych zadań studenci mieli by za zadanie napisać własne testy akceptacyjne.
-Dzięki wykorzytaniu platformy prowadzoncy miałby możliwość podejrzenia wyników prac poszczególnych grup w dowolnym momencie.
+Dla każdego z kolejnych zadań studenci mieliby za zadanie napisać własne testy akceptacyjne.
+Dzięki wykorzystaniu platformy prowadzący miałby możliwość podejrzenia wyników prac poszczególnych grup w dowolnym momencie.
 
-W przypadku takiej metodyki nawet dla takiego samego początkowego celu projektu dla każdej z grup, wyniki pracy w ciągu semestru będą różne.
+W przypadku zwinnej metodyki nawet dla takiego samego początkowego celu projektu dla każdej z grup, wyniki pracy w ciągu semestru będą różne.
 Z tego powodu wydaje się, że pełne indywidualne podejście i rozważenie postępów dla każdego z zespołów jest nieuniknione.
-W rzeczywistości można by było ograniczyć i zautomatyzować ocenę poczynań studentów poprzez wykorzystanie platfromy.
-Tak jak w przypadku tradycyjnego projektu tak i zadania prowadzonego w metodyce Agile prowadzący miałby jednolity wgląd w postępy studentóœ.
-Kolejne etapy byłyby definiowane przez studentów w analogiczny sposób w ramach każdego z projektów.
+W rzeczywistości można by było jednak ograniczyć i zautomatyzować ocenę poczynań studentów poprzez wykorzystanie platformy.
+Tak jak w przypadku tradycyjnego projektu, tak samo dla zadania prowadzonego w metodyce Agile prowadzący miałby jednolity wgląd w postępy studentów.
+Kolejne etapy byłyby definiowane przez studentów w~analogiczny sposób w ramach każdego z projektów.
 Informacje opisujące kolejne zadania wyświetlane byłyby przy użyciu tego samego interfejsu niezależnie od projektu czy grupy.
-Prowadzący na pierwszy rzut oka mógłby łatwo ocenić postępy prac w ramach jedno zespołu czy nawet wstępnie porównać zaanagażowanie w projekt pomiędzy dwoma zespołami.
+Prowadzący na pierwszy rzut oka mógłby łatwo ocenić postępy prac w ramach jedno zespołu czy nawet wstępnie porównać zaangażowanie w projekt pomiędzy dwoma zespołami.
 
-Jak zostało wspomniane wcześniej napisane przez studentów testy akceptacyjne mogą nie dawać wysokiego pokrycia.
+Jak zostało wyjaśnione wcześniej, napisane przez studentów testy akceptacyjne mogą nie dawać wysokiego pokrycia.
 Ocena słuszności przypadków testowych przez prowadzącego jest czasochłonna.
 Dzięki użyciu platformy prowadzący miałby wgląd do testów na wysokim poziomie.
-Aby zrozumieć przypadek testowy nie musiałby bezepośrednio przeglądać kodu studentów.
+Aby zrozumieć przypadek testowy, nie musiałby on bezepośrednio przeglądać kodu studentów.
 Jego zadanie sprowadzałoby się do zrozumienia zawartości pliku wejściowego, oczekiwanego pliku wyjściowego i parametrów.
-Ocena testów byłaby wciąż indywidaulna ale tu również dla każdego projektu interfejs byłby prezentowany identycznie.
+Ocena testów byłaby wciąż indywidaulna, ale tu również dla każdego projektu prezentowane byłyby one w ten sam sposób.
 
 \subsection{Dodatkowe funkcjonalności wymagające implementacji}
 \label{agile_todo}
 
-Osiągnięcie przedstawionych w poprzednim podrozdziale celów nie jest jednak możliwe przy użyciu platformy w obecnej wersji MVP i wymagałoby dokonania kilku modyfikacji w ramach narzędzia.
-W celu wskazania pełnych zmodyfikowanych założeń projektowych należałoby przeanalizować w pełni problemy stojące za przeporwadzenim projektu w metodyce Agile.
-W ramach pracy przeprowadzono zgrubną analizę takiego podejścia i wskazano główne modyfikacje jakich należałoby dokonać w narzędziu aby osiągnięcie powyższego celu było możliwe.
+Osiągnięcie przedstawionych w poprzednim podrozdziale celów nie jest możliwe przy użyciu platformy w~obecnej wersji MVP i wymagałoby dokonania kilku modyfikacji w~ramach narzędzia.
+W celu wskazania pełnych zmodyfikowanych założeń projektowych należałoby przeanalizować dokładnie problemy stojące za przeprowadzeniem projektu w~metodyce Agile.
+W ramach pracy przeprowadzono zgrubną analizę takiego podejścia i~wskazano główne modyfikacje, jakich należałoby dokonać w~narzędziu.
 
-Jedną z podstawowych modyfikacji jest dodatnie dodatkowego poziomu uprawnień.
-Obecnie w ramach platformy istnieją tylko dwie role: prowadzącego(administratora) oraz studenta(zwykłego użytkownika).
-W modelu MVP zakłada się, że w ramach platformy może istnieć kilku prowadzących którzy mają dostęp do edycji każdego z projektów, ale pomimo takich uprawnień ich zachowanie jest odpowiedzialne i nie edytują oni nie swoich projektów.
-Dla zwinnego projektu należałoby umożliwić wskazanej grupie studentów zarzżdanie zadanym, pustym projektem.
+Jedną z podstawowych zmian jest dodatnie dodatkowego poziomu uprawnień.
+Obecnie w ramach platformy istnieją tylko dwie role: prowadzącego (administratora) oraz studenta (zwykłego użytkownika).
+W modelu MVP zakłada się, że w ramach platformy może istnieć kilku prowadzących, którzy mają dostęp do edycji każdego z projektów, ale pomimo takich uprawnień ich zachowanie jest odpowiedzialne i nie edytują oni projektów innych niż własne.
+Dla zwinnego projektu należałoby umożliwić wskazanej grupie studentów zarządzanie pojedynczym projektem.
 Wymagałoby to dodatkowej roli w bazie posiadającej szersze uprawnienia niż zwykły student.
-Warto jednak zauważyć, że nie powinny one być równe z prawami administratora, który ma między innymi możliwość usunięcia całego projektu.
-W celu odpowiedniej definicji nowej roli i zakresu jej uprawnień należałoby przeanalizować dokładniej problem.
+Warto jednak zauważyć, że dodatkowe uprawnienia nie powinny być równe z prawami administratora, który ma między innymi możliwość usunięcia całego projektu.
+W celu odpowiedniej definicji nowej roli i~zakresu jej uprawnień należałoby przeanalizować dokładniej problem.
 
-Ważnym zagadnieniem jest również równoległy dostęp do zasobów platformy.
-Dla obecnej wersji platformy jedynym zasobem dla którego wymagane jest strzeżenie równoległego dostępu jest uruchamianie programów.
-Łatwo zauważyć, że w przypadku zwinnego projektu, również definiowanie etapów mogłoby wymagać lepszego zrównoleglenia dostępu do zasobów.
-Dodatkową potrzebą byłoby dodanie obserwacji zmian dokonywanych na platformie w ramach projektu i aktualizacji interfejsów studentów podążających za tymi zmianami.
+Ważnym zagadnieniem jest również równoległy dostęp platformy.
+Dla obecnej wersji narzędzia jedyna akcja, dla której wymagane jest strzeżenie równoległego dostępu to uruchamianie programów.
+Łatwo zauważyć, że w przypadku zwinnego projektu, również definiowanie etapów i integracji mogłoby wymagać równoległego dostępu do zasobów.
+Dodatkową funkcjonalnością byłoby dodanie obserwacji zmian dokonywanych na platformie w~ramach projektu i aktualizacji interfejsów studentów podążających za tymi zmianami.
 
-W przypadku zwinnego projektu zbieranie statystyk powinno być również bardziej obszerne niż dla tradycyjnego.
-Dla wersji MVP statystyki zbierane są tylko w ramach uruchomień kolejnych programów.
-W wersji podstawowej zakłada się, że prowadzący zna wymagania i definiuje projekt na początku semestru i udostępnia go studentom.
-Może on dokonywać modyfikacji zadań w trakcie trwania semestru jednak z założenia nie powinny być one duże.
-W przypadku gdy studenci sami mieliby zarządzać projektem należałoby zbierać również informacje dotyczące tworzenia zadań i przechowywać je nawet dla usuniętych etapów i integracji.
-Takie informacje na pozwoliłyby na lepsze zrozumienie specyfiki pracy studentów w przypadku zwinnego projektu.
+W przypadku zwinnego projektu zbierane statystyki powinny być szersze niż dla tradycyjnego podejścia.
+Dla wersji MVP przechowywane są one tylko dla uruchomień kolejnych programów.
+W wersji podstawowej zakłada się, że prowadzący zna wymagania i definiuje projekt na początku semestru, po czym udostępnia go studentom.
+Może on dokonywać modyfikacji zadań w trakcie trwania semestru, jednak z założenia nie powinny być one duże.
+W przypadku gdy studenci sami mieliby zarządzać projektem należałoby, zbierać również informacje dotyczące tworzenia zadań i przechowywać je nawet dla usuniętych etapów i integracji.
+Takie informacje pozwoliłyby na lepsze zrozumienie specyfiki pracy studentów w przypadku zwinnego projektu.
 Mogłyby posłużyć również do oceny pracy semestralnej i porównania zaangażowania w obrębie różnych zespołów.
 
 Inną wartą rozważenia funkcjonalnością jest dodanie komentarza dla tworzonych przez studentów przypadków testowych.
 Pomimo takiego samego przedstawienia testów w ramach wszystkich projektów ich ocena byłaby dalej indywidualna.
-Mogłaby być przez to czasochłonnna i kłopotliwa.
-Dodanie dodatkowego komentarza dla każdego z testów mogłoby być przydatne w przypadku bardziej złożonych przypadków testowych.
+Jest to czasochłonne i~kłopotliwe.
+Dodanie dodatkowego komentarza dla każdego z testów mogłoby być przydatne do lepszego zrozumienia zamiarów studentów w przypadku bardziej złożonych przypadków testowych.
 
-Kolejną przydatną funkcjonlnością dla zwinnego projektu jest możliwość zatwierdzania etapów przez prowadzącego.
+Kolejną przydatną funkcjonalnością jest możliwość zatwierdzania etapów przez prowadzącego.
 Zaakceptowanie powinno odbywać się po spotkaniu z prowadzącym, jednak taka funkcjonalność mogłaby dodatkowo pomóc w ocenie końcowej przebiegu projektu.
 
-Wszystkie omówione modyfikacje da się wprowadzić do platformy nie tracąc przy tym jej dotychczasowych funkcjonalności.
-W większości nie są to trudne do zaimplementowania funkcjonalności, jednak wymagają one przed wprowadzeniem dodatkowej, pełnejszej analizy.
-Dodanie nowej roli i wprowadzenie dodatkowego udostępniania zasobów powinno być dobrze przemyślane i zaprojektowane przed implementacją.
+Wszystkie omówione modyfikacje można wprowadzić do platformy, nie tracąc przy tym jej dotychczasowych funkcjonalności.
+W większości nie są to trudne do zaimplementowania zmiany, jednak wymagają one przed wprowadzeniem dodatkowej, pełniejszej analizy.
+Dodanie nowej roli i wprowadzenie pełniejszego zrównoleglenia dostępu do zasobów powinno być dobrze przemyślane i zaprojektowane przed implementacją.
 
 \subsection{Podsumowanie}
 
 Platforma może zostać rozszerzona, tak aby możliwe było z jej wykorzystaniem przeprowadzenie zwinnego projektu.
 Modyfikacje nie powinny wpłynąć na obecne funkcjonalności platformy.
-Dzięki takiemu podejściu narzędzie stało by się jeszcze bardziej uniwersalne.
+Dzięki takiemu podejściu narzędzie stałoby się jeszcze bardziej uniwersalne.
 
 Pomysł udostępnienia platformy dla zwinnych projektów nasunął się podczas badania gotowego narzędzia.
-Jest to moment w którym platforma była gotowa i zweryfikowana w podstawowej wersji.
-Dodanie na tym etapie pracy nowych funkcjonalności mogłby doprowadzić do destabilizacji platformy i nie przyiosło by pozytywnych rezultatów.
+Był to moment, w którym platforma została zweryfikowana w~podstawowej wersji.
+Dodanie na tym etapie pracy nowych funkcjonalności mogłoby doprowadzić do destabilizacji platformy i nie przyniosłoby pozytywnych rezultatów.
 Stąd udostępnienie platformy do prowadzenia projektów w metodyce Agile jest proponowanym rozszerzeniem pracy magisterskiej.
 
 
