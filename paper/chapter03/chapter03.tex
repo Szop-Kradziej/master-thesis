@@ -92,7 +92,14 @@ Opisany sposób testowania leży na poziomie testów akceptacyjnych w formie tes
 
 \section{Redukcja czasochłonności}
 
-Podstawowym zadaniem platformy jest zredukowanie czasochłonności procesu weryfikacji pracy studentów wynikającej z indywidualnego podejścia przy rozpatrywaniu cząstkowych rezultatów dla każdej z grup.
+Podstawowym zadaniem platformy jest redukcja czasochłonności dla procesu weryfikacji pracy studentów.
+Od strony prowadzącego sprowadza się ona do eliminacji indywidualnego podejścia do każdej z grup projektowych.
+Dla studentów uzyskiwana jest przez szybszą możliwość uzyskania informacji zwrotnej dotyczącej wyniku działania programu.
+Obie koncepcje zmniejszenia czasochłonności procesu weryfikacji pracy studentów zostały omówione szerzej w kolejnych podrozdziałach.
+
+\subsection{Eliminacja indywidualnego podejścia do grup projektowych}
+
+Zadaniem platformy jest zredukowanie czasochłonności procesu weryfikacji pracy studentów wynikającej z indywidualnego podejścia przy rozpatrywaniu cząstkowych rezultatów dla każdej z grup.
 To założenie można osiągnąć poprzez automatyzację procesu sprawdzania wyników wykonania programów w ramach kolejnych etapów.
 Automatyzacja sprowadza się do utworzenia szeregu przypadków testowych przez prowadzącego w ramach każdego z etapów.
 Następnie przeprowadzane są testy akceptacyjne na programach napisanych przez studentów.
@@ -111,8 +118,9 @@ Również w przypadku kodu programu niejednokrotnie ciężko stwierdzić, która
 W celu ułatwienia oceny pracy studentów na interfejsie webowym platformy są zgrupowane w jednym, intuicyjnym miejscu trzy elementy cząstkowej pracy studentów pozwalające na jej ocenę: program wykonywalny, link do kodu aplikacji oraz sprawozdanie.
 Dzięki łatwemu dostępowi do tych elementów prowadzący uniknie błędów podczas oceniania etapu.
 
+\vfill
 
-\section{Informacja zwrotna}
+\subsection{Informacja zwrotna}
 
 Aktualnie informacja zwrotna dotycząca wyniku uzyskanego dla zadanego podzadania jest przekazywana studentom na zakończenie etapu.
 Jest to stosunkowo późny moment.
@@ -130,8 +138,17 @@ Wśród informacji zwrotnej dla każdego z~testów znajdują się:
 
 Zaimplementowane narzędzie umożliwia pozyskanie powyżej opisanych informacji zwrotnych w krótkim czasie i bez udziału prowadzącego.
 
+\section{Organizacja pracy grupowej}
 
-\section{Praca w ramach etapów i integracji}
+Platforma pozwala na definicję projektów wraz z etapami, integracjami oraz grupami projektowymi.
+W podrozdziale \ref{work_in_stages_and_integrations} omówiono zadania studentów w ramach etapów i integracji.
+Sekcja \ref{adding_project_groups} opisuje koncepcję dodawania grup projektowych.
+W ostatnim podrozdziale wymieniono podstawowe statystyki zbierane przez platformę.
+
+\vfill
+
+\subsection{Praca w ramach etapów i integracji}
+\label{work_in_stages_and_integrations}
 
 Jednym z zadań grupy studentów korzystającej z platformy jest między innymi zamieszenie na niej wyników swojej pracy dla kolejnych etapów.
 Należą do nich: sprawozdanie, link do kodu oraz program.
@@ -156,17 +173,13 @@ Jak zostało wspomniane wcześniej, studenci nie pracują systematycznie.
 Aby zmotywować ich do regularnych działań, platforma wprowadza element grywalizacji udostępniając zbiorczy podgląd wyników innych grup.
 Dzięki temu studenci mogą sklasyfikować swoje postępy na tle innych.
 
-
-\section{Konfiguracja środowiska uruchomieniowego}
-
 Studenci przedstawiający manualnie swoje wyniki cząstkowe prowadzącym mogą natrafić obecnie na szereg problemów.
 Podczas prezentacji mogą zaistnieć komplikacje związane między innymi z niepoprawną konfiguracją środowiska uruchomieniowego lub niewłaściwym doborem przypadków testowych.
 W sytuacji, gdy zadaniem studentów jest zaprezentowanie interakcji pomiędzy stworzonymi przez nich modułami programów, prawdopodobieństwo wystąpienia powyższych błędów wzrasta.
 Proponowane narzędzie przechowuje i udostępnia wspólną konfigurację środowiska uruchomieniowego w ramach projektu.
 Zapewnia to testowanie aplikacji studenckich na różnych maszynach z takim samym efektem.
 
-
-\section{Tworzenie grup projektowych}
+\subsection{Tworzenie grup projektowych}
 \label{adding_project_groups}
 
 Wprowadzane narzędzie może zostać zintegrowane z używanym obecnie systemem kontroli wersji.
@@ -199,8 +212,7 @@ Przykład struktury akceptowalnego pliku wygląda następująco:
 \end{lstlisting}
 }
 
-
-\section{Zbieranie statystyk}
+\subsection{Zbieranie statystyk}
 
 W celu lepszego zrozumienia procesu pracy studentów podczas semestru zbierane i~przechowywane są statystyki z~wykonania kolejnych zadań.
 Platforma umożliwia zapisywanie prostych danych audytowych, dotyczących każdej z~prób uruchomienia programów w ramach etapu lub integracji.
