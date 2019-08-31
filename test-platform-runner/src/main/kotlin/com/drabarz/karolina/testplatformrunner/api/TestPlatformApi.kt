@@ -164,17 +164,6 @@ class TestPlatformApi(val loginService: LoginService,
         return stageService.saveTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
     }
 
-    @PostMapping("/stage/testCase/parameters")
-    fun editStageTestCaseParameters(
-            @RequestHeader headers: HttpHeaders,
-            @RequestParam("parameters") parameters: String?,
-            @RequestParam("projectName") projectName: String,
-            @RequestParam("stageName") stageName: String,
-            @RequestParam("testCaseName") testCaseName: String): String {
-        authHelper.isLecturerOrThrow(headers)
-        return stageService.editTestCaseParameters(projectName, stageName, testCaseName, parameters)
-    }
-
     @GetMapping("/stage/{projectName}/{stageName}/{testCaseName}/{fileType}")
     @ResponseBody
     fun downloadStageTestCaseFile(

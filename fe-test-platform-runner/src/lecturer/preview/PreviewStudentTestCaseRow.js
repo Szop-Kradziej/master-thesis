@@ -45,17 +45,22 @@ class PreviewStudentTestCaseRow extends Component {
                         color={this.props.testCase.status === 'SUCCESS' ? "green" : "red"}>{this.props.testCase.status}</font>
                     </p>
                 </CustomTableCell>
-                <CustomTableCell >
+                <CustomTableCell>
                     <p>{this.props.testCase.message ? this.props.testCase.message : "Brak"}</p>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row" width="5%">
-                    <DownloadItemComponent header={this.props.testCase.logsFile === true ? "Logi" : "Brak"}
+                <CustomTableCell component="th" scope="row" width="8%">
+                    <DownloadItemComponent header={this.props.testCase.logsFile === true ? "logs" : "Brak"}
                                            info="Pobierz logi"
                                            disabled={!this.props.testCase.logsFile === true}
                                            downloadActionHandler={this.handleDownloadLogsFile}/>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row" width="15%">
-                    {this.props.testCase.parameters ? this.props.testCase.parameters : "Brak"}
+                <CustomTableCell component="th" scope="row" width="8%">
+                    {this.props.testCase.parameters ?
+                        <DownloadItemComponent header="parameters"
+                                               info="Pobierz parametry"
+                                               disabled={false}
+                                               downloadActionHandler={this.handleDownloadParametersFile}/>
+                        : "Brak"}
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="8%">
                     <DownloadItemComponent header="input"

@@ -13,7 +13,7 @@ class TestCaseRow extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            isEditTestCaseParametersVisible: false,
+            isAddParametersTestCaseFileVisible: false,
             isAddInputTestCaseFileVisible: false,
             isAddOutputTestCaseFileVisible: false
         };
@@ -32,11 +32,11 @@ class TestCaseRow extends Component {
     };
 
     handleOpenEditTestCaseParametersDialog = () => {
-        this.setState({isEditTestCaseParametersVisible: true});
+        this.setState({isAddParametersTestCaseFileVisible: true});
     };
 
     handleCloseEditTestCaseParametersDialog = () => {
-        this.setState({isEditTestCaseParametersVisible: false});
+        this.setState({isAddParametersTestCaseFileVisible: false});
     };
 
     handleOpenAddInputTestCaseFileDialog = () => {
@@ -83,7 +83,7 @@ class TestCaseRow extends Component {
                         header={this.props.testCase.parameters ? this.props.testCase.parameters : 'Brak'}
                         info="Edytuj parametry"
                         editActionHandler={this.handleOpenEditTestCaseParametersDialog}/>
-                    <EditParametersDialog isOpen={this.state.isEditTestCaseParametersVisible}
+                    <EditParametersDialog isOpen={this.state.isAddParametersTestCaseFileVisible}
                                           closeActionHandler={this.handleCloseEditTestCaseParametersDialog}
                                           successActionHandler={this.props.integrationChangedHandler}
                                           projectName={this.props.projectName}

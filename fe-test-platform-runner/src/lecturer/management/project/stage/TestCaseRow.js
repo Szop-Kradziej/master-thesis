@@ -5,16 +5,14 @@ import EditItemComponent from "../../../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
 import * as Api from "../../../../Api";
 import UploadTestCaseFileDialog from "./UploadTestCaseFileDialog";
-import EditParametersDialog from "./dialog/EditParametersDialog";
 import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
-import {withStyles} from "@material-ui/core";
 
 class TestCaseRow extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            isEditTestCaseParametersVisible: false,
+            isAddParametersTestCaseFileVisible: false,
             isAddInputTestCaseFileVisible: false,
             isAddOutputTestCaseFileVisible: false
         };
@@ -28,16 +26,20 @@ class TestCaseRow extends Component {
         this.downloadFile("output");
     };
 
+    handleDownloadParametersFile = () => {
+        this.downloadFile("parameters");
+    };
+
     downloadFile = (fileType) => {
         Api.downloadStageTestCaseFile(this.props.projectName, this.props.stageName, this.props.testCase.testCaseName, fileType)
     };
 
-    handleOpenEditTestCaseParametersDialog = () => {
-        this.setState({isEditTestCaseParametersVisible: true});
+    handleOpenAddParametersTestCaseFileDialog = () => {
+        this.setState({isAddParametersTestCaseFileVisible: true});
     };
 
-    handleCloseEditTestCaseParametersDialog = () => {
-        this.setState({isEditTestCaseParametersVisible: false});
+    handleCloseAddParametersTestCaseFileDialog = () => {
+        this.setState({isAddParametersTestCaseFileVisible: false});
     };
 
     handleOpenAddInputTestCaseFileDialog = () => {
@@ -80,18 +82,21 @@ class TestCaseRow extends Component {
                         editActionHandler={this.handleEditTestName}/>
                 </CustomTableCell>
                 <CustomTableCell>
-                    <EditItemComponent
+                    <UploadAndDownloadItemComponent
                         header={this.props.testCase.parameters ? this.props.testCase.parameters : 'Brak'}
-                        info="Edytuj parametry"
-                        editActionHandler={this.handleOpenEditTestCaseParametersDialog}/>
-                    <EditParametersDialog isOpen={this.state.isEditTestCaseParametersVisible}
-                                          closeActionHandler={this.handleCloseEditTestCaseParametersDialog}
-                                          successActionHandler={this.props.stageChangedHandler}
-                                          projectName={this.props.projectName}
-                                          stageName={this.props.stageName}
-                                          testCaseName={this.props.testCase.testCaseName}
-                                          headerText="Dodaj parametry uruchomienia"
-                                          defaultValue={this.props.testCase.parameters}/>
+                        uploadInfo="Załaduj plik z parametrami"
+                        uploadActionHandler={this.handleOpenAddParametersTestCaseFileDialog}
+                        downloadInfo="Pobierz plik z parametrami"
+                        downloadDisabled={this.props.testCase.parameters === null}
+                        downloadActionHandler={this.handleDownloadParametersFile}/>
+                    <UploadTestCaseFileDialog isOpen={this.state.isAddParametersTestCaseFileVisible}
+                                              closeActionHandler={this.handleCloseAddParametersTestCaseFileDialog}
+                                              successActionHandler={this.props.stageChangedHandler}
+                                              projectName={this.props.projectName}
+                                              stageName={this.props.stageName}
+                                              testCaseName={this.props.testCase.testCaseName}
+                                              fileType="parameters"
+                                              headerText="Dodaj parametry uruchomienia"/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
                     <UploadAndDownloadItemComponent

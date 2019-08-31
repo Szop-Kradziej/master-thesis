@@ -37,12 +37,11 @@ class TestCaseService(val pathProvider: TaskPathProvider) {
                 .map {
                     TestCase(
                             it,
-                            getTestCaseParameters(projectName, taskName, it),
+                            getParametersTestCaseFileName(projectName, taskName, it),
                             getTestCaseFileName(INPUT, projectName, taskName, it),
                             getTestCaseFileName(OUTPUT, projectName, taskName, it))
                 }
     }
-
 
     private fun getTestCaseParameters(projectName: String, taskName: String, testCaseName: String): String? {
         val dir = pathProvider.getTaskTestCaseParametersDir(projectName, taskName, testCaseName)
@@ -54,6 +53,16 @@ class TestCaseService(val pathProvider: TaskPathProvider) {
         }
 
         return testCaseParametersFile.readText()
+    }
+
+
+    private fun getParametersTestCaseFileName(projectName: String, taskName: String, testCaseName: String): String? {
+        val fileDir = pathProvider.getTaskTestCaseParametersDir(projectName, taskName, testCaseName)
+        if (!fileDir.exists() || fileDir.list().size != 1 || fileDir.listFiles().first().reader().readText().isBlank()) {
+            return null
+        }
+
+        return fileDir.list().first()
     }
 
     private fun getTestCaseFileName(fileType: String, projectName: String, taskName: String, testCaseName: String): String? {
@@ -186,6 +195,7 @@ class TestCaseService(val pathProvider: TaskPathProvider) {
         val log = LoggerFactory.getLogger(TestCaseService::class.java)
         const val SUCCESS_RESPONSE = "200"
         const val INPUT = "input"
+        const val PARAMETERS = "parameters"
         const val OUTPUT = "output"
     }
 }

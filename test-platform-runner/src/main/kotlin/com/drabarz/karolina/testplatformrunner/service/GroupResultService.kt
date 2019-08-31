@@ -96,8 +96,8 @@ class GroupResultService(
                             stage.stageName,
                             getBinaryName(groupName, projectName, stage.stageName),
                             getReportName(groupName, projectName, stage.stageName),
-                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).sortedBy { it.testCaseName },
-                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
+                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, null) }).sortedBy { it.testCaseName },
+                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, null) }).count { it.status == "SUCCESS" },
                             stage.testCases.size,
                             stage.startDate,
                             stage.endDate,
@@ -138,8 +138,8 @@ class GroupResultService(
                             stage.stageName,
                             getBinaryName(groupName, projectName, stage.stageName),
                             getReportName(groupName, projectName, stage.stageName),
-                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).sortedBy { it.testCaseName },
-                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
+                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, null) }).sortedBy { it.testCaseName },
+                            getTestCasesWithResults(groupName, projectName, stage.stageName, stage.testCases.map { StudentTestCase(it.testCaseName, null) }).count { it.status == "SUCCESS" },
                             stage.testCases.size,
                             stage.startDate,
                             stage.endDate,
@@ -203,7 +203,7 @@ class GroupResultService(
         val resultFile = File(stagePathProvider.getStudentResultsDir(groupName, projectName, stageName), RESULT_FILE_NAME)
 
         if (!resultFile.exists()) {
-            return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters, "NO RUN", null) }
+            return testCases.map { testCase -> TestCaseWithResult(testCase.name, isParametersFileExist(projectName, stageName, testCase.name), "NO RUN", null) }
         }
 
         val jsonData = resultFile.readBytes()
@@ -214,15 +214,21 @@ class GroupResultService(
         return testCases.map { testCase ->
             TestCaseWithResult(
                     testCase.name,
-                    testCase.parameters,
+                    isParametersFileExist(projectName, stageName, testCase.name),
                     results.find { it.testCaseName == testCase.name }?.status ?: "NO RUN",
                     results.find { it.testCaseName == testCase.name }?.message,
                     isLogsFileExist(groupName, projectName, stageName, testCase.name))
         }
     }
 
-    private fun isLogsFileExist(groupName: String, projectName: String, stageName: String, testCase: String): Boolean {
-        return stagePathProvider.getStudentLogsFileDir(groupName, projectName, stageName, testCase).exists()
+    private fun isParametersFileExist(projectName: String, stageName: String, testCaseName: String): Boolean {
+        return stagePathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName).exists() &&
+                stagePathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName).list().size == 1 &&
+                stagePathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName).listFiles().first().readText().isNotBlank()
+    }
+
+    private fun isLogsFileExist(groupName: String, projectName: String, stageName: String, testCaseName: String): Boolean {
+        return stagePathProvider.getStudentLogsFileDir(groupName, projectName, stageName, testCaseName).exists()
     }
 
     fun saveCodeLink(userName: String, groupName: String, projectName: String, stageName: String, codeLink: String): String {
@@ -283,8 +289,8 @@ class GroupResultService(
                     StudentIntegration(
                             integration.name,
                             integration.integrationStages,
-                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, it.parameters) }),
-                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
+                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, null) }),
+                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, null) }).count { it.status == "SUCCESS" },
                             integration.testCases.count(),
                             countSuccessfulIntegrationGroups(projectName, integration.name),
                             countTotalGroups(projectName),
@@ -323,8 +329,8 @@ class GroupResultService(
                             integration.name,
                             integration.integrationStages,
                             integration.comment,
-                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, it.parameters) }),
-                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, it.parameters) }).count { it.status == "SUCCESS" },
+                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases!!.map { StudentTestCase(it.testCaseName, null) }),
+                            getTestCasesWithResultsIntegration(groupName, projectName, integration.name, integration.testCases.map { StudentTestCase(it.testCaseName, null) }).count { it.status == "SUCCESS" },
                             integration.testCases.count(),
                             countSuccessfulIntegrationGroups(projectName, integration.name),
                             countTotalGroups(projectName),
@@ -347,7 +353,7 @@ class GroupResultService(
         val resultFile = File(integrationPathProvider.getStudentResultsDir(groupName, projectName, integrationName), RESULT_FILE_NAME)
 
         if (!resultFile.exists()) {
-            return testCases.map { testCase -> TestCaseWithResult(testCase.name, testCase.parameters, "NO RUN", null) }
+            return testCases.map { testCase -> TestCaseWithResult(testCase.name, isParametersFileExistIntegration(projectName, integrationName, testCase.name), "NO RUN", null) }
         }
 
         val jsonData = resultFile.readBytes()
@@ -358,11 +364,15 @@ class GroupResultService(
         return testCases.map { testCase ->
             TestCaseWithResult(
                     testCase.name,
-                    testCase.parameters,
+                    isParametersFileExistIntegration(projectName, integrationName, testCase.name),
                     results.find { it.testCaseName == testCase.name }?.status ?: "NO RUN",
                     results.find { it.testCaseName == testCase.name }?.message,
                     isLogsFileExistIntegration(groupName, projectName, integrationName, testCase.name))
         }
+    }
+
+    private fun isParametersFileExistIntegration(projectName: String, stageName: String, testCaseName: String): Boolean {
+        return stagePathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName).exists()
     }
 
     private fun isLogsFileExistIntegration(groupName: String, projectName: String, integrationName: String, testCase: String): Boolean {

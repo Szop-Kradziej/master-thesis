@@ -195,10 +195,6 @@ class StageService(
         log.info("Description directory for stage: $stageName in project: $projectName deleted")
     }
 
-    fun editTestCaseParameters(projectName: String, stageName: String, testCaseName: String, parameters: String?): String {
-        return testCaseService.editParameters(projectName, stageName, testCaseName, parameters)
-    }
-
     fun saveTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, stageName: String, testCaseName: String): String {
         return testCaseService.addTestCase(inputFile, outputFile, projectName, stageName, testCaseName)
     }

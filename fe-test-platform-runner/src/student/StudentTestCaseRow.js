@@ -25,6 +25,10 @@ class StudentTestCaseRow extends Component {
         this.downloadFile("output");
     };
 
+    handleDownloadParametersFile = () => {
+        this.downloadTestCaseFile("parameters");
+    };
+
     downloadFile = (fileType) => {
         if (this.props.taskType === "stage") {
             Api.downloadStageTestCaseFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName, fileType)
@@ -49,13 +53,18 @@ class StudentTestCaseRow extends Component {
                     <p>{this.props.testCase.message ? this.props.testCase.message : "Brak"}</p>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="5%">
-                    <DownloadItemComponent header={this.props.testCase.logsFile === true ? "Logi" : "Brak"}
+                    <DownloadItemComponent header={this.props.testCase.logsFile === true ? "logs" : "Brak"}
                                            info="Pobierz logi"
                                            disabled={!this.props.testCase.logsFile === true}
                                            downloadActionHandler={this.handleDownloadLogsFile}/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="15%">
-                    {this.props.testCase.parameters ? this.props.testCase.parameters : "Brak"}
+                    {this.props.testCase.parameters ?
+                        <DownloadItemComponent header="parameters"
+                                               info="Pobierz parametry"
+                                               disabled={false}
+                                               downloadActionHandler={this.handleDownloadParametersFile}/>
+                        : "Brak"}
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row" width="8%">
                     <DownloadItemComponent header="input"
