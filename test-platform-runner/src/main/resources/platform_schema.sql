@@ -35,7 +35,7 @@ CREATE TABLE users_auth
   user_id BIGINT       NOT NULL,
 
   CONSTRAINT users_auth_pk PRIMARY KEY (id)
-)
+);
 
 CREATE TABLE students_in_groups
 (
