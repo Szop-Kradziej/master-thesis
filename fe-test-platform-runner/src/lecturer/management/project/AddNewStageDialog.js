@@ -9,12 +9,13 @@ import DialogContentText from "@material-ui/core/es/DialogContentText/DialogCont
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
 import * as Api from "../../../Api";
+import moment from "moment";
 
 class AddNewStageDialog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {stageName: null, startDate: "2019-06-19", endDate: "2019-09-15"};
+        this.state = {stageName: null, startDate: null, endDate: null};
     }
 
     handleStageNameAdded = () => event => {
@@ -58,7 +59,7 @@ class AddNewStageDialog extends Component {
                             id="start-date"
                             label="Data rozpoczęcia"
                             type="date"
-                            defaultValue="2019-06-19"
+                            defaultValue={moment().format("YYYY-MM-DD")}
                             className={this.props.classes.textField}
                             value={this.state.startDate}
                             onChange={this.handleStartDateAdded()}
@@ -69,7 +70,7 @@ class AddNewStageDialog extends Component {
                             id="end-date"
                             label="Data zakończenia"
                             type="date"
-                            defaultValue="2019-09-15"
+                            defaultValue={moment().add(3, "M").format("YYYY-MM-DD")}
                             className={this.props.classes.textField}
                             value={this.state.endDate}
                             onChange={this.handleEndDateAdded()}
