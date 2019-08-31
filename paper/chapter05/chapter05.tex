@@ -232,14 +232,101 @@ Dodatkowo ma on uprawnienia do definicji i edycji projektu oraz podglądu statys
 
 \section {Zestawienie platformy na serwerze}
 \label{run-platform}
+TODO: what with IP address for cors? also in system envs?
 
-TODO: Opis i przykład
+W celu poprawnego uwierzytelnienia użytkowników przez GitHub należy zarejestrować aplikację w serwisie.
+Na rysunku \ref{fig:github_app_register} został przedstawiony formularz rejestracyjny.
+\textit{Homepage URL} jest adresem dla strony startowej platformy.
+\textit{Authorization callback URL} jest linkiem, na który zostanie przekierowany użytkownik po poprawnym zalogowaniu w serwisie GitHub.
+Dla obu adresów należy podać publiczny adres IP, pod którym zostanie wystawiony interfejs webowy.
+Więcej informacji o uwierzytelnieniu użytkowników przy pomocy serwisu GitHub zostało zmieszczone w podrozdziale \ref{authorization}.
 
-- zmienne systemowe TEST\_PLATFORM\_CLIENT\_ID, TEST\_PLATFORM\_SECRET
-- secret - nie powinien być publicznie udostępniany
-- strona startowa i callback
-- nadawane przez github
-- strona do rejestracji aplikacji []
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 12cm]{chapter05/github_app_register.png}
+    \caption{Formularz rejestracji aplikacji w serwisie GitHub (źródło własne).}
+    \label{fig:github_app_register}
+\end{figure}
+
+Po poprawnej rejestracji aplikacji serwis wygeneruje dwa identyfikatory dla aplikacji \textit{Client ID} oraz \textit{Client Secret}.
+Oba identyfikatory należy zapisać do zmiennych systemowych pod nazwami: \textit{TEST\_PLATFORM\_CLIENT\_ID} oraz \textit{TEST\_PLATFORM\_SECRET}.
+
+W celu uruchomienia platformy na dowolnej maszynie z systemem Linux należy zainstalować:
+\begin{itemize}
+    \item Java w wersji 8,
+    \item Npm w wersji 6,
+    \item Docker w wersji 18 i nadać mu uprawnienia administratora.
+\end{itemize}
+
+W katalogu domowym użytkownika należy utworzyć folder \textit{platform} a wewnątrz jego dwa katalogi \textit{students} i \textit{projects}.
+
+Następnie należy utworzyć schemat bazy danych.
+Można to zrobić bezpośrednio instalując na maszynie PostgreSQL lub przy użyciu kontenera dockerowego.
+Przykładowa komenda do uruchomienia kontenera z bazą wygląda następująco:
+
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
+
+    docker run -d --name platform -p 5432:5432 -e POSTGRES_PASSWORD=password
+    -e POSTGRES_DB=platform_db -e POSTGRES_USER=user postgres:12-alpine
+
+\end{lstlisting}
+}
+
+Po uruchomieniu bazy należy utworzyć tabele.
+W przypadku kontenera dockerowego można użyć do tego poniższej komendy, gdzie \textit{platform\_schema.sql} jest plikiem zawierającym definicję schematu bazodanowego, który został załączony do pracy:
+
+TODO: fix command
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
+
+    cp
+    exec
+
+\end{lstlisting}
+}
+
+Dodanie użytkowników sprowadza się do wstawienia wierszy do tabeli \textit{users}.
+Przykład komendy SQL pozwalającej na dołączenie studenta i prowadzącego został przedstawiony poniżej.
+
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
+
+    INSERT INTO users (name, is_student) VALUES ('student_mail@gmail.com', true);
+    INSERT INTO users (name, is_student) VALUES ('lecturer_mail@gmail.com', false);
+
+\end{lstlisting}
+}
+
+Kod wykonywalny platformy można pobrać z repozytorium GitHub lub przenieść na maszynę kod załączony na płycie.
+
+Aby uruchomić serwer należy przejść do katalogu \textit{master\_thesis/test\_platform\_runner} i użyć komendy:
+
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
+
+    ./gradlew runBootJar
+
+\end{lstlisting}
+}
+
+W celu uruchomienia interfejsu webowego należy przejść do katalogu \newline \textit{master\_thesis/fe\_test\_platform\_runner} i użyć kolejno dwóch komend:
+
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
+
+    npm install
+    npm start
+
+\end{lstlisting}
+}
+
+Po wykonaniu powyższych kroków platforma jest gotowa do użycia.
 
 \section {Przykład integracji platformy z narzędziem CI oraz repozytorium kodu}
 \label{ci-integration}
