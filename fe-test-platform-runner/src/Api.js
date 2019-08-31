@@ -220,6 +220,10 @@ export function downloadIntegrationTestCaseFile(projectName, integrationName, te
     return downloadFile(backendUrl('/integration/' + projectName + '/' + integrationName + '/' + testCaseName + '/' + fileType))
 }
 
+export function downloadIntegrationParametersTestCaseFile(projectName, integrationName, testCaseName, index) {
+    return downloadFile(backendUrl('/integration/parameters/' + projectName + '/' + integrationName + '/' + testCaseName + '/' + index))
+}
+
 export function downloadStudentStageLogsFile(projectName, stageName, testCaseName) {
     let headers = {'Authorization': getAuthHeader()};
     return downloadFile(backendUrl('/student/stage/' + projectName + '/' + stageName + '/' + testCaseName + '/logs'), headers)

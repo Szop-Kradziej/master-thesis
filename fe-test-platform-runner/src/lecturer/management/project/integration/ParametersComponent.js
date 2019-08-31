@@ -15,7 +15,7 @@ class ParametersComponent extends Component {
     };
 
     downloadFile = (fileType) => {
-        Api.downloadIntegrationTestCaseFile(this.props.projectName, this.props.integrationName, this.props.testCaseName, fileType)
+        Api.downloadIntegrationParametersTestCaseFile(this.props.projectName, this.props.integrationName, this.props.testCaseName, this.props.index)
     };
 
     handleOpenAddParametersTestCaseFileDialog = () => {

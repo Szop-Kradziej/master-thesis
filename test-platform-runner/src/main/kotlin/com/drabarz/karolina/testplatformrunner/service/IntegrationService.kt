@@ -140,6 +140,10 @@ class IntegrationService(
         return testCaseService.getTestCaseFile(projectName, integrationName, testCaseName, fileType)
     }
 
+    fun getParametersTestCaseFile(projectName: String, integrationName: String, testCaseName: String, index: Int): File {
+        return testCaseService.getIntegrationParametersTestCaseFile(projectName, integrationName, testCaseName, index)
+    }
+
     fun uploadTestCaseFile(projectName: String, integrationName: String, testCaseName: String, fileType: String, file: MultipartFile): String {
         return testCaseService.uploadTestCaseFile(projectName, integrationName, testCaseName, fileType, file)
     }
@@ -151,6 +155,7 @@ class IntegrationService(
     fun uploadParametersTestCaseFile(projectName: String, integrationName: String, testCaseName: String, index: Int, file: MultipartFile): String {
         return testCaseService.uploadIntegrationParametersTestCaseFile(projectName, integrationName, testCaseName, index, file)
     }
+
 
     companion object {
         val log = LoggerFactory.getLogger(IntegrationService::class.java)

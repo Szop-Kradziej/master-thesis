@@ -166,6 +166,17 @@ class TestCaseService(val pathProvider: TaskPathProvider) {
         throw java.lang.RuntimeException("Error file doesn't exist")
     }
 
+    fun getIntegrationParametersTestCaseFile(projectName: String, taskName: String, testCaseName: String, index: Int): File {
+        log.info("Getting parameters file for test case: $testCaseName in task: $taskName in project: $projectName")
+
+        val fileDir = File(pathProvider.getTaskTestCaseParametersDir(projectName, taskName, testCaseName), "stage_$index")
+        if (fileDir.exists() && fileDir.list().size == 1) {
+            return fileDir.listFiles().first()
+        }
+
+        log.error("Test case parameters file for test case: $testCaseName in task: $taskName in project: $projectName doesn't exist")
+        throw java.lang.RuntimeException("Error file doesn't exist")
+    }
 
     fun uploadTestCaseFile(projectName: String, taskName: String, testCaseName: String, fileType: String, file: MultipartFile): String {
         log.info("Adding ${fileType.toLowerCase()} file for test case: $testCaseName in task: $taskName in project: $projectName")

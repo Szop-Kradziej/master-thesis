@@ -323,6 +323,16 @@ class TestPlatformApi(val loginService: LoginService,
         return createFileResponse(integrationService.getTestCaseFile(projectName, integrationName, testCaseName, fileType))
     }
 
+    @GetMapping("/integration/parameters/{projectName}/{integrationName}/{testCaseName}/{index}")
+    @ResponseBody
+    fun downloadIntegrationParametersTestCaseFile(
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("integrationName") integrationName: String,
+            @PathVariable("testCaseName") testCaseName: String,
+            @PathVariable("index") index: Int): ResponseEntity<*> {
+        return createFileResponse(integrationService.getParametersTestCaseFile(projectName, integrationName, testCaseName, index))
+    }
+
     @PostMapping("/integration/{projectName}/{integrationName}/{testCaseName}/{fileType}")
     fun uploadIntegrationTestCaseFile(
             @RequestHeader headers: HttpHeaders,
