@@ -137,6 +137,32 @@ class ProjectBoard extends Component {
                 <ExpansionPanel>
                     <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
                         <Typography className={this.props.classes.headingMainPanel}>
+                            <AddNewItemComponent
+                                header="Integracje"
+                                info="Dodaj nową integrację"
+                                addActionHandler={this.handleOpenNewIntegrationDialog}/>
+                        </Typography>
+                    </ExpansionPanelSummary>
+                    <ExpansionPanelDetails>
+                        <Typography className={this.props.classes.heading}>
+                            <div className={this.props.classes.panel}>
+                                {this.state.integrations.integrations.map(integration => (
+                                    <TableRow key={integration.name}>
+                                        <CustomTableCell component="th" scope="row">
+                                            <IntegrationComponent
+                                                integration={integration}
+                                                projectName={this.props.match.params.projectId}
+                                                integrationChangedHandler={this.fetchIntegrations}/>
+                                        </CustomTableCell>
+                                    </TableRow>
+                                ))}
+                            </div>
+                        </Typography>
+                    </ExpansionPanelDetails>
+                </ExpansionPanel>
+                <ExpansionPanel>
+                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
+                        <Typography className={this.props.classes.headingMainPanel}>
                             <AddAndUploadItemComponent
                                 header="Grupy"
                                 addInfo="Dodaj nową grupę"
@@ -155,32 +181,6 @@ class ProjectBoard extends Component {
                                                 group={group}
                                                 projectName={this.props.match.params.projectId}
                                                 groupChangedHandler={this.fetchGroups}/>
-                                        </CustomTableCell>
-                                    </TableRow>
-                                ))}
-                            </div>
-                        </Typography>
-                    </ExpansionPanelDetails>
-                </ExpansionPanel>
-                <ExpansionPanel>
-                    <ExpansionPanelSummary expandIcon={<ExpandMoreIcon/>}>
-                        <Typography className={this.props.classes.headingMainPanel}>
-                            <AddNewItemComponent
-                                header="Integracje"
-                                info="Dodaj nową integrację"
-                                addActionHandler={this.handleOpenNewIntegrationDialog}/>
-                        </Typography>
-                    </ExpansionPanelSummary>
-                    <ExpansionPanelDetails>
-                        <Typography className={this.props.classes.heading}>
-                            <div className={this.props.classes.panel}>
-                                {this.state.integrations.integrations.map(integration => (
-                                    <TableRow key={integration.name}>
-                                        <CustomTableCell component="th" scope="row">
-                                            <IntegrationComponent
-                                                integration={integration}
-                                                projectName={this.props.match.params.projectId}
-                                                integrationChangedHandler={this.fetchIntegrations}/>
                                         </CustomTableCell>
                                     </TableRow>
                                 ))}
