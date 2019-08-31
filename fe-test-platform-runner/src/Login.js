@@ -14,7 +14,7 @@ class Login extends Component {
         <div className={this.props.classes.app}>
             <header className={this.props.classes.header}>
                 <p>
-                    Panel logowania.
+                    Panel logowania
                 </p>
             </header>
             <body className={this.props.classes.body}>
