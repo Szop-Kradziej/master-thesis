@@ -21,6 +21,7 @@ import * as Api from "../Api";
 import StudentIntegrationRow from "./StudentIntegrationRow";
 import {getAuthHeader} from "../Api";
 import DescriptionAndSettingsItemComponent from "../utils/DescriptionAndSettingsItemComponent";
+import StudentIntegrationTestCasesDetails from "./StudentIntegrationTestCasesDetails";
 
 class StudentProjectBoard extends Component {
 
@@ -169,7 +170,7 @@ class StudentProjectBoard extends Component {
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
                                                     <p className={this.props.classes.testsHeading}> Testy </p>
-                                                    <StudentTestCasesDetails
+                                                    <StudentIntegrationTestCasesDetails
                                                         testCases={integration.testCases}
                                                         projectName={this.props.match.params.projectId}
                                                         taskName={integration.integrationName}
