@@ -17,6 +17,7 @@ import PreviewStudentTestCasesDetails from "./PreviewStudentTestCasesDetails";
 import PreviewStudentIntegrationRow from "./PreviewStudentIntegrationRow";
 import {getAuthHeader} from "../../Api";
 import DescriptionAndSettingsItemComponent from "../../utils/DescriptionAndSettingsItemComponent";
+import PreviewStudentIntegrationTestCasesDetails from "./PreviewStudentIntegrationTestCasesDetails";
 
 class PreviewStudentProjectBoard extends Component {
 
@@ -168,7 +169,7 @@ class PreviewStudentProjectBoard extends Component {
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
                                                     <p className={this.props.classes.testsHeading}> Testy </p>
-                                                    <PreviewStudentTestCasesDetails
+                                                    <PreviewStudentIntegrationTestCasesDetails
                                                         testCases={integration.testCases}
                                                         groupName={this.props.match.params.groupId}
                                                         projectName={this.props.match.params.projectId}
