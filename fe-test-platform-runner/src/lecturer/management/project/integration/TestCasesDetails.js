@@ -141,6 +141,7 @@ class TestCasesDetails extends Component {
                                 testCase={testCase}
                                 projectName={this.props.projectName}
                                 integrationName={this.props.integrationName}
+                                integrationStages={this.props.integrationStages}
                                 integrationChangedHandler={this.props.integrationChangedHandler}/>
                         )
                     )}

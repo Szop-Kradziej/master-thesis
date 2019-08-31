@@ -29,6 +29,7 @@ class IntegrationComponent extends Component {
                                 testCases={this.props.integration.testCases}
                                 projectName={this.props.projectName}
                                 integrationName={this.props.integration.name}
+                                integrationStages={this.props.integration.integrationStages}
                                 integrationChangedHandler={this.props.integrationChangedHandler}/>
                         </div>
                     </Typography>

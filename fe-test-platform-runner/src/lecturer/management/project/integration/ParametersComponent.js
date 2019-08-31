@@ -30,7 +30,7 @@ class ParametersComponent extends Component {
         return (
             <div>
                 <UploadAndDownloadItemComponent
-                    header={this.props.parameters ? this.props.parameters : 'Brak'}
+                    header={this.props.parameters ? (this.props.index + 1) + '. ' + this.props.parameters : (this.props.index + 1) + '. Brak'}
                     uploadInfo="Załaduj plik z parametrami"
                     uploadActionHandler={this.handleOpenAddParametersTestCaseFileDialog}
                     downloadInfo="Pobierz plik z parametrami"
