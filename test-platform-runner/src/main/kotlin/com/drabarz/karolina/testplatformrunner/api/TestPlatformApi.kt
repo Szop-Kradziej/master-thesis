@@ -335,6 +335,18 @@ class TestPlatformApi(val loginService: LoginService,
         return integrationService.uploadTestCaseFile(projectName, integrationName, testCaseName, fileType, file)
     }
 
+    @PostMapping("/integration/parameters/{projectName}/{integrationName}/{testCaseName}/{index}")
+    fun uploadIntegrationParametersTestCaseFile(
+            @RequestHeader headers: HttpHeaders,
+            @PathVariable("projectName") projectName: String,
+            @PathVariable("integrationName") integrationName: String,
+            @PathVariable("testCaseName") testCaseName: String,
+            @PathVariable("index") index: Int,
+            @RequestParam("file") file: MultipartFile): String {
+        authHelper.isLecturerOrThrow(headers)
+        return integrationService.uploadParametersTestCaseFile(projectName, integrationName, testCaseName, index, file)
+    }
+
     @DeleteMapping("/integration/{projectName}/{integrationName}/{testCaseName}")
     fun deleteIntegrationTestCase(
             @RequestHeader headers: HttpHeaders,
@@ -360,5 +372,6 @@ class Group(val groupName: String, val projectName: String, val students: List<S
 data class GroupsDao(val groups: List<GroupDao> = ArrayList())
 data class GroupDao(val name: String = "", val students: List<String> = ArrayList())
 data class IntegrationsDao(val integrations: List<IntegrationDao> = ArrayList())
-data class IntegrationDao(val name: String, val integrationStages: List<IntegrationStageDao>, val comment: String?, val testCases: List<TestCase>?)
+data class IntegrationDao(val name: String, val integrationStages: List<IntegrationStageDao>, val comment: String?, val testCases: List<IntegrationTestCase>?)
 data class IntegrationStageDao(val name: String, val orderNumber: Int, val stageName: String)
+data class IntegrationTestCase(val testCaseName: String, val parameters: List<String?>, val inputFileName: String?, val outputFileName: String?)

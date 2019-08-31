@@ -1,5 +1,6 @@
 package com.drabarz.karolina.testplatformrunner.service
 
+import com.drabarz.karolina.testplatformrunner.api.IntegrationTestCase
 import com.drabarz.karolina.testplatformrunner.api.TestCase
 import com.drabarz.karolina.testplatformrunner.service.helper.DeleteFileHelper
 import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
@@ -73,6 +74,52 @@ class TestCaseService(val pathProvider: TaskPathProvider) {
         return fileDir.list().first()
     }
 
+    fun getIntegrationTestCases(projectName: String, taskName: String, numberOfStages: Int): List<IntegrationTestCase>? {
+        log.info("Getting all test cases for task: $taskName in project: $projectName")
+
+        val projectDir = pathProvider.getProjectDir(projectName)
+        if (!projectDir.exists()) {
+            log.error("Can not get test cases for project: $projectName, project doesn't exist")
+            throw RuntimeException("Error. Project $projectName doesn't exist")
+        }
+
+        val taskDir = pathProvider.getTaskDir(projectName, taskName)
+        if (!taskDir.exists()) {
+            log.error("Can not get test cases for task: $taskName in project: $projectName, task doesn't exist")
+            throw RuntimeException("Error. Task $taskName doesn't exist")
+        }
+
+        val testCasesDir = pathProvider.getTaskTestCasesDir(projectName, taskName)
+        if (!testCasesDir.exists()) {
+            log.warn("No test cases for task: $taskName in project: $projectName")
+            return emptyList()
+        }
+
+        return testCasesDir.list()
+                .map {
+                    IntegrationTestCase(
+                            it,
+                            getIntegrationParametersTestCaseFileName(projectName, taskName, it, numberOfStages),
+                            getTestCaseFileName(INPUT, projectName, taskName, it),
+                            getTestCaseFileName(OUTPUT, projectName, taskName, it))
+                }
+    }
+
+    private fun getIntegrationParametersTestCaseFileName(projectName: String, taskName: String, testCaseName: String, numberOfStages: Int): List<String?> {
+        var listOfParameters = mutableListOf<String?>()
+
+        for (i in 0..numberOfStages - 1) {
+            var integrationStageParameterDir = File(pathProvider.getTaskTestCaseParametersDir(projectName, taskName, testCaseName), "stage_$i")
+            if (integrationStageParameterDir.exists() && integrationStageParameterDir.list().size == 1 && integrationStageParameterDir.listFiles().first().readText().isNotBlank()) {
+                listOfParameters.add(integrationStageParameterDir.list().first())
+            } else {
+                listOfParameters.add(null)
+            }
+        }
+
+        return listOfParameters
+    }
+
     fun addTestCase(inputFile: MultipartFile, outputFile: MultipartFile, projectName: String, taskName: String, testCaseName: String): String {
         log.info("Adding test case: $testCaseName for task: $taskName in project: $projectName")
 
@@ -132,6 +179,25 @@ class TestCaseService(val pathProvider: TaskPathProvider) {
         addTestCaseFile(file, fileType, projectName, taskName, testCaseName)
 
         log.info("Test case ${fileType.toLowerCase()} file for test case: $testCaseName in task: $taskName in project: $projectName created")
+
+        return SUCCESS_RESPONSE
+    }
+
+    fun uploadIntegrationParametersTestCaseFile(projectName: String, taskName: String, testCaseName: String, index: Int, file: MultipartFile): String {
+        log.info("Adding parameters file for test case: $testCaseName in task: $taskName in project: $projectName")
+
+        val fileDir = File(pathProvider.getTaskTestCaseFileDir(projectName, taskName, testCaseName, PARAMETERS), "stage_$index")
+
+        if (fileDir.exists()) {
+            deleteFileHelper.deleteSingleFileFromDir(fileDir)
+        }
+
+        fileDir.mkdirs()
+
+        val savedInputFile = File(fileDir, file.originalFilename)
+        file.transferTo(savedInputFile)
+
+        log.info("Test case parameters file for test case: $testCaseName in task: $taskName in project: $projectName created")
 
         return SUCCESS_RESPONSE
     }

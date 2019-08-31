@@ -109,6 +109,10 @@ export function uploadIntegrationTestCaseFile(projectName, integrationName, test
     return postData(backendUrl('/integration/' + projectName + '/' + integrationName + '/' + testCaseName + '/' + fileType), data)
 }
 
+export function uploadIntegrationParametersTestCaseFile(projectName, integrationName, testCaseName, index, data) {
+    return postData(backendUrl('/integration/parameters/' + projectName + '/' + integrationName + '/' + testCaseName + '/' + index), data)
+}
+
 export function uploadStudentBinary(data) {
     return postData(backendUrl("/student/upload/bin"), data)
 }

@@ -1,7 +1,7 @@
 import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
-import UploadTestCaseFileDialog from "./UploadTestCaseFileDialog";
 import React, {Component} from "react";
 import * as Api from "../../../../Api";
+import UploadParametersTestCaseFileDialog from "./UploadParametersTestCaseFileDialog";
 
 class ParametersComponent extends Component {
 
@@ -36,14 +36,14 @@ class ParametersComponent extends Component {
                     downloadInfo="Pobierz plik z parametrami"
                     downloadDisabled={this.props.parameters === null}
                     downloadActionHandler={this.handleDownloadParametersFile}/>
-                <UploadTestCaseFileDialog
+                <UploadParametersTestCaseFileDialog
                     isOpen={this.state.isAddParametersTestCaseFileVisible}
                     closeActionHandler={this.handleCloseAddParametersTestCaseFileDialog}
                     successActionHandler={this.props.integrationChangedHandler}
                     projectName={this.props.projectName}
                     integrationName={this.props.integrationName}
                     testCaseName={this.props.testCaseName}
-                    fileType="parameters"
+                    index={this.props.index}
                     headerText="Dodaj parametry uruchomienia"/>
             </div>
         )

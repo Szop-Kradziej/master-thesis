@@ -32,7 +32,7 @@ class IntegrationService(
                             it.name,
                             getIntegrationStages(it),
                             integrationMetadata.comment,
-                            testCaseService.getTestCases(projectName, it.name))
+                            testCaseService.getIntegrationTestCases(projectName, it.name, getIntegrationStages(it).size))
                 })
     }
 
@@ -146,6 +146,10 @@ class IntegrationService(
 
     fun deleteTestCase(projectName: String, integrationName: String, testCaseName: String): String {
         return testCaseService.deleteTestCase(projectName, integrationName, testCaseName)
+    }
+
+    fun uploadParametersTestCaseFile(projectName: String, integrationName: String, testCaseName: String, index: Int, file: MultipartFile): String {
+        return testCaseService.uploadIntegrationParametersTestCaseFile(projectName, integrationName, testCaseName, index, file)
     }
 
     companion object {

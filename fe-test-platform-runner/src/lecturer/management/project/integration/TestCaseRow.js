@@ -70,10 +70,10 @@ class TestCaseRow extends Component {
                         editActionHandler={this.handleEditTestName}/>
                 </CustomTableCell>
                 <CustomTableCell>
-                    {this.props.integrationStages.map((integrationStage, index) => (
+                    {this.props.testCase.parameters.map((parameters, index) => (
                         <ParametersComponent
                             index={index}
-                            parameters={this.props.testCase.parameters}
+                            parameters={parameters}
                             integrationChangedHandler={this.props.integrationChangedHandler}
                             projectName={this.props.projectName}
                             integrationName={this.props.integrationName}
