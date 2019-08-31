@@ -5,7 +5,6 @@ import EditItemComponent from "../../../../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadItemComponent";
 import * as Api from "../../../../Api";
 import UploadTestCaseFileDialog from "./UploadTestCaseFileDialog";
-import EditParametersDialog from "./EditParametersDialog";
 import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
 
 class TestCaseRow extends Component {
@@ -27,15 +26,19 @@ class TestCaseRow extends Component {
         this.downloadFile("output");
     };
 
+    handleDownloadParametersFile = () => {
+        this.downloadFile("parameters");
+    };
+
     downloadFile = (fileType) => {
         Api.downloadIntegrationTestCaseFile(this.props.projectName, this.props.integrationName, this.props.testCase.testCaseName, fileType)
     };
 
-    handleOpenEditTestCaseParametersDialog = () => {
+    handleOpenAddParametersTestCaseFileDialog = () => {
         this.setState({isAddParametersTestCaseFileVisible: true});
     };
 
-    handleCloseEditTestCaseParametersDialog = () => {
+    handleCloseAddParametersTestCaseFileDialog = () => {
         this.setState({isAddParametersTestCaseFileVisible: false});
     };
 
@@ -79,18 +82,21 @@ class TestCaseRow extends Component {
                         editActionHandler={this.handleEditTestName}/>
                 </CustomTableCell>
                 <CustomTableCell>
-                    <EditItemComponent
+                    <UploadAndDownloadItemComponent
                         header={this.props.testCase.parameters ? this.props.testCase.parameters : 'Brak'}
-                        info="Edytuj parametry"
-                        editActionHandler={this.handleOpenEditTestCaseParametersDialog}/>
-                    <EditParametersDialog isOpen={this.state.isAddParametersTestCaseFileVisible}
-                                          closeActionHandler={this.handleCloseEditTestCaseParametersDialog}
-                                          successActionHandler={this.props.integrationChangedHandler}
-                                          projectName={this.props.projectName}
-                                          integrationName={this.props.integrationName}
-                                          testCaseName={this.props.testCase.testCaseName}
-                                          headerText="Dodaj parametry uruchomienia"
-                                          defaultValue={this.props.testCase.parameters}/>
+                        uploadInfo="Załaduj plik z parametrami"
+                        uploadActionHandler={this.handleOpenAddParametersTestCaseFileDialog}
+                        downloadInfo="Pobierz plik z parametrami"
+                        downloadDisabled={this.props.testCase.parameters === null}
+                        downloadActionHandler={this.handleDownloadParametersFile}/>
+                    <UploadTestCaseFileDialog isOpen={this.state.isAddParametersTestCaseFileVisible}
+                                              closeActionHandler={this.handleCloseAddParametersTestCaseFileDialog}
+                                              successActionHandler={this.props.integrationChangedHandler}
+                                              projectName={this.props.projectName}
+                                              integrationName={this.props.integrationName}
+                                              testCaseName={this.props.testCase.testCaseName}
+                                              fileType="parameters"
+                                              headerText="Dodaj parametry uruchomienia"/>
                 </CustomTableCell>
                 <CustomTableCell component="th" scope="row">
                     <UploadAndDownloadItemComponent

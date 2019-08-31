@@ -372,7 +372,9 @@ class GroupResultService(
     }
 
     private fun isParametersFileExistIntegration(projectName: String, stageName: String, testCaseName: String): Boolean {
-        return stagePathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName).exists()
+        return integrationPathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName).exists() &&
+                integrationPathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName).list().size == 1 &&
+                integrationPathProvider.getTaskTestCaseParametersDir(projectName, stageName, testCaseName).listFiles().first().readText().isNotBlank()
     }
 
     private fun isLogsFileExistIntegration(groupName: String, projectName: String, integrationName: String, testCase: String): Boolean {
