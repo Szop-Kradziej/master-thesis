@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile
 import java.util.*
 
 
-@CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000"], allowCredentials = "true")
+@CrossOrigin(origins = ["http://localhost:3000", "http://192.168.0.80:3000", "http://34.65.81.82:3000"], allowCredentials = "true")
 @RestController
 class TestPlatformApi(val loginService: LoginService,
                       val authHelper: TestPlatformApiHelper,
