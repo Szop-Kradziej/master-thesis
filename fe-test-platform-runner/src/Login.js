@@ -7,7 +7,7 @@ class Login extends Component {
 
     loginHandler = () => {
         console.log("Login");
-        window.location.href = "https://github.com/login/oauth/authorize?scope=user:email&client_id=e984173171ad3f4c4133";
+        window.location.href = "https://github.com/login/oauth/authorize?scope=user:email&client_id=" + process.env.REACT_APP_CLIENT_ID;
     };
 
     render() {
