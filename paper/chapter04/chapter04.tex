@@ -8,7 +8,7 @@ W przypadku prowadzącego jest to ekran wyboru zarządzania projektami lub podgl
 Użytkownik będący studentem jest przekierowywany do widoku dostępnych dla niego projektów.
 
 Opis ekranu logowania znajduje się w podrozdziale \ref{fe_login}.
-W kolejnym rozdziale zostały omówione interfejsy dostępne dla prowadzącego.
+W kolejnej sekcji zostały omówione interfejsy dostępne dla prowadzącego.
 Ostatni podrozdział zawiera opis widoku studenta.
 
 \section{Panel logowania}
@@ -72,7 +72,7 @@ Zdefiniowanie projektu sprowadza się do:
     \item Dodania grup projektowych.
 \end {itemize}
 
-Dla wszystkich parametrów będących plikami interfejs umożliwia dodanie ich poprzez wskazanie, w oknie dialogowym, ścieżki na dysku użytkownika, pod którą znajduje się plik.
+Dla wszystkich parametrów będących plikami interfejs umożliwia dodanie ich poprzez wskazanie w oknie dialogowym ścieżki na dysku użytkownika, pod którą znajduje się plik.
 
 Na rysunku \ref{fig:lecturer_projects_list} został przedstawiony podstawowy widok zarządzania projektami zawierający listę dostępnych projektów.
 Na tym ekranie prowadzący może przejść do wybranego projektu, usunąć go lub utworzyć nowy projekt.
@@ -85,7 +85,7 @@ Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
     \label{fig:lecturer_projects_list}
 \end{figure}
 
-Widok projektu oraz panele etapów, grup i integracji zostały omówione w ramach kolejnych sekcji.
+Widok projektu oraz panele etapów, integracji i grup zostały omówione w ramach kolejnych sekcji.
 
 \subsubsection{Widok projektu}
 
@@ -96,8 +96,8 @@ Projekt definiowany jest przez następujące dane:
     \item Plik z opisem projektu o dowolnym formacie.
     \item Plik Dockerfile definiujący środowisko uruchomieniowe programów.
     \item Listę etapów.
-    \item Listę grup.
     \item Listę integracji.
+    \item Listę grup.
 \end {itemize}
 
 Na rysunku \ref{fig:lecturer_project_board} przedstawiono podstawowy widok projektu.
@@ -119,7 +119,7 @@ Etap definiowany jest przez następujące dane:
     \item Metadane dotyczące etapu, takie jak:
     \begin {itemize}
         \item Data rozpoczęcia etapu.
-        Data rozpoczęcia jest rozumiana jako data, od której studenci mają możliwość rozpoczęcia prac nad etapem (dostęp do opisu etapu, możliwość zaimportowania i uruchomienia swoich programów),
+        Data rozpoczęcia jest rozumiana jako data, od której studenci mają możliwość rozpoczęcia prac nad etapem (dostęp do opisu etapu, możliwość zaimportowania i uruchomienia swoich programów).
         \item Data zakończenia etapu.
         Data zakończenia jest rozumiana jako data, do której studenci mają możliwość zaimportowania i uruchomienia swoich programów.
         Po przekroczeniu tej daty zmian programów i ponownych uruchomień może dokonywać tylko prowadzący.
@@ -129,6 +129,7 @@ Etap definiowany jest przez następujące dane:
 \end {itemize}
 
 Etapy, które nie mają zdefiniowanej daty rozpoczęcia nie są widoczne dla studentów.
+Lista etapów jest posortowana rosnąco po dacie zakończenia etapu.
 Interfejs umożliwia wskazanie dat poprzez ich wybór w oknie dialogowym z kalendarzem.
 
 Na rysunku \ref{fig:lecturer_stages} został przedstawiony przykładowy panel etapów.
@@ -216,7 +217,7 @@ W ramach każdego z paneli można dodawać, edytować oraz usuwać przypadki tes
 
 W ramach panelu prowadzący ma możliwość utworzenia grup projektowych oraz przypisania do nich studentów.
 Na rysunku \ref{fig:lecturer_groups} zamieszczono widok rozwiniętego panelu grup.
-Kolejny rysunek \ref{fig:lecturer_students_in_group} przedstawia rozwiniętą listę studentów przypisanych do danego zespołu
+Kolejny rysunek \ref{fig:lecturer_students_in_group} przedstawia rozwiniętą listę studentów przypisanych do danego zespołu.
 
 \begin{figure}[h]
     \centering
@@ -233,7 +234,7 @@ Kolejny rysunek \ref{fig:lecturer_students_in_group} przedstawia rozwiniętą li
 \end{figure}
 
 Utworzenie grup projektowych może zostać zrealizowane na dwa sposoby.
-Pierwszy z nich to manualne utworzenie grup, definiowanych przez nazwę i dodanie kolejnych studentów w oknie dialogowym.
+Pierwszy z nich to manualne utworzenie grup definiowanych przez nazwę i dodanie kolejnych studentów w oknie dialogowym.
 Aby dodać grupy manualnie należy użyć przycisku ”+” znajdującego się obok etykiety \textit{Grupy}.
 Drugim sposobem definicji grup jest wczytanie ich bezpośrednio z pliku w formacie JSON.
 Przykład struktury akceptowalnego pliku został zamieszczony w podrozdziale \ref{adding_project_groups}.
@@ -349,7 +350,54 @@ Panel pozwala na pobranie:
 \end{figure}
 
 \subsubsection{Pogląd postępów w ramach integracji}
-TODO: Opisać po poprawieniu dodawania parametrów dla integracji na platformie
+
+Panel podglądu postępów w ramach integracji zawiera informacje o statusie prac dla każdego ze zdefiniowanych procesów integracji.
+Przykładowy widok został zamieszczony na rysunku \ref{fig:lecturer-preview-integration}.
+Panel podglądu postępów w ramach integracji umożliwia prowadzącemu:
+\begin {itemize}
+    \item Pobranie statystyk z uruchomienia integracji.
+    \item Podejrzenie komentarza.
+    \item Uruchomienie integracji.
+\end {itemize}
+
+Panel zawiera również dodatkowe informacje takie jak:
+\begin{itemize}
+    \item Schemat integracji obrazujący, które z etapów i w jakiej kolejności zostaną uruchomione w~ramach procesu integracji.
+    \item Status zaliczenia integracji określający ile ze wszystkich testów zostało zaliczone przez grupę (pole \textit{Zaliczone}).
+    \item Status zaliczenia integracji w ramach wszystkich grup mówiący ile zespołów zaliczyło dane zadanie (pole \textit{Grupy}).
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/lecturer_preview_integration.png}
+    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd integracji (źródło własne).}
+    \label{fig:lecturer-preview-integration}
+\end{figure}
+
+Po rozwinięciu widoku integracji widoczny jest dodatkowo panel wyników testów (patrz rysunek \ref{fig:lecturer-preview-integration-tests}).
+Zawiera on informacje o uruchomionych przypadkach testowych w~tym:
+\begin{itemize}
+    \item Nazwę przypadku testowego.
+    \item Status uruchomienia. W przypadku poprawnego rezultatu testu wyświetlany jest \textit{SUCCESS}, dla niewłaściwego wyniku widoczny jest \textit{FAILURE}.
+    \item Komunikat błędu.
+\end{itemize}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/lecturer_preview_integration_tests.png}
+    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd wyników testów dla integracji (źródło własne).}
+    \label{fig:lecturer-preview-integration-tests}
+\end{figure}
+
+Panel pozwala na pobranie:
+\begin{itemize}
+    \item Logów z wykonania programu dla zadanego przypadku testowego.
+    \item Parametrów wywołania dla każdego z etapów wchodzących w skład integracji.
+    \item Pliku wejściowego.
+    \item Oczekiwanego pliku wyjściowego dla testu.
+\end{itemize}
+
+
 
 
 
