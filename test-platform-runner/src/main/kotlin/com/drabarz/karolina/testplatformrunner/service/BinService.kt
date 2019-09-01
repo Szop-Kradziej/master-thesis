@@ -1,6 +1,8 @@
 package com.drabarz.karolina.testplatformrunner.service
 
+import com.drabarz.karolina.testplatformrunner.api.IntegrationTestCase
 import com.drabarz.karolina.testplatformrunner.api.TestCase
+import com.drabarz.karolina.testplatformrunner.model.Integration
 import com.drabarz.karolina.testplatformrunner.service.helper.IntegrationPathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.PathProvider
 import com.drabarz.karolina.testplatformrunner.service.helper.StagePathProvider
@@ -98,8 +100,8 @@ class BinService(
 
     fun runBins(groupName: String, projectName: String, integrationName: String): List<TestResponse> {
         log.info("Running program of group: $groupName for integration: $integrationName in project: $projectName")
-        val testCases = integrationTestCaseService.getTestCases(projectName, integrationName)
         val integrationStages = integrationService.getIntegrationStages(projectName, integrationName)
+        val testCases = integrationTestCaseService.getIntegrationTestCases(projectName, integrationName, integrationStages.size)
 
         if (testCases.isEmpty()) {
             log.warn("There are no test cases for integration: $integrationName in project: $projectName")

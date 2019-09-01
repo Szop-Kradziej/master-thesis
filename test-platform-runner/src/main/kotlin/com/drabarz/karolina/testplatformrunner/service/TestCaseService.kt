@@ -74,7 +74,7 @@ class TestCaseService(val pathProvider: TaskPathProvider) {
         return fileDir.list().first()
     }
 
-    fun getIntegrationTestCases(projectName: String, taskName: String, numberOfStages: Int): List<IntegrationTestCase>? {
+    fun getIntegrationTestCases(projectName: String, taskName: String, numberOfStages: Int): List<IntegrationTestCase> {
         log.info("Getting all test cases for task: $taskName in project: $projectName")
 
         val projectDir = pathProvider.getProjectDir(projectName)
