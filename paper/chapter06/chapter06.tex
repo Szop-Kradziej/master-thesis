@@ -56,36 +56,95 @@ Z powyżej przedstawionych powodów do weryfikacji platformy zostały użyte czt
 
 \section{Lokalne uruchomienie historycznych programów studentów}
 
-TODO: Przeorganizować/przeedytować dodać informacje o czwartym programie (narazie opisane 3)
+Lokalne uruchomienie programów studentów można sprowadzić do następujących kroków:
+\begin{itemize}
+    \item Analiza kodu historycznych programów.
+    \item Kompilacja.
+    \item Uruchomienie i ocena.
+\end{itemize}
 
-Podczas lokalnego uruchamiania programów studentów napotykamy na kilka problemów.
+Podczas każdego z powyższych kroków napotkano na kilka problemów.
+Natrafione trudności zostały omówione w kolejnych podrozdziałach.
+Ostatnia sekcja zawiera podsumowanie i wnioski z lokalnego uruchomienia historycznych programów studentów.
+
+\subsection{Analiza kodu}
+
 Projekt był prowadzony przez cały semestr a kod studentów sytematycznie wrzucany na GitLab.
-Studenci nie używali tagowania commitów (ciężko też od nich tego wymagać na 1 roku studiów).
+Studenci nie używali tagowania commitów (ciężko też od nich tego wymagać na pierwszym roku studiów).
 Z tych powodów granice wykonania kolejnych etapów są zatarte i ciężko je odtworzyć.
-Zakłada się więc, że kod znajdujący się na GitLab to ostateczne wersje projektów, które powinny spełniać wymienione wyżej założenia.
+Zakłada się więc, że kod znajdujący się na GitLab to ostateczne wersje projektów, które powinny spełniać założenia projektowe i pozwolić na uruchomienie wersji interaktywnej oraz AI.
 
-Kolejnym problemem jest określenie, wewnątrz repozytorium, która wersja kodu jest ostateczna i powinna zostać zweryfikowana.
-W tym przypadku można posłużyć się datą ostatniego commita, jednak nie zawsze wydaje się to być odpowiednim rozwiązaniem.
-Często zdarza się, że studenci tuż przez końcem projektu (zwłaszcza na samym początku studiów) poprawiają szybko swoje rozwiązania.
+%team 05
+Trzy grupy projektowe zamieszczały swój kod bezpośrednio w repozytorium.
+Jeden zespół zamieścił go w tzn. ”snippetach” co utrudniło odszukanie i pobranie go w celu lokalnego uruchomienia.
+
+Kolejnym problemem jest określenie wewnątrz repozytorium, która wersja kodu jest ostateczna i powinna zostać zweryfikowana.
+W tym przypadku można posłużyć się datą ostatniego tzw. ”commita”, jednak nie zawsze wydaje się to być odpowiednim rozwiązaniem.
+Często zdarza się, że studenci tuż przez końcem projektu (zwłaszcza na samym początku studiów) poprawiają szybko swoje programy.
 Takie działania bardzo często doprowadzają do powstawania dodatkowych błędów i powrotu do poprzedniej wersji rozwiązania.
-Tak więc data ostatniego commita może nie określać jednoznacznie wersji kodu która została przedstawiona oficjalnie prowadzącemu.
+%team 05
+W repozytoriach istnieje wiele folderów nazwierających nazwy \textit{final} przykładowo: \textit{Penguins\_final\_code}, \textit{Penguins\_final\_edition\_2}, \textit{Penguins\_final\_edition\_3}.
+%team 05 i team 02
+Innym problemem jest fakt, że programy dla połowy zespołów były zamieszane w repozytorium w postaci archiwum.
+Stąd śledzenie zmian w kodzie przy pomocy systemu kontroli wersji jest bardzo utrudnione.
+
+\subsection{Kompilacja}
 
 Kompilacja programów sprawdza się do indywidualnego przejrzenia kodu każdego z projektów.
-Spośród wszystkich czterech projektów tylko jeden miał zdefiniowany i poprawny plik Makefile.
-Kolejny posiadał tylko jeden plik z właściwym kodem aplikacji (rozszerzenie .c), więc jego kompilacja była prosta.
-Dwa pozostałe projekty wymagały własnoręcznej kompilacji przez zdefiniowanie pliku Makefile.
+%team 04
+Spośród wszystkich czterech projektów tylko jeden miał zdefiniowany, zawarty w repozytorium i poprawny plik Makefile.
+Trzy pozostałe projekty wymagały własnoręcznej kompilacji.
+Spośród nich dwie kompilacje były stosunkowo proste i zakończyły się sukcesem.
+Jeden z programów posiadał pojedynczy plik z właściwym kodem aplikacja (rozszerzenie .c) a kompilacja drugiego programu sprowadziła się do skompilowania wszystkich plików w folderze.
+
+%team 02
+Dla jednego z zespołów własnoręczna kompilacja finalnej wersji aplikacji nie powiodła się.
+Udało się za to uruchomić plik wykonywalny znajdujący się w jednym z podkatalogów.
+Aplikacja działała jednak niewłaściwie (próba ustawienia pingwina wypisywała komunikat o poprawnym umieszczniu na ekran jednak plansza była aktualizowana) co doprowadziło do wniosku, że nie jest ona ostateczną wersją programu.
+Dla tego zespołu pozyskano finalny kod programu razem z Makefile bezpośrednio od prowadzącego projekt.
+Kompilacja tej wersji przebiegła pomyślnie.
+Warto jednak zaznaczyć, że uzyskana wersja kodu nie była dostępna przez repozytorium GitLab.
+
+\subsection{Uruchomienie}
 
 Lokalne uruchomienie i ocena sposobu działania programów wymagała również indywidualnego podejścia do każdego z zespołów.
 Można założyć, że w celu weryfikacji programów każdy z nich uruchomimy w trybie interaktywnym.
 Następnie dla każdego wykonamy identyczne kroki i porównany otrzymane wyniki.
-Jeden z programów uruchomiony w trybie interaktywnym pozwalał na wprowadzenie ruchu gracza i przeprowadzenia założonych testów.
-Inny program, posiadający jeden plik z rozszerzeniem .c uruchomił się w wersji autmatycznej rozgrywki.
+
+%team 02 i team 04
+Dwa z programów uruchomionych w trybie interaktywnym pozwalały na wprowadzenie ruchu gracza i przeprowadzenia założonych testów.
+Warto zaznaczyć, że dla jedengo z testowanych programów bardzo szybko można było zauważyć, że logika do rozmieszczania i ruchu pingwinów została napisana przez dwie różne osoby.
+Dla fazy rozmieszczania współrzędne na planszy należało podać jako parę (x, y), natomiast dla fazy ruchu przyjmowane one były w postaci (y, x).
+
+Jeden z programów uruchomiony w trybie interaktywnym nie pozwalał na umieszczenie pingwina na planszy i nie zapisywał wyniku do pliku wynikowego.
+Wyświetlana przez program plansza była nieprawidłowa i nie pozwalała na poprawne sparsowanie.
+Warto dodać, że dla tego programu przejście pomiędzy trybem AI a interaktywnym wymagało zmiany stałej w jednym z plików zawierających kod programu.
+
+Jeden z programów uruchomił się w wersji autmatycznej rozgrywki.
 Sprawia to, że przetestowanie dla założonego wcześniej schematu jest niemożliwe, ponieważ nie mamy wpływu na ruch pionków.
 Dodatkowo ciężko przez to ocenić, jak zachowuje się program dla przypadków brzegowych, ponieważ nie ma możliwości ustawienia pingwinów w dowolnej lokalizacji.
-W tym przypadku ocena sposobu działania programu opierała się na przeanalizowaniu algorytmu AI zaimplementowanego przez studentów i porównaniu jego działania z wynikiem symulacji.
+W tym przypadku ocena sposobu działania programu opierałaby się na przeanalizowaniu algorytmu AI zaimplementowanego przez studentów i porównaniu jego działania z wynikiem symulacji.
+Ze względu na brak dokumentacji dotyczącej działania algorymtu AI pominięto ocenę sposobu działania tego programu.
 
+\subsection{Podsumowanie}
+
+Lokalne uruchomienie historycznych programów pokazuje, że proces weryfikacji pracy studentów jest trudnym i czasochłonnym zadniem.
+Podejście do każdego z zespołów jest indywidualne na każdym z kroków: analizie kodu, kompilacji, uruchomieniu i ocenie działania.
+Rezultat działania każdej z aplikacji jest inny.
+
+Pomimo tych samych parametrów wejściowych wewnętrzna logiki i interfejs użytkownika jest zupełnie różna.
+Widać to między innymi na przykładzie ustalania pozycji pingwina na planszy.
+Podczas badania programów spotkano różne osoby ustalania położenia identyfikowane przez podanie: dwóch liter, litery i cyfry oraz dwóch cyfr.
+Przy czym same współrzędne pól (x,y) lub (y,x) są podawane w niejednoznaczny sposób nawet wewnątrz jednej aplikacji.
+
+Wszystkie powyższe programy zmożna uruchomić na platformie.
+Niestety ze względu na to, że zarówno faza rozmieszczania jak i ruchu odbywa się w pełni w trybie interaktywnym i przyjmuje dodatkowe parametry położenia nie da się napisać wartościowych testów akceptacyjnych dla programów historycznych na platformie.
+Ocena uruchomienia programów na platformie sprowadza się do sprawdzenia uzyskanych logów.
 
 \section{Definicja projektu wraz z przypadkami testowymi}
+
+Przy założeniu, że wszystkie historyczne programy studenckie spełniają wymagania projektowe definicja projektu na platformie sprowadziłaby się do utworzenia pojedynczego projeku oraz czterach grup projektowych.
+
 
 TODO: Uzupełnić
 
