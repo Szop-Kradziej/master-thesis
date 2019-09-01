@@ -359,6 +359,8 @@ Panel podglądu postępów w ramach integracji umożliwia prowadzącemu:
     \item Podejrzenie komentarza.
     \item Uruchomienie integracji.
 \end {itemize}
+Proces integracji może zostać uruchomiony tylko wtedy, gdy dla każdego z etapów wchodzących w jej skład został załączony program.
+W przeciwnym przypadku przycisk \textit{PLAY} jest nieaktywny.
 
 Panel zawiera również dodatkowe informacje takie jak:
 \begin{itemize}
@@ -398,22 +400,28 @@ Panel pozwala na pobranie:
 \end{itemize}
 
 
-
-
-
 \section{Interfejs studenta}
-TODO: Dodać rysunki
 
 Po zalogowaniu do platformy z uprawnieniami studenta użytkownikowi wyświetlany jest ekran dostępnych dla niego projektów.
 Są one posortowane alfabetycznie po nazwie.
 Na rysunku \ref{fig:student_projects} został przedstawiony podstawowy widok dla interfejsu studenta.
 
-TODO: dodać rysunek
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/student_projects.png}
+    \caption{Interfejs studenta - lista dostępnych projektów (źródło własne).}
+    \label{fig:student_projects}
+\end{figure}
 
 Po przejściu do wybranego projektu wyświetalny jest panel postępów dla grupy projektowej, do której jest przypisany student.
-Przykładowy ekran został przedstawiony na rysunku \ref{fig:student_project}.
+Przykładowy ekran został przedstawiony na rysunku \ref{fig:student_project_board}.
 
-TODO: dodać rysunek
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/student_project_board.png}
+    \caption{Interfejs studenta - widok projektu (źródło własne).}
+    \label{fig:student_project_board}
+\end{figure}
 
 Warto zauważyć, że interfejs jest bardzo podobny do widoku podglądu wyników w ramach grupy projektowej dla prowadzącego.
 Student ma jednak pewne ograniczenia co do akcji wykonywanych w ramach interfejsu.
@@ -422,17 +430,41 @@ Student nie ma również możliwości zmiany zaimportowanych danych po upływie 
 
 \subsubsection{Pogląd postępów w ramach etapów}
 
-Na rysunku \ref{fig:student_stage_view} został przedstawiony podgląd postępów w ramach etapów dla studenta.
+Na rysunku \ref{fig:student_stage} oraz \ref{fig:student_stage_tests} został przedstawiony podgląd postępów w ramach etapów dla studenta.
 W ramach tego panelu udostępnione są wszystkie akcje związane z załączeniem i edycją danych dotyczących każdego z zadań.
 Student ma także umożliwiony pełny podgląd rezultatów uruchomienia aplikacji dla kolejnych przypadków testowych.
 
-TODO: dodać rysunek
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/student_stage.png}
+    \caption{Interfejs studenta - podgląd etapu (źródło własne).}
+    \label{fig:student_stage}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/student_stage_tests.png}
+    \caption{Interfejs studenta - podgląd wyników testów dla etapu (źródło własne).}
+    \label{fig:student_stage_tests}
+\end{figure}
 
 \subsubsection{Pogląd postępów w ramach integracji}
 
 Student po zakończeniu odpowiedniej liczby etapów wchodzących w skład zdefiniowanego procesu integracji ma możliwość uruchomienia go.
 Rezultat działania procesu jest reprezentowany podobnie jak na widoku podglądu wyników dla prowadzącego.
-Przykładowy panel został przedstawiony na rysunku \ref{fig:student_integration_view}.
+Przykładowy panel został przedstawiony na rysunkach \ref{fig:student_integration} i \ref{fig:student_integration_tests}.
 Różni się on od widoku prowadzącego brakiem przycisku do pobrania statystyk i wyświetlenia komentarza.
 
-TODO: dodać rysunek
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/student_integration.png}
+    \caption{Interfejs studenta - podgląd integracji (źródło własne).}
+    \label{fig:student_integration}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter04/student_integration_tests.png}
+    \caption{Interfejs studenta - podgląd wyników testów dla integracji (źródło własne).}
+    \label{fig:student_integration_tests}
+\end{figure}
