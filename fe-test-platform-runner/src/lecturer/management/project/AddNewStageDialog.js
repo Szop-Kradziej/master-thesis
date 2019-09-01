@@ -15,7 +15,7 @@ class AddNewStageDialog extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {stageName: null, startDate: null, endDate: null};
+        this.state = {stageName: null, startDate: moment().format("YYYY-MM-DD"), endDate: moment().add(3, "M").format("YYYY-MM-DD")};
     }
 
     handleStageNameAdded = () => event => {

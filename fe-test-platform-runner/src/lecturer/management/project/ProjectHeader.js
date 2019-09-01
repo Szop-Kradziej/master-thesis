@@ -63,7 +63,7 @@ class ProjectHeader extends Component {
                                                 uploadInfo="Załaduj środowisko projektu"
                                                 uploadActionHandler={this.handleOpenAddEnvironmentDialog}
                                                 downloadInfo="Pobierz środowisko projektu"
-                                                downloadDisabled={this.props.projectDescription === null}
+                                                downloadDisabled={this.props.projectEnvironment === null}
                                                 downloadActionHandler={this.handleDownloadProjectEnvironment}/>
                 <AddFileDialog isOpen={this.state.isAddDescriptionDialogVisible}
                                closeActionHandler={this.handleCloseAddDescriptionDialog}
