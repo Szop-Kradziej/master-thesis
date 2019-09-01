@@ -64,12 +64,12 @@ Lokalne uruchomienie programów studentów można sprowadzić do następujących
 \end{itemize}
 
 Podczas każdego z powyższych kroków napotkano na kilka problemów.
-Natrafione trudności zostały omówione w kolejnych podrozdziałach.
+Te trudności zostały omówione w kolejnych podrozdziałach.
 Ostatnia sekcja zawiera podsumowanie i wnioski z lokalnego uruchomienia historycznych programów studentów.
 
 \subsection{Analiza kodu}
 
-Projekt był prowadzony przez cały semestr a kod studentów sytematycznie wrzucany na GitLab.
+Projekt był prowadzony przez cały semestr a kod studentów systematycznie wrzucany na GitLab.
 Studenci nie używali tagowania commitów (ciężko też od nich tego wymagać na pierwszym roku studiów).
 Z tych powodów granice wykonania kolejnych etapów są zatarte i ciężko je odtworzyć.
 Zakłada się więc, że kod znajdujący się na GitLab to ostateczne wersje projektów, które powinny spełniać założenia projektowe i pozwolić na uruchomienie wersji interaktywnej oraz AI.
@@ -80,10 +80,10 @@ Jeden zespół zamieścił go w tzn. ”snippetach” co utrudniło odszukanie i
 
 Kolejnym problemem jest określenie wewnątrz repozytorium, która wersja kodu jest ostateczna i powinna zostać zweryfikowana.
 W tym przypadku można posłużyć się datą ostatniego tzw. ”commita”, jednak nie zawsze wydaje się to być odpowiednim rozwiązaniem.
-Często zdarza się, że studenci tuż przez końcem projektu (zwłaszcza na samym początku studiów) poprawiają szybko swoje programy.
+Często zdarza się, że studenci tuż przed końcem projektu (zwłaszcza na samym początku studiów) poprawiają szybko swoje programy.
 Takie działania bardzo często doprowadzają do powstawania dodatkowych błędów i powrotu do poprzedniej wersji rozwiązania.
 %team 05
-W repozytoriach istnieje wiele folderów nazwierających nazwy \textit{final} przykładowo: \textit{Penguins\_final\_code}, \textit{Penguins\_final\_edition\_2}, \textit{Penguins\_final\_edition\_3}.
+W repozytoriach istnieje wiele folderów zawierających nazwy \textit{final} przykładowo: \textit{Penguins\_final\_code}, \textit{Penguins\_final\_edition\_2}, \textit{Penguins\_final\_edition\_3}.
 %team 05 i team 02
 Innym problemem jest fakt, że programy dla połowy zespołów były zamieszane w repozytorium w postaci archiwum.
 Stąd śledzenie zmian w kodzie przy pomocy systemu kontroli wersji jest bardzo utrudnione.
@@ -100,7 +100,7 @@ Jeden z programów posiadał pojedynczy plik z właściwym kodem aplikacja (rozs
 %team 02
 Dla jednego z zespołów własnoręczna kompilacja finalnej wersji aplikacji nie powiodła się.
 Udało się za to uruchomić plik wykonywalny znajdujący się w jednym z podkatalogów.
-Aplikacja działała jednak niewłaściwie (próba ustawienia pingwina wypisywała komunikat o poprawnym umieszczniu na ekran jednak plansza była aktualizowana) co doprowadziło do wniosku, że nie jest ona ostateczną wersją programu.
+Aplikacja działała jednak niewłaściwie (próba ustawienia pingwina wypisywała komunikat o poprawnym umieszczeniu na ekran jednak plansza nie była aktualizowana) co doprowadziło do wniosku, że nie jest ona ostateczną wersją programu.
 Dla tego zespołu pozyskano finalny kod programu razem z Makefile bezpośrednio od prowadzącego projekt.
 Kompilacja tej wersji przebiegła pomyślnie.
 Warto jednak zaznaczyć, że uzyskana wersja kodu nie była dostępna przez repozytorium GitLab.
@@ -120,15 +120,15 @@ Jeden z programów uruchomiony w trybie interaktywnym nie pozwalał na umieszcze
 Wyświetlana przez program plansza była nieprawidłowa i nie pozwalała na poprawne sparsowanie.
 Warto dodać, że dla tego programu przejście pomiędzy trybem AI a interaktywnym wymagało zmiany stałej w jednym z plików zawierających kod programu.
 
-Jeden z programów uruchomił się w wersji autmatycznej rozgrywki.
+Jeden z programów uruchomił się w wersji automatycznej rozgrywki.
 Sprawia to, że przetestowanie dla założonego wcześniej schematu jest niemożliwe, ponieważ nie mamy wpływu na ruch pionków.
 Dodatkowo ciężko przez to ocenić, jak zachowuje się program dla przypadków brzegowych, ponieważ nie ma możliwości ustawienia pingwinów w dowolnej lokalizacji.
 W tym przypadku ocena sposobu działania programu opierałaby się na przeanalizowaniu algorytmu AI zaimplementowanego przez studentów i porównaniu jego działania z wynikiem symulacji.
-Ze względu na brak dokumentacji dotyczącej działania algorymtu AI pominięto ocenę sposobu działania tego programu.
+Ze względu na brak dokumentacji dotyczącej działania algorytmu AI pominięto ocenę sposobu działania tego programu.
 
 \subsection{Podsumowanie}
 
-Lokalne uruchomienie historycznych programów pokazuje, że proces weryfikacji pracy studentów jest trudnym i czasochłonnym zadniem.
+Lokalne uruchomienie historycznych programów pokazuje, że proces weryfikacji pracy studentów jest trudnym i czasochłonnym zadaniem.
 Podejście do każdego z zespołów jest indywidualne na każdym z kroków: analizie kodu, kompilacji, uruchomieniu i ocenie działania.
 Rezultat działania każdej z aplikacji jest inny.
 
@@ -137,43 +137,88 @@ Widać to między innymi na przykładzie ustalania pozycji pingwina na planszy.
 Podczas badania programów spotkano różne osoby ustalania położenia identyfikowane przez podanie: dwóch liter, litery i cyfry oraz dwóch cyfr.
 Przy czym same współrzędne pól (x,y) lub (y,x) są podawane w niejednoznaczny sposób nawet wewnątrz jednej aplikacji.
 
-Wszystkie powyższe programy zmożna uruchomić na platformie.
-Niestety ze względu na to, że zarówno faza rozmieszczania jak i ruchu odbywa się w pełni w trybie interaktywnym i przyjmuje dodatkowe parametry położenia nie da się napisać wartościowych testów akceptacyjnych dla programów historycznych na platformie.
+Wszystkie powyższe programy można uruchomić na platformie.
+Niestety ze względu na to, że zarówno faza rozmieszczania, jak i ruchu odbywa się w pełni w trybie interaktywnym i przyjmuje dodatkowe parametry położenia nie da się napisać wartościowych testów akceptacyjnych dla programów historycznych na platformie.
 Ocena uruchomienia programów na platformie sprowadza się do sprawdzenia uzyskanych logów.
 
-\section{Definicja projektu wraz z przypadkami testowymi}
+\section{Przebieg uruchomienia programów na platformie i definicja projektu}
 
-Przy założeniu, że wszystkie historyczne programy studenckie spełniają wymagania projektowe definicja projektu na platformie sprowadziłaby się do utworzenia pojedynczego projeku oraz czterach grup projektowych.
+Początkowym założeniem dla uruchomienia programów na platformie było utworzenie pojedynczego projektu oraz czterech grup projektowych dla każdego z badanych projektów historycznych.
+Dla projektu planowano utworzyć dwa etapy: \textit{placement} i \textit{movement} wraz z przypadkami testowymi.
+Jednak już podczas analizy i lokalnego uruchamiania programów okazało się, że utworzenie wartościowych testów akceptacyjnych dla projektu historycznego nie będzie możliwe.
+Wynika to między innymi z tego, że programy działają w trybie interaktywnym, czekając na reakcję użytkownika, której nie można zasymulować przy użyciu aktualnej wersji platformy.
+W przypadku trybu AI nie jest udokumentowane, w jaki sposób powinny zachować się programy, stąd napisanie testów akceptacyjnych dla tego trybu jest również bezcelowe.
 
+Z powyższych powodów uznano, że w celu weryfikacji platformy historyczne programy zostaną uruchomione przy pomocy narzędzia, jednak poprawność ich wykonania nie będzie oceniana poprzez testy akceptacyjne.
+Zostanie ona oceniona poprzez porównanie otrzymanych w wyniku działania programów logów z wynikiem lokalnego uruchomiania programów.
+W przypadku, gdy programy nie zalogowały błędów wykonania i wypisały takie same logi, jak w lokalnej konsoli uznaje się, że uruchamiają się poprawnie na platformie.
 
-TODO: Uzupełnić
+W początkowym podejściu w wyniku analizy działania uruchomionych lokalnie programów zdecydowano się na utworzenie jednego projektu i zdefiniowanie czterech różnych etapów (oddzielnych dla każdego z programów).
+Ze względu na podawane parametry w~postaci argumentów do programu plik Dockerfile dla tego projektu wyglądał następująco:
 
-W celu uruchomienia programów na platformie został zdefiniowany nowy projekt o nazwie penguins z jednym etapem interactive i trzema przypadkami testowymi.
-Tak jak zostało wspomniane wcześniej, dla obecnych założeń projektu ciężko utworzyć black-box testy pozwalające na autmatyczną weryfikację programów.
-Sprawdzenie poprawności programów studentów na platformie sprowadziło się więc do skompilowania programów lokalnie, wrzucenia ich na platformę i indywidualnego przejrzenia logów z wynikami ich wykonania.
-W przypadku, gdy programy nie zalogowały błędów wykonania uznaje się, że uruchamiają się poprawnie.
-Wyniki przeprowadzonych testów zostały przedstawione w tabeli TODO.
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
 
+    FROM gcc:4.9
 
-\section{Przebieg uruchomienia programów na platformie}
+    CMD ["./home/app", "phase=placement", "penguins=2", "/home/input.txt", "/home/output.txt"]
 
-TODO: opisać
+\end{lstlisting}
+}
 
-Spośród czterech testowanych programów TODO.
+Definicja projektu na platformie dla widoku podglądu prowadzącego została przedstawiona na rysunku \ref{fig:veryfication_first_project}.
 
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 12cm]{chapter06/veryfication_first_project.png}
+    \caption{Projekt dla weryfikacji platformy przy pomocy historycznych programów studentów (źródło własne).}
+    \label{fig:veryfication_first_project}
+\end{figure}
 
-TODO: opisać
+Dla każdego z czterech etapów (reprezentujących historyczne programy studentów) utworzono prosty przypadek testowy, gdzie jako \textit{input} i \textit{output} wprowadzono plik z planszą.
+Został on wybrany losowo spośród zawartych w repozytoriach historycznych grup testowych plików wejściowych.
+Następnie uruchomiono wszystkie cztery etapy.
+Po przejrzeniu logów okazało się, że tylko jeden program uruchomił się poprawnie (załączony dla etapu \textit{team05}).
+Była to aplikacja z tego samego repozytorium, z którego załączono plik z planszą do testów.
+Inne dwa programy (etapy \textit{team02} oraz \textit{team04}) nie wypisały logów, natomiast jeden wypisał komunikat o niepoprawnym formacie pliku wejściowego (\textit{team01}).
+
+Dla programu dołączonego do etapu \textit{team01} zmieniono plik wejściowy i wejściowy na taki, który znajdowały się w repozytorium razem z tym programem.
+Aplikacja została następnie uruchomiona i wyniku swojego działania wypisała logi.
+
+Programy załączone do etapów \textit{team02} oraz \textit{team04} zostały ponownie przeanalizowane poprzez lokalne uruchomienie.
+W wyniku tego okazało się, że uruchamiają się one w wersji interaktywnej bez podawania argumentów wykonania.
+Aby uzyskać informację zwrotną z ich działania utworzono nowy projekt z poniższą definicją środowiska:
+
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
+
+    FROM gcc:4.9
+
+    CMD ["./home/app"]
+
+\end{lstlisting}
+}
+
+W ramach projektu zostały utworzone dwa etapy:  \textit{team02} oraz \textit{team04}.
+Następnie załączono i uruchomiono programy.
+Program załączony do etapu \textit{team02} uruchomił się w wersji interaktywnej i wypisał logi.
+
+Aplikacja dla etapu \textit{team04} po raz kolejny nie zostawiła informacji zwrotnej z wyniku wywołania.
+W celu rozwiązania problemu przeanalizowano część kodu aplikacji.
+Ustalono, że problem może wynikać z pętli \textit{while}, która czeka na pobranie znaku od użytkownika.
+Po usunięciu jej z kodu programu, rekompilacji i ponownym uruchomieniu programu na platformie uzyskano logi z wykonania aplikacji.
 
 
 \section{Podsumowanie}
 \label{verification_summary}
 
-
-TODO: opisać
-
+Wszystkie lokalnie uruchomione  historyczne programy  studenckie udało się uruchomić na platformie uzyskując przy tym informację zwrotną w postaci logów.
 Jak łatwo zauważyć, taki sposób przetestowania programów nie przynosi wiele korzyści.
-Równocześnie pokazuje na jak wiele problemów może napotkać prowadzący podczas weryfkacji pracy studentów, mimo korzystania z narzędzia do wersjonowania kodu.
-Takie komplikacje mogą wystąpić podczas sprawdzania każdego z kolejnych etapów i nałożyć się w momencie próby przeprowadzenia integracji programów.
+Równocześnie pokazuje na jak wiele problemów może napotkać prowadzący podczas procesu weryfkacji pracy studentów i w jak dużym stopniu wymaga on obecnie indywidualnego podejścia do każdej z grup.
+Opisane w rozdziale komplikacje mogą wystąpić podczas sprawdzania każdego z etapów i nałożyć się w momencie próby przeprowadzenia integracji programów.
+
 Jednak przy niewielkiej modyfikacji zadania, można osiągnąć dużo lepszą automatyzację procesu oceny efektów pracy zespołów.
-W kolejnym rozdziale zostaną omówione zmiany założeń zadania, tak aby osiągnąć korzyści wynikające z korzystania z platformy.
-Opisane również zostaną wnioski z przeprowadzenia zmodyfikowanego projektu na grupie testowej.
+W kolejnym rozdziale zostaną omówione zmiany założeń zadania historycznego, tak aby osiągnąć korzyści wynikające z korzystania z platformy.
+Opisane również zostaną wnioski z przeprowadzenia symulacji zmodyfikowanego projektu historycznego na testowej grupie absolwentów.
