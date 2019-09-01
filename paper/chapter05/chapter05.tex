@@ -167,14 +167,13 @@ Przykład poprawnie zdefiniowanego środowiska dla systemu Linux z zainstalowan�
 
 Przykład poprawnie zdefiniowanego środowiska dla systemu Linux i języka C wygląda następująco:
 
-TODO: fix c dockerfile
 {\fontfamily{qcr}\selectfont
 \tiny
 \begin{lstlisting}
 
-    FROM openjdk:8-alpine
+    FROM gcc:4.9
 
-    CMD ["gcc", "./home/app", "/home/input.txt", "/home/parameters.txt", "/home/output.txt"]
+    CMD ["./home/app", "/home/input.txt", "/home/parameters.txt", "/home/output.txt"]
 
 \end{lstlisting}
 }
@@ -303,13 +302,14 @@ Przykład komendy SQL pozwalającej na dołączenie studenta i prowadzącego zos
 
 Kod wykonywalny platformy można pobrać z repozytorium GitHub lub przenieść na maszynę kod załączony na płycie.
 
-Aby uruchomić serwer należy przejść do katalogu \textit{master\_thesis/test\_platform\_runner} i użyć komendy:
+Aby skompilować i uruchomić serwer należy przejść do katalogu \textit{master\_thesis/test\_platform\_runner} i użyć następujących komend:
 
 {\fontfamily{qcr}\selectfont
 \tiny
 \begin{lstlisting}
 
-    ./gradlew runBootJar
+    ./gradlew bootJar
+    java -jar /
 
 \end{lstlisting}
 }
