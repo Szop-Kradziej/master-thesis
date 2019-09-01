@@ -131,9 +131,9 @@ class BinService(
 
         return testCases.map { testCase ->
             val inputFile = integrationPathProvider.getTaskTestCaseFileDir(projectName, integrationName, testCase.testCaseName, "input").listFiles().first()
-            val parametersFile = getParameters(integrationPathProvider.getTaskTestCaseParametersDir(projectName, integrationName, testCase.testCaseName))
-            val outputFile = binPaths.fold(inputFile) { accumulatedInputFile, it ->
-                val binPath = it.absolutePath
+            val parametersFiles = getIntegrationParameters(integrationPathProvider.getTaskTestCaseParametersDir(projectName, integrationName, testCase.testCaseName), binPaths.size)
+            val outputFile = binPaths.zip(parametersFiles).fold(inputFile) { accumulatedInputFile, (binFile, parametersFile) ->
+                val binPath = binFile.absolutePath
                 generateOutputFile(environmentDir, groupName, projectName, integrationName, accumulatedInputFile, parametersFile, binPath, testCase)
             }
 
@@ -143,7 +143,23 @@ class BinService(
         }
     }
 
-    private fun generateOutputFile(environmentDir: File, groupName: String, projectName: String, integrationName: String, inputFile: File, parametersFile: File, binPath: String, testCase: TestCase): File {
+    private fun getIntegrationParameters(parametersDir: File, stageCount: Int): List<File> {
+        if (!parametersDir.exists()) {
+            parametersDir.mkdir()
+        }
+        return (0 until stageCount).map {
+            val stageParametersDir = File(parametersDir, "stage_$it")
+            if (!stageParametersDir.exists()) {
+                stageParametersDir.mkdir()
+            }
+            if (stageParametersDir.list().isEmpty()) {
+                File(stageParametersDir, PathProvider.PARAMETERS).createNewFile()
+            }
+            stageParametersDir.listFiles().first()
+        }
+    }
+
+    private fun generateOutputFile(environmentDir: File, groupName: String, projectName: String, integrationName: String, inputFile: File, parametersFile: File, binPath: String, testCase: IntegrationTestCase): File {
         val outputFile = File(integrationPathProvider.getStudentOutputDir(groupName, projectName, integrationName).apply { mkdirs() }, "output").apply { createNewFile() }
 
         val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, parametersFile.absolutePath, outputFile.absolutePath, binPath)
