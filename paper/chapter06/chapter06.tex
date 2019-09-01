@@ -22,7 +22,7 @@ Przebieg powyższych kroków został opisany w kolejnych podrozdziałach.
 W celu weryfikacji platformy posłużono się kodem studentów napisanym w ramach przedmiotu podstawy programowania.
 Zadaniem studentów było napisanie programu odzwierciedlającego logikę gry planszowej ”Hey, that’s mine fish”.
 Aplikacja miała umożliwiać interaktywny oraz autonomiczny rodzaj rozgrywki.
-Zadaniem programów było wczytanie wejściowego układ planszy z pliku, wykonanie zadanej akcji oraz zapisanie zmodyfikowanego układu planszy do pliku.
+Zadaniem programów było wczytanie wejściowego układu planszy z pliku, wykonanie zadanej akcji oraz zapisanie zmodyfikowanego układu planszy do pliku.
 Format pliku jest jednoznacznie określony w~treści zadania i składa się z:
 \begin{itemize}
     \item \textit{Wiersz 1}: \textit{m n} - dwóch wartości liczbowych oznaczających rozmiar planszy.
@@ -34,7 +34,7 @@ Format pliku jest jednoznacznie określony w~treści zadania i składa się z:
 Zgodnie z założeniami programy mają przyjmować następujące parametry:
 \begin{itemize}
     \item \textit{phase=phase\_mark}, parametr \textit{phase\_mark} może przyjąć jedną z dwóch wartości: \textit{placement} (rozmieszczanie) lub \textit{movement} (ruch).
-    \item \textit{penguins=N}, gdzie \textit{N} oznacza liczbę pingwinów (pionków) danego gracza.
+    \item \textit{penguins=N}, gdzie \textit{N} oznacza liczbę pingwinów (pionków) dostępnych dla każdego z graczy.
     Parametr jest używany tylko w fazie rozmieszczania.
     \item \textit{inputboardfile}, nazwa pliku wejściowego z układem planszy.
     \item \textit{outputboardfile}, nazwa pliku wyjściowego z układem planszy.
@@ -69,7 +69,7 @@ Ostatnia sekcja zawiera podsumowanie i wnioski z lokalnego uruchomienia historyc
 
 \subsection{Analiza kodu}
 
-Projekt był prowadzony przez cały semestr a kod studentów systematycznie wrzucany na GitLab.
+Projekt był prowadzony przez cały semestr a kod studentów systematycznie wgrywany na GitLab.
 Studenci nie używali tagowania commitów (ciężko też od nich tego wymagać na pierwszym roku studiów).
 Z tych powodów granice wykonania kolejnych etapów są zatarte i ciężko je odtworzyć.
 Zakłada się więc, że kod znajdujący się na GitLab to ostateczne wersje projektów, które powinny spełniać założenia projektowe i pozwolić na uruchomienie wersji interaktywnej oraz AI.
@@ -90,7 +90,7 @@ Stąd śledzenie zmian w kodzie przy pomocy systemu kontroli wersji jest bardzo 
 
 \subsection{Kompilacja}
 
-Kompilacja programów sprawdza się do indywidualnego przejrzenia kodu każdego z projektów.
+Kompilacja programów sprowadza się do indywidualnego przejrzenia kodu każdego z projektów.
 %team 04
 Spośród wszystkich czterech projektów tylko jeden miał zdefiniowany, zawarty w repozytorium i poprawny plik Makefile.
 Trzy pozostałe projekty wymagały własnoręcznej kompilacji.
@@ -122,7 +122,7 @@ Warto dodać, że dla tego programu przejście pomiędzy trybem AI a interaktywn
 
 Jeden z programów uruchomił się w wersji automatycznej rozgrywki.
 Sprawia to, że przetestowanie dla założonego wcześniej schematu jest niemożliwe, ponieważ nie mamy wpływu na ruch pionków.
-Dodatkowo ciężko przez to ocenić, jak zachowuje się program dla przypadków brzegowych, ponieważ nie ma możliwości ustawienia pingwinów w dowolnej lokalizacji.
+Dodatkowo nie da się przez to ocenić, jak zachowuje się program dla przypadków brzegowych, ponieważ nie ma możliwości ustawienia pingwinów w dowolnej lokalizacji.
 W tym przypadku ocena sposobu działania programu opierałaby się na przeanalizowaniu algorytmu AI zaimplementowanego przez studentów i porównaniu jego działania z wynikiem symulacji.
 Ze względu na brak dokumentacji dotyczącej działania algorytmu AI pominięto ocenę sposobu działania tego programu.
 
@@ -140,6 +140,21 @@ Przy czym same współrzędne pól (x,y) lub (y,x) są podawane w niejednoznaczn
 Wszystkie powyższe programy można uruchomić na platformie.
 Niestety ze względu na to, że zarówno faza rozmieszczania, jak i ruchu odbywa się w pełni w trybie interaktywnym i przyjmuje dodatkowe parametry położenia nie da się napisać wartościowych testów akceptacyjnych dla programów historycznych na platformie.
 Ocena uruchomienia programów na platformie sprowadza się do sprawdzenia uzyskanych logów.
+
+TODO: Dopisać
+
+- prowadzący mają trudne zadanie
+
+- ustalenie ostatecznej wersji kodu wymaga konsultacji ze studentami
+
+- budowanie projektów jest utrudnione, wymaga dodatkowej analizy kodu
+
+- programy nie trzymają sie założeń projektowych (parametry/format planszy)
+
+- uruchamiane są w różny sposób i przyjmują różne parametry wejściowe
+
+- uruchmienie w trybie interkatywnym utrudnia ocenę działania aplikacji, trzeba śledzić ruchy pionków, część logów jest urwana ze względu na to że się nie mieści w konsoli
+, nie ma wypisywanych komunikatów błędów
 
 \section{Przebieg uruchomienia programów na platformie i definicja projektu}
 
@@ -183,7 +198,7 @@ Po przejrzeniu logów okazało się, że tylko jeden program uruchomił się pop
 Była to aplikacja z tego samego repozytorium, z którego załączono plik z planszą do testów.
 Inne dwa programy (etapy \textit{team02} oraz \textit{team04}) nie wypisały logów, natomiast jeden wypisał komunikat o niepoprawnym formacie pliku wejściowego (\textit{team01}).
 
-Dla programu dołączonego do etapu \textit{team01} zmieniono plik wejściowy i wejściowy na taki, który znajdowały się w repozytorium razem z tym programem.
+Dla programu dołączonego do etapu \textit{team01} zmieniono plik wejściowy i wejściowy na takie, które znajdowały się w repozytorium razem z tym programem.
 Aplikacja została następnie uruchomiona i wyniku swojego działania wypisała logi.
 
 Programy załączone do etapów \textit{team02} oraz \textit{team04} zostały ponownie przeanalizowane poprzez lokalne uruchomienie.
@@ -222,3 +237,25 @@ Opisane w rozdziale komplikacje mogą wystąpić podczas sprawdzania każdego z 
 Jednak przy niewielkiej modyfikacji zadania, można osiągnąć dużo lepszą automatyzację procesu oceny efektów pracy zespołów.
 W kolejnym rozdziale zostaną omówione zmiany założeń zadania historycznego, tak aby osiągnąć korzyści wynikające z korzystania z platformy.
 Opisane również zostaną wnioski z przeprowadzenia symulacji zmodyfikowanego projektu historycznego na testowej grupie absolwentów.
+
+TODO: dopisać w podsumowania:
+- nie można ocenić poprawności działania projektów bez analizy kodu
+
+- nie wiadomo co tam działa a co nie i jak
+
+- integracja jest praktycznie nie możliwa bo programy przyjmują różne formaty planszy pomimo zdefiniowanego w założeniach zadania spójnego formatu
+
+- prowadzący ma bardzo trudne zadanie
+
+- ja z perspektywy czasu nie jestem w stanie ocenić poprawności programów
+
+- trzeba mieć obok studentów żeby zrozumieć o co chodzi
+
+- pomimo że wszyscy mieli te same założenia projektowe wynik końcowy to zupełnie różne projekty które nie mogą ze sobą współgrać
+
+- studenci nawet w obrębie jednego projektu nie mają wypracowanego wspólnego protokołu
+
+- to wszystko pokazuje, że platforma jest potrzebna
+
+
+
