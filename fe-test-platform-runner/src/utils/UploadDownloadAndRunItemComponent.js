@@ -8,6 +8,22 @@ import RunIcon from "@material-ui/icons/PlayArrow";
 
 class UploadDownloadAndRunItemComponent extends Component {
 
+    constructor(props) {
+        super(props);
+        this.state = {disabled: false};
+    }
+
+    handleRunTests = () => {
+        this.setState({disabled: true});
+        this.props.runActionHandler()
+            .then(this.handleRunFinished)
+            .catch(this.handleRunFinished)
+    };
+
+    handleRunFinished = () => {
+        this.setState({disabled: false});
+    };
+
     render() {
         return (
             <InputWrapper>
@@ -26,8 +42,8 @@ class UploadDownloadAndRunItemComponent extends Component {
                     </Tooltip>
                 </IconButton>
                 <IconButton aria-label={this.props.runInfo}
-                            disabled={this.props.disabled}
-                            onClick={this.props.runActionHandler}>
+                            disabled={this.props.disabled || this.state.disabled}
+                            onClick={this.handleRunTests}>
                     <Tooltip title={this.props.runInfo}>
                         <RunIcon/>
                     </Tooltip>

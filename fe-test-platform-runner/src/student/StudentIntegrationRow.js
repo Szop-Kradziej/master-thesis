@@ -13,15 +13,13 @@ import RunItemComponent from "../utils/RunItemComponent";
 class StudentIntegrationRow extends Component {
 
     handleRunTests = () => {
-        fetch(backendUrl(`/student/integration/run`), {
+        return fetch(backendUrl(`/student/integration/run`), {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
             body: "projectName=" + this.props.projectName + "&integrationName=" + this.props.integration.integrationName
         })
             .then(this.props.integrationChangedHandler)
-            .then(function (response) {
-            })
     };
 
     //TODO: Move to separate function - remove duplicates

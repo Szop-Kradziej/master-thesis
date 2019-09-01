@@ -41,15 +41,13 @@ class StudentStageRow extends Component {
     };
 
     handleRunTests = () => {
-        fetch(backendUrl(`/student/stage/run`), {
+        return fetch(backendUrl(`/student/stage/run`), {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
             body: "projectName=" + this.props.projectName + "&stageName=" + this.props.stage.stageName
         })
             .then(this.props.stageChangedHandler)
-            .then(function (response) {
-            })
     };
 
     handleOpenAddReportDialog = () => {

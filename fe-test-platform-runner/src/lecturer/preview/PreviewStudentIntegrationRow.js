@@ -15,15 +15,13 @@ import StatisticsAndCommentItemComponent from "../../utils/StatisticsAndCommentI
 class PreviewStudentIntegrationRow extends Component {
 
     handleRunTests = () => {
-        fetch(backendUrl(`/preview/${this.props.groupName}/integration/run`), {
+        return fetch(backendUrl(`/preview/${this.props.groupName}/integration/run`), {
             method: "POST",
             credentials: "include",
             headers: {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': getAuthHeader()},
             body: "projectName=" + this.props.projectName + "&integrationName=" + this.props.integration.integrationName
         })
             .then(this.props.integrationChangedHandler)
-            .then(function (response) {
-            })
     };
 
     handleDownloadIntegrationStatistics = () => {
