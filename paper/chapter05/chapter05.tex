@@ -231,7 +231,7 @@ Dodatkowo ma on uprawnienia do definicji i edycji projektu oraz podglądu statys
 
 \section {Zestawienie platformy na serwerze}
 \label{run-platform}
-TODO: what with IP address for cors? also in system envs?
+
 
 W celu poprawnego uwierzytelnienia użytkowników przez GitHub należy zarejestrować aplikację w serwisie.
 Na rysunku \ref{fig:github_app_register} został przedstawiony formularz rejestracyjny.
@@ -249,6 +249,7 @@ Więcej informacji o uwierzytelnieniu użytkowników przy pomocy serwisu GitHub 
 
 Po poprawnej rejestracji aplikacji serwis wygeneruje dwa identyfikatory dla aplikacji \textit{Client ID} oraz \textit{Client Secret}.
 Oba identyfikatory należy zapisać do zmiennych systemowych pod nazwami: \textit{TEST\_PLATFORM\_CLIENT\_ID} oraz \textit{TEST\_PLATFORM\_SECRET}.
+Identyfikator \textit{Client\_ID} należy również przypisać do zmiennej \textit{REACT\_APP\_CLIENT\_ID} w pliku \textit{.env} znajdującym się pod ścieżką \textit{master\_thesis/fe\_test\_platform\_runner}.
 
 W celu uruchomienia platformy na dowolnej maszynie z systemem Linux należy zainstalować:
 \begin{itemize}
@@ -259,9 +260,9 @@ W celu uruchomienia platformy na dowolnej maszynie z systemem Linux należy zain
 
 W katalogu domowym użytkownika należy utworzyć folder \textit{platform} a wewnątrz jego dwa katalogi \textit{students} i \textit{projects}.
 
-Następnie należy utworzyć schemat bazy danych.
+Następnie należy utworzyć schemat bazy danych i utworzyć tabele.
 Można to zrobić bezpośrednio instalując na maszynie PostgreSQL lub przy użyciu kontenera dockerowego.
-Przykładowa komenda do uruchomienia kontenera z bazą wygląda następująco:
+Przykładowa komenda pozwalające na uruchomienie kontenera z bazą i utworzenie tabel wygląda następująco:
 
 {\fontfamily{qcr}\selectfont
 \tiny
@@ -269,23 +270,13 @@ Przykładowa komenda do uruchomienia kontenera z bazą wygląda następująco:
 
     docker run -d --name platform -p 5432:5432 -e POSTGRES_PASSWORD=password
     -e POSTGRES_DB=platform_db -e POSTGRES_USER=user postgres:12-alpine
+    docker cp platform_schema.sql platform:platform_schema.sql
+    docker exec platform psql -d platform_db -U user -f platform_schema.sql
 
 \end{lstlisting}
 }
 
-Po uruchomieniu bazy należy utworzyć tabele.
-W przypadku kontenera dockerowego można użyć do tego poniższej komendy, gdzie \textit{platform\_schema.sql} jest plikiem zawierającym definicję schematu bazodanowego, który został załączony do pracy:
-
-TODO: fix command
-{\fontfamily{qcr}\selectfont
-\tiny
-\begin{lstlisting}
-
-    cp
-    exec
-
-\end{lstlisting}
-}
+Dla powyższego przykładu plik \textit{platform\_schema.sql} zawiera definicję schematu bazodanowego, który został załączony do pracy.
 
 Dodanie użytkowników sprowadza się do wstawienia wierszy do tabeli \textit{users}.
 Przykład komendy SQL pozwalającej na dołączenie studenta i prowadzącego został przedstawiony poniżej.
@@ -309,7 +300,7 @@ Aby skompilować i uruchomić serwer należy przejść do katalogu \textit{maste
 \begin{lstlisting}
 
     ./gradlew bootJar
-    java -jar /
+    java -jar build/libs/test-platform-runner-0.0.1-SNAPSHOT.jar
 
 \end{lstlisting}
 }
