@@ -319,6 +319,23 @@ W celu uruchomienia interfejsu webowego należy przejść do katalogu \newline \
 
 Po wykonaniu powyższych kroków platforma jest gotowa do użycia.
 
+W ramach pracy platforma została skonfigurowana i wystawiona na Google Cloud (patrz rysunek \ref{fig:google_cloud}).
+W tym celu została stworzona maszyna o następujących parametrach:
+\begin{itemize}
+    \item 1 CPU
+    \item 3.75 GB RAM
+    \item zwykły dysk 10 GB z zainstalowanym Ubuntu w wersji 18.04 LTS Minimal
+\end{itemize}
+Dla maszyny zostały zdefiniowane dwie reguły firewall na porty: 3000 oraz 8080.
+Ta instancja została użyta do przeprowadzenia badań platformy.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 12cm]{chapter05/google_cloud.png}
+    \caption{Instancja zdefiniowana na Google Cloud (źródło własne).}
+    \label{fig:google_cloud}
+\end{figure}
+
 \section {Przykład integracji platformy z narzędziem CI oraz repozytorium kodu}
 \label{ci-integration}
 
@@ -366,7 +383,15 @@ W kolejnym kroku dodano skrypt wdrożeniowy, który zamieszcza zbudowany program
 \end{lstlisting}
 }
 
-Zmienna \textit{token} została zdefiniowana wewnątrz narzędzia Travis i przechowuje token nadany użytkownikowi przez serwis GitHub podczas logowania.
+Zmienna \textit{token} została zdefiniowana wewnątrz narzędzia Travis i przechowuje token nadany użytkownikowi przez serwis GitHub podczas logowania (dla tego przykładu token został pobrany bezpośrednio z bazy z tabeli \textit{users\_auth}).
+Na rysunku \ref{fig:travis_integration_internal} została przedstawiona konfiguracja zmiennej \textit{token} w narzędziu Travis.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 12cm]{chapter05/travis_integration_internal.png}
+    \caption{Konfiguracja zmiennej \textit{token} w narzędziu Travis (źródło własne).}
+    \label{fig:travis_integration_internal}
+\end{figure}
 
 Po dodaniu nowej zmiany do repozytorium GitHub system Travis zbudował program automatycznie, a następnie zamieścił go na platformie i uruchomił.
 Oba zdefiniowane testy akceptacyjne dla projektu \textit{TravisIntegration} zostały poprawnie wykonane i zwróciły prawidłowy status.
