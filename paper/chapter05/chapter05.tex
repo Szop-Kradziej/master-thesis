@@ -30,7 +30,7 @@ Przykład konfiguracji i uruchomienia platformy na dowolnym serwerze został om�
 
 Platformę można zintegrować z zewnętrznymi narzędziami.
 Przykładem takiej integracji może być powiązanie z systemem Continuous Integration (na przykład Travis).
-Taki system można skonfigurować tak, aby w ramach testów automatycznych budował program, wysyłał plik wykonywalny do platformy i raportował o wyniku uruchomienia.
+Taki system można skonfigurować tak, aby w ramach testów automatycznych budował program, wysyłał plik wykonywalny do platformy i uruchamiał go.
 Przykład takiej integracji platformy z zewnętrznym narzędziem został opisany w~podrozdziale \ref{ci-integration}.
 
 \section{Schemat bazy}
@@ -210,14 +210,14 @@ Dodanie nowego adresu nie wpływa negatywnie na sposób korzystania z konta gith
 
 Proces uwierzytelniania można podzielić na następujące kroki:
 \begin{enumerate}
-\item Użytkownik naciska przycisk \textit{Zaloguj} na interfejsie webowym platformy.
-\item Aplikacja webowa przekierowuje użytkownika na stronę GitHub, na której loguje się on do serwisu i nadaje odpowiednie uprawnienia do odczytu danych platformie.
-\item Aplikacja webowa otrzymuje tymczasowy kod dostępu z GitHub odpowiadający profilowi zalogowanego użytkownika.
-\item Aplikacja webowa przekazuje kod dostępu do serwera.
-\item Serwer odpytuje GitHub o token dla użytkownika na podstawie otrzymanego z~aplikacji webowej kodu dostępu.
-\item Serwer odpytuje GitHub o adresy mailowe przypisane do konta użytkownika o~zadanym tokenie.
-\item Serwer filtruje otrzymane maile i sprawdza, czy któryś z nich jest zgodny z mailem użytkownika (nazwą) zapisanym w bazie.
-\item Jeśli tak to odsyłana jest do użytkownika informacja zwrotna zawierająca token, a~zweryfikowany użytkownik przekierowywany jest na odpowiedni dla jego uprawnień ekran (widok projektu w przypadku studenta lub widok wyboru podglądu albo zarządzania projektami w przypadku prowadzącego).
+    \item Użytkownik naciska przycisk \textit{Zaloguj} na interfejsie webowym platformy.
+    \item Aplikacja webowa przekierowuje użytkownika na stronę GitHub, na której loguje się on do serwisu i nadaje odpowiednie uprawnienia do odczytu danych platformie.
+    \item Aplikacja webowa otrzymuje tymczasowy kod dostępu z GitHub odpowiadający profilowi zalogowanego użytkownika.
+    \item Aplikacja webowa przekazuje kod dostępu do serwera.
+    \item Serwer odpytuje GitHub o token dla użytkownika na podstawie otrzymanego z~aplikacji webowej kodu dostępu.
+    \item Serwer odpytuje GitHub o adresy mailowe przypisane do konta użytkownika o~zadanym tokenie.
+    \item Serwer filtruje otrzymane maile i sprawdza, czy któryś z nich jest zgodny z mailem użytkownika (nazwą) zapisanym w bazie.
+    \item Jeśli tak to odsyłana jest do użytkownika informacja zwrotna zawierająca token, a~zweryfikowany użytkownik przekierowywany jest na odpowiedni dla jego uprawnień ekran (widok projektu w przypadku studenta lub widok wyboru podglądu albo zarządzania projektami w przypadku prowadzącego).
 \end{enumerate}
 
 Serwis w miarę potrzeby może zweryfikować czy dany użytkownik jest studentem czy prowadzącym.
@@ -233,12 +233,12 @@ Dodatkowo ma on uprawnienia do definicji i edycji projektu oraz podglądu statys
 \label{run-platform}
 
 
-W celu poprawnego uwierzytelnienia użytkowników przez GitHub należy zarejestrować aplikację w serwisie.
+W celu poprawnego uwierzytelnienia użytkowników przez GitHub należy zarejestrować platformę w tym serwisie.
 Na rysunku \ref{fig:github_app_register} został przedstawiony formularz rejestracyjny.
 \textit{Homepage URL} jest adresem dla strony startowej platformy.
-\textit{Authorization callback URL} jest linkiem, na który zostanie przekierowany użytkownik po poprawnym zalogowaniu w serwisie GitHub.
+\textit{Authorization callback URL} jest linkiem, na który zostanie przekierowany użytkownik po poprawnym zalogowaniu w~serwisie GitHub.
 Dla obu adresów należy podać publiczny adres IP, pod którym zostanie wystawiony interfejs webowy.
-Więcej informacji o uwierzytelnieniu użytkowników przy pomocy serwisu GitHub zostało zmieszczone w podrozdziale \ref{authorization}.
+Więcej informacji o uwierzytelnieniu użytkowników przy pomocy serwisu GitHub zostało zamieszczone w podrozdziale \ref{authorization}.
 
 \begin{figure}[h]
     \centering
@@ -247,7 +247,7 @@ Więcej informacji o uwierzytelnieniu użytkowników przy pomocy serwisu GitHub 
     \label{fig:github_app_register}
 \end{figure}
 
-Po poprawnej rejestracji aplikacji serwis wygeneruje dwa identyfikatory dla aplikacji \textit{Client ID} oraz \textit{Client Secret}.
+Po poprawnej rejestracji aplikacji serwis wygeneruje dwa identyfikatory \textit{Client ID} oraz \textit{Client Secret}.
 Oba identyfikatory należy zapisać do zmiennych systemowych pod nazwami: \textit{TEST\_PLATFORM\_CLIENT\_ID} oraz \textit{TEST\_PLATFORM\_SECRET}.
 Identyfikator \textit{Client\_ID} należy również przypisać do zmiennej \textit{REACT\_APP\_CLIENT\_ID} w pliku \textit{.env} znajdującym się pod ścieżką \textit{master\_thesis/fe\_test\_platform\_runner}.
 
@@ -260,7 +260,7 @@ W celu uruchomienia platformy na dowolnej maszynie z systemem Linux należy zain
 
 W katalogu domowym użytkownika należy utworzyć folder \textit{platform} a wewnątrz jego dwa katalogi \textit{students} i \textit{projects}.
 
-Następnie należy utworzyć schemat bazy danych i utworzyć tabele.
+Następnie należy utworzyć schemat bazy danych i tabele.
 Można to zrobić bezpośrednio instalując na maszynie PostgreSQL lub przy użyciu kontenera dockerowego.
 Przykładowa komenda pozwalające na uruchomienie kontenera z bazą i utworzenie tabel wygląda następująco:
 
@@ -293,7 +293,7 @@ Przykład komendy SQL pozwalającej na dołączenie studenta i prowadzącego zos
 
 Kod wykonywalny platformy można pobrać z repozytorium GitHub lub przenieść na maszynę kod załączony na płycie.
 
-Aby skompilować i uruchomić serwer należy przejść do katalogu \textit{master\_thesis/test\_platform\_runner} i użyć następujących komend:
+Aby skompilować i uruchomić serwer należy przejść do katalogu \newline \textit{master\_thesis/test\_platform\_runner} i użyć następujących komend:
 
 {\fontfamily{qcr}\selectfont
 \tiny
@@ -322,5 +322,62 @@ Po wykonaniu powyższych kroków platforma jest gotowa do użycia.
 \section {Przykład integracji platformy z narzędziem CI oraz repozytorium kodu}
 \label{ci-integration}
 
-TODO: opis i przykład integracji platformy z narzędziem CI oraz repozytorium
-kodu.
+System CI można skonfigurować tak, aby w ramach testów automatycznych budował program, wysyłał plik wykonywalny do platformy, a następnie uruchamiał go.
+W ramach pracy zintegrowano platformę z narzędziem Travis.
+
+W tym celu utworzono nowe repozytorium na GitHub i zamieszczono w nim prosty program, który przepisuje do pliku wyjściowego zawartość pliku wejściowego.
+Na platformie dodano nowy projekt \textit{TravisIntegration}.
+Jego definicja znajduje się na rysunku~\ref{fig:travis_integration}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 12cm]{chapter05/travis_integration.png}
+    \caption{Definicja projektu dla integracji platformy z narzędziem Travis (źródło własne).}
+    \label{fig:travis_integration}
+\end{figure}
+
+Następnie do repozytorium dołączono plik \textit{.travis.yaml} definiujący sposób budowy projektu:
+
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
+    language: java
+    dist: trusty
+
+    script:
+    - ./gradlew bootJar
+
+    after_script:
+    - ./deploy.sh
+\end{lstlisting}
+}
+
+W kolejnym kroku dodano skrypt wdrożeniowy, który zamieszcza zbudowany program na platformie oraz uruchamia go:
+
+{\fontfamily{qcr}\selectfont
+\tiny
+\begin{lstlisting}
+    curl -F 'projectName=TravisIntegration' -F 'stageName=Stage'
+    -F 'file=@build/libs/traviscurl-0.0.1-SNAPSHOT.jar'
+    -H "Authorization: token \$token" http://34.65.81.82:8080/student/upload/bin;
+
+    curl -X POST -d 'projectName=TravisIntegration' -d 'stageName=Stage'
+    -H "Authorization: token \$token" http://34.65.81.82:8080/student/stage/run;
+\end{lstlisting}
+}
+
+Zmienna \textit{token} została zdefiniowana wewnątrz narzędzia Travis i przechowuje token nadany użytkownikowi przez serwis GitHub podczas logowania.
+
+Po dodaniu nowej zmiany do repozytorium GitHub system Travis zbudował program automatycznie, a następnie zamieścił go na platformie i uruchomił.
+Oba zdefiniowane testy akceptacyjne dla projektu \textit{TravisIntegration} zostały poprawnie wykonane i zwróciły prawidłowy status.
+Wyniki testów uzyskane na platformie zostały przedstawione na rysunku~\ref{fig:travis_integration_result}.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 12cm]{chapter05/travis_integration_result.png}
+    \caption{Wyniki automatycznego uruchomienia programu otrzymane dla integracji platformy z narzędziem Travis (źródło własne).}
+    \label{fig:travis_integration_result}
+\end{figure}
+
+Opisana integracja z narzędziem CI jest przykładowa i ma na celu pokazanie możliwości automatyzacji procesu budowania i uruchamiania aplikacji studenckich.
+System Travis można zastąpić innym narzędziem CI np. GitLab CI lub Jenkins.
