@@ -155,17 +155,66 @@ Dla projektu utworzono również jeden proces integracji z pojedynczym testem ak
 Proces składał się z dwóch kroków, kolejno: \textit{set} i \textit{move}.
 Utworzony test akceptacyjny pozwolił na sprawdzenie pozytywnego przebiegu akcji ustawienia a następnie przesunięcia pingwina.
 
-
 \subsection{Przebieg symulacji}
 \label{penguins_simulation}
+Już na samym początku symulacji zmodyfikowane zadanie okazało się proste do implementacji i trudne do podziału pomiędzy członków zespołu.
+Z tych powodów projekt samodzielnie wykonał jeden absolwent.
 
-TODO: Napisać że zadanie okazało się proste dla absolwentów i ciężko podzielne więc wykonali je pojedynczo a nie w grupie.
-W grupie wykonane została druga symulacja
-Opisać pełny przebieg i załączyć statystyki
+W ramach symulacji absolwentowi został udostępniony historyczny opis projektu oraz zmodyfikowany zakres przyjmowanych parametrów dla zadania.
+Następnie poproszono go o zalogowanie się do platformy przy użyciu własnego konta GitHub.
+
+Symulacji była na bieżąco monitorowana.
+W trakcie jej trwania poprawiano definicję projektu.
+Między innymi zdecydowano się uzupełnić etap pierwszy i drugi o dodatkowe przypadki testowe, które sprawdzały warunki brzegowe.
+
+Już po kilku pierwszych iteracjach absolwent wyraził zadowolenie z~korzystania z~narzędzia.
+W trakcie wykonywania zadania dodał, że ułatwia ono mu pracę a dzięki zdefiniowanym przypadkom testowym może skupić się na implementacji logiki aplikacji.
+
+W tabelach od \ref{tab:read_parse_write} do \ref{tab:move_penguins} przedstawiono pełne statystyki uruchomienia programów dla wszystkich trzech etapów w ramach symulacji.
+
+\input{chapter07//read_parse_write.tex}
+
+
+\input{chapter07//set_penguins.tex}
+
+
+\input{chapter07//move_penguins.tex}
+
+Powyższe statystyki nie zawieraja komunikatów o błędzie, które są również zapisywane przez platformę.
+Dodanie ich pogorszyłoby znacznie czytelność tabel, ze względu na długość informacji.
+
+Na podstawie powyższych statystyk można stwierdzić, że absolwent wykonywał etapy kolejno.
+Nie tworzył on od razu pełnej logiki aplikacji.
+Kod był pisany przez niego inkrementacyjnie.
+Programy pisane w ramach poszczególnych etapów były uruchamiane przez niego regularnie.
+Widać również, że zmieniając logikę aplikacji doprowadzał do regresji kodu.
+
+W ramach etapu drugiego zostało wykonane najwięcej iteracji.
+To zadanie wymagało zaimplementowania logiki umieszczania pingwina wraz z uwzględnieniem warunków brzegowych.
+Ostatni etap wymagał od absolwenta zrealizowania tylko trzech iteracji.
+Dla tego zadania logika aplikacji była juz w większości zaimplementowana i zatwierdzona w~ramach poprzednich etapów.
+
 
 \subsection{Podsumowanie}
 
-TODO Napisać i odnieść się do weryfikacji
+TODO Napisać i odnieść się do badania projektu historycznego
+
+- Stwierdził że zdefiniowane etapy są bardzo sensowne a przypadki testowe dobrze dobrane
+
+- Przy pierwszym etapie uznał że warto napisać poprawną implementację i parsowanie planszy ponieważ rzutuje ona na dalsze etapy
+
+- Stwierdził ze to bardzo dobry etap
+
+- Pozytywnie ocenił platformę
+
+- Nie miał problemów z użytkowaniem platformy
+
+- Oferowany przez platformę interfejs graficzny był dla nich zrozumiały
+
+- Absolwent pisali kod inkrementacyjnie za każdym razem sprawdzając czy ich programy przechodzą przez przypadki testowe
+
+- Platforma wykryłą regresję
+
 
 
 \section{Symulacja projektu z procesem integracji}
