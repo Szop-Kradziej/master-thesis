@@ -44,8 +44,8 @@ Do otrzymania korzyści z użytkowania platformy należałoby zmienić założen
 Przykładowo dla fazy ruchu wystarczyłoby dodać dwa parametry wykonania: położenie pingwina, którym chcemy poruszyć oraz docelowe miejsce, w które chcemy go przesunąć.
 Faza rozmieszczania również wymagałaby modyfikacji.
 
-W celu zbadania rezultatów projektów studenckich udostępniono siedem repozytoriów używanych przez studentów i zamieszczonych na platformie GitLab.
-Wstępna analiza kodu znajdującego się w repozytoriach pozwoliła ustalić, że spośród dostępnych grup tylko cztery ukończyły zadanie projektowe.
+W celu zbadania rezultatów projektów studenckich przeanalizowano siedem udostępnionych repozytoriów używanych przez studentów i zamieszczonych na platformie GitLab.
+Wstępny przegląd repozytoriów kodu pozwolił ustalić, że spośród dostępnych grup tylko cztery ukończyły zadanie projektowe.
 Dwie z pozostałych grup przerwały projekt już na samym początku semestru.
 Jeden z zespołów dołączył do innej grupy w trakcie trwania projektu, przez co kod z jego pracy przed przegrupowaniem nie jest analizowany.
 Z powyżej przedstawionych powodów dokonano próby lokalnego uruchomiona czterech historycznych programów studenckich.
@@ -54,7 +54,7 @@ Z powyżej przedstawionych powodów dokonano próby lokalnego uruchomiona cztere
 
 Lokalne uruchomienie programów studentów zostało sprowadzone do następujących kroków:
 \begin{itemize}
-    \item Analiza kodu historycznych programów.
+    \item Analiza repozytorium kodu historycznych programów.
     \item Kompilacja.
     \item Uruchomienie.
 \end{itemize}
@@ -62,7 +62,7 @@ Lokalne uruchomienie programów studentów zostało sprowadzone do następujący
 Podczas każdego z powyższych kroków napotkano na kilka problemów.
 Te trudności zostały omówione w kolejnych podrozdziałach.
 
-\subsection{Analiza kodu}
+\subsection{Analiza repozytorium kodu}
 
 Projekt był prowadzony przez cały semestr a kod studentów systematycznie wgrywany na GitLab.
 Studenci nie używali tzw. ”tagowania commitów” (ciężko też od nich tego wymagać na pierwszym roku studiów).
@@ -114,7 +114,7 @@ Dla fazy rozmieszczania współrzędne na planszy należało podać jako parę (
 
 Jeden z programów uruchomiony w trybie interaktywnym nie pozwalał na umieszczenie pingwina na planszy i nie zapisywał wyniku do pliku wynikowego.
 Wyświetlana przez program plansza była nieprawidłowa i nie pozwalała na poprawne sparsowanie.
-Warto dodać, że dla tego programu przejście pomiędzy trybem AI a interaktywnym wymagało zmiany stałej w jednym z plików zawierających kod programu.
+Warto dodać, że dla tego programu przejście pomiędzy trybem AI a interaktywnym wymagało zmiany stałej w jednym z plików zawierających kod programu oraz ponownej kompilacji.
 
 Jeden z programów uruchomił się w wersji automatycznej rozgrywki.
 Sprawia to, że przetestowanie dla założonego wcześniej schematu jest niemożliwe, ponieważ w tym trybie nie mamy wpływu na ruch pingwinów.
