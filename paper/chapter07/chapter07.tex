@@ -194,28 +194,53 @@ To zadanie wymagało zaimplementowania logiki umieszczania pingwina wraz z uwzgl
 Ostatni etap wymagał od absolwenta zrealizowania tylko trzech iteracji.
 Dla tego zadania logika aplikacji była juz w większości zaimplementowana i zatwierdzona w~ramach poprzednich etapów.
 
+Proces integracji został uruchomiony raz, po poprawnym ukończeniu ostatniego etapu i zakończył się sukcesem.
+
+Na rysunku \ref{fig:penguins_simulation_interface} przedstawiony został wynik symulacji z perspektywy prowadzącego.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 13cm]{chapter07/penguins_preview.png}
+    \caption{Podgląd postępów studentów w ramach symulacji zmodyfikowanego projektu historycznego (źródło własne).}
+    \label{fig:penguins_simulation_interface}
+\end{figure}
+
 
 \subsection{Podsumowanie}
 
-TODO Napisać i odnieść się do badania projektu historycznego
+Platforma została oceniona pozytywnie.
+Podczas symulacji nie wystąpiły znaczące problemy z jej użytkowaniem.
+Oferowany przez narzędzie interfejs graficzny był intuicyjny, czytelny i zrozumiały.
 
-- Stwierdził że zdefiniowane etapy są bardzo sensowne a przypadki testowe dobrze dobrane
+Po ukończeniu projektu absolwent uznał, że zadanie zostało podzielone we właściwy i jasny sposób na kolejne etapy.
+Testy akceptacyjne były dobrze dobrane i pozwoliły na przetestowanie wartości brzegowych.
 
-- Przy pierwszym etapie uznał że warto napisać poprawną implementację i parsowanie planszy ponieważ rzutuje ona na dalsze etapy
+Sam kod był pisany przez absolwenta inkrementacyjnie.
+Programy były wielokrotnie uruchamiane na platformie i sprawdzany był wynik ich wykonania.
+Absolwent był zadowolony z uzyskanej informacji zwrotnej.
+Również czas, po jakim otrzymywał ją był dla niego akceptowalny.
+Dodatkowo platforma pozwoliła na wykrycie regresji dla kolejnych wersji programów.
+Potwierdza to użyteczność platformy od strony studenta.
 
-- Stwierdził ze to bardzo dobry etap
+Proces tworzenia programu był na bieżąco monitorowany.
+Podczas symulacji zmodyfikowano projekt dodając dodatkowe przypadki testowe.
+Aby uniknąć takiej sytuacji w przypadku prawdziwego projektu studenckiego zalecane jest, żeby prowadzący tworząc kolejne etapy na bieżąco tworzył własny program testowy i sprawdzał poprawność definicji testów akceptacyjnych.
+Warto również udostępnić studentom projekt, który będzie wcześniej w pełni zdefiniowany i przetestowany, aby uniknąć niespójności w definicji kolejnych etapów.
 
-- Pozytywnie ocenił platformę
+Dla pierwszego etapu dopiero dodanie przypadku testowego oczekującego na wypisanie komunikatu o błędzie w przypadku niepoprawnego formatu pliku wejściowego wymusiło na absolwencie napisanie pełnej i poprawnej implementacji kodu do parsowania planszy.
+Absolwent uznał, że po dodaniu drugiego testu etap był bardzo dobrze zdefiniowany.
+Implementacja poprawnego parsownia planszy sprawiła, że ilość pracy potrzebnej do zrealizowania kolejnych zadań stała się wyważona.
+Ten fakt podkreśla istotę odpowiedniego doboru testów akceptacyjnych dla etapów.
 
-- Nie miał problemów z użytkowaniem platformy
+Rezultaty wykonania kolejnych etapów są przekazane w jasny sposób na interfejsie platformy.
+Dzięki temu można bardzo szybko ocenić postępy pracy.
+W~przypadku symulacji, wymagana logika programu napisanego przez absolwenta dla każdego z etapów była poprawna, ponieważ testy akceptacyjne załączone do projektu zostały wykonane pomyślnie.
+Statystyki z uruchomienia aplikacji pokazują, że absolwent z zaangażowaniem wykonywał kolejne zadania.
 
-- Oferowany przez platformę interfejs graficzny był dla nich zrozumiały
-
-- Absolwent pisali kod inkrementacyjnie za każdym razem sprawdzając czy ich programy przechodzą przez przypadki testowe
-
-- Platforma wykryłą regresję
-
-
+Przeprowadzona integracja przebiegła pomyślnie.
+Oznacza to, że programy napisane w ramach kolejnych etapów używały spójnego formatu danych.
+Definicja testów akceptacyjnych na platformie wymusiła jednakowy protokół przekazywania informacji.
+W~przypadku gdy w ramach projektu uczestniczyłoby więcej grup projektowych programy, które pomyślnie przeszłyby kolejne etapy również używałyby spójnego formatu danych, przez co można byłoby wykonać pomyślną próbę integracji aplikacji pomiędzy zespołami.
 
 \section{Symulacja projektu z procesem integracji}
 \label{research_matrix}
