@@ -1,0 +1,179 @@
+\textbf{Nazwa testu: \textit{Place on cell with too many fish}}
+
+\begin{table}[H]
+    \centering
+    \caption{Definicja przypadku testowego \textit{Place on cell with too many fish}}
+    \scalebox{0.65}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        Plik wejściowy & Parametry & Oczekiwany plik wyjściowy \\ \hline
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 0
+        \vspace{.5\baselineskip} }            &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        id=1 \\
+        phase=placement \\
+        placement\_x=0 \\
+        placement\_y=0
+        \vspace{.5\baselineskip} } &
+        Invalid parameters                         \\ \hline
+    \end{tabular}
+    }
+\end{table}
+
+
+
+\textbf{Nazwa testu: \textit{Place outside of board}}
+
+\begin{table}[H]
+    \centering
+    \caption{Definicja przypadku testowego \textit{Place outside of board}}
+    \scalebox{0.65}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        Plik wejściowy & Parametry & Oczekiwany plik wyjściowy \\ \hline
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 0
+        \vspace{.5\baselineskip} }            &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        id=2 \\
+        phase=placement \\
+        placement\_x=13 \\
+        placement\_y=4
+        \vspace{.5\baselineskip} } &
+        Invalid parameters                         \\ \hline
+    \end{tabular}
+    }
+\end{table}
+
+\pagebreak
+
+\textbf{Nazwa testu: \textit{Place player 2 on 3 4}}
+
+\begin{table}[H]
+    \centering
+    \caption{Definicja przypadku testowego \textit{Place player 2 on 3 4}}
+    \scalebox{0.65}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        Plik wejściowy & Parametry & Oczekiwany plik wyjściowy \\ \hline
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 0
+        \vspace{.5\baselineskip} }            &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        id=2 \\
+        phase=placement \\
+        placement\_x=3 \\
+        placement\_y=4
+        \vspace{.5\baselineskip} } &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 02 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 1 \\
+        Team3 3 0
+        \vspace{.5\baselineskip} } \\ \hline
+    \end{tabular}
+    }
+\end{table}
+
+
+
+\textbf{Nazwa testu: \textit{Place with player id too high}}
+
+\begin{table}[H]
+    \centering
+    \caption{Definicja przypadku testowego \textit{Place with player id too high}}
+    \scalebox{0.65}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        Plik wejściowy & Parametry & Oczekiwany plik wyjściowy \\ \hline
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 0
+        \vspace{.5\baselineskip} }            &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        id=5 \\
+        phase=placement \\
+        placement\_x=3 \\
+        placement\_y=4
+        \vspace{.5\baselineskip} } &
+        Invalid parameters                         \\ \hline
+    \end{tabular}
+    }
+\end{table}
+
+\pagebreak

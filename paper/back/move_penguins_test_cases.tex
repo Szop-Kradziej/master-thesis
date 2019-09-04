@@ -1,0 +1,140 @@
+\textbf{Nazwa testu: \textit{Move penguin 1 1 down to other penguin}}
+
+\begin{table}[H]
+    \centering
+    \caption{Definicja przypadku testowego \textit{Move penguin 1 1 down to other penguin}}
+    \scalebox{0.65}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        Plik wejściowy & Parametry & Oczekiwany plik wyjściowy \\ \hline
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 0
+        \vspace{.5\baselineskip} }            &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        id=3 \\
+        phase=move \\
+        from\_x=1 \\
+        from\_y=1 \\
+        direction=down
+        \vspace{.5\baselineskip} } &
+        Invalid parameters                         \\ \hline
+    \end{tabular}
+    }
+\end{table}
+
+
+
+\textbf{Nazwa testu: \textit{Move penguin 1 1 up}}
+
+\begin{table}[H]
+    \centering
+    \caption{Definicja przypadku testowego \textit{Move penguin 1 1 up}}
+    \scalebox{0.65}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        Plik wejściowy & Parametry & Oczekiwany plik wyjściowy \\ \hline
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 0
+        \vspace{.5\baselineskip} }            &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        id=3 \\
+        phase=move \\
+        from\_x=1 \\
+        from\_y=1 \\
+        direction=up
+        \vspace{.5\baselineskip} } &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 03 30 01 20 30 20 20 10 20 \\
+        20 00 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 3
+        \vspace{.5\baselineskip}
+        } \\ \hline
+    \end{tabular}
+    }
+\end{table}
+
+\pagebreak
+
+\textbf{Nazwa testu: \textit{Move penguin 3 1 right to empty}}
+
+\begin{table}[H]
+    \centering
+    \caption{Definicja przypadku testowego \textit{Move penguin 3 1 right to empty}}
+    \scalebox{0.65}{
+    \begin{tabular}{|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        Plik wejściowy & Parametry & Oczekiwany plik wyjściowy \\ \hline
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 0
+        \vspace{.5\baselineskip} }            &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        id=1 \\
+        phase=move \\
+        from\_x=3 \\
+        from\_y=1 \\
+        direction=right
+        \vspace{.5\baselineskip} } &
+        Invalid parameters                         \\ \hline
+    \end{tabular}
+    }
+\end{table}

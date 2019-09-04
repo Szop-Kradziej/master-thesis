@@ -1,0 +1,64 @@
+
+\textbf{Nazwa testu: \textit{SetAndMove}}
+
+\begin{table}[H]
+    \centering
+    \caption{Definicja przypadku testowego \textit{SetAndMove}}
+    \scalebox{0.65}{
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \rowcolor[HTML]{EFEFEF}
+        Plik wejściowy & Parametry etap 1 & Parametry etap 2 & Oczekiwany plik wyjściowy \\ \hline
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 0
+        \vspace{.5\baselineskip} }            &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        id=2 \\
+        phase=placement \\
+        placement\_x=3 \\
+        placement\_y=4
+        \vspace{.5\baselineskip} } &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        id=2 \\
+        phase=move \\
+        from\_x=3 \\
+        from\_y=4 \\
+        direction=left
+        \vspace{.5\baselineskip} } &
+        \pbox{20cm}{
+        \vspace{.5\baselineskip}
+        10 10 \\
+        30 30 30 01 20 30 20 20 10 20 \\
+        20 03 10 01 00 03 10 20 10 10 \\
+        10 01 10 20 20 10 03 10 30 02 \\
+        30 20 30 20 10 30 30 30 30 20 \\
+        30 30 30 10 30 30 10 30 10 20 \\
+        30 30 30 10 30 30 10 10 30 20 \\
+        30 20 20 30 30 30 20 30 10 02 \\
+        20 20 20 30 20 20 10 01 20 20 \\
+        02 20 30 30 20 30 10 10 30 01 \\
+        10 30 10 10 10 30 10 10 30 30 \\
+        TEAM1 1 0 \\
+        team2 2 0 \\
+        Team3 3 0
+        \vspace{.5\baselineskip}
+        } \\ \hline
+    \end{tabular}
+    }
+\end{table}
