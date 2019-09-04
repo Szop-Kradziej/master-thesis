@@ -48,7 +48,7 @@ W celu zbadania rezultatów projektów studenckich przeanalizowano siedem udost�
 Wstępny przegląd repozytoriów kodu pozwolił ustalić, że spośród dostępnych grup tylko cztery ukończyły zadanie projektowe.
 Dwie z pozostałych grup przerwały projekt już na samym początku semestru.
 Jeden z zespołów dołączył do innej grupy w trakcie trwania projektu, przez co kod z jego pracy przed przegrupowaniem nie jest analizowany.
-Z powyżej przedstawionych powodów dokonano próby lokalnego uruchomiona czterech historycznych programów studenckich.
+Z~powyżej przedstawionych powodów dokonano próby lokalnego uruchomienia czterech z~potencjalnie dostępnych siedmiu historycznych programów studenckich.
 
 \section{Lokalne uruchomienie historycznych programów studentów}
 
@@ -59,19 +59,20 @@ Lokalne uruchomienie programów studentów zostało sprowadzone do następujący
     \item Uruchomienie.
 \end{itemize}
 
-Podczas każdego z powyższych kroków napotkano na kilka problemów.
+Podczas każdego z powyższych kroków napotkano na problemy.
 Te trudności zostały omówione w kolejnych podrozdziałach.
 
 \subsection{Analiza repozytorium kodu}
 
-Projekt był prowadzony przez cały semestr a kod studentów systematycznie wgrywany na GitLab.
-Studenci nie używali tzw. ”tagowania commitów” (ciężko też od nich tego wymagać na pierwszym roku studiów).
-Z tych powodów granice wykonania kolejnych etapów są zatarte i ciężko je odtworzyć.
+Projekt był prowadzony przez cały semestr, a kod studentów systematycznie wgrywany na GitLab.
+Studenci nie używali tzw. ”tagowania commitów” (ciężko też od nich tego wymagać na pierwszym roku studiów), czyli etykietowania konkretnych, ważnych miejsc w historii co mogłoby pomóc w ustaleniu ostatecznej wersji kodu napisanego w ramach kolejnych zadań.
+Z tych powodów granice wykonania kolejnych etapów są zatarte i~ciężko je odtworzyć.
 Zakłada się więc, że kod znajdujący się na GitLab to ostateczne wersje programów, które powinny spełniać założenia projektowe i~pozwolić na uruchomienie wersji interaktywnej oraz AI.
 
 %team 05
 Trzy grupy projektowe zamieszczały swój kod bezpośrednio w repozytorium.
-Jeden zespół zamieścił go w tzn. ”snippetach” co utrudniło odszukanie i pobranie go w celu lokalnego uruchomienia.
+Jeden zespół zamieścił go w tzn. ”snippetach”, czyli miejscu służącym zwykle jako notatnik do umieszczania małych fragmentów kodu lub innych informacji.
+Ten sposób zamieszczenia pełnego kodu aplikacji trudnił odszukanie i pobranie go w celu lokalnego uruchomienia.
 
 Kolejnym problemem jest określenie wewnątrz repozytorium, która wersja kodu jest ostateczna i powinna zostać zweryfikowana.
 W tym przypadku można posłużyć się datą ostatniego tzw. ”commita”, jednak nie zawsze wydaje się to być odpowiednim rozwiązaniem.
@@ -91,7 +92,8 @@ Kompilacja programów sprowadzała się do indywidualnego przejrzenia kodu każd
 Spośród wszystkich czterech projektów tylko jeden miał zdefiniowany, zawarty w repozytorium i poprawny plik Makefile.
 Trzy pozostałe projekty wymagały własnoręcznej kompilacji.
 Spośród nich dwie kompilacje były stosunkowo proste i zakończyły się sukcesem.
-Jeden z programów posiadał pojedynczy plik z właściwym kodem aplikacja (rozszerzenie .c) a kompilacja drugiego programu sprowadziła się do skompilowania wszystkich plików w folderze.
+Jeden z programów posiadał pojedynczy plik z właściwym kodem aplikacji (rozszerzenie .c).
+Kompilacja drugiego programu sprowadziła się do skompilowania wszystkich plików w folderze.
 
 %team 02
 Dla jednego z zespołów własnoręczna kompilacja finalnej wersji aplikacji nie powiodła się.
@@ -125,18 +127,18 @@ Ze względu na brak dokumentacji dotyczącej działania algorytmu AI pominięto 
 \section{Uruchomienie programów na platformie}
 \label{veryfication_platform}
 
-Początkowym założeniem dla uruchomienia programów na platformie było utworzenie pojedynczego projektu oraz czterech grup projektowych dla każdego z badanych projektów historycznych.
-Dla projektu planowano utworzyć dwa etapy: \textit{placement} i \textit{movement} wraz z przypadkami testowymi.
+Początkowym założeniem dla uruchomienia programów na platformie było utworzenie pojedynczego projektu oraz czterech grup projektowych reprezentujących historyczne zespoły.
+Dla projektu planowano utworzyć dwa etapy: \textit{placement} i \textit{movement} wraz z~przypadkami testowymi.
 Jednak już podczas analizy i lokalnego uruchamienia programów okazało się, że utworzenie wartościowych testów akceptacyjnych dla projektu historycznego nie będzie możliwe.
-Wynika to między innymi z tego, że programy działają w trybie interaktywnym, czekając na reakcję użytkownika, której nie można zasymulować przy użyciu aktualnej wersji platformy.
-W przypadku trybu AI nie jest udokumentowane, w jaki sposób powinny zachować się programy, stąd napisanie testów akceptacyjnych dla tego trybu jest również bezcelowe.
+Wynika to między innymi z tego, że programy działają w~trybie interaktywnym, czekając na reakcję użytkownika, której nie można zasymulować przy użyciu aktualnej wersji platformy.
+W przypadku trybu AI programy miały dowolność w~wyborze ruchu tak długo, jak było to zgodne z regułami, stąd napisanie testów akceptacyjnych dla tego trybu jest również bezcelowe.
 
 Z powyższych powodów uznano, że historyczne programy zostaną uruchomione przy pomocy narzędzia, jednak poprawność ich wykonania nie będzie oceniana poprzez testy akceptacyjne.
 W ramach platformy oceniono samą możliwość uruchomienia programów przy jej użyciu.
 W tym celu porównano otrzymane na platformie logi z wynikiem lokalnego uruchomiania aplikacji.
 W przypadku, gdy programy nie zalogowały błędów wykonania i wypisały takie same logi, jak w lokalnej konsoli uznane zostało, że uruchamiają się poprawnie na platformie.
 
-W początkowym podejściu w wyniku analizy działania uruchomionych lokalnie programów zdecydowano się na utworzenie jednego projektu i zdefiniowanie czterech różnych etapów (oddzielnych dla każdego z programów).
+W początkowym podejściu w wyniku analizy działania uruchomionych lokalnie programów zdecydowano się na utworzenie jednego projektu i zdefiniowanie czterech różnych grup projektowych (oddzielnych dla każdego z programów).
 Ze względu na podawane parametry w~postaci argumentów do programu plik Dockerfile dla tego projektu wyglądał następująco:
 
 {\fontfamily{qcr}\selectfont
@@ -150,28 +152,20 @@ Ze względu na podawane parametry w~postaci argumentów do programu plik Dockerf
 \end{lstlisting}
 }
 
-Definicja projektu na platformie dla widoku podglądu prowadzącego została przedstawiona na rysunku \ref{fig:veryfication_first_project}.
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 12cm]{chapter06/veryfication_first_project.png}
-    \caption{Projekt dla weryfikacji platformy przy pomocy historycznych programów studentów (źródło własne).}
-    \label{fig:veryfication_first_project}
-\end{figure}
-
-Dla każdego z czterech etapów (reprezentujących historyczne programy studentów) utworzono prosty przypadek testowy, gdzie jako \textit{input} i \textit{output} wprowadzono plik z planszą.
+Dla projektu utworzono pojedynczy etap i zdefiniowano prosty przypadek testowy, gdzie jako \textit{input} i \textit{output} wprowadzono plik z planszą.
 Został on wybrany losowo spośród zawartych w repozytoriach historycznych grup testowych plików wejściowych.
-Następnie uruchomiono wszystkie cztery etapy.
-Po przejrzeniu logów okazało się, że tylko jeden program uruchomił się poprawnie (załączony dla etapu \textit{team05}).
+Następnie uruchomiono kolejno programy dla każdej z czterech grup (reprezentujących historyczne zespoły studentów).
+Po przejrzeniu logów okazało się, że tylko jeden program uruchomił się poprawnie (załączony dla grupy \textit{team05}).
 Była to aplikacja z tego samego repozytorium, z którego załączono plik z planszą dla przypadków testowych.
-Inne dwa programy (etapy \textit{team02} oraz \textit{team04}) nie wypisały logów, natomiast jeden wypisał komunikat o niepoprawnym formacie pliku wejściowego (\textit{team01}).
+Inne dwa programy (dla grupy \textit{team02} oraz \textit{team04}) nie wypisały logów, natomiast jeden wypisał komunikat o niepoprawnym formacie pliku wejściowego (\textit{team01}).
 
-Dla programu dołączonego do etapu \textit{team01} zmieniono plik wejściowy i wejściowy na taki, który znajdowały się w repozytorium razem z tym programem.
-Aplikacja została następnie uruchomiona i wyniku swojego działania wypisała logi.
+Dla programu grupy \textit{team01} utworzono nowy analogiczny projekt z pojedynczym etapem.
+Następnie przedefiniowano test akceptacyjny zmieniając plik wejściowy i wyjściowy na taki, który znajdował się w repozytorium razem z tym programem.
+Aplikacja została następnie uruchomiona i w wyniku swojego działania wypisała oczekiwane logi.
 
-Programy załączone do etapów \textit{team02} oraz \textit{team04} zostały ponownie przeanalizowane poprzez lokalne uruchomienie.
+Programy dla grup \textit{team02} oraz \textit{team04} zostały ponownie przeanalizowane poprzez lokalne uruchomienie.
 W wyniku tego okazało się, że uruchamiają się one w wersji interaktywnej bez podawania argumentów wykonania.
-Aby uzyskać informację zwrotną z ich działania utworzono nowy projekt z poniższą definicją środowiska:
+Aby uzyskać informację zwrotną z~ich działania utworzono nowy projekt z~poniższą definicją środowiska:
 
 {\fontfamily{qcr}\selectfont
 \tiny
@@ -184,14 +178,14 @@ Aby uzyskać informację zwrotną z ich działania utworzono nowy projekt z poni
 \end{lstlisting}
 }
 
-W ramach projektu zostały utworzone dwa etapy:  \textit{team02} oraz \textit{team04}.
+Dla projektu zostały utworzone dwie grupy:  \textit{team02} oraz \textit{team04}.
 Następnie załączono i uruchomiono aplikacje.
-Program załączony do etapu \textit{team02} uruchomił się w wersji interaktywnej i wypisał logi.
+Program dla grupy \textit{team02} uruchomił się w wersji interaktywnej i wypisał oczekiwane logi.
 
-Aplikacja dla etapu \textit{team04} po raz kolejny nie zostawiła informacji zwrotnej z wyniku wywołania.
+Aplikacja dla zespołu \textit{team04} po raz kolejny nie zostawiła informacji zwrotnej z~wyniku wywołania.
 W celu rozwiązania problemu przeanalizowano część kodu aplikacji.
 Ustalono, że problem może wynikać z pętli \textit{while}, która czeka na pobranie znaku od użytkownika.
-Po usunięciu jej z kodu programu, rekompilacji i ponownym uruchomieniu programu na platformie uzyskano logi z wykonania aplikacji.
+Po usunięciu jej z kodu programu, rekompilacji i ponownym uruchomieniu programu na platformie uzyskano oczekiwane logi z wykonania aplikacji.
 
 
 \section{Podsumowanie}
@@ -215,7 +209,6 @@ Podczas badania programów spotkano trzy różne sposoby ustalania położenia i
 Nawet w przypadku jednego programu wewnętrzny format przyjmowanych parametrów położenia (x, y lub y, x) może być zupełnie inny w~zależności od wykonywanej fazy.
 Prowadzący projekt mają bardzo trudne zadanie podczas oceny efektów pracy zespołów, ponieważ pomimo przyjętych takich samych założeń projektowych rezultat działania każdej z aplikacji jest inny.
 
-W przypadku przyjmowanych różnych formatów planszy i parametrów integracja programów jest praktycznie niemożliwa.
 Opisane powyżej komplikacje mogą wystąpić podczas sprawdzania każdego z etapów i nałożyć się w momencie próby przeprowadzenia integracji programów.
 
 Uruchomienie aplikacji i testowanie ich w trybie interaktywnym znacznie utrudnia ocenę ich działania.
@@ -226,7 +219,7 @@ Dodatkowo większość aplikacji nie wypisuje informacji zwrotnych z komunikatem
 W przypadku trybu AI ocena programów jest jeszcze trudniejsza.
 W raportach brakuje dokumentacji co do tego, jak aplikacja będzie zachowywać się dla tego wariantu rozgrywki.
 Ocenę programów można byłoby oprzeć na przeprowadzeniu opisanego w~treści projektu turnieju.
-Przeprowadzenie wspomnianych zawodów sprowadza się jednak do przeprowadzenia integracji aplikacji, co jak zostało opisane wcześniej, nie jest możliwe dla historycznych programów.
+Przeprowadzenie wspomnianych zawodów sprowadza się jednak do przeprowadzenia integracji aplikacji, co w przypadku przyjmowanych różnych formatów planszy i parametrów wejściowych jest praktycznie niemożliwe.
 
 Te wszystkie powyższe problemy sprawiają, że właściwa ocena programów z perspektywy czasu i bez kontaktu ze studentami jest praktycznie niemożliwa.
 Aplikacje można ocenić pod względem estetycznym.
@@ -237,7 +230,7 @@ Zwłaszcza w przypadku kodu pisanego przez studentów pierwszego roku studiów, 
 
 Zbadanie projektu historycznego potwierdziło potrzebę wprowadzenia narzędzia, które usprawni proces weryfikacji pracy studentów.
 Dzięki platformie można wyeliminować indywidualne podejście do każdej z grup projektowych i zmniejszyć czasochłonność oceny poszczególnych etapów.
-Pozwoliłaby ona na jednoznaczną ocenę logiki działania każdej z aplikacji na podstawie uruchomienia zestawu testów integracyjnych.
+Pozwoliłaby ona na jednoznaczną ocenę logiki działania każdej z aplikacji na podstawie uruchomienia zestawu testów akceptacyjnych.
 Co więcej, dzięki webowemu interfejsowi możliwe byłoby porównanie postępów w~ramach projektów w~przypadku realizacji dla dwóch różnych semestrów.
 Mogłaby to być przydatna informacja dla prowadzącego.
 
@@ -250,8 +243,8 @@ Warto zaznaczyć, że modyfikacje nie oznaczają wykluczenia wersji interaktywne
 Programy studenckie dalej mogą używać tych dwóch trybów pracy (choć nie muszą).
 Rozszerzenie założeń o przyjmowanie parametrów z pliku pozwoliłoby na przetestowanie głównej logiki programów i byłoby pomocne przy ocenie działania aplikacji.
 
-Przy niewielkiej modyfikacji zadania, można osiągnąć dużo lepszą automatyzację procesu oceny efektów pracy zespołów.
-W kolejnym rozdziale zostaną omówione zmiany założeń zadania historycznego, tak aby osiągnąć korzyści wynikające z korzystania z platformy.
+Przy niewielkiej modyfikacji zadania można osiągnąć dużo lepszą automatyzację procesu oceny efektów pracy zespołów.
+W kolejnym rozdziale zostaną omówione zmiany założeń zadania historycznego, tak aby osiągnąć korzyści wynikające z~korzystania z~platformy.
 Opisane również zostaną wnioski z przeprowadzenia symulacji zmodyfikowanego projektu historycznego na testowej grupie absolwentów.
 
 
