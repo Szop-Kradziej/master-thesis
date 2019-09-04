@@ -4,6 +4,8 @@
 
 \begin{tabularx}{\textwidth}{Xl}
 
+    Opis panelu logowania & str. \pageref{file:login-panel} \\
+
     Pełny schemat bazy danych & str. \pageref{file:database-schema} \\
 
     Pełny opis zadania projektowego dla przedmiotu ”Podstawy Programowania” w realizacji zima 2018 & str. \pageref{file:penguins_description} \\
@@ -17,11 +19,19 @@
 \chapter*{Załączniki}
 \addcontentsline{toc}{chapter}{Załączniki}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section*{Opis panelu logowania}
+\label{file:login-panel}
+{
+\input{back//login_panel.tex}
+}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section*{Pełny schemat bazy danych}
 \label{file:database-schema}
 {
-\tiny
+\scriptsize
 \verbatiminput{back//platform_schema.sql}
 }
 
