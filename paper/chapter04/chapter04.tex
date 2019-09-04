@@ -9,45 +9,13 @@ Po poprawnym zalogowaniu użytkownik jest przekierowywany do kolejnego widoku za
 W przypadku prowadzącego jest to ekran wyboru zarządzania projektami lub podglądu postępów studentów.
 Użytkownik będący studentem jest przekierowywany do widoku dostępnych dla niego projektów.
 
-Opis ekranu logowania znajduje się w podrozdziale \ref{fe_login}.
-W kolejnej sekcji zostały omówione interfejsy dostępne dla prowadzącego.
-Ostatni podrozdział zawiera opis widoku studenta.
+Opis ekranu logowania został dołączony w załączniku.
+W podrozdziale \ref{lecturer_ui} zostały omówione interfejsy dostępne dla prowadzącego.
+Ostatnia sekcja zawiera opis widoku studenta.
 
-\section{Panel logowania}
-\label{fe_login}
-
-Panel logowania umożliwia uwierzytelnienie z użyciem serwisu GitHub.
-Po kliknięciu przycisku ”Zaloguj” użytkownik jest przekierowywany na stronę logowania GitHub.
-W~serwisie można zalogować się poprzez podanie adresu e-mail bądź nazwy użytkownika i hasła.
-Należy też wyrazić zgodę na przetwarzanie danych przez platformę.
-Po poprawnym zalogowaniu użytkownik zostaje przekierowany z powrotem na stronę platformy.
-Po przetworzeniu danych uwierzytelniających przez platformę użytkownikowi wyświetlany jest kolejny ekran, zależny od jego uprawnień.
-Na rysunkach od \ref{fig:log_in_button} do \ref{fig:wait_for_login} zostały przedstawione kolejne ekrany związane z procesem logowania.
-
-\vfill
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 8cm]{chapter04/log_in_button.png}
-    \caption{Ekran logowania w ramach platformy (źródło własne).}
-    \label{fig:log_in_button}
-\end{figure}
-
-\begin{figure}[h]
-    \centering
-    \includegraphics[width = 8cm]{chapter04/log_in_github.png}
-    \caption{Ekran logowania do serwisu GitHub (źródło własne).}
-    \label{fig:log_in_github}
-\end{figure}
-
-\begin{figure}[H]
-    \centering
-    \includegraphics[width = 8cm]{chapter04/wait_for_login.png}
-    \caption{Ekran oczekiwania na zalogowanie w ramach platformy (źródło własne).}
-    \label{fig:wait_for_login}
-\end{figure}
 
 \section{Interfejs prowadzącego}
+\label{lecturer_ui}
 
 Jeśli zalogowany użytkownik posiada uprawnienia prowadzącego (administratora) po poprawnym zalogowaniu wyświetlany jest mu ekran wyboru zarządzania projektami lub podglądu postępów grup.
 Ekran wyboru akcji został zamieszczony na rysunku \ref{fig:lecturer_actions}.
@@ -55,7 +23,7 @@ Ekran wyboru akcji został zamieszczony na rysunku \ref{fig:lecturer_actions}.
 \begin{figure}[h]
     \centering
     \includegraphics[width = 8cm]{chapter04/lecturer_actions.png}
-    \caption{Ekran wyboru akcji dla prowadzącego (źródło własne).}
+    \caption{Ekran wyboru akcji dla prowadzącego.}
     \label{fig:lecturer_actions}
 \end{figure}
 
@@ -83,7 +51,7 @@ Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
 \begin{figure}[h]
     \centering
     \includegraphics[width = 8cm]{chapter04/lecturer_projects_list.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - lista projektów (źródło własne).}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - lista projektów.}
     \label{fig:lecturer_projects_list}
 \end{figure}
 
@@ -107,7 +75,7 @@ Na rysunku \ref{fig:lecturer_project_board} przedstawiono podstawowy widok proje
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_project_board.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - widok projektu (źródło własne).}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - widok projektu.}
     \label{fig:lecturer_project_board}
 \end{figure}
 
@@ -140,7 +108,7 @@ Komentarz do etapu wyświetlany jest po najechaniu na ikonę reprezentującą do
 \begin{figure}[h]
     \centering
     \includegraphics[width = 15cm]{chapter04/lecturer_stages.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - panel etapów (źródło własne).}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel etapów.}
     \label{fig:lecturer_stages}
 \end{figure}
 
@@ -165,7 +133,7 @@ Rysunek \ref{fig:lecturer_stages_tests} przedstawia przykładowy panel zawieraj�
 \begin{figure}[h]
     \centering
     \includegraphics[width = 15cm]{chapter04/lecturer_stages_tests.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla etapu (źródło własne).}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla etapu.}
     \label{fig:lecturer_stages_tests}
 \end{figure}
 
@@ -187,7 +155,7 @@ Na rysunku \ref{fig:lecturer_integrations} został przedstawiony przykładowy pa
 \begin{figure}[h]
     \centering
     \includegraphics[width = 15cm]{chapter04/lecturer_integrations.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - panel integracji (źródło własne).}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel integracji.}
     \label{fig:lecturer_integrations}
 \end{figure}
 
@@ -209,7 +177,7 @@ Pojedynczy przypadek testowy jest definiowany przez następujące dane:
 \begin{figure}[h]
     \centering
     \includegraphics[width = 15cm]{chapter04/lecturer_integrations_tests.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla integracji (źródło własne).}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla integracji.}
     \label{fig:lecturer_integrations_tests}
 \end{figure}
 
@@ -224,14 +192,14 @@ Kolejny rysunek \ref{fig:lecturer_students_in_group} przedstawia rozwiniętą li
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_groups.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - panel grup (źródło własne).}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel grup.}
     \label{fig:lecturer_groups}
 \end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_students_in_group.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - panel grupy wraz z przypisanymi studentami (źródło własne).}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel grupy wraz z przypisanymi studentami.}
     \label{fig:lecturer_students_in_group}
 \end{figure}
 
@@ -266,7 +234,7 @@ Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_preview_projects_list.png}
-    \caption{Interfejs prowadzącego, podgląd postępów - lista projektów (źródło własne).}
+    \caption{Interfejs prowadzącego, podgląd postępów - lista projektów.}
     \label{fig:lecturer_preview_projects_list}
 \end{figure}
 
@@ -278,7 +246,7 @@ Przykładowy ekran wyboru zespołu projektowego został zamieszczony na rysunku 
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_preview_groups.png}
-    \caption{Interfejs prowadzącego, podgląd postępów - lista grup (źródło własne).}
+    \caption{Interfejs prowadzącego, podgląd postępów - lista grup.}
     \label{fig:lecturer_preview_groups}
 \end{figure}
 
@@ -294,7 +262,7 @@ W ramach widoku można:
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_interface_preview.png}
-    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd projektu dla grupy (źródło własne).}
+    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd projektu dla grupy.}
     \label{fig:lecturer-interface-preview}
 \end{figure}
 
@@ -324,7 +292,7 @@ Panel zawiera również dodatkowe informacje takie jak:
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_preview_stage.png}
-    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd etapu (źródło własne).}
+    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd etapu.}
     \label{fig:lecturer-preview-stage}
 \end{figure}
 
@@ -347,7 +315,7 @@ Panel pozwala na pobranie:
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_preview_stage_tests.png}
-    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd wyników testów dla etapu (źródło własne).}
+    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd wyników testów dla etapu.}
     \label{fig:lecturer-preview-stage-tests}
 \end{figure}
 
@@ -374,7 +342,7 @@ Panel zawiera również dodatkowe informacje takie jak:
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_preview_integration.png}
-    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd integracji (źródło własne).}
+    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd integracji.}
     \label{fig:lecturer-preview-integration}
 \end{figure}
 
@@ -389,7 +357,7 @@ Zawiera on informacje o uruchomionych przypadkach testowych w~tym:
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/lecturer_preview_integration_tests.png}
-    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd wyników testów dla integracji (źródło własne).}
+    \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd wyników testów dla integracji.}
     \label{fig:lecturer-preview-integration-tests}
 \end{figure}
 
@@ -411,7 +379,7 @@ Na rysunku \ref{fig:student_projects} został przedstawiony podstawowy widok dla
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/student_projects.png}
-    \caption{Interfejs studenta - lista dostępnych projektów (źródło własne).}
+    \caption{Interfejs studenta - lista dostępnych projektów.}
     \label{fig:student_projects}
 \end{figure}
 
@@ -421,7 +389,7 @@ Przykładowy ekran został przedstawiony na rysunku \ref{fig:student_project_boa
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/student_project_board.png}
-    \caption{Interfejs studenta - widok projektu (źródło własne).}
+    \caption{Interfejs studenta - widok projektu.}
     \label{fig:student_project_board}
 \end{figure}
 
@@ -439,14 +407,14 @@ Student ma także umożliwiony pełny podgląd rezultatów uruchomienia aplikacj
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/student_stage.png}
-    \caption{Interfejs studenta - podgląd etapu (źródło własne).}
+    \caption{Interfejs studenta - podgląd etapu.}
     \label{fig:student_stage}
 \end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/student_stage_tests.png}
-    \caption{Interfejs studenta - podgląd wyników testów dla etapu (źródło własne).}
+    \caption{Interfejs studenta - podgląd wyników testów dla etapu.}
     \label{fig:student_stage_tests}
 \end{figure}
 
@@ -460,13 +428,13 @@ Różni się on od widoku prowadzącego brakiem przycisku do pobrania statystyk 
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/student_integration.png}
-    \caption{Interfejs studenta - podgląd integracji (źródło własne).}
+    \caption{Interfejs studenta - podgląd integracji.}
     \label{fig:student_integration}
 \end{figure}
 
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/student_integration_tests.png}
-    \caption{Interfejs studenta - podgląd wyników testów dla integracji (źródło własne).}
+    \caption{Interfejs studenta - podgląd wyników testów dla integracji.}
     \label{fig:student_integration_tests}
 \end{figure}
