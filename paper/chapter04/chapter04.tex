@@ -42,8 +42,6 @@ Zdefiniowanie projektu sprowadza się do:
     \item Dodania grup projektowych.
 \end {itemize}
 
-Dla wszystkich parametrów będących plikami interfejs umożliwia dodanie ich poprzez wskazanie w oknie dialogowym ścieżki na dysku użytkownika, pod którą znajduje się plik.
-
 Na rysunku \ref{fig:lecturer_projects_list} został przedstawiony podstawowy widok zarządzania projektami zawierający listę dostępnych projektów.
 Na tym ekranie prowadzący może przejść do wybranego projektu, usunąć go lub utworzyć nowy projekt.
 Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
@@ -51,7 +49,7 @@ Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
 \begin{figure}[h]
     \centering
     \includegraphics[width = 8cm]{chapter04/lecturer_projects_list.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - lista projektów.}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - wybór projektu.}
     \label{fig:lecturer_projects_list}
 \end{figure}
 
@@ -64,7 +62,7 @@ Projekt definiowany jest przez następujące dane:
     \item Nazwę projektu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi projektu.
     Nazwa jest parametrem będącym ciągiem znaków (String).
     \item Plik z opisem projektu o dowolnym formacie.
-    \item Plik Dockerfile definiujący środowisko uruchomieniowe programów.
+    \item Plik Dockerfile definiujący środowisko uruchomieniowe programów (więcej informacji o definicji pliku konfiguracyjnego można znaleźć w porozdziale \ref{environment_configuration}).
     \item Listę etapów.
     \item Listę integracji.
     \item Listę grup.
@@ -102,9 +100,6 @@ Etapy, które nie mają zdefiniowanej daty rozpoczęcia nie są widoczne dla stu
 Lista etapów jest posortowana rosnąco po dacie zakończenia etapu.
 Interfejs umożliwia wskazanie dat poprzez ich wybór w oknie dialogowym z kalendarzem.
 
-Na rysunku \ref{fig:lecturer_stages} został przedstawiony przykładowy panel etapów.
-Komentarz do etapu wyświetlany jest po najechaniu na ikonę reprezentującą dodatkowe informacje.
-
 \begin{figure}[h]
     \centering
     \includegraphics[width = 15cm]{chapter04/lecturer_stages.png}
@@ -112,23 +107,29 @@ Komentarz do etapu wyświetlany jest po najechaniu na ikonę reprezentującą do
     \label{fig:lecturer_stages}
 \end{figure}
 
+
+Na rysunku \ref{fig:lecturer_stages} został przedstawiony przykładowy panel etapów.
 W ramach panelu można dodawać, edytować oraz usuwać etapy.
+Komentarz do zadania wyświetlany jest po najechaniu na ikonę reprezentującą dodatkowe informacje.
 
 
 Dla każdego z etapów można rozwinąć panel zawierający listę zdefiniowanych testów.
-Opis uruchamianie i testowania programów studentów w ramach etapów został zamieszczony w rozdziale \ref{chapter:platform-technical}.
+Rysunek \ref{fig:lecturer_stages_tests} przedstawia przykładowy widok zawierający definicje przypadków testowych.
+W ramach każdego z paneli można dodawać, edytować oraz usuwać przypadki testowe zdefiniowane dla etapu.
+Opis uruchamiania i testowania programów studentów w ramach etapów został zamieszczony w rozdziale \ref{chapter:platform-technical}.
 Pojedynczy przypadek testowy jest definiowany przez następujące dane:
 \begin {itemize}
     \item Nazwę przypadku testowego, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego przypadku.
     Nazwa jest parametrem będącym ciągiem znaków (String).
     \item Parametry uruchomienia programu, podawane jako plik.
+    Podanie parametrów nie jest wymagane.
     \item Plik z danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
     Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego.
+    Podanie pliku wejściowego jest wymagane.
     \item Oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
     Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w rezultacie działania programów studentów i na jego podstawie oceniana jest poprawność programów.
+    Podanie oczekiwanego pliku wyjściowego jest wymagane.
 \end {itemize}
-
-Rysunek \ref{fig:lecturer_stages_tests} przedstawia przykładowy panel zawierający definicje testów dla etapu.
 
 \begin{figure}[h]
     \centering
@@ -136,8 +137,6 @@ Rysunek \ref{fig:lecturer_stages_tests} przedstawia przykładowy panel zawieraj�
     \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla etapu.}
     \label{fig:lecturer_stages_tests}
 \end{figure}
-
-W ramach każdego z paneli można dodawać, edytować oraz usuwać przypadki testowe.
 
 \subsubsection{Panel integracji}
 
@@ -160,6 +159,8 @@ Na rysunku \ref{fig:lecturer_integrations} został przedstawiony przykładowy pa
 \end{figure}
 
 Dla każdej z integracji można rozwinąć panel zawierający listę zdefiniowanych testów.
+Rysunek \ref{fig:lecturer_integrations_tests} przedstawia przykładowy widok zawierający definicje przypadków testowych.
+W ramach każdego z paneli można dodawać, edytować oraz usuwać przypadki testowe zdefiniowane dla integracji.
 Opis uruchamianie i testowania programów studentów w ramach procesu integracji został zamieszczony w rozdziale \ref{chapter:platform-technical}.
 Pojedynczy przypadek testowy jest definiowany przez następujące dane:
 \begin {itemize}
@@ -167,11 +168,13 @@ Pojedynczy przypadek testowy jest definiowany przez następujące dane:
     Nazwa jest parametrem będącym ciągiem znaków (String).
     \item Parametry uruchomienia programu, podawane jako pliki.
     Dla każdego z etapów integracji podawane są oddzielne parametry wykonania w ramach jednego testu.
+    Podanie parametrów nie jest wymagane.
     \item Plik z danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
     Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego i jest pojedynczy w ramach jednego testu.
+    Podanie pliku wejściowego jest wymagane.
     \item Oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
     Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w rezultacie działania programów studentów i na jego podstawie oceniana jest poprawność programów.
-    Oczekiwany plik wyjściowy jest pojedynczy w~ramach jednego testu.
+    Podanie oczekiwanego pliku wyjściowego jest wymagane.
 \end {itemize}
 
 \begin{figure}[h]
@@ -180,8 +183,6 @@ Pojedynczy przypadek testowy jest definiowany przez następujące dane:
     \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla integracji.}
     \label{fig:lecturer_integrations_tests}
 \end{figure}
-
-W ramach każdego z paneli można dodawać, edytować oraz usuwać przypadki testowe.
 
 \subsubsection{Panel grup}
 
@@ -379,7 +380,7 @@ Na rysunku \ref{fig:student_projects} został przedstawiony podstawowy widok dla
 \begin{figure}[h]
     \centering
     \includegraphics[width = 13cm]{chapter04/student_projects.png}
-    \caption{Interfejs studenta - lista dostępnych projektów.}
+    \caption{Interfejs studenta - wybór dostępnego projektu.}
     \label{fig:student_projects}
 \end{figure}
 
