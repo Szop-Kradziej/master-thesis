@@ -10,7 +10,7 @@ Dla każdej z wymienionych trudności opisano sposób jej załagodzenia z wykorz
 W przedostatniej sekcji omówiono wymagania niefunkcjonalne dla narzędzia.
 Ostatni podrozdział zawiera opis ograniczeń proponowanego rozwiązania.
 
-\section{Sprawdzenie poprawności działania programów studentów}
+\section{Testy akceptacyjne jako narzędzie weryfikacji}
 
 W celu oceny poprawności działania programów studentów należy przeprowadzić odpowiednie testy.
 Jedną z kategorii podziału testów, jest klasyfikacja ze względu na wiedzę na temat testowanego programu.
@@ -79,25 +79,26 @@ Warto jednak zaznaczyć, że ten typ testów używany jest głównie w testach j
 Dzięki takiemu podejściu programiści mogą uzyskać bardzo szybką informację zwrotną.
 Pozwala ono także na szczegółowe przetestowanie aplikacji.
 Jednak poprawne napisanie testów jednostkowych jest bardziej złożone i wymaga dobrych umiejętności programistycznych.
-Z założenia testów jednostkowych jest więcej niż integracyjnych czy akceptacyjnych i dla częstych zmian implementacji (co jest bardzo prawdopodobne na początkowym etapie nauki programowania) utrzymanie white box testów może okazać się bardzo kłopotliwe, a nawet wręcz niemożliwe dla studentów.
+Z założenia testów jednostkowych jest więcej niż integracyjnych czy akceptacyjnych i dla częstych zmian implementacji (co jest bardzo prawdopodobne na początkowym etapie nauki programowania) utrzymanie white box testów może okazać się bardzo kłopotliwe z punktu widzenia studentów.
+Z punktu widzenia prowadzącego weryfikującego prace studentów samodzielne utworzenie i utrzymanie testów jednostkowych jest praktycznie niemożliwe.
 Warto też zauważyć, że testy jednostkowe są ściśle związane z implementacją, a więc z językiem programowania, w którym został napisany program.
-W celu dodatnia testów najniższego poziomu należałoby posłużyć się dodatkową biblioteką, która byłaby wspierana przez dany język.
-Poznanie zewnętrznych bibliotek i zaznajamianie się z ich interfejsami na początkowej drodze nauki programowania mogłoby przynieść negatywne rezultaty.
+W celu dodania testów najniższego poziomu należałoby posłużyć się dodatkową biblioteką, która byłaby wspierana przez dany język.
+Poznanie zewnętrznych bibliotek i zaznajamianie się z ich interfejsami na początkowej drodze nauki programowania mogłoby przynieść negatywne rezultaty w przypadku gdy wymagalibyśmy formalnie od studentów przeprowadzenia tego typu weryfikacji.
 Studenci, zamiast skupić się na zrozumieniu podstaw programowania, zmuszeni byliby do poznania bibliotek, dla których nie rozumieliby w pełni słuszności zastosowania.
 
-Przy użyciu platformy w przypadku jednakowych, wieloetapowych projektów prowadzący ma możliwość przygotowania szeregu przypadków testowych, które następnie zostaną użyte do sprawdzenia poprawności programów studentów.
+Przy użyciu projektowanej platformy w przypadku jednakowych, wieloetapowych projektów prowadzący ma możliwość przygotowania szeregu przypadków testowych, które następnie zostaną użyte do sprawdzenia poprawności programów studentów.
 Narzędzie udostępnia je studentom, dzięki czemu mają oni możliwość samodzielnie, lokalnie przetestować swój kod, przed ostateczną prezentacją prowadzącemu.
 Taki proces sprawdzania programów studentów dla zadanych przypadków testowych jest automatyczny.
 Dzięki temu studenci mogą w prosty sposób wielokrotnie uruchamiać te same testy dla nowych wariantów swoich programów.
 Mają również możliwość uczenia się poprawnego definiowania przypadków testowych poprzez analizę testów akceptacyjnych.
 Opisany sposób testowania leży na poziomie testów akceptacyjnych w formie testów czarnej skrzynki.
 
-\section{Redukcja czasochłonności}
+\section{Redukcja czasochłonności procesu weryfikacji}
 
 Podstawowym zadaniem platformy jest redukcja czasochłonności dla procesu weryfikacji pracy studentów.
-Od strony prowadzącego sprowadza się ona do eliminacji indywidualnego podejścia do każdej z grup projektowych.
+Od strony prowadzącego zmniejszenie pracochłonności sprowadza się do eliminacji indywidualnego podejścia do każdej z grup projektowych.
 Dla studentów uzyskiwana jest przez szybszą możliwość uzyskania informacji zwrotnej dotyczącej wyniku działania programu.
-Obie koncepcje zmniejszenia czasochłonności procesu weryfikacji pracy studentów zostały omówione szerzej w kolejnych podrozdziałach.
+Obie perspektywy zmniejszenia czasochłonności procesu weryfikacji pracy studentów zostały omówione szerzej w kolejnych podrozdziałach.
 
 \subsection{Eliminacja indywidualnego podejścia do grup projektowych}
 
@@ -111,7 +112,7 @@ W przypadku, gdy któryś z testów zakończy się błędem, aplikacja studencka
 Na podstawie znajomości ilości i rodzaju testów, które zakończyły się niepoprawnie, prowadzący ma jasną sytuację co do postępów pracy danego zespołu dla zadanego zadania.
 Te same testy służą do weryfikacji cząstkowej pracy każdej z grup, dzięki czemu prowadzący nie musi już indywidualnie oceniać poprawności programów.
 
-Wymuszenie usunięcia indywidualnego podejścia do grup nie jest w pełni możliwe i~wskazane.
+Całkowite usunięcie indywidualnego podejścia do grup nie jest w pełni możliwe i~wskazane.
 Obecnie w ramach każdego etapu studenci udostępniają swoje sprawozdania z postępów prac prowadzącym.
 Analiza i ocena dokumentów odbywa się indywidualnie dla każdej grupy.
 Studenci zamieszczają sprawozdania korzystając z systemu kontroli wersji.
@@ -122,62 +123,59 @@ Dzięki łatwemu dostępowi do tych elementów prowadzący uniknie błędów pod
 
 \vfill
 
-\subsection{Informacja zwrotna}
+\subsection{Uzyskanie informacji zwrotnej przez studentów}
 
 Aktualnie informacja zwrotna dotycząca wyniku uzyskanego dla zadanego podzadania jest przekazywana studentom na zakończenie etapu.
 Jest to stosunkowo późny moment.
 Uzyskanie informacji zwrotnej przez grupę można przyspieszyć, udostępniając jej narzędzie pozwalające na wielokrotne sprawdzenie działania programu przy użyciu zdefiniowanych przez prowadzących testów akceptacyjnych.
-Umożliwiając studentom samodzielne sprawdzenie ich aplikacji, pozwalamy im na zdobycie w szybszym czasie informacji o nieprawidłowościach w ich programie.
+Umożliwiając studentom samodzielne sprawdzenie ich aplikacji w zewnętrznym środowisku, pozwalamy im na zdobycie w szybszym czasie informacji o nieprawidłowościach w ich programie.
 Dzięki temu studenci mają czas na eliminację błędów i doprecyzowanie założeń na wstępnym etapie implementacji danego etapu.
 Studenci powinni mieć wgląd do pełnej definicji wszystkich przypadków testowych, aby mogli lepiej zrozumieć błędne działanie swoich aplikacji.
-Wśród informacji zwrotnej dla każdego z~testów znajdują się:
+Do informacji zwrotnych, przekazywanych w ramach rezultatu uruchomienia dla każdego z~testów należą:
 \begin{itemize}
-    \item dane wejściowe,
-    \item oczekiwane dane wyjściowe oraz zwrócony wynik,
-    \item status,
-    \item logi aplikacji.
+    \item Dane wejściowe takie jak parametry wykonania i plik wejściowy, użyte do przeprowadzenia testu.
+    \item Oczekiwane dane wyjściowe w postaci pliku oraz w przypadku nieprawidłowego wyniku testu zwrócony komunikatat błędu.
+    \item Status, będący ogólnym rezultatem testu.
+    Status przyjmuje jedną z następujących wartości: \textit{SUCEESS}, \textit{FAILURE} lub \textit{NO RUN}.
+    \item Logi z wykonania aplikacji w postaci pliku.
+    W skład zbieranych logów wchodzą: komunikaty narzędzia Docker, komunikaty wypisywane przez program na standardowy strumień wyjścia oraz standardowy strumień błędów.
 \end{itemize}
 
-Zaimplementowane narzędzie umożliwia pozyskanie powyżej opisanych informacji zwrotnych w krótkim czasie i bez udziału prowadzącego.
+Stworzona w ramach pracy platforma umożliwia pozyskanie powyżej opisanych informacji zwrotnych w krótkim czasie i bez udziału prowadzącego.
 
 \section{Organizacja pracy grupowej}
 
-Platforma pozwala na definicję projektów wraz z etapami, integracjami oraz grupami projektowymi.
-W podrozdziale \ref{work_in_stages_and_integrations} omówiono zadania studentów w ramach etapów i integracji.
-Sekcja \ref{adding_project_groups} opisuje koncepcję dodawania grup projektowych.
-W ostatnim podrozdziale wymieniono podstawowe statystyki zbierane przez platformę.
+Koncepcja rozwiązania opiera się na organizacji pracy w postaci projektów podzielonych na kilka etapów.
+Wykonanie każdego z etapów prowadzi studentów do pełnego zrealizowania zadania projektowego.
+Projekty oraz etapy definiowane są w pełni na początku semestru a następnie udostępniane studentom.
+Podczas trwania prac ich główna logika nie ulegaja przedefiniowaniu.
 
-\vfill
+Dla tej koncepcji realizowanie etapu sprowadza się do przeanalizowania wymagań, utworzenia kodu aplikacji, przedstawienia wyników jej działania prowadzącym oraz napisania raportu omawiającego postępy prac.
+
+W ramach takiego projektu może być również wymagane zintegrowanie programów studentów.
+Taki proces jest rozumiany jako uruchomienie conajmniej dwóch niezależnych programów w taki sposób, że rezultat wykonania pierwszego z nich jest wejściem dla kolejnej aplikacji.
+Aby lepiej przybliżyć koncepcję integracji, jako prosty przykład projektu można byłoby podać prosty, hipotetyczny projekt mający na celu odwrócenie macierzy.
+Mógłby mieć on wyróżnione dwa etapy: pierwszy polegający na wyznaczeniu wyznacznika i drugi służący do obliczenia nowej macierzy na podstawie podanego wyznacznika i macierzy wejściowej.
+Po stworzeniu programów dla obu etapów można byłoby przeprowadzić proces integracji.
+Polegałby on na uruchomieniu pierwszego etapu dla zadanej macierzy wejściowej, a następnie uruchomieniu drugiego etapu dla otrzymanych w kroku pierwszym wyników.
+Końcowy wynik byłby rezultatem integracji i należałoby sprawdzić jego poprawność.
+
+Opisana organizacja pracy w ramach projektu może być wykorzystana zarówno przy zespołowym jak i indywidualnym projekcie informatycznym.
+W przypadku grupowego zadania studenci sami decydują o zakresie prac wykonywanych przez członków zespołu jednak efektem ich pracy powinien być jeden spójny projekt.
+Podczas trwania semestru cała grupa odpowiada za wyniki kolejnych etapów.
+
+Tak zdefiniowany proces organizacji projektu jest zgodny ze sposobem prowadzenia przedmiotów na wydziale EiTI.
+Przykładem tak przeprowadzonego projektu jest zadanie wykonywane w ramach przedmiotu "Podstawy Programowania" w realizacji zima 2018.
+Platforma zakłada odtworzenie większości stosowanych podczas prowadzenia projektu rozwiązań takich jak udokumentowanie postępów prac w postaci raportów, przedstawienie programu prowadzącemu i udowodnienie poprawności rozwiązania czy udostępnienie kodu aplikacji prowadzącemu
+
+W podrozdziale \ref{work_in_stages_and_integrations} przybliżono koncepcję organizacji pracy w ramach etapów i integracji przy użyciu platformy.
+Sekcja \ref{adding_project_groups} opisuje sposób tworzenia i dodawania grup projektowych.
+W ostatnim podrozdziale wyjaśniono założenia wspomagania oceny pracy zespołów poprzez dostęp do podstawowych statystyk zbieranych przez platformę.
+
 
 \subsection{Praca w ramach etapów i integracji}
 \label{work_in_stages_and_integrations}
 
-Jednym z zadań grupy studentów korzystającej z platformy jest między innymi zamieszenie na niej wyników swojej pracy dla kolejnych etapów.
-Należą do nich: sprawozdanie, link do kodu oraz program.
-Platforma umożliwia umieszczanie dokumentu w dowolnym formacie.
-Użytkownicy mogą w intuicyjny sposób przejść do kodu programu powstałego dla zadanego etapu poprzez link prowadzący do odpowiedniego tzw. ”commita” w~systemie kontroli wersji.
-
-TODO: Rev comment: Priorytetyzowaną listę etapów czy to zostało wyjaśnione?
-TODO: Rev comment: dopisać, że wynikiem działania powinien być plik "czy to znaczy, wynikiem działania programu stud. musi być plik?"
-TODO: Rev comment: Mam poczucie, że etapy i integracje nie zostały wystarczająco wyjaśnione (być może nie tu, tylko wcześniej)
-
-Kolejnym zadaniem zespołu jest przeprowadzenie procesu integracji w~ramach projektu.
-Proces integracji jest definiowany przez prowadzącego i składa się on z listy kolejnych etapów.
-Przeprowadzenie procesu polega na uruchomieniu przez platformę w odpowiedniej kolejności programów studentów załączonych dla wskazanych etapów i~sprawdzenia wyniku.
-Aby lepiej przybliżyć koncepcję integracji, jako prosty przykład projektu można byłoby podać projekt mający na celu odwrócenie macierzy.
-Mógłby mieć on wyróżnione dwa etapy: pierwszy polegający na wyznaczeniu wyznacznika i drugi służący do obliczenia nowej macierzy na podstawie podanego wyznacznika i macierzy wejściowej.
-Po zamieszczeniu programów dla obu etapów można byłoby przeprowadzić proces integracji.
-Polegałby on na uruchomieniu pierwszego etapu dla zadanej macierzy wejściowej, a następnie uruchomieniu drugiego etapu dla otrzymanych w kroku pierwszym wyników.
-Końcowy wynik zostałby sprawdzony z oczekiwanym wynikiem w ramach testu akceptacyjnego.
-Na platformie można definiować procesy integracji składające się maksymalnie z pięciu etapów.
-
-Narzędzie udostępnia studentom wyniki dla przeprowadzonych etapów oraz integracji.
-Dla każdego zadania są to pełne, opisane w poprzednim podrozdziale, wyniki testów.
-W przypadku już zakończonych etapów oraz integracji studenci mają wgląd do podsumowanego statusu ich pracy, mówiącego o tym ile z testów akceptacyjnych zostało przez nich zaliczone.
-
-Jak zostało wspomniane wcześniej, studenci nie pracują systematycznie.
-Aby zmotywować ich do regularnych działań, platforma wprowadza element grywalizacji udostępniając zbiorczy podgląd wyników innych grup.
-Dzięki temu studenci mogą sklasyfikować swoje postępy na tle innych.
 
 Studenci przedstawiający manualnie swoje wyniki cząstkowe prowadzącym mogą natrafić obecnie na szereg problemów.
 Podczas prezentacji mogą zaistnieć komplikacje związane między innymi z niepoprawną konfiguracją środowiska uruchomieniowego lub niewłaściwym doborem przypadków testowych.
@@ -185,8 +183,48 @@ W sytuacji, gdy zadaniem studentów jest zaprezentowanie interakcji pomiędzy st
 Proponowane narzędzie przechowuje i udostępnia wspólną konfigurację środowiska uruchomieniowego w ramach projektu.
 Zapewnia to testowanie aplikacji studenckich na różnych maszynach z takim samym efektem.
 
+Jednym z zadań grupy studentów w ramach etapu jest zamieszczenie na platformie wyników swojej pracy.
+Jak zostało wspomniane należą do nich: sprawozdanie, kodu oraz program.
+Wszystkie dane powinny zostać dostarczone przez studentów.
+
+W ramach platformy zakłada się, że kod studentów jest zamieszczany w zewnętrznym systemie kontroli wersji (przykładowo dla przedmiotu "Podstawy Programowania" w realizacji zima 2018 używano narzędzia GitLab).
+Platforma pozwala na zamieszczenie odnośnika do kodu w postaci linku.
+Aby umożliwić śledzenie zmian w ramach kolejnych etapów zalecane jest aby prowadził on do ostatniego tzw. "commita" zawierającego zmiany dla danego etapu.
+Dzięki czemu zarówno prowadzący jak i pozostali członkowie zespołu będą mogli w intuicyjny sposób przejść do kodu dla zadanego zadania.
+Platforma umożliwia użytkownikom zamieszczanie dokumentu ze sprawozdaniem w dowolnym formacie.
+Narzędzie pozwala również na dołączenie aplikacji dla wskazanego etapu.
+Program powinien być plikiem wykonywalnym, skompilowanym wcześniej lokalnie przez studentów.
+
+Kolejnym zadaniem grupy w ramach etapu jest uruchomienie załączonego programu i przeanalizowanie wyników testów akceptacyjnych.
+Zakład się, że wynikiem działania programu studentów powinien być plik, który następnie jest porównywany z wzorcowym plikiem z oczekiwanym rezultatem, zdefiniowanym przez prowadzącego.
+Programy w ramach etapów mogą być wielokrotnie aktualizowane i uruchamiane.
+
+
+Dodatkowym zadaniem grupy studentów w ramach projektu może być przeprowadzenie integracji aplikacji.
+W ramach platformy zakłada się, że proces integracji jest dodawany przez prowadzącego i jest definiowany poprzez podanie priorytetyzowanej listy kolejnych etapów.
+Ta lista nazywana jest schematem integracji.
+Przeprowadzenie procesu polega na uruchomieniu przez platformę w zadanej kolejności programów studentów załączonych dla wskazanych etapów i~sprawdzenia wyniku.
+Zakłada się, że integracja powinna zostać przeprowadzona przez studentów po ukończeniu przez nich programów dla etpów wchodzących w jej schemat.
+Procesy mogą być uruchamiane wielokrotnie w ramach projektu.
+
+Na platformie można definiować wiele procesów integracji ale każdy z nich możę składać się maksymalnie z pięciu etapów.
+
+Narzędzie udostępnia studentom wyniki dla przeprowadzonych etapów oraz integracji.
+Dla każdego zadania są to pełne, opisane w poprzednim podrozdziale, wyniki testów.
+W przypadku już zakończonych etapów oraz integracji studenci mają wgląd do podsumowanego statusu ich pracy, mówiącego o tym ile z testów akceptacyjnych zostało przez nich zaliczone.
+Każdy etap, integracja oraz rezultaty uruchomienia zdefiniowanych testów akceptacyjnych są prezentowane na interfejscie webowym platformy w analogiczny sposób.
+
+Jak zostało wspomniane wcześniej, studenci nie pracują systematycznie.
+Aby zmotywować ich do regularnych działań, platforma wprowadza element grywalizacji udostępniając zbiorczy podgląd wyników innych grup.
+Dzięki temu studenci mogą sklasyfikować swoje postępy na tle innych.
+
+
 \subsection{Tworzenie grup projektowych}
 \label{adding_project_groups}
+
+Zakłada się, że użytkownikiem platformy wykonującym projekt jest grupa studentów.
+Wynikiem pracy zespołu powinien być jeden spójny projekt.
+W myśl tego założenia każdy ze studentów wchodzących w skład grupy dokonuje na platformie modyfikacji informacji w ramach tego samego zasobu (projektu), a rezultat jego zmian jest dostępny dla innych członków zespołu.
 
 Wprowadzane narzędzie może zostać zintegrowane z używanym obecnie systemem kontroli wersji.
 W myśl tego założenia prowadzący ma możliwość konfiguracji na platformie takich samych grup projektowych jak grupy zdefiniowane w systemie kontroli wersji.
@@ -222,11 +260,12 @@ Przykład struktury akceptowalnego pliku wygląda następująco:
 
 W celu lepszego zrozumienia procesu pracy studentów podczas semestru zbierane i~przechowywane są statystyki z~wykonania kolejnych zadań.
 Platforma umożliwia zapisywanie prostych danych audytowych, dotyczących każdej z~prób uruchomienia programów w ramach etapu lub integracji.
+Informacje zbierane są osobno dla każdego z zespołów projektowych.
 W skład gromadzonych informacji wchodzą:
 \begin{itemize}
     \item identyfikator użytkownika,
     \item data próby,
-    \item rezultat, jaki uzyskano w wyniku działania programu.
+    \item rezultat, jaki uzyskano w wyniku działania programu, w tym status oraz komunikat błędu w przypadku nieprawidłowego wyniku testu.
 \end{itemize}
 Powyższe informacje są przechowywane przez platformę i dostępne na żądanie prowadzącego.
 Opisane wyżej statystyki mogą posłużyć do dalszej analizy procesu pracy studentów i usprawnienia prowadzenia projektów grupowych.
@@ -274,14 +313,16 @@ Pozostałe, dodatkowe funkcjonalności mogą zostać dodane w ramach rozwinięci
 
 W wersji MVP nie zakłada się kompilacji kodu studentów bezpośrednio przez narzędzie.
 Oczekuje się, że studenci sami zbudują swoje projekty i zamieszczą na platformie wykonywalne programy.
+Aby uniknąć problemu z różnymi konfiguracjami środowiska na platformie w ramach każdego projektu udostępniana jest definicja środowiska.
+Jest ono konfigurowane przy pomocy pliku Dockerfile.
+Dodatkowe ograniczenia co do używanych ścieżek do plików dla definicji poprawnego kontenera Dockerowego zostały opisane w~podrodziale \ref{environment_configuration}.
 
 Warto podkreślić, że celem wprowadzenia platformy nie jest eliminacja spotkań z~prowadzącym.
 Zastosowanie narzędzia nie dąży również do zastąpienia funkcjonalności systemów do kontroli wersji, których interfejs usprawnia przeglądanie kodu.
 Podstawowym zadaniem platformy jest usprawnienie procesu weryfikacji postępów pracy w ramach studenckiego grupowego projektu informatycznego, zarówno dla nauczycieli akademickich, jak i studentów.
 
 Celem pracy nie jest również opracowanie systemu sprawiedliwej oceny członków zespołu.
-Platforma może jednak stanowić ważną pomoc w tym procesie.
-
+Platforma może jednak stanowić ważną pomoc w tym procesie poprzez udostępnienie statystyk z uruchomienia poszczególnych etapów wraz z informacją o użytkowniku, który wykonał tę akcję.
 
 
 
