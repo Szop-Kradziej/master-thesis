@@ -163,14 +163,14 @@ Z tych powodów projekt samodzielnie wykonał jeden absolwent.
 W ramach symulacji absolwentowi został udostępniony historyczny opis projektu oraz zmodyfikowany zakres przyjmowanych parametrów dla zadania.
 Następnie poproszono go o zalogowanie się do platformy przy użyciu własnego konta GitHub.
 
-Symulacji była na bieżąco monitorowana.
+Symulacja była na bieżąco monitorowana.
 W trakcie jej trwania poprawiano definicję projektu.
 Między innymi zdecydowano się uzupełnić etap pierwszy i drugi o dodatkowe przypadki testowe, które sprawdzały warunki brzegowe.
 
 Już po kilku pierwszych iteracjach absolwent wyraził zadowolenie z~korzystania z~narzędzia.
 W trakcie wykonywania zadania dodał, że ułatwia ono mu pracę a dzięki zdefiniowanym przypadkom testowym może skupić się na implementacji logiki aplikacji.
 
-W tabelach od \ref{tab:read_parse_write} do \ref{tab:move_penguins} przedstawiono pełne statystyki uruchomienia programów dla wszystkich trzech etapów w ramach symulacji.
+W tabelach od \ref{tab:read_parse_write} do \ref{tab:move_penguins} przedstawiono pełne historie uruchomień programów dla wszystkich trzech etapów w ramach symulacji.
 
 \input{chapter07//read_parse_write.tex}
 
@@ -183,7 +183,7 @@ W tabelach od \ref{tab:read_parse_write} do \ref{tab:move_penguins} przedstawion
 Powyższe statystyki nie zawieraja komunikatów o błędzie, które są również zapisywane przez platformę.
 Dodanie ich pogorszyłoby znacznie czytelność tabel, ze względu na za dużą ilość informacji.
 
-Na podstawie powyższych statystyk można stwierdzić, że absolwent wykonywał etapy kolejno.
+Na podstawie powyższych historii uruchomień programów można stwierdzić, że absolwent wykonywał etapy kolejno.
 Nie tworzył on od razu pełnej logiki aplikacji.
 Kod był pisany przez niego inkrementacyjnie.
 Programy pisane w ramach poszczególnych etapów były uruchamiane przez niego regularnie.
@@ -200,7 +200,7 @@ Na rysunku \ref{fig:penguins_simulation_interface} przedstawiony został wynik s
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 13cm]{chapter07/penguins_preview.png}
+    \includegraphics[width = 16cm]{chapter07/penguins_preview.png}
     \caption{Podgląd postępów studentów w ramach symulacji zmodyfikowanego projektu historycznego.}
     \label{fig:penguins_simulation_interface}
 \end{figure}
@@ -225,7 +225,7 @@ Potwierdza to użyteczność platformy od strony studenta.
 Proces tworzenia programu był na bieżąco monitorowany.
 Podczas symulacji zmodyfikowano projekt dodając dodatkowe przypadki testowe.
 Aby uniknąć takiej sytuacji w przypadku prawdziwego projektu studenckiego zalecane jest, żeby prowadzący tworząc kolejne etapy na bieżąco tworzył własny program testowy i sprawdzał poprawność definicji testów akceptacyjnych.
-Warto również udostępnić studentom projekt, który będzie wcześniej w pełni zdefiniowany i przetestowany, aby uniknąć niespójności w definicji kolejnych etapów.
+Wcześniejsze doświadczenie w pracy z wybranym do realizacji projektem wydaje się być również kliczowe, na pewno pozwoliłoby zminimalizować przykładowo ewentualne niespójności w definicji kolejnych etapów i integracji.
 
 Dla pierwszego etapu dopiero dodanie przypadku testowego oczekującego na wypisanie komunikatu o błędzie w przypadku niepoprawnego formatu pliku wejściowego wymusiło na absolwencie napisanie pełnej i poprawnej implementacji kodu do parsowania planszy.
 Absolwent uznał, że po dodaniu drugiego testu etap był bardzo dobrze zdefiniowany.
@@ -268,20 +268,26 @@ W ramach symulacji projektu na platformie zostało utworzone pięć etapów.
 Celem kolejnych zadań jest:
 \begin{enumerate}
     \item Mnożenie macierzy przez skalar.
+    \item Dodanie macierzy.
     \item Transpozycja macierzy.
     \item Rotacja macierzy o 90 stopni zgodnie z ruchem wskazówek zegara (rotacja w prawo o 90 stopni).
-    \item Dodanie macierzy.
     \item Mnożenie dwóch macierzy.
 \end{enumerate}
 
 W ramach każdego etapu utworzono cztery przypadki testowe sprawdzające poprawność działań.
 Plik wejściowy opisuje macierz o rozmiarze n na m i jest takiego samego formatu dla każdego z zadań.
 Zawiera on m wierszy, gdzie w każdym z nich znajduje się n liczb oddzielonych spacją reprezentujących elementy macierzy.
+Wspomniane cztery przypadki testowe przyjmują w pliku wejściowym macierze o kolejnych rozmiarach: 2 na 2, 2 na 3, 3 na 2 oraz 3 na 3.
 
+Oprócz pliku wejściowego zawierającego definicję macierzy część testów przyjmuje również parametry wejściowe.
 W przypadku pierwszego etapu parametrem wejściowym jest pojedyncza liczba reprezentująca skalar.
-Dla drugiego i trzeciego zadania niepodawane są parametry wejściowe.
-Program wykonujący dwa ostatnie etapy powinien przyjmować jako parametr wejściowy drugą macierz.
+Program wykonujący drugi oraz piąty etap powinien przyjmować jako parametr wejściowy drugą macierz.
 Format opisujący macierz zawartą w pliku z parametrami dla zadania cztery i pięć jest taki sam jak format pliku wejściowego.
+Dla trzeciego i czwartego zadania niepodawane są parametry wejściowe.
+
+Oprócz testów sprawdzających poprawność wykonania działań zdefiniowano również przypadki sprawdzające czy walidacja danych wejściowych jest prawidłowa.
+Dla wszystkich etapów utworzono pojedyncze testy sprawdzające poprawność formatu pliku wejściowego.
+Dodatkowe dwa przypadki testowe, sprawdzające poprawność formatu pliku z~parametrami oraz rozmiary obu wejściowych macierzy zostały dodane dla etapu drugiego oraz piątego.
 
 Pliki zawierające dane dla wszystkich powyższych testów zostały zamieszczone w~załącznikach.
 
