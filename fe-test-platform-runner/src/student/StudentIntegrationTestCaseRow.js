@@ -27,10 +27,6 @@ class StudentIntegrationTestCaseRow extends Component {
         this.downloadFile("output");
     };
 
-    handleDownloadParametersFile = () => {
-        this.downloadTestCaseFile("parameters");
-    };
-
     downloadFile = (fileType) => {
         if (this.props.taskType === "stage") {
             Api.downloadStageTestCaseFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName, fileType)
