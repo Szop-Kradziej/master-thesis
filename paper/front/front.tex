@@ -9,7 +9,14 @@
 \input{front//statement.tex}
 \input{front//dedication.tex}
 
-{\tableofcontents}
+{
+\fancypagestyle{plain}
+{
+\fancyfoot[R]{}
+
+}
+\tableofcontents
+}
 
 \pagestyle{empty}
 \cleardoublepage

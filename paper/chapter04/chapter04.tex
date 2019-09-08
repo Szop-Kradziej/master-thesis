@@ -2,12 +2,12 @@
 \label{chapter:interfaces}
 
 Stroną startową platformy jest ekran logowania użytkownika.
-Uwierzytelnienie odbywa się z użyciem serwisu GitHub (opis techniczny procesu znajduje się w podrozdziale~\ref{authorization}).
+Uwierzytelnienie odbywa się z~użyciem serwisu GitHub (opis techniczny procesu znajduje się w~podrozdziale~\ref{authorization}).
 Po poprawnym zalogowaniu użytkownik jest przekierowywany do kolejnego widoku zależnego od jego uprawnień.
 W przypadku prowadzącego jest to ekran wyboru zarządzania projektami lub podglądu postępów studentów.
 Użytkownik będący studentem jest przekierowywany do widoku dostępnych dla niego projektów.
 
-Opis ekranu logowania został dołączony w załączniku.
+Opis ekranu logowania został dołączony w~załączniku.
 W podrozdziale \ref{lecturer_ui} zostały omówione interfejsy dostępne dla prowadzącego.
 Ostatnia sekcja zawiera opis widoku studenta.
 
@@ -20,23 +20,23 @@ Ekran wyboru akcji został zamieszczony na rysunku \ref{fig:lecturer_actions}.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 8cm]{chapter04/lecturer_actions.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_actions.png}
     \caption{Ekran wyboru akcji dla prowadzącego.}
     \label{fig:lecturer_actions}
 \end{figure}
 
-Omówienie widoku zarządzania projektami znajduje się w podrozdziale \ref{lecturer-management}.
-Opis interfejsu podglądu postępów studentów został zamieszczony w sekcji \ref{lecturer_preview}.
+Omówienie widoku zarządzania projektami znajduje się w~podrozdziale \ref{lecturer-management}.
+Opis interfejsu podglądu postępów studentów został zamieszczony w~sekcji \ref{lecturer_preview}.
 
 \subsection{Zarządzanie projektami}
 \label{lecturer-management}
 
-W ramach zarządzania udostępnione jest tworzenie i edytowanie projektów, w tym wyznaczanie etapów i integracji oraz dodawanie do nich przypadków testowych.
+W ramach zarządzania udostępnione jest tworzenie i~edytowanie projektów, w~tym wyznaczanie etapów i~integracji oraz dodawanie do nich przypadków testowych.
 Zdefiniowanie projektu sprowadza się do:
 \begin {itemize}
     \item Utworzenia nowego projektu.
-    \item Dodania etapów wraz z przypadkami testowymi.
-    \item Utworzenia procesów integracji wraz z przypadkami testowymi.
+    \item Dodania etapów wraz z~przypadkami testowymi.
+    \item Utworzenia procesów integracji wraz z~przypadkami testowymi.
     \item Dodania grup projektowych.
 \end {itemize}
 
@@ -46,21 +46,21 @@ Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 8cm]{chapter04/lecturer_projects_list.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_projects_list.png}
     \caption{Interfejs prowadzącego, zarządzanie projektami - wybór projektu.}
     \label{fig:lecturer_projects_list}
 \end{figure}
 
-Widok projektu oraz panele etapów, integracji i grup zostały omówione w ramach kolejnych sekcji.
+Widok projektu oraz panele etapów, integracji i~grup zostały omówione w~ramach kolejnych sekcji.
 
 \subsubsection{Widok projektu}
 
 Projekt definiowany jest przez następujące dane:
 \begin {itemize}
-    \item Nazwę projektu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi projektu.
+    \item Nazwę projektu, która jest jednoznaczna z~nazwą katalogu na dysku, w~którym przechowywane będą pliki z~danymi dotyczącymi projektu.
     Nazwa jest parametrem będącym ciągiem znaków (String).
-    \item Plik z opisem projektu o dowolnym formacie.
-    \item Plik Dockerfile definiujący środowisko uruchomieniowe programów (więcej informacji o definicji pliku konfiguracyjnego można znaleźć w porozdziale \ref{environment_configuration}).
+    \item Plik z~opisem projektu o dowolnym formacie.
+    \item Plik Dockerfile definiujący środowisko uruchomieniowe programów (więcej informacji o definicji pliku konfiguracyjnego można znaleźć w~porozdziale \ref{environment_configuration}).
     \item Listę etapów.
     \item Listę integracji.
     \item Listę grup.
@@ -70,7 +70,7 @@ Na rysunku \ref{fig:lecturer_project_board} przedstawiono podstawowy widok proje
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_project_board.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_project_board.png}
     \caption{Interfejs prowadzącego, zarządzanie projektami - widok projektu.}
     \label{fig:lecturer_project_board}
 \end{figure}
@@ -79,16 +79,16 @@ Na rysunku \ref{fig:lecturer_project_board} przedstawiono podstawowy widok proje
 
 Etap definiowany jest przez następujące dane:
 \begin {itemize}
-    \item Nazwę etapu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi etapu.
+    \item Nazwę etapu, która jest jednoznaczna z~nazwą katalogu na dysku, w~którym przechowywane będą pliki z~danymi dotyczącymi etapu.
     Nazwa jest parametrem będącym ciągiem znaków (String).
-    \item Plik z opisem etapu o dowolnym formacie.
+    \item Plik z~opisem etapu o dowolnym formacie.
     \item Metadane dotyczące etapu, takie jak:
     \begin {itemize}
         \item Data rozpoczęcia etapu.
-        Data rozpoczęcia jest rozumiana jako data, od której studenci mają możliwość rozpoczęcia prac nad etapem (dostęp do opisu etapu, możliwość zaimportowania i uruchomienia swoich programów).
+        Data rozpoczęcia jest rozumiana jako data, od której studenci mają możliwość rozpoczęcia prac nad etapem (dostęp do opisu etapu, możliwość zaimportowania i~uruchomienia swoich programów).
         \item Data zakończenia etapu.
-        Data zakończenia jest rozumiana jako data, do której studenci mają możliwość zaimportowania i uruchomienia swoich programów.
-        Po przekroczeniu tej daty zmian programów i ponownych uruchomień może dokonywać tylko prowadzący.
+        Data zakończenia jest rozumiana jako data, do której studenci mają możliwość zaimportowania i~uruchomienia swoich programów.
+        Po przekroczeniu tej daty zmian programów i~ponownych uruchomień może dokonywać tylko prowadzący.
         \item Komentarz do etapu.
         Jest on dodatkową informacją widoczną tylko dla prowadzącego.
     \end{itemize}
@@ -96,11 +96,11 @@ Etap definiowany jest przez następujące dane:
 
 Etapy, które nie mają zdefiniowanej daty rozpoczęcia nie są widoczne dla studentów.
 Lista etapów jest posortowana rosnąco po dacie zakończenia etapu.
-Interfejs umożliwia wskazanie dat poprzez ich wybór w oknie dialogowym z kalendarzem.
+Interfejs umożliwia wskazanie dat poprzez ich wybór w~oknie dialogowym z~kalendarzem.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_stages.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_stages.png}
     \caption{Interfejs prowadzącego, zarządzanie projektami - panel etapów.}
     \label{fig:lecturer_stages}
 \end{figure}
@@ -110,39 +110,40 @@ Na rysunku \ref{fig:lecturer_stages} został przedstawiony przykładowy panel et
 W ramach panelu można dodawać, edytować oraz usuwać etapy.
 Komentarz do zadania wyświetlany jest po najechaniu na ikonę reprezentującą dodatkowe informacje.
 
-
-Dla każdego z etapów można rozwinąć panel zawierający listę zdefiniowanych testów.
-Rysunek \ref{fig:lecturer_stages_tests} przedstawia przykładowy widok zawierający definicje przypadków testowych.
-W ramach każdego z paneli można dodawać, edytować oraz usuwać przypadki testowe zdefiniowane dla etapu.
-Opis uruchamiania i testowania programów studentów w ramach etapów został zamieszczony w rozdziale \ref{chapter:platform-technical}.
-Pojedynczy przypadek testowy jest definiowany przez następujące dane:
-\begin {itemize}
-    \item Nazwę przypadku testowego, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego przypadku.
-    Nazwa jest parametrem będącym ciągiem znaków (String).
-    \item Parametry uruchomienia programu, podawane jako plik.
-    Podanie parametrów nie jest wymagane.
-    \item Plik z danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
-    Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego.
-    Podanie pliku wejściowego jest wymagane.
-    \item Oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
-    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w rezultacie działania programów studentów i na jego podstawie oceniana jest poprawność programów.
-    Podanie oczekiwanego pliku wyjściowego jest wymagane.
-\end {itemize}
-
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_stages_tests.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_stages_tests.png}
     \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla etapu.}
     \label{fig:lecturer_stages_tests}
 \end{figure}
+
+Dla każdego z~etapów można rozwinąć panel zawierający listę zdefiniowanych testów.
+Rysunek \ref{fig:lecturer_stages_tests} przedstawia przykładowy widok zawierający definicje przypadków testowych.
+W ramach każdego z~paneli można dodawać, edytować oraz usuwać przypadki testowe zdefiniowane dla etapu.
+Opis uruchamiania i~testowania programów studentów w~ramach etapów został zamieszczony w~rozdziale \ref{chapter:platform-technical}.
+Pojedynczy przypadek testowy jest definiowany przez następujące dane:
+\begin {itemize}
+    \item Nazwę przypadku testowego, która jest jednoznaczna z~nazwą katalogu na dysku, w~którym przechowywane będą pliki z~danymi dotyczącymi tego przypadku.
+    Nazwa jest parametrem będącym ciągiem znaków (String).
+    \item Parametry uruchomienia programu, podawane jako plik.
+    Podanie parametrów nie jest wymagane.
+    \item Plik z~danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
+    Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego.
+    Podanie pliku wejściowego jest wymagane.
+    \item Oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
+    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w~rezultacie działania programów studentów i~na jego podstawie oceniana jest poprawność programów.
+    Podanie oczekiwanego pliku wyjściowego jest wymagane.
+\end {itemize}
+
+
 
 \subsubsection{Panel integracji}
 
 Proces integracji jest definiowany przez następujące dane:
 \begin {itemize}
-    \item Nazwę procesu, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego procesu.
+    \item Nazwę procesu, która jest jednoznaczna z~nazwą katalogu na dysku, w~którym przechowywane będą pliki z~danymi dotyczącymi tego procesu.
     Nazwa jest parametrem będącym ciągiem znaków (String).
-    \item Priorytetyzowaną listę etapów, które zostaną wykonane kolejno w ramach procesu integracji.
+    \item Priorytetyzowaną listę etapów, które zostaną wykonane kolejno w~ramach procesu integracji.
     \item Komentarz do procesu integracji.
     Jest on dodatkową informacją widoczną tylko dla prowadzącego.
 \end {itemize}
@@ -151,33 +152,33 @@ Na rysunku \ref{fig:lecturer_integrations} został przedstawiony przykładowy pa
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_integrations.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_integrations.png}
     \caption{Interfejs prowadzącego, zarządzanie projektami - panel integracji.}
     \label{fig:lecturer_integrations}
 \end{figure}
 
-Dla każdej z integracji można rozwinąć panel zawierający listę zdefiniowanych testów.
+Dla każdej z~integracji można rozwinąć panel zawierający listę zdefiniowanych testów.
 Rysunek \ref{fig:lecturer_integrations_tests} przedstawia przykładowy widok zawierający definicje przypadków testowych.
-W ramach każdego z paneli można dodawać, edytować oraz usuwać przypadki testowe zdefiniowane dla integracji.
-Opis uruchamianie i testowania programów studentów dla procesu integracji został zamieszczony w rozdziale \ref{chapter:platform-technical}.
+W ramach każdego z~paneli można dodawać, edytować oraz usuwać przypadki testowe zdefiniowane dla integracji.
+Opis uruchamianie i~testowania programów studentów dla procesu integracji został zamieszczony w~rozdziale \ref{chapter:platform-technical}.
 Pojedynczy przypadek testowy jest definiowany przez następujące dane:
 \begin {itemize}
-    \item Nazwę przypadku testowego, która jest jednoznaczna z nazwą katalogu na dysku, w którym przechowywane będą pliki z danymi dotyczącymi tego przypadku.
+    \item Nazwę przypadku testowego, która jest jednoznaczna z~nazwą katalogu na dysku, w~którym przechowywane będą pliki z~danymi dotyczącymi tego przypadku.
     Nazwa jest parametrem będącym ciągiem znaków (String).
     \item Parametry uruchomienia programu, podawane jako pliki.
-    Dla każdego z etapów integracji podawane są oddzielne parametry wykonania w ramach jednego testu.
+    Dla każdego z~etapów integracji podawane są oddzielne parametry wykonania w~ramach jednego testu.
     Podanie parametrów nie jest wymagane.
-    \item Plik z danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
-    Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego i jest pojedynczy w ramach jednego testu.
+    \item Plik z~danymi wejściowymi dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
+    Plik wejściowy jest używany jako dana wejściowa dla danego przypadku testowego i~jest pojedynczy w~ramach jednego testu.
     Podanie pliku wejściowego jest wymagane.
     \item Oczekiwany plik wyjściowy dla zadanego przypadku o dowolnym, najczęściej tekstowym, formacie.
-    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w rezultacie działania programów studentów i na jego podstawie oceniana jest poprawność programów.
+    Oczekiwany plik wyjściowy jest używany do porównania wyniku otrzymanego w~rezultacie działania programów studentów i~na jego podstawie oceniana jest poprawność programów.
     Podanie oczekiwanego pliku wyjściowego jest wymagane.
 \end {itemize}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_integrations_tests.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_integrations_tests.png}
     \caption{Interfejs prowadzącego, zarządzanie projektami - panel testów dla integracji.}
     \label{fig:lecturer_integrations_tests}
 \end{figure}
@@ -190,39 +191,39 @@ Kolejny rysunek \ref{fig:lecturer_students_in_group} przedstawia rozwiniętą li
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_groups.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_groups.png}
     \caption{Interfejs prowadzącego, zarządzanie projektami - panel grup.}
     \label{fig:lecturer_groups}
 \end{figure}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_students_in_group.png}
-    \caption{Interfejs prowadzącego, zarządzanie projektami - panel grupy wraz z przypisanymi studentami.}
+    \includegraphics[width = 16cm]{chapter04/lecturer_students_in_group.png}
+    \caption{Interfejs prowadzącego, zarządzanie projektami - panel grupy wraz z~przypisanymi studentami.}
     \label{fig:lecturer_students_in_group}
 \end{figure}
 
 Utworzenie grup projektowych może zostać zrealizowane na dwa sposoby.
-Pierwszy z nich to manualne utworzenie grup definiowanych przez nazwę i dodanie kolejnych studentów w oknie dialogowym.
+Pierwszy z~nich to manualne utworzenie grup definiowanych przez nazwę i~dodanie kolejnych studentów w~oknie dialogowym.
 Aby dodać grupy manualnie należy użyć przycisku ”+” znajdującego się obok etykiety \textit{Grupy}.
-Drugim sposobem definicji grup jest wczytanie ich bezpośrednio z pliku w formacie JSON.
-Przykład struktury akceptowalnego pliku został zamieszczony w podrozdziale \ref{adding_project_groups}.
-W celu wczytania grup z pliku należy użyć przycisku wgrywania danych znajdującego się obok etykiety \textit{Grupy}.
+Drugim sposobem definicji grup jest wczytanie ich bezpośrednio z~pliku w~formacie JSON.
+Przykład struktury akceptowalnego pliku został zamieszczony w~podrozdziale \ref{adding_project_groups}.
+W celu wczytania grup z~pliku należy użyć przycisku wgrywania danych znajdującego się obok etykiety \textit{Grupy}.
 
-W ramach panelu umożliwiona jest edycja grup i przypisanych do nich studentów.
+W ramach panelu umożliwiona jest edycja grup i~przypisanych do nich studentów.
 
 \subsection{Podgląd postępów studentów}
 \label{lecturer_preview}
 
 Panel podglądu postępów studentów umożliwia:
 \begin {itemize}
-    \item Sprawdzenie statusu prac w ramach etapów i integracji dla każdej ze zdefiniowanych grup projektowych.
+    \item Sprawdzenie statusu prac w~ramach etapów i~integracji dla każdej ze zdefiniowanych grup projektowych.
     \item Uruchomienie programów.
     \item Edycję danych (programu, raportu, kodu) przez prowadzącego.
-    \item Pobranie pliku zawierającego statystyki uruchomień dla integracji i etapów.
+    \item Pobranie pliku zawierającego statystyki uruchomień dla integracji i~etapów.
 \end {itemize}
 
-Prowadzący ma możliwość edycji danych studentów z uprawnieniami administratora.
+Prowadzący ma możliwość edycji danych studentów z~uprawnieniami administratora.
 Pozwalają one między innymi na zmianę wprowadzonych przez studentów informacji i~plików po upływie terminów realizacji poszczególnych etapów.
 Są to uprawnienia, które nie powinny być nadużywane przez prowadzącego, jednak mogą okazać się użyteczne w~wyjątkowych sytuacjach.
 
@@ -232,19 +233,19 @@ Lista dostępnych projektów jest posortowana alfabetycznie po ich nazwie.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_preview_projects_list.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_preview_projects_list.png}
     \caption{Interfejs prowadzącego, podgląd postępów - lista projektów.}
     \label{fig:lecturer_preview_projects_list}
 \end{figure}
 
-Po przejściu do odpowiedniego projektu wyświetlany jest ekran z listą grup i przypisanych do nich studentów.
+Po przejściu do odpowiedniego projektu wyświetlany jest ekran z~listą grup i~przypisanych do nich studentów.
 Poprzez ten ekran prowadzący może przejść do rezultatów wybranego zespołu.
 Lista grup jest posortowana alfabetycznie po nazwie.
 Przykładowy ekran wyboru zespołu projektowego został zamieszczony na rysunku \ref{fig:lecturer_preview_groups}.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_preview_groups.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_preview_groups.png}
     \caption{Interfejs prowadzącego, podgląd postępów - lista grup.}
     \label{fig:lecturer_preview_groups}
 \end{figure}
@@ -258,54 +259,56 @@ W ramach widoku można:
     \item Uruchomić procesy integracji oraz przejrzeć rezultaty ich wykonania.
 \end{itemize}
 
-\begin{figure}[h]
+\vfill
+
+\begin{figure}[H]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_interface_preview.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_interface_preview.png}
     \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd projektu dla grupy.}
     \label{fig:lecturer-interface-preview}
 \end{figure}
 
 
-\subsubsection{Pogląd postępów w ramach etapów}
+\subsubsection{Pogląd postępów w~ramach etapów}
 
-Panel podglądu postępów w ramach etapu zawiera informacje o statusie prac w~ramach każdego ze zdefiniowanych etapów.
+Panel podglądu postępów w~ramach etapu zawiera informacje o statusie prac w~ramach każdego ze zdefiniowanych etapów.
 Widok został przedstawiony na rysunku \ref{fig:lecturer-preview-stage}.
 Umożliwia on prowadzącemu:
 \begin {itemize}
     \item Pobranie opisu etapu.
-    \item Pobranie statystyk z uruchomienia programów.
+    \item Pobranie statystyk z~uruchomienia programów.
     \item Podejrzenie komentarza.
-    \item Uruchomienie, pobranie i wgranie programu.
+    \item Uruchomienie, pobranie i~wgranie programu.
     \item Edycję linku do kodu.
-    \item Pobranie i wgranie raportu.
+    \item Pobranie i~wgranie raportu.
 \end {itemize}
 
 Panel zawiera również dodatkowe informacje takie jak:
 \begin{itemize}
     \item Status zaliczenia etapu określający ile ze wszystkich testów zostało zaliczone przez grupę (pole \textit{Zaliczone}).
-    \item Status zaliczenia etapu w ramach wszystkich grup mówiący ile zespołów zaliczyło dane zadanie (pole \textit{Grupy}).
+    \item Status zaliczenia etapu w~ramach wszystkich grup mówiący ile zespołów zaliczyło dane zadanie (pole \textit{Grupy}).
     \item Data rozpoczęcia etapu.
     \item Data zakończenia etapu.
 \end{itemize}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_preview_stage.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_preview_stage.png}
     \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd etapu.}
     \label{fig:lecturer-preview-stage}
 \end{figure}
 
 Po rozwinięciu widoku etapu widoczny jest dodatkowo panel wyników testów (patrz rysunek \ref{fig:lecturer-preview-stage-tests}).
-Zawiera on informacje o uruchomionych przypadkach testowych w tym:
+Zawiera on informacje o uruchomionych przypadkach testowych w~tym:
 \begin{itemize}
     \item Nazwę przypadku testowego.
-    \item Status uruchomienia. W przypadku poprawnego rezultatu testu wyświetlany jest \textit{SUCCESS}, dla niewłaściwego wyniku widoczny jest \textit{FAILURE}.
+    \item Status uruchomienia. w~przypadku poprawnego rezultatu testu wyświetlany jest \textit{SUCCESS}, dla niewłaściwego wyniku widoczny jest \textit{FAILURE}.
     \item Komunikat błędu.
 \end{itemize}
 
 Panel pozwala na pobranie:
 \begin{itemize}
-    \item Logów z wykonania programu dla zadanego przypadku testowego.
+    \item Logów z~wykonania programu dla zadanego przypadku testowego.
     \item Parametrów wywołania.
     \item Pliku wejściowego.
     \item Oczekiwanego pliku wyjściowego dla testu.
@@ -313,34 +316,34 @@ Panel pozwala na pobranie:
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_preview_stage_tests.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_preview_stage_tests.png}
     \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd wyników testów dla etapu.}
     \label{fig:lecturer-preview-stage-tests}
 \end{figure}
 
-\subsubsection{Pogląd postępów w ramach integracji}
+\subsubsection{Pogląd postępów w~ramach integracji}
 
-Panel podglądu postępów w ramach integracji zawiera informacje o statusie prac dla każdego ze zdefiniowanych procesów integracji.
+Panel podglądu postępów w~ramach integracji zawiera informacje o statusie prac dla każdego ze zdefiniowanych procesów integracji.
 Przykładowy widok został zamieszczony na rysunku \ref{fig:lecturer-preview-integration}.
-Panel podglądu postępów w ramach integracji umożliwia prowadzącemu:
+Panel podglądu postępów w~ramach integracji umożliwia prowadzącemu:
 \begin {itemize}
-    \item Pobranie statystyk z uruchomienia integracji.
+    \item Pobranie statystyk z~uruchomienia integracji.
     \item Podejrzenie komentarza.
     \item Uruchomienie integracji.
 \end {itemize}
-Proces integracji może zostać uruchomiony tylko wtedy, gdy dla każdego z etapów wchodzących w jej skład został załączony program.
+Proces integracji może zostać uruchomiony tylko wtedy, gdy dla każdego z~etapów wchodzących w~jej skład został załączony program.
 W przeciwnym przypadku przycisk \textit{PLAY} jest nieaktywny.
 
 Panel zawiera również dodatkowe informacje takie jak:
 \begin{itemize}
-    \item Schemat integracji obrazujący, które z etapów i w jakiej kolejności zostaną uruchomione w~ramach procesu integracji.
+    \item Schemat integracji obrazujący, które z~etapów i~w~jakiej kolejności zostaną uruchomione w~ramach procesu integracji.
     \item Status zaliczenia integracji określający ile ze wszystkich testów zostało zaliczone przez grupę (pole \textit{Zaliczone}).
-    \item Status zaliczenia integracji w ramach wszystkich grup mówiący ile zespołów zaliczyło dane zadanie (pole \textit{Grupy}).
+    \item Status zaliczenia integracji w~ramach wszystkich grup mówiący ile zespołów zaliczyło dane zadanie (pole \textit{Grupy}).
 \end{itemize}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_preview_integration.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_preview_integration.png}
     \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd integracji.}
     \label{fig:lecturer-preview-integration}
 \end{figure}
@@ -349,21 +352,21 @@ Po rozwinięciu widoku integracji widoczny jest dodatkowo panel wyników testów
 Zawiera on informacje o uruchomionych przypadkach testowych w~tym:
 \begin{itemize}
     \item Nazwę przypadku testowego.
-    \item Status uruchomienia. W przypadku poprawnego rezultatu testu wyświetlany jest \textit{SUCCESS}, dla niewłaściwego wyniku widoczny jest \textit{FAILURE}.
+    \item Status uruchomienia. w~przypadku poprawnego rezultatu testu wyświetlany jest \textit{SUCCESS}, dla niewłaściwego wyniku widoczny jest \textit{FAILURE}.
     \item Komunikat błędu.
 \end{itemize}
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/lecturer_preview_integration_tests.png}
+    \includegraphics[width = 16cm]{chapter04/lecturer_preview_integration_tests.png}
     \caption{Interfejs prowadzącego, podgląd postępów studentów - podgląd wyników testów dla integracji.}
     \label{fig:lecturer-preview-integration-tests}
 \end{figure}
 
 Panel pozwala na pobranie:
 \begin{itemize}
-    \item Logów z wykonania programu dla zadanego przypadku testowego.
-    \item Parametrów wywołania dla każdego z etapów wchodzących w skład integracji.
+    \item Logów z~wykonania programu dla zadanego przypadku testowego.
+    \item Parametrów wywołania dla każdego z~etapów wchodzących w~skład integracji.
     \item Pliku wejściowego.
     \item Oczekiwanego pliku wyjściowego dla testu.
 \end{itemize}
@@ -371,13 +374,13 @@ Panel pozwala na pobranie:
 
 \section{Interfejs studenta}
 
-Po zalogowaniu do platformy z uprawnieniami studenta użytkownikowi wyświetlany jest ekran dostępnych dla niego projektów.
+Po zalogowaniu do platformy z~uprawnieniami studenta użytkownikowi wyświetlany jest ekran dostępnych dla niego projektów.
 Są one posortowane alfabetycznie po nazwie.
 Na rysunku \ref{fig:student_projects} został przedstawiony podstawowy widok dla interfejsu studenta.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 8cm]{chapter04/student_projects.png}
+    \includegraphics[width = 16cm]{chapter04/student_projects.png}
     \caption{Interfejs studenta - wybór dostępnego projektu.}
     \label{fig:student_projects}
 \end{figure}
@@ -387,53 +390,53 @@ Przykładowy ekran został przedstawiony na rysunku \ref{fig:student_project_boa
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/student_project_board.png}
+    \includegraphics[width = 16cm]{chapter04/student_project_board.png}
     \caption{Interfejs studenta - widok projektu.}
     \label{fig:student_project_board}
 \end{figure}
 
 Warto zauważyć, że interfejs jest bardzo podobny do widoku podglądu wyników w~ramach grupy projektowej dla prowadzącego.
-Student ma jednak pewne ograniczenia co do akcji wykonywanych w ramach interfejsu.
-Nie może on między innymi podejrzeć komentarzy i pobrać statystyk uruchomienia programów dla zadań.
+Student ma jednak pewne ograniczenia co do akcji wykonywanych w~ramach interfejsu.
+Nie może on między innymi podejrzeć komentarzy i~pobrać statystyk uruchomienia programów dla zadań.
 Student nie ma również możliwości zmiany zaimportowanych danych po upływie terminu zakończenia etapu.
 
-\subsubsection{Pogląd postępów w ramach etapów}
+\subsubsection{Pogląd postępów w~ramach etapów}
 
-Na rysunku \ref{fig:student_stage} oraz \ref{fig:student_stage_tests} został przedstawiony podgląd postępów w ramach etapów dla studenta.
-W ramach tego panelu udostępnione są wszystkie akcje związane z załączeniem i edycją danych dotyczących każdego z zadań.
+Na rysunku \ref{fig:student_stage} oraz \ref{fig:student_stage_tests} został przedstawiony podgląd postępów w~ramach etapów dla studenta.
+W ramach tego panelu udostępnione są wszystkie akcje związane z~załączeniem i~edycją danych dotyczących każdego z~zadań.
 Student ma także umożliwiony pełny podgląd rezultatów uruchomienia aplikacji dla kolejnych przypadków testowych.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 15cm]{chapter04/student_stage.png}
+    \includegraphics[width = 16cm]{chapter04/student_stage.png}
     \caption{Interfejs studenta - podgląd etapu.}
     \label{fig:student_stage}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
-    \includegraphics[width = 15cm]{chapter04/student_stage_tests.png}
+    \includegraphics[width = 16cm]{chapter04/student_stage_tests.png}
     \caption{Interfejs studenta - podgląd wyników testów dla etapu.}
     \label{fig:student_stage_tests}
 \end{figure}
 
-\subsubsection{Pogląd postępów w ramach integracji}
+\subsubsection{Pogląd postępów w~ramach integracji}
 
-Student po zakończeniu odpowiedniej liczby etapów wchodzących w skład zdefiniowanego procesu integracji ma możliwość uruchomienia go.
+Student po zakończeniu odpowiedniej liczby etapów wchodzących w~skład zdefiniowanego procesu integracji ma możliwość uruchomienia go.
 Rezultat działania procesu jest reprezentowany podobnie jak na widoku podglądu wyników dla prowadzącego.
-Przykładowy panel został przedstawiony na rysunkach \ref{fig:student_integration} i \ref{fig:student_integration_tests}.
-Różni się on od widoku prowadzącego brakiem przycisku do pobrania statystyk i wyświetlenia komentarza.
+Przykładowy panel został przedstawiony na rysunkach \ref{fig:student_integration} i~\ref{fig:student_integration_tests}.
+Różni się on od widoku prowadzącego brakiem przycisku do pobrania statystyk i~wyświetlenia komentarza.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = 15cm]{chapter04/student_integration.png}
+    \includegraphics[width = 16cm]{chapter04/student_integration.png}
     \caption{Interfejs studenta - podgląd integracji.}
     \label{fig:student_integration}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width = 15cm]{chapter04/student_integration_tests.png}
+    \includegraphics[width = 16cm]{chapter04/student_integration_tests.png}
     \caption{Interfejs studenta - podgląd wyników testów dla integracji.}
     \label{fig:student_integration_tests}
 \end{figure}
