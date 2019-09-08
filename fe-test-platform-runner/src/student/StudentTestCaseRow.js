@@ -26,7 +26,7 @@ class StudentTestCaseRow extends Component {
     };
 
     handleDownloadParametersFile = () => {
-        this.downloadTestCaseFile("parameters");
+        this.downloadFile("parameters");
     };
 
     downloadFile = (fileType) => {

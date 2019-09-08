@@ -25,6 +25,10 @@ class PreviewStudentTestCaseRow extends Component {
         this.downloadTestCaseFile("output");
     };
 
+    handleDownloadParametersFile = () => {
+        this.downloadTestCaseFile("parameters");
+    };
+
     downloadTestCaseFile = (fileType) => {
         if (this.props.taskType === "stage") {
             Api.downloadStageTestCaseFile(this.props.projectName, this.props.taskName, this.props.testCase.testCaseName, fileType)
