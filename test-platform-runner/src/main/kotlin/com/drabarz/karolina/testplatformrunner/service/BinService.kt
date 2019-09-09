@@ -54,7 +54,7 @@ class BinService(
         return testCases.map {
             val inputFile = stagePathProvider.getTaskTestCaseFileDir(projectName, stageName, it.testCaseName, "input").listFiles().first()
             val parametersFile = getParameters(stagePathProvider.getTaskTestCaseParametersDir(projectName, stageName, it.testCaseName))
-            val outputFile = File(stagePathProvider.getStudentOutputDir(groupName, projectName, stageName).apply { mkdir() }, "output").apply { createNewFile() }
+            val outputFile = File(stagePathProvider.getStudentOutputDir(groupName, projectName, stageName).apply { mkdir() }, "output").apply { delete() }.apply { createNewFile() }
             val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, parametersFile.absolutePath, outputFile.absolutePath, "${binDir.absolutePath}/$binName")
             containerService.runTestCase(container)
                     .also { logs -> saveLogsToStageResultFile(groupName, logs, projectName, stageName, it.testCaseName) }
@@ -160,7 +160,7 @@ class BinService(
     }
 
     private fun generateOutputFile(environmentDir: File, groupName: String, projectName: String, integrationName: String, inputFile: File, parametersFile: File, binPath: String, testCase: IntegrationTestCase): File {
-        val outputFile = File(integrationPathProvider.getStudentOutputDir(groupName, projectName, integrationName).apply { mkdirs() }, "output").apply { createNewFile() }
+        val outputFile = File(integrationPathProvider.getStudentOutputDir(groupName, projectName, integrationName).apply { mkdirs() }, "output").apply { delete() }.apply { createNewFile() }
 
         val container = containerFactory.createContainerWithFilesBinded(environmentDir, inputFile.absolutePath, parametersFile.absolutePath, outputFile.absolutePath, binPath)
         containerService.runTestCase(container)
