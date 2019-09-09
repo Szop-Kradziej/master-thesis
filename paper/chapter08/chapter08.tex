@@ -3,6 +3,10 @@
 
 TODO: Przeredagować i rozszerzyć o wnioski z badań i weryfikacji
 
+W ramach pracy utworzono platformę pozwalającą wspomagającą weyfikację pracy studentów pracujących nad zespołowym projektem informatycznym.
+
+
+
 Zastosowanie platformy w~celu weryfikacji pracy studentów niesie ze sobą wiele korzyści.
 Podstawową zaletą płynącą z jej użycia jest automatyzacja procesu udostępniania oraz sprawdzania poprawności programów studentów.
 Przyśpiesza ona proces sprawdzania kolejnych etapów prac i umożliwia zwiększenie ich liczby.
@@ -24,6 +28,16 @@ Dodatkowym rozszerzeniem pracy mogłaby być automatyzacja procesu.
 Zamiast definiowania szeregu przypadków testowych w postaci plików wejściowych i oczekiwanych plików wyjściowych można byłoby do kontenera dołączyć wzorcowy program napisany przez prowadzącego.
 Ten moduł miałby za zadanie dla losowych danych wejściowych o zadanej strukturze porównywać wynik działania programu studentów z wynikiem otrzymanym ze wzorcowego programu dla tych samych danych.
 
+
+W ramach rozszerzenia pracy można byłoby również zaproponować bardziej elastyczną wersję komparatora.
+Obecnie w wersji MVP sprawdzanie poprawności wyników odbywa się przez pełne porównanie pliku wyjściowego programu oraz oczekiwanego pliku wyjściowego.
+Taki sposób oceny rezultatów jest wystarczający dla wielu zadań, jedank może być niewystarczający dla projektów badających niestabilne algorytmy.
+
+- najlepiej dodac wlasny komparator dla miedzy innymi niestabilnych algorytmów
+
+- obecny komparator porownuje dwa pliki 1 do 1 i~moze sluzyc do definicji wiekszosci zadan
+
+- ale może okazać sie ze to zbyt mało
 
 - Warto dodać executor do porównywania wyników porwadzącego bo na razie platforma sprawdza tylko czy dwa pliki są identyczne
 
