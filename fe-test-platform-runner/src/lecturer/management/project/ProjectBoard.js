@@ -1,9 +1,6 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
-import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
-import TableBody from "@material-ui/core/TableBody/TableBody";
-import Table from "@material-ui/core/Table/Table";
 import {CustomTableCell, styles} from "../../../styles/ProjectBoardStyles";
 import AddNewItemComponent from "../../../utils/AddNewItemComponent";
 import * as Api from "../../../Api";

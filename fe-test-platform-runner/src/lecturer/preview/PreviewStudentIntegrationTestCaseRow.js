@@ -1,7 +1,5 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core";
-import green from "@material-ui/core/es/colors/green";
-import red from "@material-ui/core/es/colors/red";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableCell from "@material-ui/core/TableCell/TableCell";
 import * as Api from "../../Api";

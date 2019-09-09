@@ -13,10 +13,6 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import StudentTestCasesDetails from "./StudentTestCasesDetails"
 import StudentStageRow from "./StudentStageRow";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import DescriptionIcon from "@material-ui/icons/Description";
-import SettingsIcon from "@material-ui/icons/Settings";
-
 import * as Api from "../Api";
 import StudentIntegrationRow from "./StudentIntegrationRow";
 import {getAuthHeader} from "../Api";

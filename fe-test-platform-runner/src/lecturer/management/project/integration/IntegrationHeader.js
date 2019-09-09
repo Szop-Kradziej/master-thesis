@@ -12,7 +12,6 @@ import Tooltip from "@material-ui/core/Tooltip/Tooltip";
 import CommentIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/es/IconButton/IconButton";
 import InputWrapper from "../../../../utils/InputWrapper";
-import EditStageCommentDialog from "../stage/dialog/EditStageCommentDialog";
 import EditIntegrationCommentDialog from "./EditIntegrationCommentDialog";
 
 class GroupHeader extends Component {

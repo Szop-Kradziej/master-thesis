@@ -7,8 +7,6 @@ import DialogContentText from "@material-ui/core/es/DialogContentText/DialogCont
 import TextField from "@material-ui/core/TextField/TextField";
 import DialogActions from "@material-ui/core/DialogActions/DialogActions";
 import Dialog from "@material-ui/core/Dialog/Dialog";
-import backendUrl from "../../../../backendUrl";
-import axios from "axios";
 import TestCaseRow from "./TestCaseRow";
 import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";

@@ -8,10 +8,6 @@ import DeleteItemComponent from "../../utils/DeleteItemComponent";
 
 class ProjectRow extends React.Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     handleDeleteProject = () => {
         Api.deleteProject(this.props.projectName)
             .then(this.props.projectChangedHandler)

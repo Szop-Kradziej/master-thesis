@@ -69,7 +69,7 @@ class PreviewStudentStageRow extends Component {
     getCodeLink = () => {
         return (
             <InputWrapper>
-                <a target='_blank' href={this.props.stage.codeLink}>
+                <a target='_blank' href={this.props.stage.codeLink} rel='noopener noreferrer'>
                     Przejdź do kodu
                 </a>
             </InputWrapper>
