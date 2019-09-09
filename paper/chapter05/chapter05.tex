@@ -255,7 +255,7 @@ Identyfikator \textit{Client\_ID} należy również przypisać do zmiennej \text
 W celu uruchomienia platformy na dowolnej maszynie z~systemem Linux należy zainstalować:
 \begin{itemize}
     \item Java w~wersji 8,
-    \item Npm w~wersji 6,
+    \item Npm w~wersji 6 oraz npm serve,
     \item Docker w~wersji 18 i~nadać mu uprawnienia administratora.
 \end{itemize}
 
@@ -312,8 +312,8 @@ W celu uruchomienia interfejsu webowego należy przejść do katalogu \newline \
 \tiny
 \begin{lstlisting}
 
-    npm install
-    npm start
+    npm run build
+    serve -s build -l 3000
 
 \end{lstlisting}
 }
