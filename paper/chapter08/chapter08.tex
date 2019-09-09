@@ -1,48 +1,60 @@
 \chapter{Wnioski}
 \label{chapter:conclusion}
 
-TODO: Przeredagować i rozszerzyć o wnioski z badań i weryfikacji
+W ramach pracy utworzono platformę wspomagającą weryfikację pracy studentów pracujących nad zespołowym projektem informatycznym.
+Interfejs narzędzia oraz praca z nim została pozytywnie oceniona przez absolwentów Politechniki Warszawskiej.
 
-W ramach pracy utworzono platformę pozwalającą wspomagającą weyfikację pracy studentów pracujących nad zespołowym projektem informatycznym.
+Platforma jest generycznym rozwiązaniem pozwalającym na przeprowadzenie projektu dla różnych języków programowania.
+W ramach pracy uruchomiono na niej aplikacje napisane w~takich językach jak: C, Java, Kotlin i~Scala.
+Narzędzie pozwala na przeprowadzenie zarówno zespołowego, jak i~indywidualnego projektu.
 
-
+Badanie projektu historycznego wykazało, że motywacje do utworzenia narzędzia są określone prawidłowo.
+Dla obecnego procesu prowadzenia projektów zespołowych prowadzący zmuszony jest indywidualnie rozpatrywać rezultaty każdego zespołu w~ramach kolejnych etapów.
+Pomimo zdefiniowanych na początku semestru wymagań, końcowe aplikacje utworzone przez studentów są zupełnie różne.
+Wzajemna integracja programów jest niemożliwa między innymi ze względu na przyjmowane inne formaty danych wejściowych.
+Ustalenie właściwych wersji aplikacji, uruchomienie ich i~pełne zrozumienie sposobu ich działańa wymaga konsultacji ze studentami.
+Ocena poprawności działania programów z perspektywy czasu jest praktycznie niemożliwa.
+Te elementy sprawiają, że proces weryfikacji pracy studentów jest obecnie trudny i~czasochłonny.
 
 Zastosowanie platformy w~celu weryfikacji pracy studentów niesie ze sobą wiele korzyści.
-Podstawową zaletą płynącą z jej użycia jest automatyzacja procesu udostępniania oraz sprawdzania poprawności programów studentów.
-Przyśpiesza ona proces sprawdzania kolejnych etapów prac i umożliwia zwiększenie ich liczby.
-Student korzystający z platformy uzyskuje szybką informację zwrotną dotyczącą poprawności działania jego kodu poprzez wgląd do raportu wyników testów automatycznych.
-GUI studenta przedstawia również informację o zbiorczych postępach innych grup.
-Podgląd statusu prac pozostałych zespołów mógłby być dodatkową motywacją dla studentów do wykonania danego etapu.
-Dzięki platformie prowadzący otrzymuje ujednolicony wgląd w bieżące postępy studentów, co za tym idzie nie ma potrzeby rozpatrywać już kolejnych grup indywidualnie.
-Platforma testowa rozwiązuje też problem różnych konfiguracji systemów.
+Podstawową zaletą płynącą z jej użycia jest automatyzacja procesu sprawdzania poprawności programów studentów.
+Narzędzie przyśpiesza proces oceny kolejnych etapów i~umożliwia zwiększenie ich liczby.
+
+Student korzystający z platformy uzyskuje szybką informację zwrotną dotyczącą poprawności działania aplikacji poprzez wgląd do prezentowanych na interfejsie wyników testów automatycznych.
+Widok postępów dla grupy przedstawia również informację zbiorczą o zaliczeniach w~ramach innych zespołów.
+Podgląd statusu prac pozostałych grup może być dodatkową motywacją dla studentów do wykonania danego etapu.
+
+Dzięki platformie prowadzący otrzymuje ujednolicony wgląd w~bieżące postępy studentów, co za tym idzie nie ma potrzeby rozpatrywać już kolejnych grup indywidualnie.
+
+Narzędzie rozwiązuje też problem różnych konfiguracji systemowych.
 W ramach danego projektu studenci mają dostęp do skonfigurowanego wcześniej kontenera Dockerowego, na którym żądane jest, aby zadziałał ich projekt.
 Samo środowisko jest wyeksportowane dla studenta, tak aby mógł testować swój program lokalnie.
+
 Platforma umożliwia także zbieranie danych statystycznych dotyczących procesu pracy studentów.
 Te informacje mogą posłużyć dalszym usprawnieniom weryfikacji pracy grup projektowych.
 
-W ramach rozszerzenia funkcjonalności pracy dyplomowej można rozpatrzyć dodanie modułu służący do przedstawienia graficznego postępów studentów, między innymi w postaci wykresów.
+Jednak samo wprowadzenie platformy w~ramach programu nauczania nie jest wystarczające, aby uzyskać  korzyści dla procesu weryfikacji pracy studentów.
+Istotna jest właściwa definicja projektu, który powinien być tak skonstruowany, aby umożliwić napisanie odpowiednich i~wartościowych testów akceptacyjnych.
+Projekt powinien być dobrze przemyślana przez prowadzącego a nakład pracy niezbędny na wykonanie kolejnych zadań wyważony.
+
+Platforma została napisana w~wersji MVP.
+Taki model narzędzia pozwala na przeprowadzenie projektu informatycznego z jego wykorzystaniem i~jest otwarty na rozszerzenie funkcjonalności.
+
+W ramach usprawnień narzędzia można rozpatrzyć dodanie modułu służący do przedstawienia graficznego postępów studentów, między innymi w~postaci wykresów.
+
+Innym czysto inżynierskim udoskonaleniem platformy jest uzupełnienie informacji zwrotnej przekazywanej studentom o datę ostatniego uruchomienia programu i~możliwość poprania pliku wynikowego z rezultatem jego działania.
 
 Możliwym rozszerzeniem jest również dodanie moduł generatora testów.
 W ramach pracy założono, że prowadzący manualnie definiuje uruchamiane przypadki testowe.
 Dodatkowym rozszerzeniem pracy mogłaby być automatyzacja procesu.
-Zamiast definiowania szeregu przypadków testowych w postaci plików wejściowych i oczekiwanych plików wyjściowych można byłoby do kontenera dołączyć wzorcowy program napisany przez prowadzącego.
+Zamiast definiowania szeregu przypadków testowych w~postaci plików wejściowych i~oczekiwanych plików wyjściowych można byłoby do kontenera dołączyć wzorcowy program napisany przez prowadzącego.
 Ten moduł miałby za zadanie dla losowych danych wejściowych o zadanej strukturze porównywać wynik działania programu studentów z wynikiem otrzymanym ze wzorcowego programu dla tych samych danych.
 
+W ramach rozszerzenia pracy można byłoby również zaproponować bardziej elastyczną wersję komparatora rezultatów.
+Obecnie w~wersji MVP sprawdzanie poprawności wyników odbywa się przez pełne porównanie pliku wyjściowego z działania programu oraz oczekiwanego pliku wyjściowego.
+Taki sposób oceny rezultatów jest właściwy dla wielu zadań, jednak może być niewystarczający dla projektów badających niestabilne algorytmy.
 
-W ramach rozszerzenia pracy można byłoby również zaproponować bardziej elastyczną wersję komparatora.
-Obecnie w wersji MVP sprawdzanie poprawności wyników odbywa się przez pełne porównanie pliku wyjściowego programu oraz oczekiwanego pliku wyjściowego.
-Taki sposób oceny rezultatów jest wystarczający dla wielu zadań, jedank może być niewystarczający dla projektów badających niestabilne algorytmy.
-
-- najlepiej dodac wlasny komparator dla miedzy innymi niestabilnych algorytmów
-
-- obecny komparator porownuje dwa pliki 1 do 1 i~moze sluzyc do definicji wiekszosci zadan
-
-- ale może okazać sie ze to zbyt mało
-
-- Warto dodać executor do porównywania wyników porwadzącego bo na razie platforma sprawdza tylko czy dwa pliki są identyczne
-
-- Sprawdzenie czy identyczne może nie być słuszne w trakcie gdy mamy do zaimplementowania algorytm niestabilny
-
-- Np. zadanie implementacja quick sort w przypadku dwóch takich samych danych może dać różne wyniki (na różnych pozycjach w liście wynikowej mogą znaleźć się dwie takie same dane)
-
-- wymuszenie przestrzegania wymagań projektowych przez studentów i wprowadzenie jednoznacznej oceny zaimplementowanej logiki aplikacji dzięki testom akceptacyjnym oraz udostępnienie jednolitego interfejsu do podglądu wyników poszczególnych grup projektowych.
+Platformę można również dostosować do prowadzenia z jej wykorzystaniem projektu w~metodyce Agile.
+Wymagałoby to zaimplementowania dodatkowych, wyróżnionych w~podrozdziale \ref{agile_todo} funkcjonalności.
+Dostosowanie platformy do potrzeb projektu w~metodyce zwinnej mogłoby być bardzo ciekawym pomysłem na kontynuację pracy nad platformą.
+Dzięki takiemu rozwiązaniu narzędzie mogłoby wspierać proces przeprowadzania projektu informatycznego dla jeszcze szerszego zakresu zadań.
