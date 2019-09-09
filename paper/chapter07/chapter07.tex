@@ -149,11 +149,11 @@ Do definicji akcji przesunięcia pingwina dla trzeciego etapu użyto pięciu par
     \item \textit{direction=d}, gdzie \textit{d} przyjmuje jedną z~wartość: \textit{up, down, left, right} i~oznacza kierunek przesunięcia pingwina.
 \end{itemize}
 
-Plik zawierające dane dla testów utworzonych dla wszystkich trzech etapów zostały zamieszczone w~załącznikach.
-
 Dla projektu utworzono również jeden proces integracji z~pojedynczym testem akceptacyjnym.
 Proces składał się z~dwóch kroków, kolejno: \textit{set} i~\textit{move}.
 Utworzony test akceptacyjny pozwolił na sprawdzenie pozytywnego przebiegu akcji ustawienia a następnie przesunięcia pingwina.
+
+Plik zawierające dane dla testów utworzonych dla wszystkich trzech etapów oraz procesu integracji zostały zamieszczone w~załącznikach.
 
 \subsection{Przebieg symulacji}
 \label{penguins_simulation}
@@ -163,7 +163,7 @@ Z tych powodów projekt samodzielnie wykonał jeden absolwent.
 W ramach symulacji absolwentowi został udostępniony historyczny opis projektu oraz zmodyfikowany zakres przyjmowanych parametrów dla zadania.
 Następnie poproszono go o~zalogowanie się do platformy przy użyciu własnego konta GitHub.
 
-Symulacja była na bieżąco monitorowana.
+Symulacja była na bieżąco monitorowana przez autora pracy.
 W trakcie jej trwania poprawiano definicję projektu.
 Między innymi zdecydowano się uzupełnić etap pierwszy i~drugi o~dodatkowe przypadki testowe, które sprawdzały warunki brzegowe.
 
@@ -235,7 +235,7 @@ Ten fakt podkreśla istotę odpowiedniego doboru testów akceptacyjnych dla etap
 Rezultaty wykonania kolejnych etapów są przekazane w~jasny sposób na interfejsie platformy.
 Dzięki temu można bardzo szybko ocenić postępy pracy.
 W~przypadku symulacji, wymagana logika programu napisanego przez absolwenta dla każdego z~etapów była poprawna, ponieważ testy akceptacyjne załączone do projektu zostały wykonane pomyślnie.
-Statystyki z~uruchomienia aplikacji pokazują, że absolwent z~zaangażowaniem wykonywał kolejne zadania.
+Historia uruchomienia aplikacji pokazuje, że absolwent z~zaangażowaniem wykonywał kolejne zadania.
 
 Przeprowadzona integracja przebiegła pomyślnie.
 Oznacza to, że programy napisane w~ramach kolejnych etapów używały spójnego formatu danych.
@@ -289,19 +289,96 @@ Oprócz testów sprawdzających poprawność wykonania działań zdefiniowano r�
 Dla wszystkich etapów utworzono pojedyncze testy sprawdzające poprawność formatu pliku wejściowego.
 Dodatkowe dwa przypadki testowe, sprawdzające poprawność formatu pliku z~parametrami oraz rozmiary obu wejściowych macierzy zostały dodane dla etapu drugiego oraz piątego.
 
-Pliki zawierające dane dla wszystkich powyższych testów zostały zamieszczone w~załącznikach.
+Dla projektu utworzono również trzy procesy integracji.
+Pierwszy proces o nazwie \textit{Matrix revolution} składał się z~pięciu kroków, kolejno: \textit{Matrix multiplication by scalar}, \textit{Matrix addtion}, \textit{Matrix rotation}, \textit{Matrix transposition} i \textit{Matrix multiplication}.
+Ta integracja sprawdza, czy wszystkie programy napisane w ramach kolejnych etapów współgrają ze sobą.
+W ramach tego procesu utworzono dwa testy akceptacyjne sprawdzające czy otrzymany wynik końcowy w postaci macierzy jest poprawny.
+Utworzony test akceptacyjny pozwolił na sprawdzenie pozytywnego przebiegu akcji ustawienia a następnie przesunięcia pingwina.
+Kolejny proces o nazwie \textit{Steady matrix} sprawdza czy po czterech rotacjach macierzy o 90 stopni uzyskiwana jest macierz wejściowa.
+Ostatnia integracja \textit{Matrix untransposition} ocenia czy dwókrotna transpozycja macierzy zwraca macierz wejściową.
+Dla każdego z dwóch ostatnich procesów załączono jeden przypadek testowy sprawdzający poprawność otrzymanej macierzy wynikowej.
 
-TODO: Opisać definicje integracji
+Plik zawierające dane dla testów utworzonych dla wszystkich etapów oraz procesów integracji zostały zamieszczone w~załącznikach.
 
 \subsection{Przebieg symulacji}
 \label{matrix_simulation}
 
-TODO: Opisać
+W ramach symulacji przybliżono absolwentom koncepcję platformy oraz opisano zadanie projektowe.
+Następnie poproszono ich o~zalogowanie się do platformy przy użyciu własnego konta GitHub.
+
+Po zalogowaniu absolwenci podzielili się zadaniami i przystąpili do pracy.
+
+Symulacja była na bieżąco obserwowana przez autora pracy, dzięki czemu możliwa była szybka reakcja na ewentualne błędy.
+W trakcie jej wykonywania poprawiono jeden niewłaściwie zdefiniowany przypadek testowy.
+Pozostałe etapy oraz integracje nie uległy zmianie.
+
+W tabelach od \ref{tab:matrix_multiplication_by_scalar} do \ref{tab:matrix_multiplication} przedstawiono pełne historie uruchomień programów dla wszystkich pięciu etapów w~ramach symulacji.
+Dane nie zawieraja komunikatów o~błędzie, które są również zapisywane przez platformę.
+
+Absolwent oznaczony jako first\_user@mail implementował rozwiązanie w języku Kotlin i napisał samodzielnie algorytmy do wykonywania kolejnych operacji.
+Dzięki temu od początku kontrolował on format pliku wyjściowego
+Druga osoaba zaimplementowała swoje rozwiązanie w Scali i użyła biblioteki zewnętrznej pozwalającej na mnożenie macierzy.
+Do pliku wyjściowego przekierowała ona macierz otrzymaną z użycia zewnętrznej funkcji.
+Sprawiło to, że w rezultacie plik wyjściowy posiadał nadmiarowe białe znaki przez co testy akceptacyjne zwracały komunikat o błędzie.
+
+\input{chapter07//matrix_multiplication_by_scalar.tex}
+
+\input{chapter07//matrix_addition.tex}
+
+\input{chapter07//matrix_rotation.tex}
+
+\input{chapter07//matrix_transposition.tex}
+
+\input{chapter07//matrix_multiplication.tex}
+
+Na podstawie historii uruchomień programów można zauważyć, że najwięcej trudności sprawiły absolwentom etpy: \textit{Matrix multiplication by scalar}, \textit{Matrix addition} oraz \textit{Matrix multiplication}.
+Pierwsze dwa były implementowane oddzielnie przez każdego z absolwentów i w ramach nich musieli oni przystosować aplikacje do pobrania odpowiedniego formatu danych wejściowych.
+Wykonanie operacji mnożenia dwóch macierzy z założenia było najtrudniejszym z wszystkich zadań stąd też wymagało kilku iteracji (patrz tabela \ref{tab:matrix_multiplication}).
+Z histori zmian można wywnioskować, że podczas tego etapu absolwenci wspólnie doszczegóławiali implementację programu dla tego zadania ze względu na uruchomienia programów wykonywane przez obie osoby.
+Te przypuszczenia zostały potwierdzone przez grupę testową.
+
+Dla zadań: \textit{Matrix roatation} oraz \textit{Matrix transposition} logika operacji nie była skomplikowana.
+Te etapy nie wymagały również parsowania specyficznych parametrów wejściowych, stad poprawną implementację uzyskano bardzo szybko.
+
+Każda z trzech integracji została uruchomiona raz, po poprawnym ukończeniu etapów wchodzących w skład schematu definiującego proces.
+
+Na rysunkach \ref{fig:matrix_preview_part_1} oraz \ref{fig:matrix_preview_part_2} przedstawiony został wynik symulacji z~perspektywy prowadzącego.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 16cm]{chapter07/matrix_preview_part_1.png}
+    \caption{Podgląd postępów studentów w~ramach symulacji projektu dla operacji na macierzach (część pierwsza).}
+    \label{fig:matrix_preview_part_1}
+\end{figure}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width = 16cm]{chapter07/matrix_preview_part_2.png}
+    \caption{Podgląd postępów studentów w~ramach symulacji projektu dla operacji na macierzach (część druga).}
+    \label{fig:matrix_preview_part_2}
+\end{figure}
 
 
 \subsection{Podsumowanie}
 
-TODO: Napisać
+Napisane przez absolwentów aplikacje przeszły pomyślnie zdefiniowane testy akceptacyjne w ramach etapów i integracji.
+Warto zaznaczyć, że studenci napisali swoje programy w dwóch różnych językach programowania: Kotlin oraz Scala.
+Pomimo użycia dwóch języków integracja rozwiązań przebiegła bez problemów.
+Oczywiście jest to związane z tym, że oba języki kompilują się do bytecode Java co umożliwiło poprawne uruchomienie aplikacji w ramach jednej prostej definicji środowiska.
+Utworzenie konfiguracji środowiska pozwalajacej na uruchamianie programów napisanych w C i Javie byłoby znacznie bardziej skomplikowane.
+
+Absolwenci ocenili pozytywnie pracę z platformą, w tym określili jej wygląd jako profesjonalny.
+Nie mieli oni problemu z użytkowaniem narzędzia i wykonywanie akcji było dla nich intuicyjne.
+Uznali również, że platforma może być użytecza podczas przeprowadzania projektu studenckiego.
+
+Absolwenci zwrócili jednak uwagę na to, że informacja zwrotna z uruchomienia programu przekazywana przez platformę mogłaby być bardziej obszerna.
+Chcieliby, żeby dostępna była dla nich informacja nie tylko o poprzednim rezultacie wykonania programu ale o dwóch poprzednich uruchomieniach.
+Obecnie tworząc program podczas krótkiego okresu czasu pamiętali oni wyniki poprzedniej iteracji, jednak zwrócili uwagę, że gdyby proces tworzenia projektu był duższy a ilość zdefiniowanych testów większa informacja o pełnym rezultacie dwóch ostatnich wykonań mogłaby być użyteczna.
+Kolejnym pożądanym elementem wspomnianym przez absolwentów jest dodanie daty ostatniego uruchomienia programu.
+
+Jeden z absolwentów miał problem z uzyskaniem poprawnego formatu pliku wyjściowego ze względu na nadmiarowe białe znaki.
+Zgodził się on, że aktualny sposób porównywania rezultatów opierający się na bezpośrednim porównaniu dwóch plików jest właściwy dla wersji MVP.
+Zasugerował jednak, że przy tego typu błędzie wyświetlany przez platformę komunikat jest niewystarczający do szybkiego rozwiązania problemu i chciałby on mieć również możliwość pobrania pliku wyjściowego utworzonego przez program dla każdego z przypadków testowych.
 
 
 \section{Udostępnienie grupie testowej platformy z~prawami administratora}
@@ -458,6 +535,10 @@ TODO: Coś więcej napisać o~Agile, dodać matrix (eee czy na pewno?)
 - testy nie blokuja implementacji co jest bardzo wazne
 
 - nie ma znaczenia jak w~srodku studenci napisza program, testy nie wymuszaja implementacji
+
+- zapis wyjścia do kilku plików
+
+- komunikat o uruchmieniu akcji/loader
 
 
 
