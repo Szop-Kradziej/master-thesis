@@ -108,7 +108,7 @@ class StudentProjectBoard extends Component {
                                                      settingsInfo="Pobierz konfigurację środowiska"
                                                      getSettingsActionHandler={this.handleDownloadProjectEnvironment}/>
                 <div>
-                    Grupa: {this.state.group.name} ({this.getStudentsNames()})
+                    Grupa: {this.state.group.name} ({"first_user@mail.com"})
                 </div>
                 <Table className={this.props.classes.table}>
                     <TableHead>
@@ -130,7 +130,9 @@ class StudentProjectBoard extends Component {
                                         <ExpansionPanelDetails>
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
-                                                    <p className={this.props.classes.testsHeading}> Testy </p>
+                                                    <div className={this.props.classes.testLabel}>
+                                                    <p> Testy </p>
+                                                    </div>
                                                     <StudentTestCasesDetails
                                                         testCases={stage.testCases}
                                                         projectName={this.props.match.params.projectId}
@@ -165,7 +167,9 @@ class StudentProjectBoard extends Component {
                                         <ExpansionPanelDetails>
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
-                                                    <p className={this.props.classes.testsHeading}> Testy </p>
+                                                    <div className={this.props.classes.testLabel}>
+                                                    <p> Testy </p>
+                                                    </div>
                                                     <StudentIntegrationTestCasesDetails
                                                         testCases={integration.testCases}
                                                         projectName={this.props.match.params.projectId}

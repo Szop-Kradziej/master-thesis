@@ -63,7 +63,7 @@ class TestCaseRow extends Component {
     render() {
         return (
             <TableRow>
-                <CustomTableCell component="th" scope="row">
+                <CustomTableCell>
                     <EditItemComponent
                         header={this.props.testCase.testCaseName}
                         info="Edytuj nazwę testu"
@@ -82,7 +82,7 @@ class TestCaseRow extends Component {
                     )}
 
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row">
+                <CustomTableCell>
                     <UploadAndDownloadItemComponent
                         header={this.props.testCase.inputFileName}
                         uploadInfo="Załaduj plik wejściowy"
@@ -99,7 +99,7 @@ class TestCaseRow extends Component {
                                               fileType="input"
                                               headerText="Dodaj plik wejściowy"/>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row">
+                <CustomTableCell>
                     <UploadAndDownloadItemComponent
                         header={this.props.testCase.outputFileName}
                         uploadInfo="Załaduj plik wyjściowy"
@@ -116,7 +116,7 @@ class TestCaseRow extends Component {
                                               fileType="output"
                                               headerText="Dodaj plik wyjściowy"/>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row">
+                <CustomTableCell>
                     <DeleteItemComponent info="Usuń przypadek testowy"
                                          deleteActionHandler={this.handleDeleteTestCase}/>
                 </CustomTableCell>

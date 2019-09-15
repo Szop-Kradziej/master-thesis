@@ -29,7 +29,7 @@ export const styles = (theme) => ({
     },
     table: {
         minWidth: 900,
-        fontSize: 16,
+        fontSize: 40,
         color: "black"
     },
     link: {

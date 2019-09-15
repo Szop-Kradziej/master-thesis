@@ -6,6 +6,8 @@ import UploadAndDownloadItemComponent from "../../../../utils/UploadAndDownloadI
 import * as Api from "../../../../Api";
 import UploadTestCaseFileDialog from "./UploadTestCaseFileDialog";
 import DeleteItemComponent from "../../../../utils/DeleteItemComponent";
+import {withStyles} from "@material-ui/core";
+import {styles} from "../../../../styles/ProjectBoardStyles";
 
 class TestCaseRow extends Component {
 
@@ -75,13 +77,13 @@ class TestCaseRow extends Component {
     render() {
         return (
             <TableRow>
-                <CustomTableCell component="th" scope="row">
+                <CustomTableCell >
                     <EditItemComponent
                         header={this.props.testCase.testCaseName}
                         info="Edytuj nazwę testu"
                         editActionHandler={this.handleEditTestName}/>
                 </CustomTableCell>
-                <CustomTableCell>
+                <CustomTableCell >
                     <UploadAndDownloadItemComponent
                         header={this.props.testCase.parameters ? this.props.testCase.parameters : 'Brak'}
                         uploadInfo="Załaduj plik z parametrami"
@@ -98,7 +100,7 @@ class TestCaseRow extends Component {
                                               fileType="parameters"
                                               headerText="Dodaj parametry uruchomienia"/>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row">
+                <CustomTableCell >
                     <UploadAndDownloadItemComponent
                         header={this.props.testCase.inputFileName}
                         uploadInfo="Załaduj plik wejściowy"
@@ -115,7 +117,7 @@ class TestCaseRow extends Component {
                                               fileType="input"
                                               headerText="Dodaj plik wejściowy"/>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row">
+                <CustomTableCell >
                     <UploadAndDownloadItemComponent
                         header={this.props.testCase.outputFileName}
                         uploadInfo="Załaduj plik wyjściowy"
@@ -132,7 +134,7 @@ class TestCaseRow extends Component {
                                               fileType="output"
                                               headerText="Dodaj plik wyjściowy"/>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row">
+                <CustomTableCell >
                     <DeleteItemComponent info="Usuń przypadek testowy"
                                          deleteActionHandler={this.handleDeleteTestCase}/>
                 </CustomTableCell>
@@ -142,4 +144,4 @@ class TestCaseRow extends Component {
     }
 }
 
-export default (TestCaseRow);
+export default withStyles(styles)(TestCaseRow);

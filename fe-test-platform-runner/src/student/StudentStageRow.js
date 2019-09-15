@@ -6,7 +6,7 @@ import TableHead from "@material-ui/core/TableHead/TableHead";
 import TableRow from "@material-ui/core/TableRow/TableRow";
 import TableBody from "@material-ui/core/TableBody/TableBody";
 import Table from "@material-ui/core/Table/Table";
-import TableCell from "@material-ui/core/TableCell/TableCell";
+import {CustomTableCell, styles} from "../styles/ProjectBoardStyles";
 import EditItemComponent from "../utils/EditItemComponent";
 import UploadAndDownloadItemComponent from "../utils/UploadAndDownloadItemComponent";
 import * as Api from "../Api";
@@ -91,7 +91,7 @@ class StudentStageRow extends Component {
     render() {
         return (
             <div className={this.props.classes.stageRow}>
-                <Typography className={this.props.classes.heading}>
+                <Typography className={this.props.classes.taskName}>
                     <DescriptionItemComponent header={this.props.stage.stageName}
                                               info="Pobierz opis etapu"
                                               getDescriptionActionHandler={this.handleDownloadStageDescription}/>
@@ -135,7 +135,7 @@ class StudentStageRow extends Component {
                         </TableHead>
                         <TableBody>
                             <TableRow key="custom_key">
-                                <CustomTableCell component="th" scope="row" width="15%">
+                                <CustomTableCell component="th" scope="row" width="20%">
                                     <div display="flex">
                                         {/*TODO: It seems that it is incorrect approach to use props instead of state here, check: https://github.com/uberVU/react-guide/issues/17*/}
                                         <p> {this.props.stage.binaryName ? this.props.stage.binaryName : 'Brak pliku'} </p>
@@ -144,7 +144,7 @@ class StudentStageRow extends Component {
                                 <CustomTableCell component="th" scope="row" width="15%">
                                     <p> {this.props.stage.codeLink ? this.getCodeLink() : 'Brak linku'}</p>
                                 </CustomTableCell>
-                                <CustomTableCell component="th" scope="row" width="15%">
+                                <CustomTableCell component="th" scope="row" width="20%">
                                     <p> {this.props.stage.reportName ? this.props.stage.reportName : 'Brak pliku'} </p>
                                 </CustomTableCell>
                                 <CustomTableCell component="th" scope="row"/>
@@ -152,7 +152,8 @@ class StudentStageRow extends Component {
                                     <p> {this.props.stage.passedTestCasesCount}/{this.props.stage.allTestCasesCount}</p>
                                 </CustomTableCell>
                                 <CustomTableCell component="th" scope="row" width="5%">
-                                    <p> {this.props.stage.successfulGroups}/{this.props.stage.totalGroupsNumber}</p>
+                                    {/*<p> {this.props.stage.successfulGroups}/{this.props.stage.totalGroupsNumber}</p>*/}
+                                    {"1/1"}
                                 </CustomTableCell>
                                 <CustomTableCell component="th" scope="row" width="5%">
                                     <p>{this.props.stage.startDate ? this.props.stage.startDate : 'Brak'}</p>
@@ -189,24 +190,24 @@ class StudentStageRow extends Component {
     }
 }
 
-const CustomTableCell = withStyles(() => ({
-    head: {
-        color: "black",
-        fontWeight: 700,
-        fontSize: 12,
-        margin: 0,
-        padding: 0,
-        border: 0
-    },
-    body: {
-        color: "black",
-        fontSize: 12,
-        margin: 0,
-        padding: 0,
-        border: 0,
-        height: 5
-    }
-}))(TableCell);
+// const CustomTableCell = withStyles(() => ({
+//     head: {
+//         color: "black",
+//         fontWeight: 700,
+//         fontSize: 12,
+//         margin: 0,
+//         padding: 0,
+//         border: 0
+//     },
+//     body: {
+//         color: "black",
+//         fontSize: 12,
+//         margin: 0,
+//         padding: 0,
+//         border: 0,
+//         height: 5
+//     }
+// }))(TableCell);
 
 const stopPropagation = (e) => e.stopPropagation();
 const InputWrapper = ({children}) =>
@@ -214,29 +215,29 @@ const InputWrapper = ({children}) =>
         {children}
     </div>;
 
-export const styles = (theme) => ({
-    button: {
-        backgroundColor: "#5aa724",
-        color: "black",
-        marginTop: 0
-    },
-    stageRow: {
-        display: 'block',
-        width: 1700
-    },
-    heading: {
-        fontSize: 20,
-        fontWeight: 700
-    },
-    inputWrapper: {
-        display: 'flex',
-        width: 1700
-    },
-    textField: {
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
-        width: 200,
-    },
-});
+// export const styles = (theme) => ({
+//     button: {
+//         backgroundColor: "#5aa724",
+//         color: "black",
+//         marginTop: 0
+//     },
+//     stageRow: {
+//         display: 'block',
+//         width: 1700
+//     },
+//     heading: {
+//         fontSize: 20,
+//         fontWeight: 700
+//     },
+//     inputWrapper: {
+//         display: 'flex',
+//         width: 1700
+//     },
+//     textField: {
+//         marginLeft: theme.spacing.unit,
+//         marginRight: theme.spacing.unit,
+//         width: 200,
+//     },
+// });
 
 export default withStyles(styles)(StudentStageRow);

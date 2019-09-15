@@ -28,13 +28,13 @@ class GroupHeader extends Component {
             <Table>
                 <TableHead>
                     <TableRow>
-                        <CustomTableCell width="15%">
+                        <CustomTableCell width="40%">
                             <EditItemComponent
                                 header="Nazwa grupy:"
                                 info="Edytuj nazwę grupy"
                                 editActionHandler={this.handleEditGroupName}/>
                         </CustomTableCell>
-                        <CustomTableCell width="80%"/>
+                        <CustomTableCell width="55%"/>
                         <CustomTableCell>
                             <DeleteItemComponent info="Usuń grupę"
                                                  deleteActionHandler={this.handleDeleteGroup}/>

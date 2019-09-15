@@ -16,7 +16,7 @@ class StudentRow extends Component {
     render() {
         return (
             <TableRow>
-                <CustomTableCell component="th" scope="row">
+                <CustomTableCell>
                     {this.props.studentName}
                 </CustomTableCell>
                 <CustomTableCell>

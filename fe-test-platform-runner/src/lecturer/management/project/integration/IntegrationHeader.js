@@ -69,19 +69,19 @@ class GroupHeader extends Component {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <CustomTableCell width="15%">
+                            <CustomTableCell width="20%">
                                 <EditItemComponent
                                     header="Nazwa integracji:"
                                     info="Edytuj nazwę integracji"
                                     editActionHandler={this.handleEditIntegrationName}/>
                             </CustomTableCell>
-                            <CustomTableCell width="65%">
+                            <CustomTableCell width="55%">
                                 <EditItemComponent
                                     header="Schemat integracji:"
                                     info="Edytuj schemat integracji"
                                     editActionHandler={this.handleEditIntegrationSchema}/>
                             </CustomTableCell>
-                            <CustomTableCell width="15%">
+                            <CustomTableCell width="17%">
                                 <EditItemComponent
                                     header="Komentarz:"
                                     info="Edytuj komentarz do integracji"

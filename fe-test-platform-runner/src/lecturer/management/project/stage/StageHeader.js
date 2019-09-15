@@ -80,13 +80,13 @@ class StageHeader extends Component {
                 <Table>
                     <TableHead>
                         <TableRow>
-                            <CustomTableCell width="15%">
+                            <CustomTableCell width="20%">
                                 <EditItemComponent
                                     header="Nazwa etapu:"
                                     info="Edytuj nazwę etapu"
                                     editActionHandler={this.handleEditStageName}/>
                             </CustomTableCell>
-                            <CustomTableCell width="15%">
+                            <CustomTableCell width="20%">
                                 <UploadAndDownloadItemComponent
                                     header="Opis etapu:"
                                     uploadInfo="Załaduj opis etapu"
@@ -95,20 +95,20 @@ class StageHeader extends Component {
                                     downloadDisabled={this.props.stage.stageDescription === null}
                                     downloadActionHandler={this.handleDownloadStageDescription}/>
                             </CustomTableCell>
-                            <CustomTableCell width="20%"/>
-                            <CustomTableCell width="15%">
+                            <CustomTableCell />
+                            <CustomTableCell width="17%">
                                 <EditItemComponent
                                     header="Rozpoczęcie:"
                                     info="Edytuj datę rozpoczęcia etapu"
                                     editActionHandler={this.handleOpenEditStartDateDialog}/>
                             </CustomTableCell>
-                            <CustomTableCell width="15%">
+                            <CustomTableCell width="17%">
                                 <EditItemComponent
                                     header="Zakończenie:"
                                     info="Edytuj datę zakończenia etapu"
                                     editActionHandler={this.handleOpenEditEndDateDialog}/>
                             </CustomTableCell>
-                            <CustomTableCell width="15%">
+                            <CustomTableCell width="17%">
                                 <EditItemComponent
                                     header="Komentarz:"
                                     info="Edytuj komentarz do etapu"

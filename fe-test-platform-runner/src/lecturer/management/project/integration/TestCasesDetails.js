@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button/Button";
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core";
+import {styles} from "../../../../styles/ProjectBoardStyles";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
@@ -64,11 +65,13 @@ class TestCasesDetails extends Component {
 
     render() {
         return (
-            <div className={this.props.classes.panel}>
+            <div>
+                <div className={this.props.classes.testLabel}>
                 <AddNewItemComponent
                     header="Testy"
                     info="Dodaj nowy test"
                     addActionHandler={this.handleOpenNewTestDialog}/>
+                </div>
                 {this.isAnyTestCaseExist() ? this.renderTestCasesTable() : this.renderNoTestsLabel()}
                 <Dialog open={this.state.isNewTestDialogVisible} onClose={this.handleCloseNewTestDialog}
                         aria-labelledby="form-dialog-title">
@@ -122,13 +125,13 @@ class TestCasesDetails extends Component {
                         <CustomTableCell width="20%">
                             Nazwa testu:
                         </CustomTableCell>
-                        <CustomTableCell width="20%">
+                        <CustomTableCell width="25%">
                             Parametry:
                         </CustomTableCell>
-                        <CustomTableCell width="15%">
+                        <CustomTableCell width="25%">
                             Plik wejściowy:
                         </CustomTableCell>
-                        <CustomTableCell width="15%">
+                        <CustomTableCell width="25%">
                             Plik wyjściowy:
                         </CustomTableCell>
                         <CustomTableCell width="5%"/>
@@ -158,14 +161,5 @@ class TestCasesDetails extends Component {
         );
     }
 }
-
-const styles = theme => ({
-    root: {
-        flexGrow: 1,
-    },
-    noTestText: {
-        fontSize: 12
-    }
-});
 
 export default withStyles(styles)(TestCasesDetails);

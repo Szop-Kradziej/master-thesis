@@ -108,7 +108,7 @@ class PreviewStudentProjectBoard extends Component {
                                                      settingsInfo="Pobierz konfigurację środowiska"
                                                      getSettingsActionHandler={this.handleDownloadProjectEnvironment}/>
                 <div>
-                    Grupa: {this.props.match.params.groupId} ({this.getStudentsNames()})
+                    Grupa: {this.props.match.params.groupId} ({"first_user@mail.com"})
                 </div>
                 <Table className={this.props.classes.table}>
                     <TableHead>
@@ -131,7 +131,9 @@ class PreviewStudentProjectBoard extends Component {
                                         <ExpansionPanelDetails>
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
-                                                    <p className={this.props.classes.testsHeading}> Testy </p>
+                                                    <div className={this.props.classes.testLabel}>
+                                                    <p> Testy </p>
+                                                    </div>
                                                     <PreviewStudentTestCasesDetails
                                                         testCases={stage.testCases}
                                                         groupName={this.props.match.params.groupId}
@@ -168,7 +170,9 @@ class PreviewStudentProjectBoard extends Component {
                                         <ExpansionPanelDetails>
                                             <Typography>
                                                 <div className={this.props.classes.panel}>
-                                                    <p className={this.props.classes.testsHeading}> Testy </p>
+                                                    <div className={this.props.classes.testLabel}>
+                                                    <p> Testy </p>
+                                                    </div>
                                                     <PreviewStudentIntegrationTestCasesDetails
                                                         testCases={integration.testCases}
                                                         groupName={this.props.match.params.groupId}

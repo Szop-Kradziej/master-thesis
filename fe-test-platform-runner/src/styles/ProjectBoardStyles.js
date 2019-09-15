@@ -5,12 +5,12 @@ export const CustomTableCell = withStyles(() => ({
     head: {
         color: "black",
         fontWeight: 700,
-        fontSize: 12,
+        fontSize: 26,
         border: 0
     },
     body: {
         color: "black",
-        fontSize: 12,
+        fontSize: 22,
         border: 0
     }
 }))(TableCell);
@@ -19,7 +19,7 @@ export const CustomHeaderCell = withStyles(() => ({
     head: {
         color: "black",
         fontWeight: 700,
-        fontSize: 20,
+        fontSize: 30,
         border: 0
     },
     body: {
@@ -32,11 +32,12 @@ export const CustomHeaderCell = withStyles(() => ({
 export const styles = (theme) => ({
     app: {
         textAlign: "center",
-        fontSize: 24,
+        fontSize: 40,
         fontWeight: 700
     },
     table: {
-        fontSize: 16,
+        minWidth: 900,
+        fontSize: 40,
         color: "black"
     },
     link: {
@@ -69,12 +70,24 @@ export const styles = (theme) => ({
         width: 1700,
     },
     headingMainPanel: {
-        fontSize: 20,
+        fontSize: 30,
         fontWeight: 700,
+    },
+    testLabel: {
+        fontSize: 30,
+        fontWeight: 700
     },
     testsHeading: {
         width: 1700,
-        fontSize: 16,
-        fontWeight: 700
+        fontSize: 22,
     },
+        taskName: {
+        fontSize: 26,
+        fontWeight: 700,
+            width: 1700,
+    },
+    root_2: {
+         display: "flex",
+         width: 1700,
+     }
 });

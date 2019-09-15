@@ -1,10 +1,11 @@
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core";
 import TableRow from "@material-ui/core/TableRow/TableRow";
-import TableCell from "@material-ui/core/TableCell/TableCell";
 import * as Api from "../../Api";
 import DownloadItemComponent from "../../utils/DownloadItemComponent";
 import PreviewIntegrationParametersComponent from "./PreviewIntegrationParametersComponent";
+import {CustomTableCell, styles} from "../../styles/ProjectBoardStyles";
+
 
 class PreviewStudentIntegrationTestCaseRow extends Component {
 
@@ -47,13 +48,13 @@ class PreviewStudentIntegrationTestCaseRow extends Component {
                 <CustomTableCell>
                     <p>{this.props.testCase.message ? this.props.testCase.message : "Brak"}</p>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row" width="8%">
+                <CustomTableCell component="th" scope="row" width="10%">
                     <DownloadItemComponent header={this.props.testCase.logsFile === true ? "logs" : "Brak"}
                                            info="Pobierz logi"
                                            disabled={!this.props.testCase.logsFile === true}
                                            downloadActionHandler={this.handleDownloadLogsFile}/>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row" width="8%">
+                <CustomTableCell component="th" scope="row" width="15%">
                     {this.props.testCase.parameters.map((parameters, index) => (
                             <PreviewIntegrationParametersComponent
                                 index={index}
@@ -64,13 +65,13 @@ class PreviewStudentIntegrationTestCaseRow extends Component {
                         )
                     )}
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row" width="8%">
+                <CustomTableCell component="th" scope="row" width="10%">
                     <DownloadItemComponent header="input"
                                            info="Pobierz plik wejściowy"
                                            disabled={false}
                                            downloadActionHandler={this.handleDownloadInputFile}/>
                 </CustomTableCell>
-                <CustomTableCell component="th" scope="row" width="8%">
+                <CustomTableCell component="th" scope="row" width="10%">
                     <DownloadItemComponent header="output"
                                            info="Pobierz plik wyjściowy"
                                            disabled={false}
@@ -81,30 +82,30 @@ class PreviewStudentIntegrationTestCaseRow extends Component {
     }
 }
 
-const CustomTableCell = withStyles(() => ({
-    head: {
-        color: "black",
-        fontWeight: 700,
-        fontSize: 12,
-        margin: 0,
-        padding: 0,
-        border: 0
-    },
-    body: {
-        color: "black",
-        fontSize: 12,
-        margin: 0,
-        padding: 0,
-        border: 0,
-        height: 5
-    }
-}))(TableCell);
-
-const styles = theme => ({
-    root: {
-        flexGrow: 1,
-        width: 1700
-    },
-});
+// const CustomTableCell = withStyles(() => ({
+//     head: {
+//         color: "black",
+//         fontWeight: 700,
+//         fontSize: 12,
+//         margin: 0,
+//         padding: 0,
+//         border: 0
+//     },
+//     body: {
+//         color: "black",
+//         fontSize: 12,
+//         margin: 0,
+//         padding: 0,
+//         border: 0,
+//         height: 5
+//     }
+// }))(TableCell);
+//
+// const styles = theme => ({
+//     root: {
+//         flexGrow: 1,
+//         width: 1700
+//     },
+// });
 
 export default withStyles(styles)(PreviewStudentIntegrationTestCaseRow);

@@ -1,6 +1,7 @@
 import Button from "@material-ui/core/Button/Button";
 import React, {Component} from "react";
 import {withStyles} from "@material-ui/core";
+import {styles} from "../../../../styles/ProjectBoardStyles";
 import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import DialogContentText from "@material-ui/core/es/DialogContentText/DialogContentText";
@@ -49,10 +50,12 @@ class StudentsDetails extends Component {
     render() {
         return (
             <div className={this.props.classes.panel}>
+                <div className={this.props.classes.testLabel}>
                 <AddNewItemComponent
                     header="Studenci"
                     info="Dodaj nowego studenta"
                     addActionHandler={this.handleOpenNewStudentDialog}/>
+                </div>
                 {this.isAnyStudentExist() ? this.renderStudentsTable() : this.renderNoStudentsLabel()}
                 <Dialog open={this.state.isNewStudentDialogVisible} onClose={this.handleCloseNewStudentDialog}
                         aria-labelledby="form-dialog-title">
@@ -121,14 +124,5 @@ class StudentsDetails extends Component {
         );
     }
 }
-
-const styles = theme => ({
-    root: {
-        flexGrow: 1,
-    },
-    noTestText: {
-        fontSize: 12
-    }
-});
 
 export default withStyles(styles)(StudentsDetails);
