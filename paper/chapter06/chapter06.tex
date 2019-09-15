@@ -147,7 +147,8 @@ Ze względu na podawane parametry w~postaci argumentów do programu plik Dockerf
 
     FROM gcc
 
-    CMD chmod 777 /home/app && /home/app phase=placement penguins=2 /home/input.txt /home/parameters.txt /home/output.txt
+    CMD chmod 777 /home/app && /home/app phase=placement penguins=2 /home/input.txt
+    /home/parameters.txt /home/output.txt
 
 \end{lstlisting}
 }
