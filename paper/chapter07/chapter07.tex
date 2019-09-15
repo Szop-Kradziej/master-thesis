@@ -296,6 +296,7 @@ Celem kolejnych zadań jest:
     \item Mnożenie macierzy przez skalar.
     \item Dodawanie macierzy.
     \item Rotacja macierzy o~90 stopni zgodnie z~ruchem wskazówek zegara (rotacja w~prawo o~90 stopni).
+    Obrót macierzy nie jest typową operacją matematyczną, jednak z takim zadaniem można się spotkać podczas procesu rekrutacyjnego \cite{cracking-the-coding-interview}.
     \item Transpozycja macierzy.
     \item Mnożenie dwóch macierzy.
 \end{enumerate}
@@ -402,13 +403,14 @@ Absolwenci zwrócili jednak uwagę na to, że informacja zwrotna z uruchomienia 
 Chcieliby, żeby dostępna była dla nich informacja nie tylko o poprzednim rezultacie wykonania programu ale o dwóch poprzednich uruchomieniach.
 Obecnie tworząc program podczas krótkiego okresu pamiętali oni wyniki poprzedniej iteracji, jednak zwrócili uwagę, że gdyby proces tworzenia projektu był dłuższy a ilość zdefiniowanych testów większa, informacja o pełnym rezultacie dwóch ostatnich wykonań mogłaby być użyteczna.
 Kolejnym pożądanym elementem wspomnianym przez absolwentów jest dodanie daty ostatniego uruchomienia programu.
+Wspomniane zmiany nie zostały wprowadzone do końcowej wersji narzędzia, wykonanej w ramach pracy.
 
 Jeden z absolwentów miał problem z uzyskaniem poprawnego formatu pliku wyjściowego ze względu na nadmiarowe białe znaki.
 Zgodził się on, że aktualny sposób porównywania rezultatów opierający się na bezpośrednim porównaniu dwóch plików jest właściwy dla wersji MVP.
 Zasugerował jednak, że przy tego typu błędzie wyświetlany przez platformę komunikat jest niewystarczający do szybkiego rozwiązania problemu i chciałby on mieć również możliwość pobrania pliku wyjściowego utworzonego przez uruchomiony program dla każdego z przypadków testowych.
 Warto jednak zauważyć, że wymuszenie wspólnego formatu danych w ramach projektu jest istotne.
 Gdyby studenci nie przestrzegali wymagań napisane przez nich aplikacje nie integrowałyby się wzajemnie.
-Powyższy problem może posłużyć jako przykład programu, który zwraca poprawnie wyniki, ale nie współgra z innymi aplikacjami.
+Powyższy problem może posłużyć jako przykład programu, który zwraca poprawnie wyniki, ale nie współgra z~innymi aplikacjami.
 Platforma broni użytkowników przed tego typu sytuacjami.
 
 \section{Udostępnienie grupie testowej platformy z~prawami administratora}
@@ -427,7 +429,7 @@ Narzędzie mogłoby również posłużyć monitorowaniu prac studentów dla proj
 W związku z~możliwością użycia platformy również dla takiego typu zadania w~ramach pracy dokonano zgrubnej analizy przeprowadzenia tego typu projektu.
 
 W podrozdziale \ref{agile_proposition} omówiono propozycję przeprowadzenia zwinnego projektu.
-Sekcja opisuje \ref{agile_todo} podstawowe funkcjonalności, jakie należałoby zaimplementować w~kolejnej wersji platformy tak, aby była ona użyteczna w~prowadzeniu projektów w~metodyce Agile.
+Sekcja \ref{agile_todo} opisuje podstawowe funkcjonalności, jakie należałoby zaimplementować w~kolejnej wersji platformy tak, aby była ona użyteczna w~prowadzeniu projektów w~metodyce Agile.
 Ostatni podrozdział zawiera krótkie podsumowanie.
 
 \subsection{Propozycja przeprowadzenia zwinnego projektu z~użyciem platformy}
@@ -500,7 +502,7 @@ Dodanie nowej roli i~wprowadzenie pełniejszego zrównoleglenia dostępu do zaso
 
 \subsection{Podsumowanie}
 
-Platforma może zostać rozszerzona, tak aby możliwe było z~jej wykorzystaniem przeprowadzenie zwinnego projektu.
+Platforma może zostać rozszerzona, tak aby możliwe było przeprowadzenie zwinnego projektu z~jej wykorzystaniem.
 Modyfikacje nie powinny wpłynąć na obecne funkcjonalności platformy.
 Dzięki takiemu podejściu narzędzie stałoby się jeszcze bardziej uniwersalne.
 
@@ -510,7 +512,7 @@ Dodanie na tym etapie pracy nowych funkcjonalności mogłoby doprowadzić do des
 Stąd udostępnienie platformy do prowadzenia projektów w~metodyce Agile jest proponowanym rozszerzeniem pracy magisterskiej.
 
 
-\section{Podsumowanie}
+\section{Podsumowanie badań}
 \label{research_summary}
 
 Utworzona platforma w~wersji MVP wspomaga przeprowadzenie zespołowego oraz indywidualnego projektu informatycznego.
@@ -556,6 +558,10 @@ Do tych dodatkowych funkcjonalności należą:
     \item komunikat lub tzw. ”loader” informujący o uruchomieniu programu i wgrywaniu pliku dla plików wykonywalnych (obecnie wyszarzenie przycisku).
 \end{itemize}
 Proponowane zmiany są zagadnieniami czysto inżynierskimi i mogą być zaimplementowane w~ramach rozszerzenia pracy.
+
+W ramach badań pytano absolwentów o możliwe usprawnienia platformy a uzyskane komentarze zapisywano w postaci zadań na tablicy w narzędziu Trello \cite{trello}.
+To rozwiązanie było bardzo pomocne w opisaniu funkcjonalności, o które mogłaby być rozszerzona aktualna wersja  platformy.
+Podczas dalszych prac nad rozwojem narzędzia proponowane jest, aby udostępnić grupie testującej (przykładowo studentom) podobną tablicę, na której testujący będą mogli samodzielnie dodawać własne komentarze dotyczące pracy z platformą i proponowanych usprawnień.
 
 Podczas weryfikacji działania platformy udostępniono ją członkom grupy testowej z~nadanymi prawami administratora.
 W wyniku tego eksperymentu okazało się, że chętnie tworzyli oni własne zadania z użyciem narzędzia.
