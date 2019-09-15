@@ -145,9 +145,9 @@ Ze względu na podawane parametry w~postaci argumentów do programu plik Dockerf
 \tiny
 \begin{lstlisting}
 
-    FROM gcc:4.9
+    FROM gcc
 
-    CMD ["./home/app", "phase=placement", "penguins=2", "/home/input.txt", "/home/output.txt"]
+    CMD chmod 777 /home/app && /home/app phase=placement penguins=2 /home/input.txt /home/parameters.txt /home/output.txt
 
 \end{lstlisting}
 }
@@ -171,9 +171,9 @@ Aby uzyskać informację zwrotną z~ich działania utworzono nowy projekt z~poni
 \tiny
 \begin{lstlisting}
 
-    FROM gcc:4.9
+    FROM gcc
 
-    CMD ["./home/app"]
+    CMD chmod 777 /home/app && /home/app
 
 \end{lstlisting}
 }

@@ -172,9 +172,9 @@ Przykład poprawnie zdefiniowanego środowiska dla systemu Linux i~języka C wyg
 \tiny
 \begin{lstlisting}
 
-    FROM gcc:4.9
+    FROM gcc
 
-    CMD ["./home/app", "/home/input.txt", "/home/parameters.txt", "/home/output.txt"]
+    CMD chmod 777 /home/app && /home/app /home/input.txt /home/parameters.txt /home/output.txt
 
 \end{lstlisting}
 }
@@ -332,7 +332,7 @@ Ta instancja została użyta do przeprowadzenia badań.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 12cm]{chapter05/google_cloud.png}
+    \includegraphics[width = 16cm]{chapter05/google_cloud.png}
     \caption{Instancja zdefiniowana na Google Cloud.}
     \label{fig:google_cloud}
 \end{figure}
@@ -349,7 +349,7 @@ Jego definicja znajduje się na rysunku~\ref{fig:travis_integration}.
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 12cm]{chapter05/travis_integration.png}
+    \includegraphics[width = 16cm]{chapter05/travis_integration.png}
     \caption{Definicja projektu dla integracji platformy z~narzędziem Travis.}
     \label{fig:travis_integration}
 \end{figure}
@@ -389,7 +389,7 @@ Na rysunku \ref{fig:travis_integration_internal} została przedstawiona konfigur
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 12cm]{chapter05/travis_integration_internal.png}
+    \includegraphics[width = 16cm]{chapter05/travis_integration_internal.png}
     \caption{Konfiguracja zmiennej \textit{token} w~narzędziu Travis.}
     \label{fig:travis_integration_internal}
 \end{figure}
@@ -400,7 +400,7 @@ Wyniki testów uzyskane na platformie zostały przedstawione na rysunku~\ref{fig
 
 \begin{figure}[h]
     \centering
-    \includegraphics[width = 12cm]{chapter05/travis_integration_result.png}
+    \includegraphics[width = 16cm]{chapter05/travis_integration_result.png}
     \caption{Wyniki automatycznego uruchomienia programu otrzymane dla integracji platformy z~narzędziem Travis.}
     \label{fig:travis_integration_result}
 \end{figure}
